@@ -1,0 +1,18 @@
+# Fdb version 4
+["pdflatex"] 1764099030 "/Users/paulv/Library/CloudStorage/OneDrive-Nexus365/Documents/Oxford/Year 3/3YPE (B3)/3YP_Tracy/latex/hello_world.tex" "hello_world.pdf" "hello_world" 1764099031 0
+  "/Users/paulv/Library/CloudStorage/OneDrive-Nexus365/Documents/Oxford/Year 3/3YPE (B3)/3YP_Tracy/latex/hello_world.tex" 1764099014 72 0c9d23157c07764ce8da7928f1618ed8 ""
+  "/usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
+  "/usr/local/texlive/2023/texmf-dist/tex/latex/base/article.cls" 1667332637 20144 d5ecf0a5140c8d8d8b72cbe86e320eff ""
+  "/usr/local/texlive/2023/texmf-dist/tex/latex/base/size10.clo" 1667332637 8448 c33a4e1cb35cee9b33c2b21033b73e39 ""
+  "/usr/local/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def" 1673989714 30429 213676d4c7327a21d91ddaed900e7b81 ""
+  "/usr/local/texlive/2023/texmf-dist/web2c/texmf.cnf" 1677365944 40745 87bb86a62d462f93a1efc6b0c65c872e ""
+  "/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1702042667 4623355 b8cad38412faebe1ce5b780a45db67bd ""
+  "/usr/local/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt" 1702042588 7883455 e79effe4d40218849b4e9d3c040ea535 ""
+  "/usr/local/texlive/2023/texmf.cnf" 1678822455 577 1b2b1af17af2508fb20dd85783af4050 ""
+  "hello_world.aux" 1764099031 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "hello_world.tex" 1764099014 72 0c9d23157c07764ce8da7928f1618ed8 ""
+  (generated)
+  "hello_world.aux"
+  "hello_world.log"
+  "hello_world.pdf"
+  (rewritten before read)
