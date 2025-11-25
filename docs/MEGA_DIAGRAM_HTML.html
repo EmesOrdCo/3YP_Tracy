@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formula Student Simulation - Mega Diagram</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+    </script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1, h2 { color: #4ec9b0; }
+        h3 { color: #569cd6; }
+        .diagram-container {
+            background: #252526;
+            border: 1px solid #3e3e42;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .mermaid {
+            background: white;
+            padding: 20px;
+            border-radius: 4px;
+        }
+        .text-diagram {
+            background: #252526;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        code {
+            background: #3e3e42;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #ce9178;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚗 Formula Student Acceleration Simulation</h1>
+    <h2>Complete System Data Flow - Mega Diagram</h2>
+    
+    <p>This page shows the complete data flow through the simulation system with all functions, inputs, outputs, and data connections.</p>
+    
+    <div class="diagram-container">
+        <h3>1. Main System Flow (High Level)</h3>
+        <div class="mermaid">
+            flowchart TD
+                START([Start: JSON/YAML Config File]) --> LOAD_CONFIG[load_config<br/>config_path: str/Path]
+                
+                LOAD_CONFIG --> |Reads file| PARSE[Parse JSON/YAML<br/>Extract all properties]
+                PARSE --> CREATE_CONFIG[Create VehicleConfig<br/>mass, tires, powertrain, aero, suspension, control, environment]
+                CREATE_CONFIG --> VALIDATE[VehicleConfig.validate<br/>Check: power limit, mass > 0, CG position, tire radius, gear ratio]
+                
+                VALIDATE --> |errors: List[str]| CHECK_ERRORS{Errors?}
+                CHECK_ERRORS --> |Yes| ERROR([Raise ValueError])
+                CHECK_ERRORS --> |No| CONFIG_READY[VehicleConfig Object<br/>✓ Validated]
+                
+                CONFIG_READY --> INIT_SIM[AccelerationSimulation.__init__<br/>config: VehicleConfig]
+                
+                INIT_SIM --> CREATE_SOLVER[Create DynamicsSolver<br/>config: VehicleConfig]
+                
+                CREATE_SOLVER --> INIT_MODELS[Initialize Vehicle Models:<br/>• MassPropertiesModel<br/>• TireModel<br/>• PowertrainModel<br/>• AerodynamicsModel<br/>• SuspensionModel<br/>• ChassisGeometry<br/>• ControlStrategy]
+                
+                INIT_MODELS --> SOLVER_READY[DynamicsSolver Ready]
+                SOLVER_READY --> RUN_SIM[AccelerationSimulation.run<br/>fastest_time: Optional[float]]
+                
+                RUN_SIM --> SOLVE[DynamicsSolver.solve<br/>Loop until position >= 75m]
+                
+                SOLVE --> |Returns final_state| CHECK_POWER[check_power_limit<br/>state_history: List[SimulationState]<br/>max_power: 80e3 W]
+                
+                CHECK_POWER --> |Returns: compliant, max_power, violation_time| CHECK_TIME[check_time_limit<br/>final_state: SimulationState<br/>max_time: 25.0 s]
+                
+                CHECK_TIME --> |Returns: compliant, final_time| CALC_SCORE{fastest_time<br/>provided?}
+                
+                CALC_SCORE --> |Yes| SCORE[calculate_acceleration_score<br/>team_time: final_state.time<br/>fastest_time: float<br/>max_points: 75.0]
+                CALC_SCORE --> |No| NO_SCORE[score = None]
+                
+                SCORE --> |Returns: score| CREATE_RESULT[Create SimulationResult<br/>final_state, compliant flags, max_power,<br/>final_time, final_distance, final_velocity, score]
+                NO_SCORE --> CREATE_RESULT
+                
+                CREATE_RESULT --> END([End: Return SimulationResult])
+
+                style START fill:#90EE90
+                style END fill:#90EE90
+                style ERROR fill:#FFB6C6
+                style SOLVE fill:#87CEEB
+                style INIT_MODELS fill:#FFE4B5
+        </div>
+    </div>
+    
+    <div class="diagram-container">
+        <h3>2. Solver Loop Detail</h3>
+        <div class="mermaid">
+            flowchart TD
+                SOLVE_START([DynamicsSolver.solve Starts]) --> INIT_STATE[Initialize SimulationState<br/>position=0, velocity=0, all zeros<br/>time=0]
+                
+                INIT_STATE --> STORE_INITIAL[Store initial state<br/>in state_history]
+                
+                STORE_INITIAL --> LOOP_CHECK{position < 75m<br/>AND<br/>time < max_time?}
+                
+                LOOP_CHECK --> |Yes - Continue| CALC_DERIV[_calculate_derivatives<br/>state: SimulationState]
+                LOOP_CHECK --> |No - Exit loop| SOLVE_END([Return final_state])
+                
+                CALC_DERIV --> |Returns: dstate_dt| RK4_STEP[_rk4_step<br/>state: SimulationState<br/>dstate_dt: SimulationState<br/>dt: float]
+                
+                RK4_STEP --> |Returns: new_state| UPDATE_STATE[Update state<br/>state = new_state]
+                
+                UPDATE_STATE --> STORE_STATE[Store state<br/>in state_history]
+                
+                STORE_STATE --> LOOP_CHECK
+                
+                style SOLVE_START fill:#90EE90
+                style SOLVE_END fill:#90EE90
+                style LOOP_CHECK fill:#FFE4B5
+                style CALC_DERIV fill:#87CEEB
+                style RK4_STEP fill:#87CEEB
+        </div>
+    </div>
+    
+    <div class="diagram-container">
+        <h3>3. Complete Timestep: _calculate_derivatives() - Full Detail</h3>
+        <div class="mermaid">
+            flowchart TD
+                DERIV_START([_calculate_derivatives<br/>Input: state]) --> AERO[AerodynamicsModel.calculate_forces<br/>velocity: state.velocity]
+                
+                AERO --> |Returns: drag_force, downforce_front, downforce_rear| MASS_GUESS[MassPropertiesModel.calculate_normal_forces<br/>acceleration: state.acceleration<br/>front_downforce, rear_downforce]
+                
+                MASS_GUESS --> |Returns: normal_front, normal_rear| WHEEL_SPEED[Calculate wheel speeds<br/>front: velocity / tire_radius<br/>rear: state.wheel_angular_velocity_rear]
+                
+                WHEEL_SPEED --> SLIP_FRONT[TireModel.calculate_slip_ratio<br/>wheel_speed_front, vehicle_velocity]
+                WHEEL_SPEED --> SLIP_REAR[TireModel.calculate_slip_ratio<br/>wheel_speed_rear, vehicle_velocity]
+                
+                SLIP_FRONT --> |Returns: slip_front| TIRE_FRONT[TireModel.calculate_longitudinal_force<br/>normal_front, slip_front, velocity]
+                SLIP_REAR --> |Returns: slip_rear| TIRE_REAR[TireModel.calculate_longitudinal_force<br/>normal_rear, slip_rear, velocity]
+                
+                TIRE_FRONT --> |Returns: tire_force_front, rr_front| TIRE_FORCES[Collect Tire Forces]
+                TIRE_REAR --> |Returns: tire_force_rear, rr_rear| TIRE_FORCES
+                
+                TIRE_FORCES --> MOTOR_SPEED[PowertrainModel.calculate_motor_speed<br/>wheel_speed_rear]
+                
+                MOTOR_SPEED --> |Returns: motor_speed| REQ_TORQUE[_calculate_requested_torque<br/>state, normal_rear]
+                
+                REQ_TORQUE --> |Returns: requested_torque| POWERTRAIN[PowertrainModel.calculate_torque<br/>requested_torque, motor_speed, vehicle_velocity<br/>Applies: current limit, speed limit, 80kW power limit]
+                
+                POWERTRAIN --> |Returns: wheel_torque, motor_current, power_consumed| TORQUE_TO_FORCE[Convert torque to force<br/>drive_force = wheel_torque / tire_radius]
+                
+                TORQUE_TO_FORCE --> |drive_force_rear| NET_FORCE[Calculate Net Force<br/>net_force = drive_force + drag_force + rolling_resistance<br/>Note: drag and rolling_resistance are negative]
+                
+                NET_FORCE --> |net_force| ACCELERATION[Calculate Acceleration<br/>acceleration = net_force / mass]
+                
+                ACCELERATION --> |acceleration: float| MASS_ACTUAL[MassPropertiesModel.calculate_normal_forces<br/>acceleration: actual_acceleration<br/>front_downforce, rear_downforce<br/>Recalculate with actual acceleration]
+                
+                MASS_ACTUAL --> |Returns: normal_front, normal_rear| WHEEL_ALPHA[Calculate Wheel Angular Acceleration<br/>wheel_alpha_rear = torque - tire_force / inertia]
+                
+                WHEEL_ALPHA --> |wheel_alpha_rear| CREATE_DSTATE[Create Derivative State<br/>dstate.velocity = acceleration<br/>dstate.position = velocity<br/>dstate.wheel_angular_velocity_rear = wheel_alpha_rear<br/>All forces, currents, powers stored]
+                
+                CREATE_DSTATE --> DERIV_END([Return: dstate_dt<br/>SimulationState with derivatives])
+                
+                style DERIV_START fill:#90EE90
+                style DERIV_END fill:#90EE90
+                style AERO fill:#FFE4B5
+                style TIRE_FRONT fill:#FFE4B5
+                style TIRE_REAR fill:#FFE4B5
+                style POWERTRAIN fill:#FFE4B5
+                style MASS_ACTUAL fill:#FFE4B5
+                style ACCELERATION fill:#FF6B6B
+        </div>
+    </div>
+    
+    <div class="diagram-container">
+        <h3>4. Vehicle Models Overview</h3>
+        <div class="mermaid">
+            graph TB
+                subgraph VEHICLE["🚗 VEHICLE MODELS"]
+                    MASS[MassPropertiesModel<br/>• calculate_static_load_distribution<br/>• calculate_load_transfer<br/>• calculate_normal_forces]
+                    TIRE[TireModel<br/>• calculate_slip_ratio<br/>• calculate_longitudinal_force]
+                    PT[PowertrainModel<br/>• calculate_motor_speed<br/>• calculate_torque<br/>• Applies 80kW limit]
+                    AERO[AerodynamicsModel<br/>• calculate_forces<br/>• drag, downforce]
+                    SUSP[SuspensionModel<br/>• calculate_anti_squat_effect]
+                    CHASSIS[ChassisGeometry<br/>• calculate_wheel_positions<br/>• calculate_cg_location]
+                    CTRL[ControlStrategy<br/>• calculate_requested_torque<br/>• Launch/Traction control]
+                end
+                
+                style VEHICLE fill:#E8F5E9
+                style MASS fill:#FFE4B5
+                style TIRE fill:#FFE4B5
+                style PT fill:#FFE4B5
+                style AERO fill:#FFE4B5
+                style SUSP fill:#FFE4B5
+                style CHASSIS fill:#FFE4B5
+                style CTRL fill:#FFE4B5
+        </div>
+    </div>
+    
+    <div class="diagram-container">
+        <h3>5. Complete System Overview</h3>
+        <div class="mermaid">
+            flowchart TB
+                subgraph CONFIG["🔧 CONFIG LAYER"]
+                    JSON[JSON/YAML File] --> LOAD[load_config<br/>Returns: VehicleConfig]
+                    LOAD --> VALID[VehicleConfig.validate<br/>Returns: errors List]
+                end
+                
+                subgraph SIM["🎯 SIMULATION LAYER"]
+                    INIT[AccelerationSimulation.__init__<br/>Creates DynamicsSolver]
+                    RUN[AccelerationSimulation.run<br/>Orchestrates entire simulation]
+                end
+                
+                subgraph MODELS["🚗 VEHICLE MODELS"]
+                    MASS[MassPropertiesModel]
+                    TIRE[TireModel]
+                    PT[PowertrainModel]
+                    AERO[AerodynamicsModel]
+                    SUSP[SuspensionModel]
+                    CHASSIS[ChassisGeometry]
+                    CTRL[ControlStrategy]
+                end
+                
+                subgraph DYNAMICS["⚙️ DYNAMICS LAYER"]
+                    SOLVER[DynamicsSolver<br/>Main integration loop]
+                    DERIV[_calculate_derivatives<br/>Calls all vehicle models]
+                    RK4[_rk4_step<br/>RK4 integration]
+                    STATE[SimulationState<br/>Contains all variables]
+                end
+                
+                subgraph RULES["📋 RULES LAYER"]
+                    POWER[check_power_limit]
+                    TIME[check_time_limit]
+                    SCORE[calculate_acceleration_score]
+                end
+                
+                CONFIG --> SIM
+                SIM --> DYNAMICS
+                DYNAMICS --> MODELS
+                MODELS --> DYNAMICS
+                DYNAMICS --> SIM
+                SIM --> RULES
+                RULES --> RESULT([SimulationResult])
+                
+                style CONFIG fill:#E1F5FF
+                style SIM fill:#FFF4E1
+                style MODELS fill:#E8F5E9
+                style DYNAMICS fill:#F3E5F5
+                style RULES fill:#FFE1F5
+                style RESULT fill:#90EE90
+        </div>
+    </div>
+    
+    <div class="diagram-container">
+        <h3>6. Data Structures</h3>
+        <div class="text-diagram">
+SimulationState (Main State Container):
+  - position: float (m)
+  - velocity: float (m/s)
+  - acceleration: float (m/s²)
+  - wheel_angular_velocity_front/rear: float (rad/s)
+  - motor_speed/current/torque: float
+  - drive_force: float (N)
+  - drag_force: float (N)
+  - rolling_resistance: float (N)
+  - normal_force_front/rear: float (N)
+  - tire_force_front/rear: float (N)
+  - power_consumed: float (W)
+  - time: float (s)
+
+SimulationResult (Final Output):
+  - final_state: SimulationState
+  - compliant: bool
+  - power_compliant: bool
+  - time_compliant: bool
+  - max_power_used: float (W)
+  - final_time: float (s)
+  - final_distance: float (m)
+  - final_velocity: float (m/s)
+  - score: Optional[float]
+  - fastest_time: Optional[float]
+        </div>
+    </div>
+    
+    <hr>
+    <p><strong>Note:</strong> This HTML file uses Mermaid.js to render diagrams. Open it in a web browser to view the interactive diagrams. The diagrams will automatically render if JavaScript is enabled.</p>
+</body>
+</html>
+

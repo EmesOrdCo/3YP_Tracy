@@ -1,0 +1,48 @@
+flowchart TB
+    subgraph CONFIG["🔧 CONFIG LAYER"]
+        JSON[JSON/YAML File] --> LOAD[load_config<br/>Returns: VehicleConfig]
+        LOAD --> VALID[VehicleConfig.validate<br/>Returns: errors List]
+    end
+    
+    subgraph SIM["🎯 SIMULATION LAYER (Orchestrator)"]
+        INIT[AccelerationSimulation.__init__<br/>Creates DynamicsSolver]
+        RUN[AccelerationSimulation.run<br/>Orchestrates entire simulation]
+    end
+    
+    subgraph MODELS["🚗 VEHICLE MODELS LAYER"]
+        MASS[MassPropertiesModel]
+        TIRE[TireModel]
+        PT[PowertrainModel]
+        AERO[AerodynamicsModel]
+        SUSP[SuspensionModel]
+        CHASSIS[ChassisGeometry]
+        CTRL[ControlStrategy]
+    end
+    
+    subgraph DYNAMICS["⚙️ DYNAMICS LAYER"]
+        SOLVER[DynamicsSolver<br/>Main integration loop]
+        DERIV[_calculate_derivatives<br/>Calls all vehicle models]
+        RK4[_rk4_step<br/>RK4 integration]
+        STATE[SimulationState<br/>Contains all variables]
+    end
+    
+    subgraph RULES["📋 RULES LAYER"]
+        POWER[check_power_limit]
+        TIME[check_time_limit]
+        SCORE[calculate_acceleration_score]
+    end
+    
+    CONFIG --> SIM
+    SIM --> DYNAMICS
+    DYNAMICS --> MODELS
+    MODELS --> DYNAMICS
+    DYNAMICS --> SIM
+    SIM --> RULES
+    RULES --> RESULT([SimulationResult])
+    
+    style CONFIG fill:#E1F5FF
+    style SIM fill:#FFF4E1
+    style MODELS fill:#E8F5E9
+    style DYNAMICS fill:#F3E5F5
+    style RULES fill:#FFE1F5
+    style RESULT fill:#90EE90

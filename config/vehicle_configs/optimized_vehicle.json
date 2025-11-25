@@ -1,0 +1,66 @@
+{
+  "mass": {
+    "total_mass": 200.0,
+    "cg_x": 1.299901,
+    "cg_z": 0.22,
+    "wheelbase": 1.6,
+    "front_track": 1.2,
+    "rear_track": 1.2,
+    "i_yaw": 100.0,
+    "i_pitch": 150.0,
+    "unsprung_mass_front": 12.0,
+    "unsprung_mass_rear": 12.0
+  },
+  "tires": {
+    "radius_loaded": 0.247409,
+    "mass": 3.0,
+    "mu_max": 1.7,
+    "mu_slip_optimal": 0.139754,
+    "rolling_resistance_coeff": 0.01
+  },
+  "powertrain": {
+    "motor_torque_constant": 0.65,
+    "motor_max_current": 250.0,
+    "motor_max_speed": 1000.0,
+    "motor_efficiency": 0.96,
+    "battery_voltage_nominal": 350.0,
+    "battery_internal_resistance": 0.008,
+    "battery_max_current": 350.0,
+    "gear_ratio": 10.178587,
+    "drivetrain_efficiency": 0.97,
+    "differential_ratio": 1.0,
+    "max_power_accumulator_outlet": 80000.0,
+    "wheel_inertia": 0.06
+  },
+  "aerodynamics": {
+    "cda": 0.65,
+    "cl_front": 1.5,
+    "cl_rear": 1.8,
+    "air_density": 1.225
+  },
+  "suspension": {
+    "anti_squat_ratio": 0.182207,
+    "ride_height_front": 0.08,
+    "ride_height_rear": 0.08,
+    "wheel_rate_front": 30000.0,
+    "wheel_rate_rear": 30000.0
+  },
+  "control": {
+    "launch_torque_limit": 893.895756,
+    "target_slip_ratio": 0.138826,
+    "torque_ramp_rate": 500.0,
+    "traction_control_enabled": true
+  },
+  "environment": {
+    "air_density": 1.225,
+    "ambient_temperature": 20.0,
+    "track_grade": 0.0,
+    "wind_speed": 0.0,
+    "surface_mu_scaling": 1.0
+  },
+  "simulation": {
+    "dt": 0.001,
+    "max_time": 30.0,
+    "target_distance": 75.0
+  }
+}
