@@ -1,0 +1,10 @@
+flowchart TD
+    REQ[Requested Wheel Torque<br/>from control strategy] --> CONV1[Convert to Motor Torque<br/>Tm = Tw / Ng / η]
+    CONV1 --> CURR[Calculate Motor Current<br/>I = Tm / Kt]
+    CURR --> PWR[Calculate Electrical Power<br/>P = V × I]
+    PWR --> CHECK{P > 80 kW?}
+    CHECK --> |Yes| LIMIT[Limit Current<br/>Imax = 80000 / V]
+    CHECK --> |No| PASS[Use Calculated Current]
+    LIMIT --> RECALC[Recalculate Torque<br/>Tm = Imax × Kt]
+    PASS --> OUT[Output Wheel Torque<br/>Tw = Tm × Ng × η]
+    RECALC --> OUT

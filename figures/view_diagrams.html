@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logbook Diagrams</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        h1 { color: #333; }
+        h2 { color: #666; margin-top: 40px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+        .mermaid { background: #fff; padding: 20px; border: 1px solid #ddd; margin: 20px 0; }
+        .instructions { background: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 30px; }
+    </style>
+</head>
+<body>
+    <h1>Formula Student Acceleration Simulation — Logbook Diagrams</h1>
+    
+    <div class="instructions">
+        <strong>To export as PNG:</strong> Right-click on each diagram and select "Save image as..." 
+        or use your browser's screenshot tool.
+    </div>
+    
+    <h2>1. System Architecture</h2>
+    <div class="mermaid">
+flowchart TD
+    subgraph STATE[Current State]
+        POS[Position x]
+        VEL[Velocity v]
+        OMEGA[Wheel Angular Velocity ω]
+    end
+
+    subgraph MODELS[Physical Models]
+        AERO[Aerodynamics<br/>Drag and Downforce]
+        MASS[Mass Properties<br/>Load Transfer]
+        TYRE[Tyre Model<br/>Slip and Traction]
+        PWR[Powertrain<br/>Torque and Power]
+    end
+
+    subgraph OUTPUTS[Calculated Values]
+        FDRAG[Drag Force]
+        FZ[Normal Forces]
+        FX[Traction Force]
+        TORQUE[Wheel Torque]
+    end
+
+    VEL --> AERO
+    AERO --> FDRAG
+    AERO --> |downforce| MASS
+    
+    MASS --> FZ
+    FZ --> TYRE
+    
+    VEL --> TYRE
+    OMEGA --> TYRE
+    TYRE --> FX
+    
+    OMEGA --> PWR
+    PWR --> TORQUE
+    
+    FDRAG --> SUM[Force Summation]
+    FX --> SUM
+    TORQUE --> SUM
+    
+    SUM --> ACCEL[Acceleration Calculation]
+    ACCEL --> RK4[RK4 Integration]
+    RK4 --> NEWSTATE[Updated State]
+    </div>
+    
+    <h2>2. Tyre Model</h2>
+    <div class="mermaid">
+flowchart TD
+    subgraph INPUTS[Inputs]
+        FZ[Normal Force Fz<br/>from load transfer calculation]
+        OMEGA[Wheel Angular Velocity ω<br/>from previous state]
+        V[Vehicle Velocity v<br/>from previous state]
+        R[Loaded Radius r<br/>from configuration]
+    end
+
+    subgraph SLIP_CALC[Slip Calculation]
+        VWHEEL[Wheel Peripheral Velocity<br/>Vw = ω × r]
+        SLIP[Slip Ratio<br/>κ = Vw - V / V]
+    end
+
+    subgraph FRICTION[Friction Model]
+        MU_CALC[Friction Coefficient<br/>μ = f of κ]
+        MU_MAX[Peak Friction μmax]
+        K_OPT[Optimal Slip κopt]
+    end
+
+    subgraph FORCES[Force Outputs]
+        FX[Longitudinal Force<br/>Fx = μ × Fz]
+        FRR[Rolling Resistance<br/>Frr = Crr × Fz]
+    end
+
+    OMEGA --> VWHEEL
+    R --> VWHEEL
+    VWHEEL --> SLIP
+    V --> SLIP
+    
+    SLIP --> MU_CALC
+    MU_MAX --> MU_CALC
+    K_OPT --> MU_CALC
+    
+    MU_CALC --> FX
+    FZ --> FX
+    FZ --> FRR
+    </div>
+    
+    <h2>3. Aerodynamic Forces at Different Speeds</h2>
+    <div class="mermaid">
+flowchart LR
+    subgraph LOW[Low Speed: 5 m/s]
+        DRAG1[Drag: 12 N]
+        DOWN1[Downforce: 15 N]
+    end
+    
+    subgraph MED[Medium Speed: 15 m/s]
+        DRAG2[Drag: 110 N]
+        DOWN2[Downforce: 138 N]
+    end
+    
+    subgraph HIGH[High Speed: 25 m/s]
+        DRAG3[Drag: 306 N]
+        DOWN3[Downforce: 383 N]
+    end
+    
+    LOW --> MED --> HIGH
+    </div>
+    
+    <h2>4. Powertrain Power Limiting Flow</h2>
+    <div class="mermaid">
+flowchart TD
+    REQ[Requested Wheel Torque<br/>from control strategy] --> CONV1[Convert to Motor Torque<br/>Tm = Tw / Ng / η]
+    CONV1 --> CURR[Calculate Motor Current<br/>I = Tm / Kt]
+    CURR --> PWR[Calculate Electrical Power<br/>P = V × I]
+    PWR --> CHECK{P > 80 kW?}
+    CHECK --> |Yes| LIMIT[Limit Current<br/>Imax = 80000 / V]
+    CHECK --> |No| PASS[Use Calculated Current]
+    LIMIT --> RECALC[Recalculate Torque<br/>Tm = Imax × Kt]
+    PASS --> OUT[Output Wheel Torque<br/>Tw = Tm × Ng × η]
+    RECALC --> OUT
+    </div>
+    
+    <h2>5. Simulation Results Summary</h2>
+    <div class="mermaid">
+flowchart LR
+    subgraph RESULTS[Simulation Results]
+        TIME[Time: 4.31 s]
+        VMAX[Final Velocity: 28.4 m/s]
+        PMAX[Peak Power: 80.0 kW]
+        AMAX[Peak Acceleration: 12.1 m/s²]
+    end
+    
+    subgraph COMPLIANCE[Rule Compliance]
+        PWR_OK[Power Limit: PASS<br/>80 kW ≤ 80 kW]
+        TIME_OK[Time Limit: PASS<br/>4.31 s < 25 s]
+    end
+    
+    RESULTS --> COMPLIANCE
+    </div>
+    
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</body>
+</html>

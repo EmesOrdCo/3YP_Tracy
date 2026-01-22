@@ -1,0 +1,23 @@
+flowchart TD
+    SOLVE_START([DynamicsSolver.solve Starts]) --> INIT_STATE["Initialize SimulationState<br/>position=0, velocity=0, all zeros<br/>time=0"]
+    
+    INIT_STATE --> STORE_INITIAL["Store initial state<br/>in state_history"]
+    
+    STORE_INITIAL --> LOOP_CHECK{"position < 75m<br/>AND<br/>time < max_time?"}
+    
+    LOOP_CHECK --> |"Yes - Continue"| CALC_DERIV["_calculate_derivatives<br/>state: SimulationState"]
+    LOOP_CHECK --> |"No - Exit loop"| SOLVE_END([Return final_state])
+    
+    CALC_DERIV --> |"Returns: dstate_dt"| RK4_STEP["_rk4_step<br/>state: SimulationState<br/>dstate_dt: SimulationState<br/>dt: float"]
+    
+    RK4_STEP --> |"Returns: new_state"| UPDATE_STATE["Update state<br/>state = new_state"]
+    
+    UPDATE_STATE --> STORE_STATE["Store state<br/>in state_history"]
+    
+    STORE_STATE --> LOOP_CHECK
+    
+    style SOLVE_START fill:#90EE90
+    style SOLVE_END fill:#90EE90
+    style LOOP_CHECK fill:#FFE4B5
+    style CALC_DERIV fill:#87CEEB
+    style RK4_STEP fill:#87CEEB

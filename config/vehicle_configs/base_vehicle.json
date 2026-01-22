@@ -1,6 +1,6 @@
 {
   "mass": {
-    "total_mass": 250.0,
+    "total_mass": 200.0,
     "cg_x": 1.2,
     "cg_z": 0.3,
     "wheelbase": 1.6,
@@ -64,5 +64,6 @@
     "target_distance": 75.0
   }
 }
+
 
 

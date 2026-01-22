@@ -1,382 +1,446 @@
-# PowerPoint Presentation Generation Prompt
+# Presentation Creation Prompt for AI
 
-## Context
-You are creating a technical presentation about a Formula Student vehicle acceleration simulation system developed as part of a 3rd Year Project (3YP). The system is a physics-based simulation tool for predicting Formula Student vehicle performance in the 0-75m acceleration event.
+## Context: What This Project Is
 
-## Presentation Structure
+This is a **Formula Student Acceleration Simulation System**. Formula Student is an international engineering competition where university students design, build, and race formula-style race cars. This specific project is a computer simulation that predicts how fast a Formula Student vehicle will accelerate over a 75-meter straight track.
 
-### Slide 1: Title Slide
-- **Title**: "Formula Student Acceleration Simulation System"
-- **Subtitle**: "Physics-Based Performance Prediction for 0-75m Acceleration Event"
-- **Author**: [Your Name]
-- **Institution/Project**: 3rd Year Project
-- **Date**: [Current Date]
+The simulation is a physics-based computer program written in Python that:
+- Takes vehicle design parameters as input (mass, tire properties, motor specs, aerodynamics, etc.)
+- Simulates the physics of the vehicle accelerating from 0 to 75 meters
+- Checks if the vehicle complies with Formula Student competition rules
+- Calculates the competition score based on performance
 
-### Slide 2: Problem Statement & Motivation
-**Content to include:**
-- Formula Student competition requires teams to optimize vehicle design for multiple events
-- Acceleration event: 0-75m sprint, critical for overall score (75 points maximum)
-- Need for predictive simulation tool to:
-  - Evaluate design parameters before physical testing
-  - Optimize powertrain, tire selection, and vehicle setup
-  - Ensure compliance with Formula Student rules (80kW power limit, 25s time limit)
-  - Predict competition scores
-- Reduces costly physical testing iterations
-- Enables rapid design space exploration
+The user will provide 4 diagram images that show how the simulation system works internally. Your job is to create a professional presentation explaining this system.
 
-### Slide 3: System Overview
-**Content to include:**
-- **Purpose**: Physics-based simulation system for predicting Formula Student vehicle acceleration performance
-- **Key Capabilities**:
-  - Simulates 0-75m acceleration run
-  - Models all major vehicle subsystems (tires, powertrain, aerodynamics, mass properties, suspension)
-  - Enforces Formula Student rules compliance (EV 2.2: 80kW power limit, D 5.3: time limits and scoring)
-  - Calculates competition scores
-  - Parameterized design (all parameters in JSON/YAML configuration files)
-- **Technology Stack**: Python, NumPy, SciPy, modular architecture
+## Task
 
-### Slide 4: Architecture Overview
-**Visual**: Show layered architecture diagram
-**Content to include:**
-- **Modular Design Philosophy**: Each subsystem is a separate, interchangeable module
-- **Architecture Layers**:
-  1. **Configuration Layer**: JSON/YAML parameter files → VehicleConfig objects
-  2. **Vehicle Model Layer**: Physics models for each subsystem
-  3. **Dynamics Solver Layer**: RK4 numerical integration
-  4. **Rules Compliance Layer**: Formula Student rules checking
-  5. **Results Layer**: Simulation results and scoring
-- **Key Design Principles**:
-  - Modularity: Easy to swap models (e.g., simple tire model → Pacejka)
-  - Parameterization: No hardcoded values, all in config files
-  - Extensibility: Easy to add new subsystems or rules
-  - Validation: Built-in configuration validation
+Create a professional 7-slide presentation about this Formula Student Acceleration Simulation system. The user will provide 4 diagram images that you should include on slides 3, 4, 5, and 6. Make the presentation visually appealing, technically accurate, and suitable for an engineering audience.
 
-### Slide 5: Vehicle Model Components
-**Visual**: Diagram showing vehicle subsystems
-**Content to include:**
-- **Mass Properties Model**:
-  - Total mass, CG location (x, z), inertia
-  - Static load distribution
-  - Longitudinal load transfer during acceleration
-  - Normal force calculation (front/rear axles)
-- **Tire Model**:
-  - Simplified friction model (linear increase to optimal slip, then decrease)
-  - Slip ratio calculation
-  - Longitudinal force calculation: Fx = μ(λ) × Fz
-  - Rolling resistance
-  - Future: Pacejka model support (when tire data available)
-- **Powertrain Model**:
-  - Motor torque calculation (torque constant, current limits)
-  - Battery voltage and current limits
-  - Gear ratio and drivetrain efficiency
-  - **Power limit enforcement (80kW at accumulator outlet - EV 2.2)**
-  - Motor speed limits
-- **Aerodynamics Model**:
-  - Drag force: F_drag = -CdA × 0.5 × ρ × v²
-  - Downforce (front/rear): F_downforce = -CL × 0.5 × ρ × v²
-  - Air density effects
-- **Suspension Model**:
-  - Anti-squat effects
-  - Load transfer geometry
-  - Ride height parameters
+## Slide-by-Slide Instructions
 
-### Slide 6: Dynamics Solver
-**Visual**: Flowchart of integration loop
-**Content to include:**
-- **Integration Method**: 4th Order Runge-Kutta (RK4) for accuracy
-- **State Vector**: 
-  - Position, velocity, acceleration
-  - Wheel angular velocities (front/rear)
-  - Motor state (speed, current, torque)
-  - Forces (drive, drag, rolling resistance, tire forces)
-  - Normal forces, power consumption
-- **Simulation Loop** (until 75m reached):
-  1. Calculate aerodynamic forces (drag, downforce)
-  2. Calculate normal forces (static + load transfer + downforce)
-  3. Calculate slip ratios
-  4. Calculate tire forces
-  5. Calculate motor speed from wheel speed
-  6. Calculate requested torque (control strategy)
-  7. Calculate available torque (with power limit enforcement)
-  8. Calculate net force and acceleration
-  9. Integrate state using RK4
-  10. Check termination (distance ≥ 75m or time ≥ max_time)
-- **Time Step**: 0.001s (1ms) for accuracy
+### SLIDE 1: Title/Introduction Slide
 
-### Slide 7: Formula Student Rules Integration
-**Content to include:**
-- **EV 2.2 - Power Limit**:
-  - Maximum power at accumulator outlet: 80 kW
-  - Enforced during simulation by scaling torque when limit exceeded
-  - Compliance checking: tracks maximum power used, violation time
-  - Critical for competition legality
-- **D 5.3.1 - Time Limit**:
-  - Runs exceeding 25 seconds are disqualified
-  - Simulation checks final time against limit
-  - Non-compliant runs flagged in results
-- **D 5.3.2 - Scoring Formula**:
-  - Score = 0.95 × Pmax × ((Tmax / Tteam - 1) / 0.5) + 0.05 × Pmax
-  - Where: Pmax = 75 points, Tmax = 1.5 × fastest_time, Tteam = team time
-  - Automatically calculated if fastest time provided
-  - Enables performance prediction and optimization
+**Layout**: Center-aligned title slide
 
-### Slide 8: Configuration System
-**Visual**: Example JSON configuration snippet
-**Content to include:**
-- **Parameterization**: All vehicle parameters externalized in JSON/YAML files
-- **Configuration Categories**:
-  - Mass properties (mass, CG, wheelbase, track widths, inertia)
-  - Tire properties (radius, friction coefficients, rolling resistance)
-  - Powertrain (motor specs, battery, gear ratio, power limit)
-  - Aerodynamics (CdA, downforce coefficients)
-  - Suspension (anti-squat, ride height, wheel rates)
-  - Control (launch torque limit, target slip, traction control)
-  - Environment (air density, temperature, track grade)
-  - Simulation parameters (time step, max time, target distance)
-- **Benefits**:
-  - Easy to test different vehicle configurations
-  - No code changes needed for parameter sweeps
-  - Human-readable format
-  - Validation on load (checks power limits, physical constraints)
+**Exact Content to Include:**
 
-### Slide 9: Implementation Details
-**Content to include:**
-- **Language**: Python 3.x
-- **Key Libraries**:
-  - NumPy: Numerical computations, array operations
-  - SciPy: Advanced numerical methods (if needed)
-  - PyYAML: Configuration file parsing
-  - JSON: Configuration file support
-- **Code Structure**:
-  - Modular package structure (config/, vehicle/, dynamics/, rules/, simulation/)
-  - Object-oriented design with clear separation of concerns
-  - Dataclasses for configuration and state management
-  - Type hints for code clarity
-- **State Management**:
-  - `SimulationState` dataclass contains all state variables
-  - State history tracked for analysis
-  - Easy to log and visualize results
-- **Error Handling**: Configuration validation, file loading error handling
+**Main Title (large, bold, centered):**
+"Formula Student Acceleration Simulation System"
 
-### Slide 10: Example Usage & Results
-**Visual**: Code snippet and output example
-**Content to include:**
-- **Simple Usage**:
-  ```python
-  from config.config_loader import load_config
-  from simulation.acceleration_sim import AccelerationSimulation
-  
-  config = load_config("config/vehicle_configs/base_vehicle.json")
-  sim = AccelerationSimulation(config)
-  result = sim.run(fastest_time=4.5)
-  
-  print(f"Time: {result.final_time:.3f} s")
-  print(f"Score: {result.score:.2f} points")
-  print(f"Compliant: {result.compliant}")
-  ```
-- **Example Results**:
-  - Final time: ~4.5-5.5 seconds (typical for Formula Student)
-  - Power compliance: ✓ (max power ≤ 80kW)
-  - Time compliance: ✓ (time ≤ 25s)
-  - Score calculation based on fastest time
-- **Output Information**:
-  - Final time, distance, velocity
-  - Maximum power used
-  - Rules compliance status
-  - Competition score (if fastest time provided)
-  - State history available for detailed analysis
+**Subtitle (medium size, centered, below title):**
+"Physics-Based Performance Prediction and Optimization"
 
-### Slide 11: Key Features & Capabilities
-**Content to include:**
-- **Physics-Based Modeling**:
-  - Realistic tire force-slip relationship
-  - Powertrain limitations (current, voltage, power)
-  - Aerodynamic drag and downforce
-  - Load transfer during acceleration
-  - Rolling resistance
-- **Rules Compliance**:
-  - Automatic power limit enforcement
-  - Time limit checking
-  - Score calculation
-- **Flexibility**:
-  - Easy parameter modification via config files
-  - Modular architecture allows model swapping
-  - Extensible for new subsystems or rules
-- **Validation**:
-  - Configuration validation on load
-  - Physical constraint checking
-  - Rules compliance verification
+**Optional elements (smaller, bottom of slide):**
+- Date (current date or "2025")
+- Author/Team name (if provided by user)
 
-### Slide 12: Technical Highlights
-**Content to include:**
-- **RK4 Integration**:
-  - 4th order Runge-Kutta for high accuracy
-  - Stable for stiff systems
-  - Fixed time step (can be made adaptive)
-- **Power Limit Enforcement**:
-  - Real-time torque scaling when 80kW limit approached
-  - Accounts for motor efficiency and drivetrain losses
-  - Accurate representation of Formula Student constraints
-- **Load Transfer Modeling**:
-  - Longitudinal load transfer: ΔFz = (m × a × h_cg) / wheelbase
-  - Accounts for CG height and position
-  - Affects tire forces and acceleration
-- **Slip Ratio Calculation**:
-  - Accurate slip ratio: λ = (ω × r - v) / v
-  - Handles near-zero velocity cases
-  - Used for tire force calculation
-
-### Slide 13: Current Limitations & Future Work
-**Content to include:**
-- **Current Limitations**:
-  - Simplified tire model (linear friction, not Pacejka)
-  - Constant motor efficiency (no efficiency maps)
-  - No thermal effects (battery, motor, tires)
-  - Fixed time step (not adaptive)
-  - Simplified control strategy
-  - No visualization tools yet
-- **Planned Improvements**:
-  - **Pacejka Tire Model**: When tire test data available
-  - **Motor Efficiency Maps**: More accurate powertrain modeling
-  - **Advanced Control**: Launch control, traction control algorithms
-  - **Sensitivity Analysis**: Parameter sweep tools
-  - **Visualization**: Velocity vs time, force plots, power curves
-  - **Validation**: Compare with test data, calibrate models
-  - **Optimization**: Design parameter optimization wrapper
-  - **Batch Processing**: Run multiple simulations in parallel
-
-### Slide 14: Validation & Testing Strategy
-**Content to include:**
-- **Unit Testing**:
-  - Test each model independently
-  - Known input/output validation
-  - Edge case testing (zero velocity, max power, etc.)
-- **Integration Testing**:
-  - Full simulation with known configuration
-  - Comparison with analytical solutions (where possible)
-  - Rules compliance verification
-- **Validation** (Future):
-  - Compare simulation results with physical test data
-  - Calibrate tire model with tire test data
-  - Validate against previous season competition data
-  - Sensitivity analysis to identify critical parameters
-
-### Slide 15: Applications & Use Cases
-**Content to include:**
-- **Design Optimization**:
-  - Evaluate different powertrain configurations
-  - Test tire selection impact
-  - Optimize gear ratios
-  - Evaluate aerodynamic changes
-- **Rules Compliance**:
-  - Verify power limit compliance before testing
-  - Predict time performance
-  - Estimate competition scores
-- **Parameter Studies**:
-  - Sensitivity analysis (which parameters matter most?)
-  - Design space exploration
-  - Trade-off analysis (e.g., mass vs. power)
-- **Educational Tool**:
-  - Understand vehicle dynamics
-  - Learn Formula Student rules
-  - Physics-based learning
-
-### Slide 16: Project Impact & Benefits
-**Content to include:**
-- **For Formula Student Team**:
-  - Reduces physical testing iterations (cost and time savings)
-  - Enables rapid design exploration
-  - Predicts competition performance
-  - Ensures rules compliance
-- **Technical Skills Developed**:
-  - Vehicle dynamics modeling
-  - Numerical integration methods
-  - Software architecture and design
-  - Python programming
-  - Formula Student rules knowledge
-- **Extensibility**:
-  - Foundation for future enhancements
-  - Can be extended to other events (skidpad, autocross, endurance)
-  - Modular design allows easy maintenance
-
-### Slide 17: Code Quality & Architecture
-**Content to include:**
-- **Modular Design**:
-  - Clear separation of concerns
-  - Each subsystem is independent module
-  - Easy to test and maintain
-- **Configuration-Driven**:
-  - No hardcoded values
-  - Easy to modify without code changes
-  - Human-readable parameter files
-- **Type Safety**:
-  - Type hints throughout codebase
-  - Dataclasses for structured data
-  - Clear interfaces between modules
-- **Documentation**:
-  - Comprehensive architecture documentation
-  - Code comments and docstrings
-  - Example usage files
-
-### Slide 18: Conclusion
-**Content to include:**
-- **Summary**:
-  - Successfully developed physics-based acceleration simulation
-  - Modular, extensible architecture
-  - Formula Student rules compliance built-in
-  - Configuration-driven design
-- **Key Achievements**:
-  - Complete vehicle dynamics model
-  - RK4 integration solver
-  - Rules compliance checking
-  - Scoring calculator
-- **Future Directions**:
-  - Model calibration with test data
-  - Advanced tire and powertrain models
-  - Visualization and analysis tools
-  - Design optimization capabilities
-- **Value**:
-  - Practical tool for Formula Student team
-  - Educational resource
-  - Foundation for future development
-
-### Slide 19: Questions & Discussion
-- **Title**: "Questions & Discussion"
-- **Content**: Thank you slide with contact information or Q&A prompt
-
-## Visual Guidelines
-- Use professional, clean design
-- Include diagrams for architecture and data flow
-- Use code snippets with syntax highlighting
-- Include example outputs/results
-- Use consistent color scheme
-- Formula Student branding/colors if appropriate
-- Technical diagrams should be clear and labeled
-
-## Technical Depth
-- Balance between high-level overview and technical details
-- Include enough detail to show understanding of physics and implementation
-- Use technical terminology appropriately
-- Explain complex concepts clearly
-- Show both "what" and "how"
-
-## Presentation Style
-- Professional academic/engineering presentation
-- Clear, concise bullet points
-- Visual aids where helpful
-- Code examples to show implementation
-- Results/output examples
-- Future work to show forward thinking
-
-## Additional Notes
-- Emphasize the practical application to Formula Student competition
-- Highlight the modular, extensible architecture as a key strength
-- Show understanding of vehicle dynamics and numerical methods
-- Demonstrate rules compliance integration
-- Balance current capabilities with future potential
+**Design Requirements:**
+- Clean, professional design
+- Use colors that suggest racing/engineering: consider dark backgrounds with bright accents, or light backgrounds with bold colors
+- Formula Student colors are often red, white, and black, but you can use blues, grays, or other professional color schemes
+- Ensure high contrast for readability
+- Use a modern, sans-serif font for the title (e.g., Arial, Helvetica, Calibri, or similar)
+- Make the title prominent (at least 44pt font)
+- Leave adequate white space
 
 ---
 
-**Instructions for AI Presentation Generator:**
-Use this detailed outline to create a professional PowerPoint presentation. Each slide should be well-designed with appropriate visuals, clear text, and professional formatting. Include diagrams where specified, code snippets with proper formatting, and ensure the presentation flows logically from problem statement through implementation to conclusions. The presentation should be suitable for an academic/engineering audience and demonstrate both technical competence and practical application.
+### SLIDE 2: Event Overview, Rules, and Objectives
 
+**Title (top of slide, large and bold):**
+"Formula Student Acceleration Event: Rules & Objectives"
+
+**Layout**: Divide the slide into clear sections. Use a 2-column or 3-section layout.
+
+**SECTION 1: Event Description**
+**Subheading**: "The Competition Event"
+
+**Bullet points (include exactly these):**
+- Formula Student Acceleration Event (Rule D 5)
+- 75-meter straight-line acceleration track
+- Single run format per attempt
+- Vehicle staged 0.30 meters behind starting line
+- Track width: minimum 3 meters
+- Cones placed along track at ~5 meter intervals
+
+**SECTION 2: Key Rules & Constraints**
+**Subheading**: "Competition Rules"
+
+**Power Limit (Rule EV 2.2):**
+- **Maximum 80 kW at accumulator outlet**
+- This is a hard limit - vehicles cannot exceed this power
+- The simulation checks this throughout the run
+
+**Time Limit (Rule D 5.3.1):**
+- **Runs exceeding 25 seconds are disqualified**
+- The simulation stops if this limit is reached
+
+**Scoring Formula (Rule D 5.3.2):**
+**Subheading**: "Manual Mode Scoring Formula"
+
+Display this formula clearly (use proper mathematical notation):
+
+```
+M_ACCELERATION_SCORE = 0.95 × Pmax × ((Tmax/Tteam - 1) / 0.5) + 0.05 × Pmax
+```
+
+**Where:**
+- Pmax = 75 points (maximum points for manual mode acceleration event)
+- Tmax = 1.5 × fastest time (1.5 times the fastest vehicle's time in competition)
+- Tteam = team's best time including penalties (capped at Tmax, cannot exceed Tmax)
+
+**Explanation**: Teams get more points for faster times. The formula ensures that teams within 50% of the fastest time can still score points, with the fastest team getting close to the maximum 75 points.
+
+**SECTION 3: Simulation Objectives**
+**Subheading**: "What This Simulation Does"
+
+**Bullet points (include exactly these):**
+- Predict vehicle acceleration performance from 0 to 75 meters
+- Optimize design parameters within rule constraints (80kW power limit, 25s time limit)
+- Validate powertrain power consumption against 80kW limit throughout the run
+- Calculate competition scores based on predicted performance time
+- Enable rapid design iteration and parameter sensitivity analysis
+- Help engineers understand which vehicle parameters most affect acceleration performance
+
+**Visual Elements (if space allows):**
+- Simple diagram showing a 75m straight line with start and finish
+- Text boxes highlighting key numbers: "80 kW", "25 s", "75 m"
+- Consider a small flowchart showing: Design Parameters → Simulation → Performance Prediction → Score Calculation
+
+**Design Notes:**
+- Use clear section dividers
+- Make the formula stand out (larger font, different color, or boxed)
+- Use consistent bullet point styling
+- Ensure all text is readable (minimum 18pt font for body text)
+
+---
+
+### SLIDE 3: Main System Flow (High Level)
+
+**Title (top of slide, large and bold):**
+"System Architecture: High-Level Flow"
+
+**Layout**: 
+- Title at top
+- Large diagram image in center (user will provide this)
+- Optional: Brief explanatory text below or beside the diagram
+
+**Diagram Image:**
+The user will provide an image showing a flowchart. This diagram shows the complete flow from configuration file to simulation result. The diagram includes these key stages (you don't need to list these, but understand what the diagram shows):
+1. Start: JSON/YAML configuration file input
+2. Load and parse configuration
+3. Create VehicleConfig object
+4. Validate configuration (check for errors)
+5. Initialize simulation
+6. Create dynamics solver
+7. Initialize vehicle models (tires, powertrain, aerodynamics, etc.)
+8. Run simulation loop
+9. Solve dynamics (integrate until vehicle reaches 75m)
+10. Check power limit compliance
+11. Check time limit compliance
+12. Calculate score (if fastest time provided)
+13. Create and return simulation result
+
+**Text to Include (below or beside diagram, if space allows):**
+
+**Brief Description:**
+"The simulation starts with a configuration file containing all vehicle parameters. The system validates these parameters, initializes physics models, solves the vehicle dynamics until the vehicle completes 75 meters, checks Formula Student rule compliance, and calculates the competition score."
+
+**Key Points (optional bullet list):**
+- Configuration-driven: All parameters in JSON/YAML files
+- Validated: System checks parameters before simulation
+- Physics-based: Uses realistic vehicle models
+- Rule-compliant: Automatically checks competition rules
+- Score-ready: Calculates Formula Student scores
+
+**Design Notes:**
+- Make the diagram image large and clear (should take up most of the slide)
+- If the diagram is complex, ensure it's readable
+- Add a brief caption or explanation
+- Use consistent colors with the rest of the presentation
+
+---
+
+### SLIDE 4: Solver Loop Detail
+
+**Title (top of slide, large and bold):**
+"Dynamics Solver: Integration Loop"
+
+**Layout**: 
+- Title at top
+- Large diagram image in center (user will provide this)
+- Brief explanatory text
+
+**Diagram Image:**
+The user will provide an image showing a flowchart. This diagram shows the detailed solver loop that runs during simulation. The diagram shows:
+1. Solver starts
+2. Initialize state (position=0, velocity=0, time=0, all zeros)
+3. Store initial state in history
+4. Loop condition check: Is position < 75m AND time < max_time?
+5. If yes: Calculate derivatives
+6. Perform RK4 integration step
+7. Update state with new values
+8. Store state in history
+9. Loop back to condition check
+10. If no: Return final state
+
+**Text to Include:**
+
+**Main Explanation:**
+"This diagram shows how the simulation advances through time. The solver uses RK4 (Runge-Kutta 4th order) numerical integration to solve the differential equations of motion. Each iteration calculates how the vehicle's state changes over a small time step, then updates the position, velocity, and other state variables. The loop continues until the vehicle completes 75 meters or exceeds the 25-second time limit."
+
+**Key Technical Points (optional bullet list):**
+- **RK4 Integration**: 4th-order Runge-Kutta method for accurate numerical integration
+- **State History**: Complete state stored at each timestep for analysis
+- **Iterative Process**: Small timesteps (typically 0.001-0.01 seconds) for accuracy
+- **Termination Conditions**: Stops when position ≥ 75m OR time ≥ 25s
+
+**Design Notes:**
+- Diagram should be prominent
+- Explain what RK4 is briefly (it's a numerical method for solving differential equations)
+- Highlight the iterative/loop nature
+- Use technical but accessible language
+
+---
+
+### SLIDE 5: Timestep Calculation Detail
+
+**Title (top of slide, large and bold):**
+"Physics Calculation: Complete Timestep"
+
+**Layout**: 
+- Title at top
+- Large diagram image (user will provide this - this is the most complex diagram)
+- Brief explanatory text
+
+**Diagram Image:**
+The user will provide an image showing a detailed flowchart. This is the most complex diagram showing all physics calculations performed in a single timestep. The diagram shows the sequence of calculations:
+1. Start with current vehicle state
+2. Calculate aerodynamics (drag force, downforce front, downforce rear)
+3. Calculate normal forces (using mass properties model)
+4. Calculate wheel speeds
+5. Calculate tire slip ratios (front and rear)
+6. Calculate tire longitudinal forces (front and rear)
+7. Calculate motor speed from wheel speed
+8. Calculate requested torque
+9. Calculate actual torque from powertrain (applies 80kW power limit)
+10. Convert torque to drive force
+11. Calculate net force (drive force - drag - rolling resistance)
+12. Calculate acceleration (net force / mass)
+13. Recalculate normal forces with actual acceleration
+14. Calculate wheel angular acceleration
+15. Create derivative state (rate of change of all variables)
+16. Return derivatives for integration
+
+**Text to Include:**
+
+**Main Explanation:**
+"Each timestep requires calculating forces from all vehicle subsystems. The models interact: aerodynamics creates downforce which affects normal forces on tires, which affects tire grip, which affects acceleration. The powertrain model enforces the 80kW power limit. The process is iterative - an initial acceleration guess is refined using the actual calculated acceleration."
+
+**Key Model Interactions (optional bullet list):**
+- **Aerodynamics Model**: Calculates drag (slows vehicle) and downforce (increases tire grip)
+- **Mass Properties Model**: Calculates normal forces on front and rear tires, accounts for load transfer during acceleration
+- **Tire Model**: Calculates slip ratio and longitudinal force based on normal force and wheel speed
+- **Powertrain Model**: Calculates motor torque, enforces 80kW power limit, converts to wheel torque
+- **Net Force Calculation**: Sums all forces (drive force positive, drag and rolling resistance negative)
+- **Acceleration**: Net force divided by vehicle mass (F = ma)
+
+**Design Notes:**
+- This is the most complex diagram - ensure it's readable
+- Consider adding callouts or annotations if the diagram is too dense
+- Explain the interconnected nature of the models
+- Emphasize that this happens thousands of times per simulation (once per timestep)
+
+---
+
+### SLIDE 6: System Overview
+
+**Title (top of slide, large and bold):**
+"Complete System Architecture"
+
+**Layout**: 
+- Title at top
+- Large diagram image (user will provide this)
+- Brief explanatory text
+
+**Diagram Image:**
+The user will provide an image showing a system architecture diagram with colored boxes/layers. This diagram shows the layered architecture:
+- **Config Layer** (typically blue/light blue): Configuration loading and validation
+- **Simulation Layer** (typically yellow/beige): Main simulation orchestration
+- **Vehicle Models Layer** (typically green): All physics models (MassPropertiesModel, TireModel, PowertrainModel, AerodynamicsModel, SuspensionModel, ChassisGeometry, ControlStrategy)
+- **Dynamics Layer** (typically purple): Solver, derivative calculation, RK4 integration, state management
+- **Rules Layer** (typically pink/red): Power limit checking, time limit checking, scoring
+
+**Text to Include:**
+
+**Main Explanation:**
+"The system uses a modular, layered architecture. Each layer has specific responsibilities, enabling easy updates and maintenance. The Config Layer handles input, the Simulation Layer orchestrates the process, the Vehicle Models Layer contains all physics, the Dynamics Layer performs numerical integration, and the Rules Layer ensures Formula Student compliance."
+
+**Architecture Benefits (optional bullet list):**
+- **Modularity**: Each model can be updated independently
+- **Separation of Concerns**: Each layer has a clear purpose
+- **Maintainability**: Easy to understand and modify
+- **Extensibility**: New models can be added without changing existing code
+- **Rule Compliance**: Rules are enforced automatically at the Rules Layer
+
+**Design Notes:**
+- The diagram should show the layered structure clearly
+- Explain how data flows between layers
+- Emphasize the modularity and clean architecture
+- Use consistent terminology
+
+---
+
+### SLIDE 7: Conclusion/Outro Slide
+
+**Title (top of slide, large and bold):**
+"Summary & Applications"
+
+**Layout**: 
+- Title at top
+- Two or three columns/sections
+- Clean, professional closing
+
+**SECTION 1: Key Achievements**
+**Subheading**: "What We Built"
+
+**Bullet points (include exactly these):**
+- Physics-based simulation with realistic vehicle models
+  - Includes tire dynamics, powertrain, aerodynamics, mass properties
+- Full Formula Student rule compliance
+  - Automatic 80kW power limit checking
+  - 25-second time limit enforcement
+  - Competition score calculation
+- Parameterized design for rapid iteration
+  - All parameters in configuration files
+  - Easy to test different vehicle designs
+- Automated scoring calculation
+  - Uses official Formula Student scoring formula
+  - Predicts competition performance
+
+**SECTION 2: Applications**
+**Subheading**: "How It's Used"
+
+**Bullet points (include exactly these):**
+- **Design Optimization**: Find optimal vehicle parameters for best acceleration
+- **Parameter Sensitivity Analysis**: Understand which parameters most affect performance
+- **Powertrain Sizing**: Determine required motor power and torque characteristics
+- **Performance Prediction**: Estimate competition times before building the vehicle
+- **Competition Strategy**: Evaluate trade-offs between different design choices
+- **Educational Tool**: Learn vehicle dynamics and simulation techniques
+
+**SECTION 3: Future Work (Optional)**
+**Subheading**: "Potential Enhancements"
+
+**Bullet points (suggestions - can be modified):**
+- Additional vehicle models (suspension dynamics, thermal effects)
+- Real-time optimization during simulation
+- Integration with CAD tools for automatic parameter extraction
+- Multi-objective optimization (balance acceleration vs. other events)
+- Driver model for more realistic control strategies
+
+**Closing (bottom of slide, optional):**
+- "Thank you" or "Questions?"
+- Contact information (if applicable)
+- Project repository or website (if applicable)
+
+**Design Notes:**
+- Professional closing slide
+- Summarize key points clearly
+- Show the value and applications
+- Leave room for questions/discussion
+- Use consistent styling with rest of presentation
+
+---
+
+## General Design Guidelines
+
+### Color Scheme
+- **Primary Colors**: Professional colors (blues, grays, whites) for backgrounds and main content
+- **Accent Colors**: Formula Student theme colors (red, white, black) or other bold colors for highlights
+- **Consistency**: Use the same color scheme throughout all slides
+- **Contrast**: Ensure high contrast between text and background for readability
+- **Accessibility**: Avoid color combinations that are difficult for colorblind viewers
+
+### Typography
+- **Headings**: Large, bold, sans-serif font (e.g., Arial, Helvetica, Calibri)
+  - Title slides: 44-60pt
+  - Section headings: 32-40pt
+- **Body Text**: Clear, readable sans-serif or serif font
+  - Minimum 18pt for body text
+  - 24pt or larger preferred for readability
+- **Formulas**: Use proper mathematical notation
+  - Consider using equation editor or LaTeX-style formatting
+  - Ensure subscripts, superscripts, and symbols are clear
+- **Consistency**: Use the same font family throughout (can vary size and weight)
+
+### Layout Principles
+- **White Space**: Don't overcrowd slides - leave adequate margins and spacing
+- **Alignment**: Align elements consistently (left, center, or right, but be consistent)
+- **Balance**: Balance text and images - don't let one dominate
+- **Hierarchy**: Use size, color, and position to show importance
+- **Grid**: Use an invisible grid to align elements consistently
+
+### Technical Accuracy Requirements
+- **Formulas**: All formulas must be exactly correct
+  - M_ACCELERATION_SCORE = 0.95 × Pmax × ((Tmax/Tteam - 1) / 0.5) + 0.05 × Pmax
+  - Pmax = 75 points
+  - Tmax = 1.5 × fastest time
+- **Rules**: All rule references must be accurate
+  - EV 2.2: 80 kW power limit
+  - D 5.3.1: 25 second time limit
+  - D 5.3.2: Scoring formula
+- **Terminology**: Use correct technical terms
+  - "RK4" or "Runge-Kutta 4th order" (not "RK4 method" as redundant)
+  - "Normal forces" (not "normal force" when referring to front and rear)
+  - "Accumulator outlet" (not "battery" - Formula Student uses "accumulator")
+- **Units**: Include units where appropriate
+  - 80 kW (not just "80")
+  - 75 m (not just "75")
+  - 25 s (not just "25")
+
+### Image Handling
+- **User-Provided Images**: The user will provide 4 diagram images
+  - Slide 3: Main System Flow diagram
+  - Slide 4: Solver Loop Detail diagram
+  - Slide 5: Timestep Calculation diagram
+  - Slide 6: System Overview diagram
+- **Image Quality**: Ensure images are high-resolution and readable
+- **Image Placement**: Center images or align consistently
+- **Image Sizing**: Make images large enough to be readable, but leave room for text
+- **Captions**: Consider adding brief captions below images if helpful
+
+### Slide Transitions and Animation (Optional)
+- Keep transitions simple and professional
+- Avoid distracting animations
+- If using animations, use them to reveal content progressively (e.g., bullet points appear one at a time)
+- Ensure animations don't slow down the presentation
+
+## What the User Will Provide
+
+The user will provide 4 diagram images:
+1. **Main System Flow** - A flowchart showing the complete simulation process from config to result
+2. **Solver Loop Detail** - A flowchart showing the RK4 integration loop
+3. **Timestep Calculation** - A detailed flowchart showing all physics calculations in one timestep
+4. **System Overview** - A layered architecture diagram showing the system structure
+
+You should incorporate these images into slides 3, 4, 5, and 6 respectively.
+
+## Deliverable
+
+Create a professional presentation with:
+- **7 slides total**: 1 intro, 5 content slides, 1 outro
+- **4 user-provided diagram images** incorporated into slides 3-6
+- **Professional design**: Clean, modern, engineering-appropriate
+- **Accurate technical content**: All formulas, rules, and technical details correct
+- **Clear narrative flow**: Each slide builds on the previous
+- **Readable**: All text and diagrams clearly visible
+- **Consistent styling**: Same fonts, colors, and layout principles throughout
+
+## Final Notes
+
+- Assume the audience has engineering background but may not know Formula Student rules
+- Explain technical terms when first introduced
+- Make the presentation suitable for both technical and non-technical audiences
+- Focus on clarity and readability over complexity
+- The goal is to explain what the simulation does and how it works, not to show off complexity

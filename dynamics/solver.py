@@ -140,8 +140,8 @@ class DynamicsSolver:
         # Total resistive forces
         total_resistive = drag_force + rr_front + rr_rear
         
-        # Net force
-        net_force = total_drive_force + total_resistive
+        # Net force (resistive forces oppose motion, so subtract them)
+        net_force = total_drive_force - total_resistive
         
         # Calculate effective mass accounting for wheel rotational inertia
         # When accelerating, we need to accelerate:

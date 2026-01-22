@@ -61,42 +61,38 @@ class PowertrainModel:
         # Convert wheel torque to motor torque
         motor_torque_requested = requested_torque / (self.gear_ratio * self.drivetrain_efficiency)
         
-        # Limit by motor current
-        max_motor_torque_current = self.motor_kt * self.motor_max_current
-        motor_torque = np.clip(motor_torque_requested, -max_motor_torque_current, max_motor_torque_current)
-        
         # Limit by motor speed (simplified - no field weakening)
         if abs(motor_speed) > self.motor_max_speed:
-            motor_torque = 0.0
+            motor_torque_requested = 0.0
         
-        # Calculate motor current
-        motor_current = motor_torque / self.motor_kt if self.motor_kt > 0 else 0.0
+        # Calculate motor current from requested torque (before current limit)
+        motor_current_unlimited = motor_torque_requested / self.motor_kt if self.motor_kt > 0 else 0.0
         
-        # Calculate power at motor (electrical input)
-        motor_power = self.battery_voltage * motor_current
+        # Calculate power at accumulator outlet (EV 2.2)
+        # Power = V * I (at accumulator outlet)
+        electrical_power_unlimited = self.battery_voltage * motor_current_unlimited
         
-        # Account for motor efficiency
-        if motor_power > 0:  # Motoring
-            electrical_power = motor_power / self.motor_efficiency
-        else:  # Regenerating
-            electrical_power = motor_power * self.motor_efficiency
+        # Apply power limit FIRST (EV 2.2) - CAP THE POWER
+        # This is the Formula Student rule limit (80kW)
+        max_current_power = self.max_power / self.battery_voltage
+        # Apply current limit (motor hardware limit)
+        max_current = min(self.motor_max_current, max_current_power)
         
-        # Apply power limit at accumulator outlet (EV 2.2)
-        if electrical_power > self.max_power:
-            # Scale back torque to meet power limit
-            scale_factor = self.max_power / electrical_power
-            motor_torque *= scale_factor
-            motor_current *= scale_factor
-            electrical_power = self.max_power
-        elif electrical_power < -self.max_power:
-            # Limit regeneration power
-            scale_factor = -self.max_power / electrical_power
-            motor_torque *= scale_factor
-            motor_current *= scale_factor
-            electrical_power = -self.max_power
+        # Cap the current by both limits
+        motor_current = np.sign(motor_current_unlimited) * min(abs(motor_current_unlimited), max_current)
+        
+        # Recalculate torque from capped current
+        motor_torque = motor_current * self.motor_kt
+        
+        # Calculate final power (should now be at or below limit)
+        electrical_power = self.battery_voltage * motor_current
         
         # Convert back to wheel torque
         wheel_torque = motor_torque * self.gear_ratio * self.drivetrain_efficiency
+        
+        # Final safety clamp to ensure power never exceeds limit (handle any numerical issues)
+        # This is a hard cap - power MUST never exceed max_power
+        electrical_power = np.clip(electrical_power, -self.max_power, self.max_power)
         
         return wheel_torque, motor_current, electrical_power
     
