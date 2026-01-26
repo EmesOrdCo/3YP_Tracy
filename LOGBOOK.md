@@ -40,37 +40,37 @@ The product Cd×A is the drag area. For a Formula Student vehicle without signif
 
 Fx,drag = 0.5 × 1.225 × 0.8 × 625 = 306 N
 
-This is fairly small compared to the traction force available at launch (several thousand Newtons), but becomes increasingly significant as speed builds.
+This is fairly small compared to the traction force available at launch (several thousand Newtons).
 
 Rolling resistance is modelled as proportional to the normal load on each tyre:
 
 Fx,rolling = Crr × Fz,total
 
-The rolling resistance coefficient Crr for racing slick tyres on smooth asphalt is typically 0.010 to 0.015. For a 250 kg vehicle, this gives a rolling resistance of approximately 25 to 37 N — small but not negligible over the duration of the acceleration run.
+The rolling resistance coefficient Crr for racing slick tyres on smooth asphalt is typically 0.010 to 0.015 when dry. For a 250 kg vehicle, this gives a rolling resistance of approximately 25 to 37 N — this is small but not negligible over the duration of the acceleration run.
 
 
 11th November 2025
 Tyre Force Models and Slip Ratio
 
-Researched tyre force generation in detail today. The longitudinal force (tractive or braking force) that a tyre can generate depends on two primary factors: the normal load pressing the tyre into the road surface, and the slip ratio between the tyre and the road.
+Researched tyre force generation in detail. The longitudinal force that a tyre generates depends on two  factors: the normal load pressing the tyre into the road, and the slip ratio between the tyre and the road.
 
-Slip ratio is defined as the normalised difference between the wheel's peripheral velocity and the vehicle's translational velocity:
+Slip ratio is defined as the normalised difference between the wheel's peripheral velocity (the velocity of the tyre surface) and the vehicle's translational velocity (the velocity of the car moving forward):
 
 κ = (ωr - v) / v
 
-where ω is the wheel's angular velocity in rad/s, r is the loaded tyre radius in metres, and v is the vehicle velocity in m/s. When the wheel is rolling freely without any driving or braking torque, κ = 0 (the peripheral velocity equals the vehicle velocity). During acceleration, the driven wheels spin slightly faster than free-rolling would suggest, giving κ > 0. The slip ratio is typically expressed as a decimal (0.10 meaning 10% slip) or as a percentage.
+where ω is the wheel's angular velocity in rad/s, r is the loaded tyre radius in metres, and v is the vehicle velocity in m/s. When the wheel is rolling freely without any driving or braking torque, κ = 0 (the peripheral velocity equals the vehicle velocity). During acceleration, the driven wheels spin slightly faster than free-rolling would suggest, giving κ > 0. 
 
-The relationship between slip ratio and friction coefficient is nonlinear. At zero slip, no tractive force is generated. As slip increases, the friction coefficient rises approximately linearly until reaching a peak at the optimal slip ratio, typically 0.10 to 0.15 for dry racing tyres. Beyond this point, the friction coefficient decreases — the tyre is spinning excessively and losing grip. At very high slip ratios (approaching 1.0, where the wheel is spinning but the vehicle is stationary), the friction coefficient may drop to 60-70% of its peak value.
+There needs to be an optimum slip as both too little and too much both causes issues. At zero slip, no tractive force is generated. As slip increases, the friction coefficient rises approximately linearly until reaching a peak at the optimal slip ratio, typically 0.10 to 0.15 for dry racing tyres. Beyond this point, the friction coefficient decreases — the tyre is spinning excessively and starts spinning. 
 
-The industry-standard model for this behaviour is the Pacejka "Magic Formula", which expresses the friction coefficient as:
+Research shows that the industry-standard model for this behaviour is the Pacejka model, which expresses the friction coefficient as:
 
 μ = D × sin(C × arctan(B×κ - E×(B×κ - arctan(B×κ))))
 
-where D is the peak friction coefficient, C is a shape factor (typically 1.65 for longitudinal forces), B is a stiffness factor controlling the initial slope, and E is a curvature factor affecting the shape near the peak. These parameters must be determined from tyre testing data — measurements of force versus slip at various normal loads on a tyre test rig.
+where D is the peak friction coefficient, C is a shape factor (typically 1.65 for longitudinal forces), B is a stiffness factor, and E is a curvature factor. These parameters must be determined from tyre testing data — unfortunately we will not have data as we are using sims to inform design decisions and also not building real car. 
 
-I do not have access to such data for Formula Student tyres. Contacted the university's motorsport society to enquire whether they have any tyre data from previous competitions, but they indicated that most teams treat this information as confidential.
+I was also unable to find estimated, relevant values via research.
 
-Given this constraint, I will implement a simplified piecewise-linear model that captures the essential characteristics without requiring empirical parameters:
+Given this constraint, for now I will implement a simplified piecewise-linear model that captures the essential characteristics without requiring empirical parameters:
 
 For κ ≤ κopt:   μ = μmax × (κ / κopt)
 For κ > κopt:   μ = μmax × (1 - (κ - κopt) / (1 - κopt))
@@ -81,13 +81,14 @@ Fx = μ(κ) × Fz
 
 ![Tyre Friction Curve](tyre_friction_curve.png)
 
-The simulation architecture should allow this simplified model to be replaced with a full Pacejka implementation if tyre data becomes available in future.
+The simulation architecture should allow this simplified model to be replaced with a full Pacejka implementation if tyre data becomes available due to further research or contacting Oxford Formula Student Team.
 
 
 14th November 2025
 Numerical Integration Methods
 
-Investigated numerical integration methods for solving the equations of motion. The simulation must advance the vehicle state (position, velocity, wheel angular velocities) forward in time by solving a system of coupled ordinary differential equations.
+I started reading Press et al.'s "Numerical Recipes" , which I accessed via an online library.
+I investigated numerical integration methods for solving the equations of motion. The simulation must advance the vehicle state (position, velocity, wheel angular velocities) forward in time by solving a system of coupled ordinary differential equations.
 
 The simplest approach is Euler's method, which approximates the state at the next timestep using the derivative at the current timestep:
 
@@ -95,9 +96,9 @@ x(t + dt) = x(t) + f(x, t) × dt
 
 where f(x, t) is the derivative function (velocity for position, acceleration for velocity, etc.). Euler's method is straightforward to implement but has significant drawbacks. The local truncation error (error per timestep) is O(dt²), and the global accumulated error over the simulation is O(dt). For a simulation with dt = 0.001 s running for 5 seconds, this represents 5000 timesteps, and errors can accumulate substantially.
 
-More critically, Euler's method can be unstable for certain types of differential equations, particularly those with rapidly changing derivatives. In the acceleration simulation, forces change significantly as velocity increases (drag grows quadratically) and as the powertrain transitions from traction-limited to power-limited operation.
+More concerningly, Euler's method can be unstable for certain types of differential equations, particularly those with rapidly changing derivatives. In the acceleration simulation, forces change significantly as velocity increases (drag grows quadratically) and as the powertrain transitions from traction-limited to power-limited operation. 
 
-The 4th-order Runge-Kutta method (RK4) provides substantially better accuracy. Rather than using only the derivative at the start of the timestep, RK4 evaluates the derivative at four points and takes a weighted average:
+The 4th-order Runge-Kutta method (RK4) provides substantially better accuracy. Rather than using only the derivative at the start of the timestep, RK4 evaluates the derivative at four points and takes a weighted average: 
 
 k1 = f(x, t)
 k2 = f(x + k1×dt/2, t + dt/2)
@@ -105,17 +106,18 @@ k3 = f(x + k2×dt/2, t + dt/2)
 k4 = f(x + k3×dt, t + dt)
 x(t + dt) = x(t) + (k1 + 2×k2 + 2×k3 + k4) × dt/6
 
-The local truncation error is O(dt⁵) and the global error is O(dt⁴). For the same timestep of 0.001 s, this represents a dramatic improvement in accuracy. The cost is four derivative evaluations per timestep rather than one, but for a simulation of this scale (5000-10000 timesteps), the computational overhead is negligible on modern hardware.
+The local truncation error is O(dt⁵) and the global error is O(dt⁴). For the same timestep of 0.001 s, this represents a significant improvement in accuracy. The cost is four derivative evaluations per timestep rather than one, but for a simulation of this scale (5000-10000 timesteps), the computational overhead is negligible on modern hardware. As such I will implement RK4 for the dynamics solver as the benifits far outweigh the costs.
 
-I will implement RK4 for the dynamics solver. Found useful implementation guidance in Press et al.'s "Numerical Recipes" (Chapter 17), which I accessed through the university library's online resources.
+
 
 
 18th November 2025
 Software Architecture Design
 
-Designed the overall software architecture today. The simulation involves several interacting physical models, and these should be encapsulated in separate modules for maintainability, testability, and future extensibility.
+Designed the overall modular software architecture today. The simulation involves several interacting physical models, and these should be encapsulated in separate modules which can be built one by one and edited independantly.
 
-The following diagram shows the high-level data flow during force calculation within a single simulation timestep:
+Vehicle parameters will be stored in JSON configuration files rather than hardcoded values. This enables parameter studies and optimisation to be performed without modifying code in several areas, and allows different vehicle configurations to be compared easily.
+
 
 ```mermaid
 flowchart TD
@@ -162,7 +164,7 @@ flowchart TD
     RK4 --> NEWSTATE[Updated State]
 ```
 
-The powertrain model requires particular attention regarding the 80 kW power limit. The constraint applies at the accumulator outlet (battery terminals), not at the motor shaft or wheels. The model must therefore:
+The powertrain model needs to abide by the 80 kW power limit. The constraint applies at the accumulator outlet (battery terminals), not at the motor shaft or wheels. The model must therefore: 
 
 1. Calculate the requested motor torque based on the control strategy
 2. Determine the motor current required: I = Tmotor / Kt, where Kt is the motor torque constant (N·m/A)
@@ -171,15 +173,11 @@ The powertrain model requires particular attention regarding the 80 kW power lim
 5. Recalculate the actual motor torque from the limited current: Tactual = Ilimit × Kt
 6. Convert motor torque to wheel torque through the gear ratio: Twheel = Tactual × Ngear × ηdrivetrain
 
-This sequence ensures the power constraint is enforced at the correct point in the energy flow path.
-
-Vehicle parameters will be stored in JSON configuration files rather than hardcoded values. This enables parameter studies and optimisation to be performed without modifying source code, and allows different vehicle configurations to be compared easily.
-
 
 21st November 2025
 Tyre Model Data Flow and Load Transfer
 
-Before implementing the tyre model code, I created a detailed diagram of the force interactions and data flow for a driven rear wheel:
+Before implementing the tyre model code, I created a detailed diagram of the force interactions and data flow for a driven rear wheels:
 
 ```mermaid
 flowchart TD
@@ -233,9 +231,7 @@ For a 250 kg vehicle with 50/50 static weight distribution, 0.30 m CG height, an
 
 ΔFz = (250 × 9.81 × 0.30) / 1.55 = 475 N
 
-This transfers approximately 475 N from the front axle to the rear axle — a significant redistribution. The rear normal force increases from 1226 N (static) to 1701 N, whilst the front decreases from 1226 N to 751 N. This load transfer benefits a rear-wheel-drive vehicle by increasing grip at the driven wheels, but also creates a feedback loop: more acceleration causes more load transfer, which enables more traction force, which produces more acceleration.
-
-This coupling between acceleration and normal force creates an implicit relationship that the solver must handle. One approach is to use the acceleration from the previous timestep as an estimate when calculating normal forces for the current timestep. For small timesteps (1 ms), this approximation introduces minimal error.
+This transfers approximately 475 N from the front axle to the rear axle — a significant redistribution. The rear normal force increases from 1226 N (static) to 1701 N, whilst the front decreases from 1226 N to 751 N. This load transfer benefits a rear-wheel-drive vehicle by increasing grip at the driven wheels, but also creates a feedback loop: more acceleration causes more load transfer, which enables more traction force, which produces more acceleration. 
 
 ---
 
@@ -243,7 +239,7 @@ This coupling between acceleration and normal force creates an implicit relation
 24th November 2025
 Project Setup and Configuration System
 
-Began writing code today. Created the project directory structure and initialised a Git repository for version control. Set up a virtual environment and installed the required packages: NumPy for numerical operations, SciPy for optimisation (to be used later), Matplotlib for plotting results, and PyYAML for configuration file parsing.
+Began writing code today. Started by installing the required packages: NumPy for numerical operations, SciPy for optimisation (to be used later), Matplotlib for plotting results, and PyYAML for configuration file parsing. 
 
 Started with the configuration system, as this forms the foundation for all other modules. Created a vehicle_config.py file defining dataclasses for each category of vehicle parameters:
 
@@ -253,17 +249,17 @@ Started with the configuration system, as this forms the foundation for all othe
 - AerodynamicsProperties: drag area (CdA), downforce coefficients for front and rear
 - ControlProperties: launch torque limit, target slip ratio for traction control
 
-Each dataclass includes type hints for all parameters to catch errors early. Created a validate() method on the main VehicleConfig class to check that all parameters are within physically reasonable ranges (positive masses, gear ratios greater than zero, friction coefficients between 0 and 2, etc.).
+Created a validate() method on the main VehicleConfig class to check that all parameters are within physically reasonable ranges (positive masses, gear ratios greater than zero, friction coefficients between 0 and 2, etc.).
 
 
 26th November 2025
 Configuration Loader Implementation
 
-Implemented the configuration loader today. The load_config() function reads a JSON file and constructs the appropriate dataclass instances. Encountered some difficulty with nested structures — the JSON file contains nested objects (e.g., "mass": {"total_mass": 250, ...}), and these must be converted to the corresponding dataclass types.
+Implemented the configuration loader. The load_config() function reads a JSON file and constructs the appropriate dataclass instances. Encountered some difficulty with nested structures — the JSON file contains nested objects (e.g., "mass": {"total_mass": 250, ...}), and these must be converted to the corresponding dataclass types.
 
 The solution was to create a helper function that recursively processes the JSON dictionary, instantiating dataclasses for recognised keys. Error handling was added to provide informative messages when required parameters are missing or have invalid types.
 
-Created a base vehicle configuration file with representative Formula Student values:
+Created a base vehicle configuration file with dummy data which was fairly representative Formula Student values:
 
 - Total mass: 250 kg (including driver)
 - Wheelbase: 1.55 m
@@ -293,7 +289,7 @@ when the correct formulation for acceleration is:
 
 κ = (ωr - v) / v
 
-The difference is subtle but critical. With the incorrect formula, accelerating wheels (ωr > v) give negative slip ratios, which then produce negative friction coefficients through the linear model, resulting in negative forces. The Milliken textbook uses a different sign convention (defining slip in terms of vehicle velocity relative to wheel velocity), which caused the initial confusion.
+The difference is subtle but critical. With the incorrect formula, accelerating wheels (ωr > v) give negative slip ratios, which then produce negative friction coefficients, resulting in negative forces. The Milliken textbook uses a different sign convention (defining slip in terms of vehicle velocity relative to wheel velocity), which caused the initial confusion.
 
 After correcting this, the tyre model produces sensible values: for a normal force of 1500 N and 10% slip ratio, the traction force is approximately 2100 N, consistent with a friction coefficient around 1.4.
 
@@ -322,11 +318,7 @@ Created unit tests to verify the calculations against hand-computed values. A 25
 3rd December 2025
 Python Import System Issues
 
-Encountered an issue with Python's import system. When running the test scripts, Python cannot find the vehicle module:
-
-```
-ModuleNotFoundError: No module named 'vehicle'
-```
+Encountered an issue with Python's import system. When running the test scripts, Python cannot find the vehicle module.
 
 The project structure has separate directories for different components (vehicle/, dynamics/, rules/, etc.), and files in one directory need to import from another. In Python, this requires the directories to be recognised as packages.
 
@@ -368,11 +360,9 @@ Downforce is calculated similarly:
 
 Fdownforce = 0.5 × ρ × CL × Aref × v²
 
-The configuration specifies separate downforce coefficients for front and rear, allowing asymmetric aerodynamic loading. Most Formula Student vehicles are designed with more rear downforce to improve traction, though the actual values depend heavily on the specific aerodynamic package.
+The configuration specifies separate downforce coefficients for front and rear, allowing asymmetric aerodynamic loading. Most Formula Student vehicles are designed with more rear downforce to improve traction, though the actual values depend heavily on the specific aerodynamic package. I am including an aeropackage however it is unlikely that we will proceed with implementation in reality - these sims should show they are largely redundant for a straight line acceleration event. 
 
-The aerodynamics model also provides the air density as a function of ambient conditions (temperature and pressure), though for initial development a constant value is sufficient.
-
-The quadratic velocity dependence means aerodynamic forces are negligible at launch but become significant at higher speeds. At 25 m/s, drag consumes roughly 7.6 kW of the available 80 kW power budget.
+The quadratic velocity dependence means aerodynamic drag are negligible at launch but become significant at higher speeds. At 25 m/s, drag consumes roughly 7.6 kW of the available 80 kW power budget.
 
 
 8th December 2025
