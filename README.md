@@ -99,13 +99,4 @@ print(f"Compliant: {result.compliant}")
 
 
 
-Strategy / Stakeholder Analysis
-
-Market Analysis / Competition Analysis
-
-Design Requirements / Prototype Planning
-
-Supply Chain Planning 
-
-Financial 
 
