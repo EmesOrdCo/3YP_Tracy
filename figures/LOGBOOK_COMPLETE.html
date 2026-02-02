@@ -137,7 +137,7 @@
 <h1>Formula Student Simulation Logbook - Harry Emes</h1>
 
 <div style="text-align: center; font-size: 12px; color: #999; margin-bottom: 30px;">
-    Generated: 2026-01-26 15:49:42
+    Generated: 2026-02-02 14:12:52
 </div>
 
 <div class="entry">
@@ -513,11 +513,9 @@ except ImportError:
 
 <div class="equation">Fdownforce = 0.5 × ρ × CL × Aref × v²</div>
 
-<p>The configuration specifies separate downforce coefficients for front and rear, allowing asymmetric aerodynamic loading. Most Formula Student vehicles are designed with more rear downforce to improve traction, though the actual values depend heavily on the specific aerodynamic package.</p>
+<p>The configuration specifies separate downforce coefficients for front and rear, allowing asymmetric aerodynamic loading. Most Formula Student vehicles are designed with more rear downforce to improve traction, though the actual values depend heavily on the specific aerodynamic package. I am including an aeropackage however it is unlikely that we will proceed with implementation in reality - these sims should show they are largely redundant for a straight line acceleration event.</p>
 
-<p>The aerodynamics model also provides the air density as a function of ambient conditions (temperature and pressure), though for initial development a constant value is sufficient.</p>
-
-<p>The quadratic velocity dependence means aerodynamic forces are negligible at launch but become significant at higher speeds. At 25 m/s, drag consumes roughly 7.6 kW of the available 80 kW power budget.</p>
+<p>The quadratic velocity dependence means aerodynamic drag are negligible at launch but become significant at higher speeds. At 25 m/s, drag consumes roughly 7.6 kW of the available 80 kW power budget.</p>
 </div>
 
 <div class="entry">

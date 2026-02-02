@@ -5,27 +5,50 @@ from typing import List, Optional
 import sys
 from pathlib import Path
 
+# Setup path for development mode first
+package_root = Path(__file__).parent.parent.resolve()
+if str(package_root) not in sys.path:
+    sys.path.insert(0, str(package_root))
+
 # Import with fallback for both package and development modes
 try:
     from .state import SimulationState
     from ..config.vehicle_config import VehicleConfig
+except (ImportError, ValueError):
+    from dynamics.state import SimulationState
+    from config.vehicle_config import VehicleConfig
+
+# Import vehicle modules directly (avoid going through vehicle/__init__ to prevent circular imports)
+try:
     from ..vehicle.tire_model import TireModel
-    from ..vehicle.powertrain import PowertrainModel
     from ..vehicle.aerodynamics import AerodynamicsModel
     from ..vehicle.mass_properties import MassPropertiesModel
     from ..vehicle.suspension import SuspensionModel
 except (ImportError, ValueError):
-    # Fall back to absolute imports (development mode)
-    package_root = Path(__file__).parent.parent.parent.resolve()
-    if str(package_root) not in sys.path:
-        sys.path.insert(0, str(package_root))
-    from dynamics.state import SimulationState
-    from config.vehicle_config import VehicleConfig
     from vehicle.tire_model import TireModel
-    from vehicle.powertrain import PowertrainModel
     from vehicle.aerodynamics import AerodynamicsModel
     from vehicle.mass_properties import MassPropertiesModel
     from vehicle.suspension import SuspensionModel
+
+# Lazy import for powertrain to avoid circular imports
+# These will be imported when DynamicsSolver is instantiated
+_PowertrainModel = None
+_create_powertrain_with_battery = None
+_create_powertrain_with_supercapacitor = None
+
+def _ensure_powertrain_imports():
+    """Lazy import of powertrain module to avoid circular imports."""
+    global _PowertrainModel, _create_powertrain_with_battery, _create_powertrain_with_supercapacitor
+    if _PowertrainModel is None:
+        # Direct file import to bypass package __init__
+        import importlib.util
+        pt_path = Path(__file__).parent.parent / "vehicle" / "powertrain.py"
+        spec = importlib.util.spec_from_file_location("powertrain_direct", pt_path)
+        pt_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(pt_module)
+        _PowertrainModel = pt_module.PowertrainModel
+        _create_powertrain_with_battery = pt_module.create_powertrain_with_battery
+        _create_powertrain_with_supercapacitor = pt_module.create_powertrain_with_supercapacitor
 
 
 class DynamicsSolver:
@@ -42,7 +65,24 @@ class DynamicsSolver:
         
         # Initialize vehicle models
         self.tire_model = TireModel(config.tires)
-        self.powertrain = PowertrainModel(config.powertrain)
+        
+        # Ensure powertrain imports are loaded (lazy import to avoid circular deps)
+        _ensure_powertrain_imports()
+        
+        # Create powertrain with appropriate energy storage based on config
+        energy_storage_type = getattr(config.powertrain, 'energy_storage_type', 'battery')
+        if energy_storage_type == 'supercapacitor':
+            self.powertrain = _create_powertrain_with_supercapacitor(
+                config.powertrain,
+                cell_voltage=getattr(config.powertrain, 'supercap_cell_voltage', 3.0),
+                cell_capacitance=getattr(config.powertrain, 'supercap_cell_capacitance', 600.0),
+                cell_esr=getattr(config.powertrain, 'supercap_cell_esr', 0.7e-3),
+                num_cells=getattr(config.powertrain, 'supercap_num_cells', 200),
+                min_operating_voltage=getattr(config.powertrain, 'supercap_min_voltage', 350.0)
+            )
+        else:
+            self.powertrain = _create_powertrain_with_battery(config.powertrain)
+        
         self.aero_model = AerodynamicsModel(config.aerodynamics)
         self.mass_model = MassPropertiesModel(config.mass)
         self.suspension_model = SuspensionModel(config.suspension)
@@ -62,8 +102,13 @@ class DynamicsSolver:
         Returns:
             Final simulation state
         """
+        # Reset powertrain (important for supercapacitor - resets to full voltage)
+        self.powertrain.reset()
+        
         # Initialize state
         state = SimulationState()
+        state.dc_bus_voltage = self.powertrain.get_dc_bus_voltage()  # Initial voltage
+        state.energy_storage_soc = 1.0  # Start fully charged
         self.state_history = [state.copy()]
         
         # Simulation loop
@@ -125,10 +170,13 @@ class DynamicsSolver:
         requested_torque = self._calculate_requested_torque(state, normal_rear)
         
         # Calculate powertrain torque (with power limit)
+        # Pass dt for energy storage state update (supercapacitor voltage decay)
         wheel_torque, motor_current, power = self.powertrain.calculate_torque(
             requested_torque,
             motor_speed,
-            state.velocity
+            state.velocity,
+            dt=self.dt,
+            update_storage=False  # Don't update during RK4 intermediate steps
         )
         
         # Convert wheel torque to force
@@ -141,7 +189,7 @@ class DynamicsSolver:
         total_resistive = drag_force + rr_front + rr_rear
         
         # Net force (resistive forces oppose motion, so subtract them)
-        net_force = total_drive_force - total_resistive
+        net_force = total_drive_force + total_resistive  # resistive forces are already negative
         
         # Calculate effective mass accounting for wheel rotational inertia
         # When accelerating, we need to accelerate:
@@ -168,6 +216,9 @@ class DynamicsSolver:
         # When there is slip, the relationship is more complex, but this approximation is reasonable
         wheel_alpha_rear = acceleration / self.tire_model.radius if self.tire_model.radius > 0 else 0.0
         
+        # Get powertrain state for energy storage tracking
+        pt_state = self.powertrain.get_last_state()
+        
         # Create derivative state
         dstate = SimulationState()
         dstate.velocity = acceleration
@@ -187,6 +238,13 @@ class DynamicsSolver:
         dstate.motor_torque = wheel_torque
         dstate.power_consumed = power
         dstate.time = 1.0  # dt will be applied in integration
+        
+        # Energy storage state (not derivatives, but captured for logging)
+        if pt_state is not None:
+            dstate.dc_bus_voltage = pt_state.dc_bus_voltage
+            dstate.energy_storage_soc = pt_state.state_of_charge
+            dstate.energy_storage_loss = pt_state.storage_power_loss
+            dstate.in_field_weakening = pt_state.in_field_weakening
         
         return dstate
     
@@ -269,6 +327,32 @@ class DynamicsSolver:
         # Update state
         new_state = self._add_states(state, self._scale_state(weighted_avg, dt))
         new_state.time = state.time + dt
+        
+        # Get the final power calculated by the last derivative (k4)
+        # Then update energy storage ONCE per timestep with this power
+        pt_state = self.powertrain.get_last_state()
+        if pt_state is not None:
+            # Update energy storage state with the final power value (once per timestep)
+            # This ensures supercapacitor discharges at correct rate (not 4x during RK4)
+            self.powertrain.update_energy_storage(dt, pt_state.power_electrical)
+            
+            # Re-get state after update to capture new voltage/SoC
+            pt_state = self.powertrain.get_last_state()
+            
+            new_state.dc_bus_voltage = pt_state.dc_bus_voltage
+            new_state.energy_storage_soc = pt_state.state_of_charge
+            new_state.energy_storage_loss = pt_state.storage_power_loss
+            new_state.in_field_weakening = pt_state.in_field_weakening
+            # CRITICAL: Use actual values from powertrain/final derivative, not integrated
+            new_state.power_consumed = pt_state.power_electrical
+            new_state.motor_current = pt_state.motor_current
+            new_state.motor_torque = pt_state.motor_torque
+        
+        # Capture acceleration from final derivative (k4), not the incorrectly integrated value
+        new_state.acceleration = k4.acceleration
+        new_state.drive_force = k4.drive_force
+        new_state.drag_force = k4.drag_force
+        new_state.rolling_resistance = k4.rolling_resistance
         
         return new_state
     

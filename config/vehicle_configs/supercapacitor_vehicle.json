@@ -1,6 +1,6 @@
 {
   "mass": {
-    "total_mass": 200.0,
+    "total_mass": 180.0,
     "cg_x": 1.2,
     "cg_z": 0.3,
     "wheelbase": 1.6,
@@ -24,14 +24,19 @@
     "motor_max_speed": 838.0,
     "motor_efficiency": 0.95,
     "battery_voltage_nominal": 600.0,
-    "battery_internal_resistance": 0.01,
+    "battery_internal_resistance": 0.14,
     "battery_max_current": 300.0,
-    "gear_ratio": 6.0,
+    "gear_ratio": 5.5,
     "drivetrain_efficiency": 0.95,
     "differential_ratio": 1.0,
     "max_power_accumulator_outlet": 80000.0,
     "wheel_inertia": 0.1,
-    "energy_storage_type": "battery"
+    "energy_storage_type": "supercapacitor",
+    "supercap_cell_voltage": 3.0,
+    "supercap_cell_capacitance": 600.0,
+    "supercap_cell_esr": 0.0007,
+    "supercap_num_cells": 200,
+    "supercap_min_voltage": 350.0
   },
   "aerodynamics": {
     "cda": 0.8,
