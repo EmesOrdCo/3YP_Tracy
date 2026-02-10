@@ -17,9 +17,10 @@ def _import_with_fallback():
         from ..rules.power_limit import check_power_limit
         from ..rules.time_limits import check_time_limit
         from ..rules.scoring import calculate_acceleration_score
+        from ..rules.wheelie_check import check_wheelie
         return (
             VehicleConfig, load_config, DynamicsSolver, SimulationState,
-            check_power_limit, check_time_limit, calculate_acceleration_score
+            check_power_limit, check_time_limit, calculate_acceleration_score, check_wheelie
         )
     except (ImportError, ValueError):
         # Fall back to absolute imports (development mode)
@@ -35,14 +36,15 @@ def _import_with_fallback():
         from rules.power_limit import check_power_limit
         from rules.time_limits import check_time_limit
         from rules.scoring import calculate_acceleration_score
+        from rules.wheelie_check import check_wheelie
         return (
             VehicleConfig, load_config, DynamicsSolver, SimulationState,
-            check_power_limit, check_time_limit, calculate_acceleration_score
+            check_power_limit, check_time_limit, calculate_acceleration_score, check_wheelie
         )
 
 # Import all dependencies
 (VehicleConfig, load_config, DynamicsSolver, SimulationState,
- check_power_limit, check_time_limit, calculate_acceleration_score) = _import_with_fallback()
+ check_power_limit, check_time_limit, calculate_acceleration_score, check_wheelie) = _import_with_fallback()
 
 
 @dataclass
@@ -58,6 +60,9 @@ class SimulationResult:
     final_velocity: float
     score: Optional[float] = None
     fastest_time: Optional[float] = None
+    wheelie_detected: bool = False
+    min_front_normal_force: float = 0.0
+    wheelie_time: float = -1.0
     
     def to_dict(self) -> Dict:
         """Convert result to dictionary."""
@@ -70,7 +75,10 @@ class SimulationResult:
             'final_distance': self.final_distance,
             'final_velocity': self.final_velocity,
             'score': self.score,
-            'fastest_time': self.fastest_time
+            'fastest_time': self.fastest_time,
+            'wheelie_detected': self.wheelie_detected,
+            'min_front_normal_force': self.min_front_normal_force,
+            'wheelie_time': self.wheelie_time
         }
 
 
@@ -109,6 +117,11 @@ class AccelerationSimulation:
         # Check time limit (D 5.3.1)
         time_compliant, final_time = check_time_limit(final_state, max_time=25.0)
         
+        # Check for wheelie (front wheel lift-off)
+        wheelie_detected, min_front_normal, wheelie_time = check_wheelie(
+            self.solver.state_history
+        )
+        
         # Overall compliance
         compliant = power_compliant and time_compliant
         
@@ -132,7 +145,10 @@ class AccelerationSimulation:
             final_distance=final_state.position,
             final_velocity=final_state.velocity,
             score=score,
-            fastest_time=fastest_time
+            fastest_time=fastest_time,
+            wheelie_detected=wheelie_detected,
+            min_front_normal_force=min_front_normal,
+            wheelie_time=wheelie_time
         )
         
         return result

@@ -1,0 +1,14 @@
+flowchart LR
+    subgraph RESULTS[Simulation Results]
+        TIME[Time: 4.31 s]
+        VMAX[Final Velocity: 28.4 m/s]
+        PMAX[Peak Power: 80.0 kW]
+        AMAX[Peak Acceleration: 12.1 m/s²]
+    end
+    
+    subgraph COMPLIANCE[Rule Compliance]
+        PWR_OK[Power Limit: PASS<br/>80 kW ≤ 80 kW]
+        TIME_OK[Time Limit: PASS<br/>4.31 s < 25 s]
+    end
+    
+    RESULTS --> COMPLIANCE

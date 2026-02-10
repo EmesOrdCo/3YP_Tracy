@@ -55,3 +55,4 @@ def calculate_tmax(fastest_time: float) -> float:
     return 1.5 * fastest_time
 
 
+

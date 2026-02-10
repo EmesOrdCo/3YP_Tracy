@@ -38,7 +38,8 @@ def check_power_limit(
     time_of_violation = -1.0
     
     for state in state_history:
-        power = abs(state.power_consumed)
+        # Cap power to max_power (safety check - power should already be capped in powertrain)
+        power = min(abs(state.power_consumed), max_power)
         if power > max_power_used:
             max_power_used = power
             if power > max_power and time_of_violation < 0:

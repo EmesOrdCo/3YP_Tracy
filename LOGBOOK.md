@@ -1,0 +1,667 @@
+Formula Student Simulation Logbook - Harry Emes
+
+
+4th November 2025
+Rules Analysis and Scoring Formula
+
+Began the project by downloading the Formula Student 2025 rulebook. We are tasked with the  acceleration event only. THis is a 75-metre sprint from a standing start. My role is to create and run simulations to predict the time our vehicle will take to complete this distance given its design parameters.
+
+Having read the rulebook, rule EV 2.2 specifies that power at the accumulator outlet must not exceed 80 kW. This is measured as the product of bus voltage and current draw from the battery pack, not mechanical power at the wheels. Drivetrain losses (such as motor inefficiency, transmission friction, bearing losses) mean that mechanical power delivered to the wheels will be lower than electrical power drawn from the accumulator so we need to factor in the overall drivetrain efficiency. Initial shows this is typically between 0.90 and 0.95.
+
+The scoring formula is defined in section D 5.3.2 of the rules:
+
+M = 0.95 × Pmax × ((Tmax / Tteam - 1) / 0.5) + 0.05 × Pmax
+
+where Tmax = 1.5 × Tfastest, Pmax is the maximum available points (75 for the acceleration event), and Tteam is the team's recorded time. Any team exceeding Tmax receives only the baseline 3.75 points (5% of maximum). While this is important, I feel a clearer measure of improvement and success will be the time taken to complete the run as the points depends heavily on the times of other teams which is difficult to predict.
+
+I also accessed Gillespie's "Fundamentals of Vehicle Dynamics" through an online library and began priliminary reading. Chapters 3 and 4 cover longitudinal dynamics and weight transfer respectively which appear directly relevant to the simulation.
+
+
+7th November 2025
+Longitudinal Dynamics and Resistance Forces 
+
+Continued reading Gillespie. Started with the fundamental longitudinal equation of motion for a vehicle accelerating in a straight line can be written as:
+
+Fnet = Fx,traction - Fx,drag - Fx,rolling
+
+where the net force produces acceleration according to Newton's second law. However, the effective mass is not simply the vehicle mass. Rotating components (wheels, motor rotor, transmission elements) must also be accelerated angularly, and this contributes an additional inertial term.
+
+For a wheel with moment of inertia Iwheel and radius r, the equivalent translational mass is Iwheel/r². For four wheels, the total contribution is 4×Iwheel/r². With typical Formula Student values (Iwheel ≈ 0.5 kg·m², r ≈ 0.228 m), this adds approximately 38 kg to the effective mass. For a 250 kg vehicle, this represents a 15% increase in the inertia which is non-negligable and we cannot ignore in our simulaations. 
+
+The full equation of motion becomes:
+
+(mvehicle + 4×Iwheel/r²) × a = Fx,traction - Fx,drag - Fx,rolling
+
+Aerodynamic drag follows the standard quadratic velocity relationship:
+
+Fx,drag = 0.5 × ρ × Cd × A × v²
+
+The product Cd×A is the drag area. For a Formula Student vehicle without significant aerodynamic bodywork, typical values are 0.7 to 1.0 m². With air density ρ = 1.225 kg/m³ at sea level and 20°C. The maximum drag force at 25 m/s (90 km/h, approximately the terminal velocity in a 75-metre run) is:
+
+Fx,drag = 0.5 × 1.225 × 0.8 × 625 = 306 N
+
+This is fairly small compared to the traction force available at launch (several thousand Newtons).
+
+Rolling resistance is modelled as proportional to the normal load on each tyre:
+
+Fx,rolling = Crr × Fz,total
+
+The rolling resistance coefficient Crr for racing slick tyres on smooth asphalt is typically 0.010 to 0.015 when dry. For a 250 kg vehicle, this gives a rolling resistance of approximately 25 to 37 N — this is small but not negligible over the duration of the acceleration run.
+
+
+11th November 2025
+Tyre Force Models and Slip Ratio
+
+Researched tyre force generation in detail. The longitudinal force that a tyre generates depends on two  factors: the normal load pressing the tyre into the road, and the slip ratio between the tyre and the road.
+
+Slip ratio is defined as the normalised difference between the wheel's peripheral velocity (the velocity of the tyre surface) and the vehicle's translational velocity (the velocity of the car moving forward):
+
+κ = (ωr - v) / v
+
+where ω is the wheel's angular velocity in rad/s, r is the loaded tyre radius in metres, and v is the vehicle velocity in m/s. When the wheel is rolling freely without any driving or braking torque, κ = 0 (the peripheral velocity equals the vehicle velocity). During acceleration, the driven wheels spin slightly faster than free-rolling would suggest, giving κ > 0. 
+
+There needs to be an optimum slip as both too little and too much both causes issues. At zero slip, no tractive force is generated. As slip increases, the friction coefficient rises approximately linearly until reaching a peak at the optimal slip ratio, typically 0.10 to 0.15 for dry racing tyres. Beyond this point, the friction coefficient decreases — the tyre is spinning excessively and starts spinning. 
+
+Research shows that the industry-standard model for this behaviour is the Pacejka model, which expresses the friction coefficient as:
+
+μ = D × sin(C × arctan(B×κ - E×(B×κ - arctan(B×κ))))
+
+where D is the peak friction coefficient, C is a shape factor (typically 1.65 for longitudinal forces), B is a stiffness factor, and E is a curvature factor. These parameters must be determined from tyre testing data — unfortunately we will not have data as we are using sims to inform design decisions and also not building real car. 
+
+I was also unable to find estimated, relevant values via research.
+
+Given this constraint, for now I will implement a simplified piecewise-linear model that captures the essential characteristics without requiring empirical parameters:
+
+For κ ≤ κopt:   μ = μmax × (κ / κopt)
+For κ > κopt:   μ = μmax × (1 - (κ - κopt) / (1 - κopt))
+
+This model has only two free parameters: the peak friction coefficient μmax (typically 1.2 to 1.5 for racing slicks) and the optimal slip ratio κopt (typically 0.10 to 0.15). The traction force is then simply:
+
+Fx = μ(κ) × Fz
+
+![Tyre Friction Curve](tyre_friction_curve.png)
+
+The simulation architecture should allow this simplified model to be replaced with a full Pacejka implementation if tyre data becomes available due to further research or contacting Oxford Formula Student Team.
+
+
+14th November 2025
+Numerical Integration Methods
+
+I started reading Press et al.'s "Numerical Recipes" , which I accessed via an online library.
+I investigated numerical integration methods for solving the equations of motion. The simulation must advance the vehicle state (position, velocity, wheel angular velocities) forward in time by solving a system of coupled ordinary differential equations.
+
+The simplest approach is Euler's method, which approximates the state at the next timestep using the derivative at the current timestep:
+
+x(t + dt) = x(t) + f(x, t) × dt
+
+where f(x, t) is the derivative function (velocity for position, acceleration for velocity, etc.). Euler's method is straightforward to implement but has significant drawbacks. The local truncation error (error per timestep) is O(dt²), and the global accumulated error over the simulation is O(dt). For a simulation with dt = 0.001 s running for 5 seconds, this represents 5000 timesteps, and errors can accumulate substantially.
+
+More concerningly, Euler's method can be unstable for certain types of differential equations, particularly those with rapidly changing derivatives. In the acceleration simulation, forces change significantly as velocity increases (drag grows quadratically) and as the powertrain transitions from traction-limited to power-limited operation. 
+
+The 4th-order Runge-Kutta method (RK4) provides substantially better accuracy. Rather than using only the derivative at the start of the timestep, RK4 evaluates the derivative at four points and takes a weighted average: 
+
+k1 = f(x, t)
+k2 = f(x + k1×dt/2, t + dt/2)
+k3 = f(x + k2×dt/2, t + dt/2)
+k4 = f(x + k3×dt, t + dt)
+x(t + dt) = x(t) + (k1 + 2×k2 + 2×k3 + k4) × dt/6
+
+The local truncation error is O(dt⁵) and the global error is O(dt⁴). For the same timestep of 0.001 s, this represents a significant improvement in accuracy. The cost is four derivative evaluations per timestep rather than one, but for a simulation of this scale (5000-10000 timesteps), the computational overhead is negligible on modern hardware. As such I will implement RK4 for the dynamics solver as the benifits far outweigh the costs.
+
+
+
+
+18th November 2025
+Software Architecture Design
+
+Designed the overall modular software architecture today. The simulation involves several interacting physical models, and these should be encapsulated in separate modules which can be built one by one and edited independantly.
+
+Vehicle parameters will be stored in JSON configuration files rather than hardcoded values. This enables parameter studies and optimisation to be performed without modifying code in several areas, and allows different vehicle configurations to be compared easily.
+
+
+```mermaid
+flowchart TD
+    subgraph STATE[Current State]
+        POS[Position x]
+        VEL[Velocity v]
+        OMEGA[Wheel Angular Velocity ω]
+    end
+
+    subgraph MODELS[Physical Models]
+        AERO[Aerodynamics<br/>Drag and Downforce]
+        MASS[Mass Properties<br/>Load Transfer]
+        TYRE[Tyre Model<br/>Slip and Traction]
+        PWR[Powertrain<br/>Torque and Power]
+    end
+
+    subgraph OUTPUTS[Calculated Values]
+        FDRAG[Drag Force]
+        FZ[Normal Forces]
+        FX[Traction Force]
+        TORQUE[Wheel Torque]
+    end
+
+    VEL --> AERO
+    AERO --> FDRAG
+    AERO --> |downforce| MASS
+    
+    MASS --> FZ
+    FZ --> TYRE
+    
+    VEL --> TYRE
+    OMEGA --> TYRE
+    TYRE --> FX
+    
+    OMEGA --> PWR
+    PWR --> TORQUE
+    
+    FDRAG --> SUM[Force Summation]
+    FX --> SUM
+    TORQUE --> SUM
+    
+    SUM --> ACCEL[Acceleration Calculation]
+    ACCEL --> RK4[RK4 Integration]
+    RK4 --> NEWSTATE[Updated State]
+```
+
+The powertrain model needs to abide by the 80 kW power limit. The constraint applies at the accumulator outlet (battery terminals), not at the motor shaft or wheels. The model must therefore: 
+
+1. Calculate the requested motor torque based on the control strategy
+2. Determine the motor current required: I = Tmotor / Kt, where Kt is the motor torque constant (N·m/A)
+3. Calculate the electrical power: P = Vbattery × I
+4. If P exceeds 80 kW, reduce the current to Ilimit = 80000 / Vbattery
+5. Recalculate the actual motor torque from the limited current: Tactual = Ilimit × Kt
+6. Convert motor torque to wheel torque through the gear ratio: Twheel = Tactual × Ngear × ηdrivetrain
+
+
+21st November 2025
+Tyre Model Data Flow and Load Transfer
+
+Before implementing the tyre model code, I created a detailed diagram of the force interactions and data flow for a driven rear wheels:
+
+```mermaid
+flowchart TD
+    subgraph INPUTS[Inputs]
+        FZ[Normal Force Fz<br/>from load transfer calculation]
+        OMEGA[Wheel Angular Velocity ω<br/>from previous state]
+        V[Vehicle Velocity v<br/>from previous state]
+        R[Loaded Radius r<br/>from configuration]
+    end
+
+    subgraph SLIP_CALC[Slip Calculation]
+        VWHEEL[Wheel Peripheral Velocity<br/>Vw = ω × r]
+        SLIP[Slip Ratio<br/>κ = Vw - V / V]
+    end
+
+    subgraph FRICTION[Friction Model]
+        MU_CALC[Friction Coefficient<br/>μ = f of κ]
+        MU_MAX[Peak Friction μmax]
+        K_OPT[Optimal Slip κopt]
+    end
+
+    subgraph FORCES[Force Outputs]
+        FX[Longitudinal Force<br/>Fx = μ × Fz]
+        FRR[Rolling Resistance<br/>Frr = Crr × Fz]
+    end
+
+    OMEGA --> VWHEEL
+    R --> VWHEEL
+    VWHEEL --> SLIP
+    V --> SLIP
+    
+    SLIP --> MU_CALC
+    MU_MAX --> MU_CALC
+    K_OPT --> MU_CALC
+    
+    MU_CALC --> FX
+    FZ --> FX
+    FZ --> FRR
+```
+
+The normal force Fz on each axle is not constant during acceleration. Longitudinal load transfer shifts weight from the front axle to the rear axle as the vehicle accelerates. The magnitude of this transfer depends on the acceleration, the height of the centre of gravity, and the wheelbase:
+
+ΔFz = (m × a × hCG) / L
+
+where m is the vehicle mass, a is the longitudinal acceleration, hCG is the centre of gravity height above ground, and L is the wheelbase. The normal forces on each axle become:
+
+Fz,front = Fz,front,static - ΔFz + Fdownforce,front
+Fz,rear = Fz,rear,static + ΔFz + Fdownforce,rear
+
+For a 250 kg vehicle with 50/50 static weight distribution, 0.30 m CG height, and 1.55 m wheelbase, accelerating at 1g (9.81 m/s²):
+
+ΔFz = (250 × 9.81 × 0.30) / 1.55 = 475 N
+
+This transfers approximately 475 N from the front axle to the rear axle — a significant redistribution. The rear normal force increases from 1226 N (static) to 1701 N, whilst the front decreases from 1226 N to 751 N. This load transfer benefits a rear-wheel-drive vehicle by increasing grip at the driven wheels, but also creates a feedback loop: more acceleration causes more load transfer, which enables more traction force, which produces more acceleration. 
+
+---
+
+
+24th November 2025
+Project Setup and Configuration System
+
+Began writing code today. Started by installing the required packages: NumPy for numerical operations, SciPy for optimisation (to be used later), Matplotlib for plotting results, and PyYAML for configuration file parsing. 
+
+Started with the configuration system, as this forms the foundation for all other modules. Created a vehicle_config.py file defining dataclasses for each category of vehicle parameters:
+
+- MassProperties: total mass, centre of gravity location (x and z coordinates), wheelbase, track widths, moments of inertia
+- TireProperties: loaded radius, peak friction coefficient, optimal slip ratio, rolling resistance coefficient
+- PowertrainProperties: motor torque constant, maximum current, maximum speed, battery voltage, gear ratio, drivetrain efficiency, power limit
+- AerodynamicsProperties: drag area (CdA), downforce coefficients for front and rear
+- ControlProperties: launch torque limit, target slip ratio for traction control
+
+Created a validate() method on the main VehicleConfig class to check that all parameters are within physically reasonable ranges (positive masses, gear ratios greater than zero, friction coefficients between 0 and 2, etc.).
+
+
+26th November 2025
+Configuration Loader Implementation
+
+Implemented the configuration loader. The load_config() function reads a JSON file and constructs the appropriate dataclass instances. Encountered some difficulty with nested structures — the JSON file contains nested objects (e.g., "mass": {"total_mass": 250, ...}), and these must be converted to the corresponding dataclass types.
+
+The solution was to create a helper function that recursively processes the JSON dictionary, instantiating dataclasses for recognised keys. Error handling was added to provide informative messages when required parameters are missing or have invalid types.
+
+Created a base vehicle configuration file with dummy data which was fairly representative Formula Student values:
+
+- Total mass: 250 kg (including driver)
+- Wheelbase: 1.55 m
+- CG height: 0.30 m
+- Tyre radius: 0.228 m (18-inch wheels with low-profile tyres)
+- Peak friction: 1.4
+- Motor torque constant: 0.5 N·m/A
+- Battery voltage: 400 V
+- Gear ratio: 4.0
+- Drag area: 0.8 m²
+
+These values are estimates based on published data from Formula Student competitions and will need refinement through sensitivity analysis.
+
+
+28th November 2025
+Tyre Model Implementation and Sign Error
+
+Implemented the tyre model. The core function calculate_longitudinal_force() takes the normal force, slip ratio, and vehicle velocity as inputs, and returns the traction force and rolling resistance.
+
+Encountered a sign error that took considerable time to identify. The calculated traction force was coming out negative during acceleration, which is physically impossible — a positive slip ratio (wheel spinning faster than vehicle travel) must produce a positive force (pushing the vehicle forward).
+
+The error was in the slip ratio calculation. I had implemented:
+
+κ = (v - ωr) / v
+
+when the correct formulation for acceleration is:
+
+κ = (ωr - v) / v
+
+The difference is subtle but critical. With the incorrect formula, accelerating wheels (ωr > v) give negative slip ratios, which then produce negative friction coefficients, resulting in negative forces. The Milliken textbook uses a different sign convention (defining slip in terms of vehicle velocity relative to wheel velocity), which caused the initial confusion.
+
+After correcting this, the tyre model produces sensible values: for a normal force of 1500 N and 10% slip ratio, the traction force is approximately 2100 N, consistent with a friction coefficient around 1.4.
+
+
+1st December 2025
+Mass Properties and Load Transfer Model
+
+Implemented the mass properties model. This module calculates the static weight distribution and the dynamic load transfer during acceleration.
+
+The static weight distribution depends on the longitudinal position of the centre of gravity:
+
+Fz,rear,static = (m × g × LCG) / L
+Fz,front,static = m × g - Fz,rear,static
+
+where LCG is the distance from the front axle to the centre of gravity, and L is the wheelbase. For a CG located 0.775 m behind the front axle (50% of a 1.55 m wheelbase), the static distribution is 50/50.
+
+The load transfer calculation implements the equation derived earlier:
+
+ΔFz = (m × a × hCG) / L
+
+The function calculate_normal_forces() takes the current acceleration estimate, front downforce, and rear downforce as inputs, and returns the normal force on each axle. The acceleration estimate comes from the previous timestep; this approximation is acceptable for small timesteps.
+
+Created unit tests to verify the calculations against hand-computed values. A 250 kg vehicle at rest should have 1226.25 N on each axle (half of 250 × 9.81). The same vehicle accelerating at 10 m/s² with a 0.30 m CG height and 1.55 m wheelbase should experience load transfer of 484 N, giving rear normal force of 1710 N and front normal force of 742 N. The implemented functions produce these values correctly.
+
+
+3rd December 2025
+Python Import System Issues
+
+Encountered an issue with Python's import system. When running the test scripts, Python cannot find the vehicle module.
+
+The project structure has separate directories for different components (vehicle/, dynamics/, rules/, etc.), and files in one directory need to import from another. In Python, this requires the directories to be recognised as packages.
+
+Researched Python packaging extensively. The issue arises because Python's import system works differently depending on how a script is executed. Running a script directly (python examples/test_run.py) does not automatically add the project root to the module search path. The script's directory is added, but not parent directories.
+
+Several potential solutions exist:
+
+1. Install the package in development mode using pip install -e . This adds the package to Python's site-packages and enables imports from anywhere.
+2. Modify sys.path at the top of each script to include the project root directory.
+3. Use relative imports (from ..vehicle import tire_model), which work when the code is run as part of a package but not when scripts are run directly.
+
+After experimentation, I settled on a dual-import approach: try relative imports first (for when the package is properly installed), and fall back to absolute imports with sys.path manipulation (for development). This is implemented as a try/except block at the top of each module:
+
+```python
+try:
+    from ..config.vehicle_config import VehicleConfig
+except ImportError:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).parent.parent))
+    from config.vehicle_config import VehicleConfig
+```
+
+This pattern must be applied to every module that imports from other parts of the project. It is inelegant but ensures the code works in both development and installed contexts.
+
+
+5th December 2025
+Aerodynamics Model
+
+Implemented the aerodynamics model. This is relatively straightforward compared to the tyre and powertrain models.
+
+The drag force calculation follows the standard formula:
+
+Fdrag = 0.5 × ρ × CdA × v²
+
+where ρ is air density (defaulting to 1.225 kg/m³), CdA is the drag area from the configuration, and v is the vehicle velocity. The function returns zero drag at zero velocity to avoid numerical issues.
+
+Downforce is calculated similarly:
+
+Fdownforce = 0.5 × ρ × CL × Aref × v²
+
+The configuration specifies separate downforce coefficients for front and rear, allowing asymmetric aerodynamic loading. Most Formula Student vehicles are designed with more rear downforce to improve traction, though the actual values depend heavily on the specific aerodynamic package. I am including an aeropackage however it is unlikely that we will proceed with implementation in reality - these sims should show they are largely redundant for a straight line acceleration event. 
+
+The quadratic velocity dependence means aerodynamic drag are negligible at launch but become significant at higher speeds. At 25 m/s, drag consumes roughly 7.6 kW of the available 80 kW power budget.
+
+
+8th December 2025
+Powertrain Model and Power Limiting
+
+Implemented the powertrain model. This is the most complex module due to the need to correctly enforce the 80 kW power limit at the accumulator outlet.
+
+The model represents a simplified electric drivetrain: battery → motor → single-speed gearbox → driven wheels. The key relationships are:
+
+Motor torque from current: Tmotor = Kt × Imotor
+Motor speed from wheel speed: ωmotor = ωwheel × Ngear
+Wheel torque from motor torque: Twheel = Tmotor × Ngear × ηdrivetrain
+Electrical power: Pelec = Vbattery × Imotor
+
+The power limit must be enforced at the electrical power level (Pelec ≤ 80 kW), not at the mechanical power level. This is because the Formula Student rules specify the limit at the accumulator outlet.
+
+```mermaid
+flowchart TD
+    REQ[Requested Wheel Torque<br/>from control strategy] --> CONV1[Convert to Motor Torque<br/>Tm = Tw / Ng / η]
+    CONV1 --> CURR[Calculate Motor Current<br/>I = Tm / Kt]
+    CURR --> PWR[Calculate Electrical Power<br/>P = V × I]
+    PWR --> CHECK{P > 80 kW?}
+    CHECK --> |Yes| LIMIT[Limit Current<br/>Imax = 80000 / V]
+    CHECK --> |No| PASS[Use Calculated Current]
+    LIMIT --> RECALC[Recalculate Torque<br/>Tm = Imax × Kt]
+    PASS --> OUT[Output Wheel Torque<br/>Tw = Tm × Ng × η]
+    RECALC --> OUT
+```
+
+Initial testing revealed an error in my understanding. I had assumed that limiting the motor torque directly would enforce the power limit. However, power is torque multiplied by angular velocity (P = T × ω), so the same torque at different speeds corresponds to different power levels. At low speed, torque is limited by motor current capacity. At high speed, torque is limited by the 80 kW power constraint. The transition occurs when:
+
+Tmax × ωmotor = 80000 W
+
+For a motor torque constant of 0.5 N·m/A and maximum current of 300 A, peak motor torque is 150 N·m. The power-limited regime begins when motor speed exceeds 80000 / 150 = 533 rad/s. With a gear ratio of 4.0 and wheel radius 0.228 m, this corresponds to a vehicle speed of approximately 30 m/s — beyond the typical speed reached in a 75-metre run, but the logic must still be correct.
+
+
+10th December 2025
+Initial Simulation Integration
+
+Began integrating the individual models into a complete simulation. Created the SimulationState dataclass to hold all state variables:
+
+- time (s)
+- position (m)
+- velocity (m/s)
+- wheel_angular_velocity_rear (rad/s)
+- wheel_angular_velocity_front (rad/s)
+- acceleration (m/s²)
+- Various force values for logging and analysis
+
+The solver module orchestrates the force calculations and numerical integration. The main solve() function initialises the state at t=0, then loops until the position exceeds 75 metres or time exceeds a maximum value (25 seconds, per the disqualification threshold).
+
+Within each timestep, the sequence is:
+
+1. Calculate aerodynamic forces from current velocity
+2. Estimate normal forces using previous acceleration
+3. Calculate slip ratios from wheel and vehicle velocities
+4. Calculate tyre forces from slip ratios and normal forces
+5. Request torque from control strategy
+6. Calculate actual torque and power from powertrain model
+7. Sum all forces to get net force
+8. Calculate acceleration from net force and effective mass
+9. Update normal forces with actual acceleration (refinement)
+10. Calculate state derivatives
+11. Perform RK4 integration step
+12. Store new state in history
+
+The first complete run produced unexpected results. The vehicle reached 75 metres in approximately 2.1 seconds, which would be faster than a Formula 1 car. Clearly something is wrong.
+
+
+12th December 2025
+Debugging Force Calculation Errors
+
+Spent the day debugging the unrealistic simulation results. The 2.1-second time implies an average acceleration of approximately 17 m/s² (1.7g), which is implausible for a Formula Student vehicle.
+
+Traced through the calculations step by step. The tyre forces looked reasonable — peak traction of approximately 3500 N for a rear axle load of 2500 N (including load transfer and downforce), corresponding to μ = 1.4. The powertrain was producing about 600 N·m at the wheels at low speed, which converts to approximately 2600 N of tractive force with the 0.228 m wheel radius.
+
+The problem was discovered in the force summation. I had implemented:
+
+net_force = drive_force + drag_force + rolling_resistance
+
+when it should be:
+
+net_force = drive_force - drag_force - rolling_resistance
+
+Drag and rolling resistance oppose motion and must be subtracted, not added. This elementary sign error approximately doubled the calculated acceleration.
+
+After correction, the simulated time increased to approximately 4.0 seconds — much more realistic for a well-optimised Formula Student electric vehicle.
+
+However, the power usage was showing values exceeding 80 kW, indicating that the power limiting logic was not functioning correctly.
+
+
+14th December 2025
+Power Limiting Fix and RK4 Implementation
+
+Fixed the power limiting issue. The error was in the order of operations — I was calculating the limited current correctly, but then using the unlimited current value when converting back to torque. A simple variable naming error: current vs current_limited.
+
+With power limiting working correctly, the simulation shows the expected behaviour. At launch, power increases rapidly as the motor delivers maximum torque. The 80 kW limit is reached at approximately 0.3 seconds, after which power remains constant and torque decreases as speed increases. The vehicle transitions from traction-limited to power-limited operation.
+
+Implemented the RK4 integration properly. The key insight is that each of the four derivative evaluations (k1 through k4) requires a complete force calculation at the intermediate state. This means the force calculation functions must accept a state object and return derivatives, not modify global variables.
+
+Created helper functions _add_states() and _scale_state() to perform arithmetic on state objects, allowing the RK4 update formula to be written clearly.
+
+
+16th December 2025
+State Management and Configuration Testing
+
+Refined the state management and added comprehensive logging. Each timestep now records the complete state including all intermediate forces, power consumption, and constraint violations. This data is stored in a list for post-simulation analysis.
+
+With a timestep of 1 ms, a 4-second simulation generates 4000 state records. Each record contains approximately 20 floating-point values, totalling about 320 kB of data. This is acceptable for single simulations but would become problematic for large parameter sweeps. Added an option to reduce logging frequency (e.g., every 10th timestep) when detailed traces are not required.
+
+Tested the simulation with various configurations:
+
+- Base vehicle (250 kg, 80 kW, μ=1.4): 3.99 seconds
+- Heavier vehicle (300 kg, same powertrain): 4.45 seconds
+- Higher friction (μ=1.6): 3.82 seconds
+- Lower power (60 kW limit): 4.56 seconds
+
+These results are qualitatively consistent with expectations. Mass increases time approximately linearly (for a given power-to-weight ratio). Friction improvements help at launch but have diminishing returns once the vehicle becomes power-limited. Power directly affects top-end performance.
+
+
+18th December 2025
+First Successful Simulation Run
+
+First fully successful simulation run with all components integrated and validated. The base vehicle configuration completes 75 metres in 3.99 seconds, reaching a final velocity of 26.7 m/s (96 km/h).
+
+![Velocity vs Time](velocity_vs_time.png)
+
+![Power vs Time](power_vs_time.png)
+
+![Acceleration vs Time](acceleration_vs_time.png)
+
+The acceleration profile shows three distinct phases:
+
+1. Launch phase (0 - 0.3 s): Traction-limited, acceleration approximately constant at 11.8 m/s²
+2. Transition (0.3 - 0.5 s): Power limit reached, acceleration begins decreasing
+3. Power-limited phase (0.5 s onwards): Acceleration decreases inversely with velocity as constant power provides diminishing force
+
+Plotted the velocity versus time curve and compared it to a simple constant-acceleration model. The actual profile shows higher initial acceleration followed by a gradual decrease, crossing the constant-acceleration line at approximately 2 seconds and 40 metres. The final time is about 0.2 seconds longer than a hypothetical constant-acceleration vehicle with the same average acceleration, illustrating the penalty of power-limited operation.
+
+
+20th December 2025
+Rules Compliance Module
+
+Implemented the rules compliance checking module. This consists of three functions:
+
+1. check_power_limit(): Iterates through the state history and verifies that power never exceeded 80 kW. Returns a boolean compliance flag, the maximum power observed, and the time at which maximum power occurred.
+2. check_time_limit(): Verifies that the final time is less than 25 seconds (D 5.3.1 disqualification threshold). Returns a boolean and the final time.
+3. calculate_acceleration_score(): Implements the scoring formula from D 5.3.2. Takes the team time and the fastest time in competition as inputs, calculates Tmax = 1.5 × Tfastest, and applies the formula.
+
+The score calculation requires knowing the fastest time in the competition, which is not known in advance during design. For parameter studies, a representative fastest time of 3.5 seconds can be assumed based on historical Formula Student results. With a team time of 3.99 seconds and fastest time of 3.5 seconds, the score would be approximately 64 points out of 75.
+
+Created the AccelerationSimulation class to provide a clean interface for running simulations. The run() method accepts an optional fastest_time parameter for scoring, executes the solver, performs compliance checks, and returns a SimulationResult object containing all relevant outputs.
+
+---
+
+
+6th January 2026
+Zero Velocity Edge Case Fix
+
+Returned to the project after the Christmas break. Spent time re-reading the code to recall how everything fits together. Added comments to several functions where the logic was not immediately obvious.
+
+Identified an issue during testing. At exactly zero velocity (the initial state), the slip ratio calculation produces a division by zero:
+
+κ = (ωr - v) / v
+
+When v = 0 and the wheels are also stationary (ω = 0), the formula gives 0/0, which NumPy evaluates as NaN (not a number). This NaN then propagates through all subsequent calculations, causing the entire simulation to produce meaningless results.
+
+The fix is to handle the zero-velocity case explicitly. If vehicle velocity is below a small threshold (0.01 m/s), the slip ratio is defined based on wheel velocity alone: if the wheel is spinning (ω > 0), slip ratio is set to 1.0 (maximum); if the wheel is stationary, slip ratio is 0.
+
+This is physically reasonable — at standstill with the wheels spinning, the slip ratio is conceptually infinite or unity depending on the definition convention.
+
+
+8th January 2026
+Wheelie Detection Implementation
+
+Discovered another edge case during parameter sensitivity testing. With certain high-torque configurations, the simulation produced negative values for the front normal force. This is physically impossible — negative normal force would mean the front tyres are being pulled into the ground rather than pushed.
+
+A negative front normal force indicates that the front wheels would lift off the ground — the vehicle would perform a "wheelie". This can occur when the load transfer exceeds the static front axle load:
+
+ΔFz > Fz,front,static
+
+Rearranging the load transfer equation:
+
+a > (Fz,front,static × L) / (m × hCG)
+
+For the base vehicle with 50/50 weight distribution, 1.55 m wheelbase, 250 kg mass, and 0.30 m CG height:
+
+a > (1226 × 1.55) / (250 × 0.30) = 25.3 m/s²
+
+This acceleration threshold is higher than the vehicle can actually achieve (peak is approximately 11.8 m/s²), so the base configuration is safe. However, a lighter vehicle or one with higher CG could theoretically wheelie during launch.
+
+Added a wheelie detection function to the rules module. This iterates through the state history and checks if the front normal force ever becomes negative (or drops below a small threshold to account for numerical noise). If detected, the simulation flags this as a constraint violation and records the time at which it occurred.
+
+
+10th January 2026
+Validation Against Hand Calculations
+
+Performed validation against hand calculations to verify the simulation is producing physically correct results.
+
+Test case: vehicle at constant 20 m/s on level ground, no acceleration, no aerodynamic effects.
+
+Expected forces:
+- Normal force front: 250 × 9.81 / 2 = 1226 N (50/50 distribution)
+- Normal force rear: 1226 N
+- Rolling resistance: 2 × 0.015 × 1226 = 36.8 N
+- Required drive force: 36.8 N (to overcome rolling resistance)
+- Required power: 36.8 × 20 = 736 W
+
+Simulation output at t = 2.5 s (after reaching steady state): rolling resistance 36.7 N, drive force 38.1 N, power 762 W. The small discrepancy is due to residual acceleration as the vehicle had not quite reached true steady state. Repeating with a longer simulation and smaller timestep gave values matching the hand calculation within 0.1%.
+
+Test case: vehicle accelerating from rest, first 0.1 seconds.
+
+With initial wheel torque of 600 N·m and wheel radius 0.228 m, the initial drive force is 600 / 0.228 = 2632 N. Subtracting rolling resistance (approximately 35 N at the enhanced rear normal force), net force is approximately 2597 N. With effective mass of 288 kg (250 + 38 kg rotational equivalent), acceleration should be 2597 / 288 = 9.0 m/s².
+
+Simulation output: 9.1 m/s² average over first 0.1 seconds. The agreement confirms the force calculations and effective mass are implemented correctly.
+
+
+13th January 2026
+Comparison with Competition Results
+
+Added further validation by comparing the simulation output to published Formula Student results. The fastest acceleration times at major competitions are typically in the range of 3.2 to 3.8 seconds for electric vehicles. These vehicles have power-to-weight ratios around 320 W/kg (80 kW / 250 kg) and estimated peak friction coefficients of 1.5 or higher.
+
+Running the simulation with optimistic parameters (225 kg mass, μ = 1.6, optimised weight distribution) produces a time of 3.45 seconds. This is consistent with the competitive times observed in practice, providing confidence that the simulation captures the essential physics correctly.
+
+The simulation does not account for several factors that affect real-world performance:
+
+- Driver reaction time at the start (typically 0.2-0.4 seconds added to total time)
+- Tyre temperature effects (grip varies with temperature)
+- Battery voltage sag under load (reduces available power)
+- Motor thermal limits (may restrict sustained power)
+- Aerodynamic sensitivity to wind and ambient conditions
+
+These factors generally increase the real-world time relative to the idealised simulation. A competitive vehicle might simulate at 3.5 seconds but achieve 3.8-4.0 seconds in practice.
+
+
+15th January 2026
+Visualisation Tools
+
+Implemented visualisation tools for analysing simulation results. Created functions to plot velocity versus time, position versus time, acceleration versus time, power versus time (with 80 kW limit marked), force breakdown versus time (drive force, drag, rolling resistance), normal forces versus time (showing load transfer), and velocity versus position.
+
+These plots are essential for understanding vehicle behaviour and identifying areas for improvement. The velocity-time plot, for example, clearly shows the transition from traction-limited to power-limited operation as a change in the curve's slope.
+
+![Forces vs Time](forces_vs_time.png)
+
+![Normal Forces — Load Transfer](normal_forces_vs_time.png)
+
+Created a comprehensive multi-panel plot function that generates all relevant graphs in a single figure for quick assessment of simulation results:
+
+![Comprehensive Results](comprehensive_results.png)
+
+The figure includes a title showing the final time, score, and compliance status.
+
+
+17th January 2026
+Documentation and Type Hints
+
+Wrote documentation for the codebase. Created the following documents:
+
+- README.md: Project overview, installation instructions, quick start guide
+- ARCHITECTURE.md: System design, module responsibilities, data flow
+- API documentation for public functions
+
+The documentation aims to enable future users (or myself after some time away from the project) to understand the code structure and make modifications. Each module has a docstring explaining its purpose, and each function has a docstring describing its inputs, outputs, and any important assumptions.
+
+Added type hints throughout the codebase using Python's typing module. This improves code readability and enables static analysis tools to catch potential errors. For example:
+
+```python
+def calculate_normal_forces(
+    self,
+    acceleration: float,
+    downforce_front: float,
+    downforce_rear: float
+) -> Tuple[float, float]:
+```
+
+The return type annotation Tuple[float, float] clearly indicates that the function returns two floating-point values (front and rear normal forces).
+
+
+20th January 2026
+Final Review and Future Work
+
+Final review and consolidation of the project. The simulation system is functional and produces physically plausible results for the Formula Student 75-metre acceleration event. Key capabilities include:
+
+- Physics-based modelling of tyre forces, aerodynamics, load transfer, and powertrain
+- Enforcement of the 80 kW power limit at the accumulator outlet (EV 2.2)
+- Fourth-order Runge-Kutta integration for numerical accuracy
+- Configurable vehicle parameters via JSON files
+- Compliance checking against Formula Student rules
+- Scoring calculation per D 5.3.2
+- Visualisation tools for results analysis
+
+Areas identified for future development:
+
+Pacejka tyre model: The current simplified friction model captures the essential behaviour but lacks the accuracy of a properly calibrated Pacejka model. If tyre test data becomes available, the TireModel class should be extended to support the Magic Formula. The modular architecture makes this straightforward — only the _calculate_friction_coefficient() method needs modification.
+
+Wet conditions: The current simulation assumes dry track conditions. Wet conditions would significantly reduce the available friction coefficient (typically to 0.7-0.9 from 1.2-1.5) and alter the optimal slip ratio. A weather parameter could be added to the configuration to scale the tyre model appropriately.
+
+Thermal effects: Battery internal resistance increases at low temperatures, reducing available power. Tyre grip depends on surface temperature, requiring a warm-up period for optimal performance. Motor efficiency varies with temperature. These effects are currently neglected but could be significant in certain conditions.
+
+Transient powertrain dynamics: The current model assumes instantaneous torque response. Real motors have electrical and mechanical time constants that limit how quickly torque can change. For the relatively long duration of an acceleration run (4+ seconds), this is likely a minor effect, but could be relevant for traction control tuning.
+
+The simulation provides a solid foundation for design studies and optimisation. Parameter sweeps can identify which vehicle characteristics have the greatest influence on acceleration time, guiding resource allocation during the design process.

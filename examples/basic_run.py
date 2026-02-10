@@ -46,17 +46,25 @@ def main():
     print(f"  Power Compliant: {'✓' if result.power_compliant else '✗'}")
     print(f"  Time Compliant: {'✓' if result.time_compliant else '✗'}")
     print(f"  Overall Compliant: {'✓' if result.compliant else '✗'}")
+    print(f"  Wheelie Detected: {'⚠️ YES' if result.wheelie_detected else '✓ NO'}")
+    if result.wheelie_detected:
+        print(f"  Min Front Normal Force: {result.min_front_normal_force:.2f} N (threshold: 0.10 N)")
     
     if result.score is not None:
         print(f"  Score: {result.score:.2f} points")
     
-    # Print warning if not compliant
-    if not result.compliant:
-        print("\n⚠️  WARNING: Simulation is not rules compliant!")
+    # Print warnings if not compliant or if wheelie detected
+    if not result.compliant or result.wheelie_detected:
+        print("\n⚠️  WARNINGS:")
         if not result.power_compliant:
             print(f"   - Power limit exceeded: {result.max_power_used/1000:.2f} kW > 80 kW")
         if not result.time_compliant:
             print(f"   - Time limit exceeded: {result.final_time:.2f} s > 25.0 s")
+        if result.wheelie_detected:
+            print(f"   - WHEELIE DETECTED: Front wheels lifted off at {result.wheelie_time:.3f} s")
+            print(f"     Minimum front normal force: {result.min_front_normal_force:.2f} N (threshold: 0.10 N)")
+            print(f"     ⚠️  Loss of front wheel traction and steering control!")
+            print(f"     Fix: Increase cg_x (move CG forward) or decrease cg_z (lower CG)")
     
     print("\n" + "=" * 60)
 

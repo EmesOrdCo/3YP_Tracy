@@ -49,7 +49,7 @@ class PowertrainProperties:
     motor_max_current: float  # A
     motor_max_speed: float  # rad/s
     
-    # Battery properties (required)
+    # Battery properties (required for battery mode)
     battery_voltage_nominal: float  # V
     battery_internal_resistance: float  # Ω
     battery_max_current: float  # A
@@ -63,6 +63,17 @@ class PowertrainProperties:
     differential_ratio: float = 1.0
     max_power_accumulator_outlet: float = 80e3  # W (80 kW) - Formula Student rule EV 2.2
     wheel_inertia: float = 0.1  # kg·m²
+    
+    # Energy storage type selection
+    energy_storage_type: str = "battery"  # "battery" or "supercapacitor"
+    
+    # Supercapacitor properties (used when energy_storage_type="supercapacitor")
+    # Based on C46W-3R0-0600 configuration from main.m
+    supercap_cell_voltage: float = 3.0  # V per cell
+    supercap_cell_capacitance: float = 600.0  # F per cell
+    supercap_cell_esr: float = 0.7e-3  # Ω per cell (0.7 mΩ)
+    supercap_num_cells: int = 200  # Number of cells in series
+    supercap_min_voltage: float = 350.0  # V - minimum operating voltage (inverter threshold)
 
 
 @dataclass

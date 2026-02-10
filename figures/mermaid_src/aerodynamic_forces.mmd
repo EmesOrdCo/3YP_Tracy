@@ -1,0 +1,17 @@
+flowchart LR
+    subgraph LOW[Low Speed: 5 m/s]
+        DRAG1[Drag: 12 N]
+        DOWN1[Downforce: 15 N]
+    end
+    
+    subgraph MED[Medium Speed: 15 m/s]
+        DRAG2[Drag: 110 N]
+        DOWN2[Downforce: 138 N]
+    end
+    
+    subgraph HIGH[High Speed: 25 m/s]
+        DRAG3[Drag: 306 N]
+        DOWN3[Downforce: 383 N]
+    end
+    
+    LOW --> MED --> HIGH

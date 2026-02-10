@@ -1,0 +1,36 @@
+flowchart TD
+    subgraph INPUTS[Inputs]
+        FZ[Normal Force Fz<br/>from load transfer calculation]
+        OMEGA[Wheel Angular Velocity ω<br/>from previous state]
+        V[Vehicle Velocity v<br/>from previous state]
+        R[Loaded Radius r<br/>from configuration]
+    end
+
+    subgraph SLIP_CALC[Slip Calculation]
+        VWHEEL[Wheel Peripheral Velocity<br/>Vw = ω × r]
+        SLIP[Slip Ratio<br/>κ = Vw - V / V]
+    end
+
+    subgraph FRICTION[Friction Model]
+        MU_CALC[Friction Coefficient<br/>μ = f of κ]
+        MU_MAX[Peak Friction μmax]
+        K_OPT[Optimal Slip κopt]
+    end
+
+    subgraph FORCES[Force Outputs]
+        FX[Longitudinal Force<br/>Fx = μ × Fz]
+        FRR[Rolling Resistance<br/>Frr = Crr × Fz]
+    end
+
+    OMEGA --> VWHEEL
+    R --> VWHEEL
+    VWHEEL --> SLIP
+    V --> SLIP
+    
+    SLIP --> MU_CALC
+    MU_MAX --> MU_CALC
+    K_OPT --> MU_CALC
+    
+    MU_CALC --> FX
+    FZ --> FX
+    FZ --> FRR

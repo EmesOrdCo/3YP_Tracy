@@ -38,6 +38,12 @@ class SimulationState:
     # Power
     power_consumed: float = 0.0  # W
     
+    # Energy storage state (for supercapacitor tracking)
+    dc_bus_voltage: float = 0.0  # V - DC bus voltage from energy storage
+    energy_storage_soc: float = 1.0  # State of charge (0-1)
+    energy_storage_loss: float = 0.0  # W - Power loss in energy storage (ESR)
+    in_field_weakening: bool = False  # True if motor is in field weakening region
+    
     # Time
     time: float = 0.0  # s
     
@@ -60,7 +66,11 @@ class SimulationState:
             'normal_force_rear': self.normal_force_rear,
             'tire_force_front': self.tire_force_front,
             'tire_force_rear': self.tire_force_rear,
-            'power_consumed': self.power_consumed
+            'power_consumed': self.power_consumed,
+            'dc_bus_voltage': self.dc_bus_voltage,
+            'energy_storage_soc': self.energy_storage_soc,
+            'energy_storage_loss': self.energy_storage_loss,
+            'in_field_weakening': self.in_field_weakening
         }
     
     def copy(self) -> 'SimulationState':
@@ -82,7 +92,12 @@ class SimulationState:
             tire_force_front=self.tire_force_front,
             tire_force_rear=self.tire_force_rear,
             power_consumed=self.power_consumed,
+            dc_bus_voltage=self.dc_bus_voltage,
+            energy_storage_soc=self.energy_storage_soc,
+            energy_storage_loss=self.energy_storage_loss,
+            in_field_weakening=self.in_field_weakening,
             time=self.time
         )
+
 
 

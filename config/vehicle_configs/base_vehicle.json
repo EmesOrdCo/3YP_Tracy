@@ -1,6 +1,6 @@
 {
   "mass": {
-    "total_mass": 250.0,
+    "total_mass": 200.0,
     "cg_x": 1.2,
     "cg_z": 0.3,
     "wheelbase": 1.6,
@@ -19,18 +19,19 @@
     "rolling_resistance_coeff": 0.015
   },
   "powertrain": {
-    "motor_torque_constant": 0.5,
-    "motor_max_current": 200.0,
-    "motor_max_speed": 1000.0,
+    "motor_torque_constant": 0.82,
+    "motor_max_current": 450.0,
+    "motor_max_speed": 838.0,
     "motor_efficiency": 0.95,
-    "battery_voltage_nominal": 300.0,
+    "battery_voltage_nominal": 600.0,
     "battery_internal_resistance": 0.01,
     "battery_max_current": 300.0,
-    "gear_ratio": 10.0,
+    "gear_ratio": 6.0,
     "drivetrain_efficiency": 0.95,
     "differential_ratio": 1.0,
     "max_power_accumulator_outlet": 80000.0,
-    "wheel_inertia": 0.1
+    "wheel_inertia": 0.1,
+    "energy_storage_type": "battery"
   },
   "aerodynamics": {
     "cda": 0.8,
@@ -64,5 +65,3 @@
     "target_distance": 75.0
   }
 }
-
-

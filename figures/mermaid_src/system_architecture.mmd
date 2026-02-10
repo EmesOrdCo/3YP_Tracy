@@ -1,0 +1,42 @@
+flowchart TD
+    subgraph STATE[Current State]
+        POS[Position x]
+        VEL[Velocity v]
+        OMEGA[Wheel Angular Velocity ω]
+    end
+
+    subgraph MODELS[Physical Models]
+        AERO[Aerodynamics<br/>Drag and Downforce]
+        MASS[Mass Properties<br/>Load Transfer]
+        TYRE[Tyre Model<br/>Slip and Traction]
+        PWR[Powertrain<br/>Torque and Power]
+    end
+
+    subgraph OUTPUTS[Calculated Values]
+        FDRAG[Drag Force]
+        FZ[Normal Forces]
+        FX[Traction Force]
+        TORQUE[Wheel Torque]
+    end
+
+    VEL --> AERO
+    AERO --> FDRAG
+    AERO --> |downforce| MASS
+    
+    MASS --> FZ
+    FZ --> TYRE
+    
+    VEL --> TYRE
+    OMEGA --> TYRE
+    TYRE --> FX
+    
+    OMEGA --> PWR
+    PWR --> TORQUE
+    
+    FDRAG --> SUM[Force Summation]
+    FX --> SUM
+    TORQUE --> SUM
+    
+    SUM --> ACCEL[Acceleration Calculation]
+    ACCEL --> RK4[RK4 Integration]
+    RK4 --> NEWSTATE[Updated State]
