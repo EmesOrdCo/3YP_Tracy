@@ -1,0 +1,59 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{styling}[2026/02/10 Formula Student 3YP Report Styling]
+
+% --- Margins and Layout ---
+% Requirement: Margins not less than 20mm [cite: 15]
+\RequirePackage[margin=20mm]{geometry}
+
+% --- Typography ---
+% Requirement: Minimum 11pt font (handled in documentclass) [cite: 16]
+% Common Practice: Sans Serif font [cite: 36]
+\RequirePackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Requirement: Double line spacing [cite: 17]
+\RequirePackage{setspace}
+\doublespacing
+
+% Common Practice: Left justified [cite: 36]
+\RequirePackage[document]{ragged2e}
+
+% --- Structure ---
+% Requirement: More than three levels is confusing (limit to 3) [cite: 39]
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+% --- Essential Packages ---
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[english]{babel}
+\RequirePackage{csquotes} % Required by biblatex when babel is loaded
+\RequirePackage{amsmath}
+\RequirePackage{graphicx}
+\RequirePackage{float}
+\RequirePackage{subcaption}
+\RequirePackage{booktabs}
+\RequirePackage{siunitx}
+\RequirePackage{makecell}
+\RequirePackage[table]{xcolor}
+\RequirePackage{arydshln}
+\RequirePackage{hyperref}
+
+% --- Captions ---
+\RequirePackage{caption}
+% Requirement: Table captions above, Figure captions below [cite: 74, 75]
+\captionsetup[table]{position=above, skip=10pt, labelfont=bf}
+\captionsetup[figure]{position=below, skip=10pt, labelfont=bf}
+
+% --- Referencing ---
+% Requirement: Vancouver/Numeric style with square brackets [cite: 79, 82]
+% Requirement: References NOT Bibliography [cite: 77]
+\RequirePackage[style=numeric, sorting=none, backend=biber]{biblatex}
+
+% --- Individual Identifiability ---
+% Requirement: Individual contributions must be clearly identifiable [cite: 18]
+\newcommand{\contribution}[1]{\medskip\noindent\textbf{Section Contribution: #1}\par}
+
+% Ensure the heading is "References", not "Bibliography"
+\DefineBibliographyStrings{english}{%
+  bibliography = {References},
+}

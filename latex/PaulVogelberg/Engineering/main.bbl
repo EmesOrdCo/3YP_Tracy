@@ -1,0 +1,171 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{linden2011}{book}{}
+      \name{author}{1}{}{%
+        {{hash=5624592f2a1d455063936c32ad0202d1}{%
+           family={Reddy},
+           familyi={R\bibinitperiod},
+           given={Thomas\bibnamedelima B.},
+           giveni={T\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {McGraw-Hill Education}%
+      }
+      \strng{namehash}{5624592f2a1d455063936c32ad0202d1}
+      \strng{fullhash}{5624592f2a1d455063936c32ad0202d1}
+      \strng{bibnamehash}{5624592f2a1d455063936c32ad0202d1}
+      \strng{authorbibnamehash}{5624592f2a1d455063936c32ad0202d1}
+      \strng{authornamehash}{5624592f2a1d455063936c32ad0202d1}
+      \strng{authorfullhash}{5624592f2a1d455063936c32ad0202d1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{4th}
+      \field{note}{Primary source for Pb-acid, NiMH, and general Li-ion ranges}
+      \field{title}{Linden's Handbook of Batteries}
+      \field{year}{2011}
+    \endentry
+    \entry{miao2019}{article}{}
+      \name{author}{4}{}{%
+        {{hash=81c557b095aa0b3c22a2fbc1e2bfa711}{%
+           family={Miao},
+           familyi={M\bibinitperiod},
+           given={Yu},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=0eca34955b6f2e5cff2eb31f1fb35698}{%
+           family={Hynan},
+           familyi={H\bibinitperiod},
+           given={Patrick},
+           giveni={P\bibinitperiod}}}%
+        {{hash=a5e747405d6d2c1e8566aa34f039cbf1}{%
+           family={Jouanne},
+           familyi={J\bibinitperiod},
+           given={Annette},
+           giveni={A\bibinitperiod},
+           prefix={von},
+           prefixi={v\bibinitperiod}}}%
+        {{hash=035f539275df4af447211d3f48ae8440}{%
+           family={Yokochi},
+           familyi={Y\bibinitperiod},
+           given={Alexandre},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {MDPI}%
+      }
+      \strng{namehash}{ccdc55aa4b15f82aaf7ae5f37020ede4}
+      \strng{fullhash}{dd4ae82865b2a0a9ab08c5cd4e3736a5}
+      \strng{bibnamehash}{ccdc55aa4b15f82aaf7ae5f37020ede4}
+      \strng{authorbibnamehash}{ccdc55aa4b15f82aaf7ae5f37020ede4}
+      \strng{authornamehash}{ccdc55aa4b15f82aaf7ae5f37020ede4}
+      \strng{authorfullhash}{dd4ae82865b2a0a9ab08c5cd4e3736a5}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Energies}
+      \field{note}{Source for LTO, LFP, and NMC comparisons}
+      \field{number}{6}
+      \field{title}{Current Li-Ion Battery Technologies in Electric Vehicles and Opportunities for Advancements}
+      \field{volume}{12}
+      \field{year}{2019}
+      \field{pages}{1074}
+      \range{pages}{1}
+    \endentry
+    \entry{omar2014}{article}{}
+      \name{author}{6}{}{%
+        {{hash=a32728f5626e57a1e0288f8037e26e45}{%
+           family={Omar},
+           familyi={O\bibinitperiod},
+           given={Noshin},
+           giveni={N\bibinitperiod}}}%
+        {{hash=3b3384d730d186d82764157ff602f1b6}{%
+           family={Daowd},
+           familyi={D\bibinitperiod},
+           given={Mohamed},
+           giveni={M\bibinitperiod}}}%
+        {{hash=c39d06ab65aee9f5115877830b2e2c35}{%
+           family={Hegazy},
+           familyi={H\bibinitperiod},
+           given={Omar},
+           giveni={O\bibinitperiod}}}%
+        {{hash=2ebc35adf6e94496449b40cce48f98d2}{%
+           family={Al\bibnamedelima Sakka},
+           familyi={A\bibinitperiod\bibinitdelim S\bibinitperiod},
+           given={Monzer},
+           giveni={M\bibinitperiod}}}%
+        {{hash=f98dc86f80d2af3d7184a43c469ed9b3}{%
+           family={Coosemans},
+           familyi={C\bibinitperiod},
+           given={Thierry},
+           giveni={T\bibinitperiod}}}%
+        {{hash=dc8c5dacdc5e6afa607ac983194ba975}{%
+           family={Van\bibnamedelima Mierlo},
+           familyi={V\bibinitperiod\bibinitdelim M\bibinitperiod},
+           given={Joeri},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{1981cdb019d9cf3255ade2c676ee8280}
+      \strng{fullhash}{6d87bc11dcc80c9ecb1aaa1837b6fa30}
+      \strng{bibnamehash}{1981cdb019d9cf3255ade2c676ee8280}
+      \strng{authorbibnamehash}{1981cdb019d9cf3255ade2c676ee8280}
+      \strng{authornamehash}{1981cdb019d9cf3255ade2c676ee8280}
+      \strng{authorfullhash}{6d87bc11dcc80c9ecb1aaa1837b6fa30}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Energy Research}
+      \field{note}{Source for Li-ion Capacitor (LIC) specific data}
+      \field{number}{12}
+      \field{title}{Lithium ion capacitor: A review of technology and thermal behaviors}
+      \field{volume}{38}
+      \field{year}{2014}
+      \field{pages}{1529\bibrangedash 1542}
+      \range{pages}{14}
+    \endentry
+    \entry{unmannedsystems2024}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=8600c60cdd536bf8a442e4920bc72f74}{%
+           family={{Unmanned Systems Technology}},
+           familyi={U\bibinitperiod}}}%
+      }
+      \strng{namehash}{8600c60cdd536bf8a442e4920bc72f74}
+      \strng{fullhash}{8600c60cdd536bf8a442e4920bc72f74}
+      \strng{bibnamehash}{8600c60cdd536bf8a442e4920bc72f74}
+      \strng{authorbibnamehash}{8600c60cdd536bf8a442e4920bc72f74}
+      \strng{authornamehash}{8600c60cdd536bf8a442e4920bc72f74}
+      \strng{authorfullhash}{8600c60cdd536bf8a442e4920bc72f74}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.unmannedsystemstechnology.com}}
+      \field{note}{Source for High-Discharge Li-Po (Drone) performance data}
+      \field{title}{High-Capacity Batteries for Drones \& Robotics: Technology Review}
+      \field{year}{2024}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
