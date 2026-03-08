@@ -64,7 +64,9 @@ class DynamicsSolver:
         self.config = config
         
         # Initialize vehicle models
-        self.tire_model = TireModel(config.tires)
+        # Use Pacejka model if specified in config, otherwise use simple model
+        use_pacejka = getattr(config.tires, 'tire_model_type', 'pacejka') == 'pacejka'
+        self.tire_model = TireModel(config.tires, use_pacejka=use_pacejka)
         
         # Ensure powertrain imports are loaded (lazy import to avoid circular deps)
         _ensure_powertrain_imports()
@@ -268,8 +270,9 @@ class DynamicsSolver:
         # Simple control: request maximum torque up to launch limit
         max_torque = self.config.control.launch_torque_limit
         
-        # Limit based on available grip (simplified)
-        max_tire_force = self.tire_model.mu_max * normal_force_rear
+        # Limit based on available grip (use peak friction coefficient with load sensitivity)
+        mu_peak = self.tire_model.get_peak_friction_coefficient(normal_force_rear)
+        max_tire_force = mu_peak * normal_force_rear
         max_torque_grip = max_tire_force * self.tire_model.radius
         
         # Use minimum of control limit and grip limit
@@ -286,6 +289,10 @@ class DynamicsSolver:
         """
         Perform one RK4 integration step.
         
+        Only position, velocity, and wheel_angular_velocity_rear are integrated.
+        All other state variables (motor_speed, forces, power, etc.) are derived
+        from the current state and should NOT be integrated.
+        
         Args:
             state: Current state
             dstate_dt: Time derivatives
@@ -298,63 +305,116 @@ class DynamicsSolver:
         k1 = dstate_dt
         
         # k2
-        state_k2 = self._add_states(state, self._scale_state(k1, dt / 2.0))
+        state_k2 = self._integrate_state(state, k1, dt / 2.0)
         k2 = self._calculate_derivatives(state_k2)
         
         # k3
-        state_k3 = self._add_states(state, self._scale_state(k2, dt / 2.0))
+        state_k3 = self._integrate_state(state, k2, dt / 2.0)
         k3 = self._calculate_derivatives(state_k3)
         
         # k4
-        state_k4 = self._add_states(state, self._scale_state(k3, dt))
+        state_k4 = self._integrate_state(state, k3, dt)
         k4 = self._calculate_derivatives(state_k4)
         
-        # Combine
-        weighted_avg = self._scale_state(
-            self._add_states(
-                k1,
-                self._add_states(
-                    self._scale_state(k2, 2.0),
-                    self._add_states(
-                        self._scale_state(k3, 2.0),
-                        k4
-                    )
-                )
-            ),
-            1.0 / 6.0
-        )
+        # RK4 weighted average of derivatives
+        # d/dt = (k1 + 2*k2 + 2*k3 + k4) / 6
+        avg_d_position = (k1.position + 2*k2.position + 2*k3.position + k4.position) / 6.0
+        avg_d_velocity = (k1.velocity + 2*k2.velocity + 2*k3.velocity + k4.velocity) / 6.0
+        avg_d_wheel_rear = (k1.wheel_angular_velocity_rear + 2*k2.wheel_angular_velocity_rear + 
+                           2*k3.wheel_angular_velocity_rear + k4.wheel_angular_velocity_rear) / 6.0
         
-        # Update state
-        new_state = self._add_states(state, self._scale_state(weighted_avg, dt))
+        # Create new state with integrated values
+        new_state = SimulationState()
         new_state.time = state.time + dt
+        new_state.position = state.position + avg_d_position * dt
+        new_state.velocity = state.velocity + avg_d_velocity * dt
+        new_state.wheel_angular_velocity_rear = state.wheel_angular_velocity_rear + avg_d_wheel_rear * dt
         
-        # Get the final power calculated by the last derivative (k4)
-        # Then update energy storage ONCE per timestep with this power
+        # Front wheels are free-rolling (velocity / tire_radius)
+        new_state.wheel_angular_velocity_front = new_state.velocity / self.tire_model.radius if new_state.velocity > 0 else 0.0
+        
+        # Calculate TRUE acceleration as dv/dt (not instantaneous force-based)
+        new_state.acceleration = (new_state.velocity - state.velocity) / dt
+        
+        # Update energy storage ONCE per timestep
         pt_state = self.powertrain.get_last_state()
         if pt_state is not None:
-            # Update energy storage state with the final power value (once per timestep)
-            # This ensures supercapacitor discharges at correct rate (not 4x during RK4)
             self.powertrain.update_energy_storage(dt, pt_state.power_electrical)
-            
-            # Re-get state after update to capture new voltage/SoC
             pt_state = self.powertrain.get_last_state()
-            
+        
+        # Recalculate all derived quantities at the NEW state
+        # This ensures motor_speed, forces, power etc. are correct for the new velocity
+        final_derivatives = self._calculate_derivatives(new_state)
+        
+        # Copy derived (non-integrated) values from final calculation
+        new_state.motor_speed = final_derivatives.motor_speed
+        new_state.motor_current = final_derivatives.motor_current
+        new_state.motor_torque = final_derivatives.motor_torque
+        new_state.drive_force = final_derivatives.drive_force
+        new_state.drag_force = final_derivatives.drag_force
+        new_state.rolling_resistance = final_derivatives.rolling_resistance
+        new_state.normal_force_front = final_derivatives.normal_force_front
+        new_state.normal_force_rear = final_derivatives.normal_force_rear
+        new_state.tire_force_front = final_derivatives.tire_force_front
+        new_state.tire_force_rear = final_derivatives.tire_force_rear
+        new_state.power_consumed = final_derivatives.power_consumed
+        
+        # Energy storage state
+        if pt_state is not None:
             new_state.dc_bus_voltage = pt_state.dc_bus_voltage
             new_state.energy_storage_soc = pt_state.state_of_charge
             new_state.energy_storage_loss = pt_state.storage_power_loss
             new_state.in_field_weakening = pt_state.in_field_weakening
-            # CRITICAL: Use actual values from powertrain/final derivative, not integrated
-            new_state.power_consumed = pt_state.power_electrical
-            new_state.motor_current = pt_state.motor_current
-            new_state.motor_torque = pt_state.motor_torque
-        
-        # Capture acceleration from final derivative (k4), not the incorrectly integrated value
-        new_state.acceleration = k4.acceleration
-        new_state.drive_force = k4.drive_force
-        new_state.drag_force = k4.drag_force
-        new_state.rolling_resistance = k4.rolling_resistance
         
         return new_state
+    
+    def _integrate_state(
+        self,
+        state: SimulationState,
+        derivatives: SimulationState,
+        dt: float
+    ) -> SimulationState:
+        """
+        Integrate ONLY the true state variables (position, velocity, wheel speed).
+        
+        Args:
+            state: Current state
+            derivatives: Time derivatives
+            dt: Time step
+            
+        Returns:
+            New state with integrated values (other fields copied from derivatives)
+        """
+        result = SimulationState()
+        
+        # Integrate only the true state variables
+        result.position = state.position + derivatives.position * dt
+        result.velocity = state.velocity + derivatives.velocity * dt
+        result.wheel_angular_velocity_rear = state.wheel_angular_velocity_rear + derivatives.wheel_angular_velocity_rear * dt
+        result.wheel_angular_velocity_front = result.velocity / self.tire_model.radius if result.velocity > 0 else 0.0
+        
+        # Time
+        result.time = state.time + dt
+        
+        # Copy non-integrated values from derivatives (they'll be recalculated anyway)
+        result.acceleration = derivatives.acceleration
+        result.motor_speed = derivatives.motor_speed
+        result.motor_current = derivatives.motor_current
+        result.motor_torque = derivatives.motor_torque
+        result.drive_force = derivatives.drive_force
+        result.drag_force = derivatives.drag_force
+        result.rolling_resistance = derivatives.rolling_resistance
+        result.normal_force_front = derivatives.normal_force_front
+        result.normal_force_rear = derivatives.normal_force_rear
+        result.tire_force_front = derivatives.tire_force_front
+        result.tire_force_rear = derivatives.tire_force_rear
+        result.power_consumed = derivatives.power_consumed
+        result.dc_bus_voltage = derivatives.dc_bus_voltage
+        result.energy_storage_soc = derivatives.energy_storage_soc
+        result.energy_storage_loss = derivatives.energy_storage_loss
+        result.in_field_weakening = derivatives.in_field_weakening
+        
+        return result
     
     def _add_states(self, s1: SimulationState, s2: SimulationState) -> SimulationState:
         """Add two states together."""

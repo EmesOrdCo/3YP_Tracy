@@ -156,8 +156,7 @@ class PowertrainModel:
             motor_speed: Motor angular velocity (rad/s)
             vehicle_velocity: Vehicle velocity (m/s)
             dt: Time step for energy storage update (s)
-            update_storage: If True, update energy storage state. Set False during
-                           RK4 intermediate calculations to prevent 4x discharge rate.
+            update_storage: If True, update energy storage state (set False during RK4 intermediates)
             
         Returns:
             Tuple of (wheel_torque, motor_current, power_consumed)
@@ -165,14 +164,11 @@ class PowertrainModel:
             - motor_current: Motor current (A)
             - power_consumed: Power consumed at accumulator outlet (W)
         """
-        # Get current DC bus voltage (read-only, doesn't modify state)
+        # Get current DC bus voltage
         dc_bus_voltage = self.energy_storage.get_voltage()
         
         # Convert wheel torque request to motor torque request
         motor_torque_requested = requested_torque / (self.gear_ratio * self.drivetrain_efficiency)
-        
-        # Track motor state for field weakening info
-        motor_state = None
         
         if self.use_advanced_motor and self.motor is not None:
             # Use advanced motor model with field weakening
@@ -185,6 +181,8 @@ class PowertrainModel:
             actual_motor_torque = motor_state.torque
             motor_current = motor_state.current
             motor_efficiency = motor_state.efficiency
+            # Use motor model's electrical power (accounts for efficiency)
+            electrical_power_unlimited = motor_state.power_electrical
             
         else:
             # Legacy simplified motor model
@@ -201,9 +199,9 @@ class PowertrainModel:
             
             actual_motor_torque = motor_current * self.motor_kt
             motor_efficiency = self.motor_efficiency
-        
-        # Calculate electrical power at accumulator outlet
-        electrical_power_unlimited = dc_bus_voltage * motor_current
+            # Calculate electrical power with efficiency
+            power_mechanical = actual_motor_torque * motor_speed
+            electrical_power_unlimited = power_mechanical / motor_efficiency if motor_efficiency > 0 else 0.0
         
         # Apply Formula Student 80kW power limit (EV 2.2)
         if abs(electrical_power_unlimited) > self.max_power:
@@ -215,13 +213,10 @@ class PowertrainModel:
         else:
             electrical_power = electrical_power_unlimited
         
-        # Update energy storage state ONLY if requested
-        # During RK4 integration, this should be False for intermediate steps
-        # to prevent the supercapacitor from discharging 4x too fast
+        # Update energy storage state (skip during RK4 intermediate steps)
         if update_storage:
             storage_state = self.energy_storage.update(dt, abs(electrical_power))
         else:
-            # Just get current state without modifying it
             storage_state = self.energy_storage.get_state()
         
         # Convert motor torque to wheel torque
@@ -230,7 +225,7 @@ class PowertrainModel:
         # Store state for diagnostics
         self._last_state = PowertrainState(
             dc_bus_voltage=dc_bus_voltage,
-            storage_current=storage_state.current if update_storage else motor_current,
+            storage_current=storage_state.current,
             storage_power_loss=storage_state.power_loss,
             energy_remaining=storage_state.energy_remaining,
             state_of_charge=storage_state.state_of_charge,
@@ -238,8 +233,8 @@ class PowertrainModel:
             motor_torque=actual_motor_torque,
             motor_current=motor_current,
             motor_efficiency=motor_efficiency if self.use_advanced_motor else self.motor_efficiency,
-            in_field_weakening=motor_state.in_field_weakening if motor_state else False,
-            voltage_limited=motor_state.voltage_limited if motor_state else False,
+            in_field_weakening=motor_state.in_field_weakening if self.use_advanced_motor and self.motor else False,
+            voltage_limited=motor_state.voltage_limited if self.use_advanced_motor and self.motor else False,
             wheel_torque=wheel_torque,
             wheel_power=wheel_torque * motor_speed / self.gear_ratio,
             power_electrical=electrical_power,
@@ -249,43 +244,13 @@ class PowertrainModel:
         
         return wheel_torque, motor_current, electrical_power
     
-    def update_energy_storage(self, dt: float, power: float) -> None:
-        """
-        Update energy storage state directly.
-        
-        This is called once per timestep after RK4 integration completes,
-        with the final power value to ensure correct discharge rate.
-        
-        Args:
-            dt: Time step (s)
-            power: Power consumed (W)
-        """
-        storage_state = self.energy_storage.update(dt, abs(power))
-        
-        # Update the last state with new storage values
-        if self._last_state is not None:
-            self._last_state = PowertrainState(
-                dc_bus_voltage=self.energy_storage.get_voltage(),
-                storage_current=storage_state.current,
-                storage_power_loss=storage_state.power_loss,
-                energy_remaining=storage_state.energy_remaining,
-                state_of_charge=storage_state.state_of_charge,
-                motor_speed=self._last_state.motor_speed,
-                motor_torque=self._last_state.motor_torque,
-                motor_current=self._last_state.motor_current,
-                motor_efficiency=self._last_state.motor_efficiency,
-                in_field_weakening=self._last_state.in_field_weakening,
-                voltage_limited=self._last_state.voltage_limited,
-                wheel_torque=self._last_state.wheel_torque,
-                wheel_power=self._last_state.wheel_power,
-                power_electrical=self._last_state.power_electrical,
-                power_mechanical=self._last_state.power_mechanical,
-                drivetrain_loss=self._last_state.drivetrain_loss
-            )
-    
     def get_last_state(self) -> Optional[PowertrainState]:
         """Get the last calculated powertrain state."""
         return self._last_state
+    
+    def update_energy_storage(self, dt: float, power: float) -> None:
+        """Update energy storage state (called once per timestep after RK4 integration)."""
+        self.energy_storage.update(dt, abs(power))
     
     def calculate_motor_speed(self, wheel_angular_velocity: float) -> float:
         """

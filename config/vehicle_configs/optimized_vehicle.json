@@ -15,8 +15,16 @@
     "radius_loaded": 0.2796894939973941,
     "mass": 3.0,
     "mu_max": 1.8,
-    "mu_slip_optimal": 0.15917943274857424,
-    "rolling_resistance_coeff": 0.01
+    "mu_slip_optimal": 0.12,
+    "rolling_resistance_coeff": 0.01,
+    "tire_model_type": "pacejka",
+    "pacejka_C": 1.65,
+    "pacejka_pDx1": 1.55,
+    "pacejka_pDx2": -0.10,
+    "pacejka_pKx1": 40000.0,
+    "pacejka_pKx2": -2500.0,
+    "pacejka_E": 0.05,
+    "pacejka_Fz0": 1500.0
   },
   "powertrain": {
     "motor_torque_constant": 0.5,

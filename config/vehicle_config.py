@@ -30,15 +30,31 @@ class TireProperties:
     """Tire properties and model parameters."""
     radius_loaded: float  # m
     mass: float  # kg
-    # Simplified tire model parameters (upgrade to Pacejka later)
+    # Simplified tire model parameters (used when tire_model_type="simple")
     mu_max: float  # Maximum friction coefficient
     mu_slip_optimal: float  # Optimal slip ratio
     rolling_resistance_coeff: float = 0.015
-    # Pacejka parameters (optional, for advanced model)
-    pacejka_D: Optional[float] = None
-    pacejka_C: Optional[float] = None
-    pacejka_B: Optional[float] = None
-    pacejka_E: Optional[float] = None
+    
+    # Tire model selection: "pacejka" or "simple"
+    tire_model_type: str = "pacejka"
+    
+    # Pacejka Magic Formula coefficients (used when tire_model_type="pacejka")
+    # These are the simplified form coefficients
+    pacejka_B: Optional[float] = None  # Stiffness factor
+    pacejka_C: Optional[float] = None  # Shape factor (typically 1.5-1.9)
+    pacejka_D: Optional[float] = None  # Peak friction coefficient (μ_peak)
+    pacejka_E: Optional[float] = None  # Curvature factor
+    
+    # Advanced Pacejka coefficients for load sensitivity
+    # D = Fz * (pDx1 + pDx2 * dfz) where dfz = (Fz - Fz0) / Fz0
+    pacejka_pDx1: Optional[float] = None  # Peak μ at nominal load
+    pacejka_pDx2: Optional[float] = None  # Load sensitivity coefficient
+    pacejka_Fz0: Optional[float] = None   # Nominal load (N)
+    
+    # Slip stiffness coefficients
+    # Kx = pKx1 + pKx2 * dfz, then B = Kx / (C * D)
+    pacejka_pKx1: Optional[float] = None  # Longitudinal slip stiffness
+    pacejka_pKx2: Optional[float] = None  # Variation with load
 
 
 @dataclass
