@@ -156,7 +156,7 @@ class DynamicsSolver:
         slip_front = self.tire_model.calculate_slip_ratio(wheel_speed_front, state.velocity)
         slip_rear = self.tire_model.calculate_slip_ratio(wheel_speed_rear, state.velocity)
         
-        # Calculate tire forces
+        # Calculate tire forces from slip (using Pacejka model)
         tire_force_front, rr_front = self.tire_model.calculate_longitudinal_force(
             normal_front, slip_front, state.velocity
         )
@@ -167,12 +167,11 @@ class DynamicsSolver:
         # Calculate motor speed
         motor_speed = self.powertrain.calculate_motor_speed(wheel_speed_rear)
         
-        # Control strategy: simple torque request
-        # In a real implementation, this would be more sophisticated
-        requested_torque = self._calculate_requested_torque(state, normal_rear)
+        # Control strategy: Pacejka-aware traction control
+        # Uses load-dependent optimal slip ratio from Pacejka model
+        requested_torque = self._calculate_requested_torque(state, normal_rear, slip_rear)
         
         # Calculate powertrain torque (with power limit)
-        # Pass dt for energy storage state update (supercapacitor voltage decay)
         wheel_torque, motor_current, power = self.powertrain.calculate_torque(
             requested_torque,
             motor_speed,
@@ -181,29 +180,23 @@ class DynamicsSolver:
             update_storage=False  # Don't update during RK4 intermediate steps
         )
         
-        # Convert wheel torque to force
-        drive_force_rear = wheel_torque / self.tire_model.radius
+        # === PROPER WHEEL DYNAMICS WITH SLIP ===
+        # The tire force that propels the vehicle is determined by the Pacejka model
+        # based on current slip - NOT directly from motor torque!
         
-        # Total drive force (rear wheel drive assumed)
-        total_drive_force = drive_force_rear
-        
-        # Total resistive forces
+        # Vehicle acceleration is driven by actual tire force (from slip)
+        # Plus rolling resistance from front tires (free-rolling)
+        total_tire_force = tire_force_rear  # Rear drive only
         total_resistive = drag_force + rr_front + rr_rear
+        net_force_vehicle = total_tire_force + total_resistive
         
-        # Net force (resistive forces oppose motion, so subtract them)
-        net_force = total_drive_force + total_resistive  # resistive forces are already negative
+        # Vehicle effective mass (includes 2 front wheels rotating with vehicle)
+        wheel_inertia = self.config.powertrain.wheel_inertia
+        wheel_rotational_mass_front = 2.0 * wheel_inertia / (self.tire_model.radius ** 2)
+        effective_mass = self.config.mass.total_mass + wheel_rotational_mass_front
         
-        # Calculate effective mass accounting for wheel rotational inertia
-        # When accelerating, we need to accelerate:
-        # 1. The vehicle's translational mass
-        # 2. The wheels' rotational inertia (all 4 wheels rotate)
-        # Effective rotational mass = I_wheel / r² per wheel
-        wheel_rotational_mass_per_wheel = self.config.powertrain.wheel_inertia / (self.tire_model.radius ** 2)
-        total_rotational_mass = 4.0 * wheel_rotational_mass_per_wheel  # 4 wheels total
-        effective_mass = self.config.mass.total_mass + total_rotational_mass
-        
-        # Acceleration (accounting for rotational inertia)
-        acceleration = net_force / effective_mass
+        # Vehicle acceleration (from tire forces, not motor torque)
+        acceleration = net_force_vehicle / effective_mass
         
         # Update normal forces with actual acceleration
         normal_front, normal_rear = self.mass_model.calculate_normal_forces(
@@ -212,14 +205,28 @@ class DynamicsSolver:
             downforce_rear
         )
         
-        # Wheel angular acceleration (rear wheel driven)
-        # For RWD: wheel torque accelerates rear wheels
-        # Angular acceleration = linear acceleration / radius (assuming no slip)
-        # When there is slip, the relationship is more complex, but this approximation is reasonable
-        wheel_alpha_rear = acceleration / self.tire_model.radius if self.tire_model.radius > 0 else 0.0
+        # === WHEEL ANGULAR ACCELERATION (allows slip to develop) ===
+        # The rear wheel accelerates based on torque imbalance:
+        # Angular accel = (motor_torque - tire_reaction_torque) / I_wheel
+        #
+        # Where tire_reaction_torque = tire_force × radius
+        # 
+        # If motor_torque > grip, wheel spins up faster (positive slip)
+        # If motor_torque < grip, wheel slows relative to vehicle (slip decreases)
+        
+        tire_reaction_torque = tire_force_rear * self.tire_model.radius
+        
+        # Total rear wheel inertia (2 driven wheels)
+        rear_wheel_inertia = 2.0 * wheel_inertia
+        
+        # Wheel angular acceleration
+        wheel_alpha_rear = (wheel_torque - tire_reaction_torque) / rear_wheel_inertia
         
         # Get powertrain state for energy storage tracking
         pt_state = self.powertrain.get_last_state()
+        
+        # Get optimal slip for logging
+        optimal_slip = self.tire_model.get_optimal_slip_ratio(normal_rear)
         
         # Create derivative state
         dstate = SimulationState()
@@ -228,13 +235,15 @@ class DynamicsSolver:
         dstate.wheel_angular_velocity_rear = wheel_alpha_rear
         dstate.wheel_angular_velocity_front = 0.0  # Free-rolling
         dstate.acceleration = acceleration
-        dstate.drive_force = total_drive_force
+        dstate.drive_force = total_tire_force
         dstate.drag_force = drag_force
         dstate.rolling_resistance = rr_front + rr_rear
         dstate.normal_force_front = normal_front
         dstate.normal_force_rear = normal_rear
         dstate.tire_force_front = tire_force_front
         dstate.tire_force_rear = tire_force_rear
+        dstate.slip_ratio_rear = slip_rear
+        dstate.optimal_slip_ratio = optimal_slip
         dstate.motor_speed = motor_speed
         dstate.motor_current = motor_current
         dstate.motor_torque = wheel_torque
@@ -253,32 +262,65 @@ class DynamicsSolver:
     def _calculate_requested_torque(
         self,
         state: SimulationState,
-        normal_force_rear: float
+        normal_force_rear: float,
+        current_slip_ratio: float
     ) -> float:
         """
-        Calculate requested torque based on control strategy.
+        Calculate requested torque with Pacejka-aware traction control.
         
-        Simplified control: request maximum available torque up to limit.
+        Uses closed-loop slip control targeting the load-dependent optimal slip
+        ratio from the Pacejka model. This maximizes traction force.
+        
+        The control has two regimes:
+        1. Launch (v < 2 m/s): Open-loop grip-based limiting
+        2. Normal (v >= 2 m/s): Closed-loop slip tracking
         
         Args:
             state: Current state
             normal_force_rear: Rear normal force
+            current_slip_ratio: Current rear tire slip ratio
             
         Returns:
             Requested torque at wheels (N·m)
         """
-        # Simple control: request maximum torque up to launch limit
-        max_torque = self.config.control.launch_torque_limit
+        # Get Pacejka load-dependent optimal slip ratio
+        optimal_slip = self.tire_model.get_optimal_slip_ratio(normal_force_rear)
         
-        # Limit based on available grip (use peak friction coefficient with load sensitivity)
+        # Get peak friction coefficient (load-sensitive)
         mu_peak = self.tire_model.get_peak_friction_coefficient(normal_force_rear)
+        
+        # Maximum tire force at optimal slip
         max_tire_force = mu_peak * normal_force_rear
         max_torque_grip = max_tire_force * self.tire_model.radius
         
-        # Use minimum of control limit and grip limit
-        requested = min(max_torque, max_torque_grip)
+        # Base torque limit
+        base_torque = min(self.config.control.launch_torque_limit, max_torque_grip)
         
-        return requested
+        # === TORQUE RAMP AT LAUNCH (optimal FS practice) ===
+        # Ramp torque over first 50ms to reduce jerk, avoid slip overshoot.
+        ramp_duration = 0.05  # s
+        if state.time < ramp_duration:
+            ramp = state.time / ramp_duration
+            base_torque *= ramp
+        
+        if not self.config.control.traction_control_enabled:
+            return base_torque
+        
+        # === OPTIMAL SLIP-TRACKING TRACTION CONTROL ===
+        #
+        # Physics: Tire force is maximized at optimal slip (~15%).
+        # Strategy: Track wheel velocity to maintain optimal slip.
+        # Target: wheel_v = vehicle_v * (1 + optimal_slip)
+        
+        wheel_velocity = state.wheel_angular_velocity_rear * self.tire_model.radius
+        target_wheel_v = state.velocity * (1.0 + optimal_slip)
+        wheel_error = wheel_velocity - target_wheel_v
+        
+        if wheel_error > 0.05:
+            reduction = max(0.1, 1.0 - wheel_error * 2.0)
+            return base_torque * reduction
+        else:
+            return base_torque
     
     def _rk4_step(
         self,
@@ -357,6 +399,8 @@ class DynamicsSolver:
         new_state.normal_force_rear = final_derivatives.normal_force_rear
         new_state.tire_force_front = final_derivatives.tire_force_front
         new_state.tire_force_rear = final_derivatives.tire_force_rear
+        new_state.slip_ratio_rear = final_derivatives.slip_ratio_rear
+        new_state.optimal_slip_ratio = final_derivatives.optimal_slip_ratio
         new_state.power_consumed = final_derivatives.power_consumed
         
         # Energy storage state

@@ -125,11 +125,15 @@ def downsample(data: list, factor: int = 10) -> list:
 
 
 def moving_average(data: list, window: int = 50) -> list:
-    """Apply moving average smoothing to data."""
+    """Apply causal moving average (no future-looking) to avoid boundary artifacts.
+    
+    Uses only past and current samples - prevents fake 'spike' at t=0 from
+    centered filter pulling in future high values.
+    """
     result = []
     for i in range(len(data)):
-        start = max(0, i - window // 2)
-        end = min(len(data), i + window // 2 + 1)
+        start = max(0, i - window + 1)
+        end = i + 1
         result.append(sum(data[start:end]) / (end - start))
     return result
 

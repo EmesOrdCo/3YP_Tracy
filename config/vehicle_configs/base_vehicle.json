@@ -34,7 +34,7 @@
     "battery_voltage_nominal": 600.0,
     "battery_internal_resistance": 0.01,
     "battery_max_current": 300.0,
-    "gear_ratio": 5.0,
+    "gear_ratio": 4.5,
     "drivetrain_efficiency": 0.95,
     "differential_ratio": 1.0,
     "max_power_accumulator_outlet": 80000.0,
