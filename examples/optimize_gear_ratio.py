@@ -16,6 +16,8 @@ The optimal gear ratio depends on:
 import sys
 from pathlib import Path
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from copy import deepcopy
 
@@ -220,7 +222,7 @@ def plot_optimization(battery_results: list, supercap_results: list, save_path: 
         plt.savefig(save_path, dpi=150, bbox_inches='tight')
         print(f"\nPlot saved to: {save_path}")
     
-    plt.show()
+    plt.close()
 
 
 def main():
@@ -229,10 +231,11 @@ def main():
     print("GEAR RATIO OPTIMIZATION FOR 75m ACCELERATION")
     print("="*70)
     
-    # Define gear ratios to test (from tall to short)
-    # Lower ratio = more torque at wheels, lower top speed
-    # Higher ratio = less torque at wheels, higher top speed
-    gear_ratios = np.arange(4.0, 14.1, 0.5).tolist()
+    # Define gear ratios to test
+    # Lower ratio = higher top speed (motor spins slower per wheel rev)
+    # Higher ratio = lower top speed (motor hits max RPM sooner)
+    # Include lower ratios to find true optimum
+    gear_ratios = np.arange(3.0, 12.1, 0.5).tolist()
     
     # Optimize battery configuration
     battery_results = optimize_gear_ratio('base_vehicle', gear_ratios)

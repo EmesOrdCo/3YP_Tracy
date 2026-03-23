@@ -35,6 +35,10 @@ class SimulationState:
     tire_force_front: float = 0.0  # N
     tire_force_rear: float = 0.0  # N
     
+    # Slip ratios
+    slip_ratio_rear: float = 0.0  # Rear tire slip ratio
+    optimal_slip_ratio: float = 0.0  # Pacejka optimal slip (load-dependent)
+    
     # Power
     power_consumed: float = 0.0  # W
     
@@ -66,6 +70,8 @@ class SimulationState:
             'normal_force_rear': self.normal_force_rear,
             'tire_force_front': self.tire_force_front,
             'tire_force_rear': self.tire_force_rear,
+            'slip_ratio_rear': self.slip_ratio_rear,
+            'optimal_slip_ratio': self.optimal_slip_ratio,
             'power_consumed': self.power_consumed,
             'dc_bus_voltage': self.dc_bus_voltage,
             'energy_storage_soc': self.energy_storage_soc,
@@ -91,6 +97,8 @@ class SimulationState:
             normal_force_rear=self.normal_force_rear,
             tire_force_front=self.tire_force_front,
             tire_force_rear=self.tire_force_rear,
+            slip_ratio_rear=self.slip_ratio_rear,
+            optimal_slip_ratio=self.optimal_slip_ratio,
             power_consumed=self.power_consumed,
             dc_bus_voltage=self.dc_bus_voltage,
             energy_storage_soc=self.energy_storage_soc,

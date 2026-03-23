@@ -15,8 +15,16 @@
     "radius_loaded": 0.2286,
     "mass": 3.0,
     "mu_max": 1.5,
-    "mu_slip_optimal": 0.15,
-    "rolling_resistance_coeff": 0.015
+    "mu_slip_optimal": 0.12,
+    "rolling_resistance_coeff": 0.015,
+    "tire_model_type": "pacejka",
+    "pacejka_C": 1.65,
+    "pacejka_pDx1": 1.45,
+    "pacejka_pDx2": -0.12,
+    "pacejka_pKx1": 35000.0,
+    "pacejka_pKx2": -3000.0,
+    "pacejka_E": 0.1,
+    "pacejka_Fz0": 1500.0
   },
   "powertrain": {
     "motor_torque_constant": 0.82,
@@ -26,7 +34,7 @@
     "battery_voltage_nominal": 600.0,
     "battery_internal_resistance": 0.14,
     "battery_max_current": 300.0,
-    "gear_ratio": 5.5,
+    "gear_ratio": 4.5,
     "drivetrain_efficiency": 0.95,
     "differential_ratio": 1.0,
     "max_power_accumulator_outlet": 80000.0,

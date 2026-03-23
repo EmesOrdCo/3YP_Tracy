@@ -153,9 +153,20 @@ class MotorModel:
         # Calculate base speed at current voltage
         base_speed = self.calculate_base_speed(dc_bus_voltage)
         
-        # Check if we're above max speed
-        if motor_speed > self.max_speed:
-            return 0.0, True, True
+        # Hard speed limit at motor max speed
+        # The motor physically cannot produce torque above this speed
+        # Use a very steep rolloff in a narrow band to prevent numerical issues
+        if motor_speed >= self.max_speed:
+            # At or beyond max speed: torque drops to zero very quickly
+            # Use steep exponential decay in a 1% band for numerical stability
+            if motor_speed > self.max_speed * 1.01:
+                return 0.0, True, True
+            else:
+                # Transition region (max_speed to 1.01*max_speed)
+                # Torque decays from field-weakening value to zero
+                overspeed_fraction = (motor_speed - self.max_speed) / (0.01 * self.max_speed)
+                torque_at_max = torque_limit * (base_speed / self.max_speed) if base_speed < self.max_speed else torque_limit
+                return torque_at_max * (1.0 - overspeed_fraction), True, True
         
         # Constant torque region
         if motor_speed <= base_speed:
