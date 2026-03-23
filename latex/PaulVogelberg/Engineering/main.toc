@@ -1,52 +1,33 @@
 \babel@toc {english}{}\relax 
-\contentsline {section}{\numberline {0.1}Introduction}{1}{section.0.1}%
-\contentsline {subsection}{\numberline {0.1.1}Role of Accumulator}{1}{subsection.0.1.1}%
-\contentsline {subsection}{\numberline {0.1.2}Design Assumptions and Target KPIs}{1}{subsection.0.1.2}%
-\contentsline {subsection}{\numberline {0.1.3}Derived Technical Requirements}{1}{subsection.0.1.3}%
-\contentsline {subsection}{\numberline {0.1.4}Project Scope}{1}{subsection.0.1.4}%
-\contentsline {section}{\numberline {0.2}Technology Selection}{2}{section.0.2}%
-\contentsline {subsection}{\numberline {0.2.1}Design Requirements and Selection Criteria}{2}{subsection.0.2.1}%
-\contentsline {subsection}{\numberline {0.2.2}Energy Storage Media Survey}{2}{subsection.0.2.2}%
-\contentsline {subsection}{\numberline {0.2.3}Supercapacitor Detailed Analysis}{3}{subsection.0.2.3}%
-\contentsline {subsection}{\numberline {0.2.4}Supercapacitor Cell Selection}{4}{subsection.0.2.4}%
-\contentsline {subsection}{\numberline {0.2.5}Technology Selection Decision}{5}{subsection.0.2.5}%
-\contentsline {section}{\numberline {0.3}Electrical System Design}{7}{section.0.3}%
-\contentsline {subsection}{\numberline {0.3.1}System Architecture Overview}{7}{subsection.0.3.1}%
-\contentsline {subsection}{\numberline {0.3.2}Electrical Power Systems}{7}{subsection.0.3.2}%
-\contentsline {subsubsection}{\numberline {0.3.2.1}Pack Configuration \& Power Distribution}{7}{subsubsection.0.3.2.1}%
-\contentsline {subsubsection}{\numberline {0.3.2.2}Safety \& Protection Systems}{8}{subsubsection.0.3.2.2}%
-\contentsline {subsubsection}{\numberline {0.3.2.3}Grounding \& EMI Architecture}{8}{subsubsection.0.3.2.3}%
-\contentsline {subsection}{\numberline {0.3.3}Electronic Monitoring \& Control Systems}{8}{subsection.0.3.3}%
-\contentsline {subsubsection}{\numberline {0.3.3.1}Cell Voltage Monitoring}{9}{subsubsection.0.3.3.1}%
-\contentsline {subsubsection}{\numberline {0.3.3.2}Temperature Monitoring}{10}{subsubsection.0.3.3.2}%
-\contentsline {subsubsection}{\numberline {0.3.3.3}Current Sensoring \& Pack Voltage Monitoring}{11}{subsubsection.0.3.3.3}%
-\contentsline {subsubsection}{\numberline {0.3.3.4}Power Management \& Master Controller}{11}{subsubsection.0.3.3.4}%
-\contentsline {subsection}{\numberline {0.3.4}BMS}{11}{subsection.0.3.4}%
-\contentsline {subsection}{\numberline {0.3.5}System Integration \& Validation}{11}{subsection.0.3.5}%
-\contentsline {subsubsection}{\numberline {0.3.5.1}Modular Interconnection Design}{11}{subsubsection.0.3.5.1}%
-\contentsline {subsubsection}{\numberline {0.3.5.2}Tolerance Analysis \& Design Margins}{11}{subsubsection.0.3.5.2}%
-\contentsline {section}{\numberline {0.4}Mechanical Design and Packaging}{12}{section.0.4}%
-\contentsline {subsection}{\numberline {0.4.1}Segment Design}{12}{subsection.0.4.1}%
-\contentsline {subsection}{\numberline {0.4.2}Accumulator Container (AC) \& Integration with Vehicle}{12}{subsection.0.4.2}%
-\contentsline {subsection}{\numberline {0.4.3}Manufacturing}{12}{subsection.0.4.3}%
-\contentsline {section}{\numberline {0.5}Design Verification and Validation}{13}{section.0.5}%
-\contentsline {subsection}{\numberline {0.5.1}Verification Approach}{13}{subsection.0.5.1}%
-\contentsline {subsection}{\numberline {0.5.2}Requirements Traceability and Compliance}{13}{subsection.0.5.2}%
-\contentsline {subsection}{\numberline {0.5.3}Analytical Verification}{13}{subsection.0.5.3}%
-\contentsline {subsection}{\numberline {0.5.4}Circuit Simulation Validation}{13}{subsection.0.5.4}%
-\contentsline {subsection}{\numberline {0.5.5}Benchmarking and Comparison}{13}{subsection.0.5.5}%
-\contentsline {subsection}{\numberline {0.5.6}Sensitivity Analysis}{13}{subsection.0.5.6}%
-\contentsline {subsection}{\numberline {0.5.7}Design Review and Expert Validation}{13}{subsection.0.5.7}%
-\contentsline {subsection}{\numberline {0.5.8}Recommendations for Physical Testing}{13}{subsection.0.5.8}%
-\contentsline {section}{\numberline {0.6}Results and Discussion}{14}{section.0.6}%
-\contentsline {subsection}{\numberline {0.6.1}Performance Metrics Summary}{14}{subsection.0.6.1}%
-\contentsline {subsection}{\numberline {0.6.2}Trade-Offs and Design Decisions}{14}{subsection.0.6.2}%
-\contentsline {subsection}{\numberline {0.6.3}Comparison with Alternative Designs}{14}{subsection.0.6.3}%
-\contentsline {section}{\numberline {0.7}Future Improvements \& Conclusion}{15}{section.0.7}%
-\contentsline {subsection}{\numberline {0.7.1}Design Improvements}{15}{subsection.0.7.1}%
-\contentsline {subsection}{\numberline {0.7.2}Accumulator Conclusion}{15}{subsection.0.7.2}%
-\contentsline {section}{\numberline {0.8}Overall Conclusions}{16}{section.0.8}%
-\contentsline {section}{\numberline {.1}Technical Specifications}{17}{section.Alph0.1}%
-\contentsline {section}{\numberline {.2}Calculations and Derivations}{17}{section.Alph0.2}%
-\contentsline {section}{\numberline {.3}Test Data}{18}{section.Alph0.3}%
-\contentsline {section}{\numberline {.4}Design Artifacts}{19}{section.Alph0.4}%
+\contentsline {chapter}{\numberline {1}Accumulator Design}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Introduction}{1}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Project Scope}{1}{subsection.1.1.1}%
+\contentsline {section}{\numberline {1.2}Technology Selection}{2}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Design Requirements and Selection Criteria}{2}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Energy Storage Media Survey}{2}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.2.3}Supercapacitor Detailed Analysis}{3}{subsection.1.2.3}%
+\contentsline {subsection}{\numberline {1.2.4}Supercapacitor Cell Selection}{4}{subsection.1.2.4}%
+\contentsline {subsection}{\numberline {1.2.5}Technology Selection Decision}{4}{subsection.1.2.5}%
+\contentsline {section}{\numberline {1.3}Electrical System Design}{5}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}System Architecture Overview}{5}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Electrical Power Systems}{7}{subsection.1.3.2}%
+\contentsline {subsubsection}{\numberline {1.3.2.1}Pack Configuration \& Power Distribution}{7}{subsubsection.1.3.2.1}%
+\contentsline {subsubsection}{\numberline {1.3.2.2}Safety \& Protection Systems}{7}{subsubsection.1.3.2.2}%
+\contentsline {subsection}{\numberline {1.3.3}Electronic Monitoring \& Control Systems}{7}{subsection.1.3.3}%
+\contentsline {subsubsection}{\numberline {1.3.3.1}Cell Voltage Monitoring}{8}{subsubsection.1.3.3.1}%
+\contentsline {subsubsection}{\numberline {1.3.3.2}Temperature Monitoring}{9}{subsubsection.1.3.3.2}%
+\contentsline {subsection}{\numberline {1.3.4}System Integration \& Validation}{10}{subsection.1.3.4}%
+\contentsline {subsubsection}{\numberline {1.3.4.1}Modular Interconnection Design}{10}{subsubsection.1.3.4.1}%
+\contentsline {subsubsection}{\numberline {1.3.4.2}Tolerance Analysis \& Design Margins}{10}{subsubsection.1.3.4.2}%
+\contentsline {section}{\numberline {1.4}Mechanical Design and Packaging}{10}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Segment Design}{10}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Accumulator Container (AC) \& Integration with Vehicle}{11}{subsection.1.4.2}%
+\contentsline {subsection}{\numberline {1.4.3}Manufacturing Scope}{12}{subsection.1.4.3}%
+\contentsline {section}{\numberline {1.5}Design Verification and Validation}{12}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Results and Discussion}{13}{section.1.6}%
+\contentsline {subsection}{\numberline {1.6.1}Design Criteria Achievement}{13}{subsection.1.6.1}%
+\contentsline {subsection}{\numberline {1.6.2}Principal Design Trade-Offs}{13}{subsection.1.6.2}%
+\contentsline {subsection}{\numberline {1.6.3}Comparison with Lithium-Polymer Baseline}{14}{subsection.1.6.3}%
+\contentsline {section}{\numberline {1.7}Future Improvements and Conclusion}{15}{section.1.7}%
+\contentsline {subsection}{\numberline {1.7.1}Strategic Refinements for Implementation}{15}{subsection.1.7.1}%
+\contentsline {subsection}{\numberline {1.7.2}Conclusion}{15}{subsection.1.7.2}%
