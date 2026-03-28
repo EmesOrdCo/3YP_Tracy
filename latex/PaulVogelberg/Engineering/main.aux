@@ -49,7 +49,7 @@
 \newlabel{eq:required_capacitance}{{1.2.2}{3}{Supercapacitor Detailed Analysis}{equation.1.2.2}{}}
 \newlabel{eq:series_capacitance}{{1.2.3}{3}{Supercapacitor Detailed Analysis}{equation.1.2.3}{}}
 \newlabel{eq:voltage_sag}{{1.2.4}{3}{Supercapacitor Detailed Analysis}{equation.1.2.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.2.4}Supercapacitor Cell Selection}{4}{subsection.1.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2.4}Supercapacitor Cell Selection}{3}{subsection.1.2.4}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {1.2}{\ignorespaces Commercial supercapacitor cell comparison for FS application. Specifications from manufacturer datasheets. Cell count, total capacitance, and voltage sag calculated for 600 V pack with 80 kW peak power at 400 V minimum.\relax }}{4}{table.caption.3}\protected@file@percent }
 \newlabel{tab:supercap_cells}{{1.2}{4}{Commercial supercapacitor cell comparison for FS application. Specifications from manufacturer datasheets. Cell count, total capacitance, and voltage sag calculated for 600 V pack with 80 kW peak power at 400 V minimum.\relax }{table.caption.3}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {1.1}{\ignorespaces Selected supercapacitor (SC1) discharge characteristics showing voltage and current evolution over time during constant 80 kW power discharge.\relax }}{4}{figure.caption.4}\protected@file@percent }
@@ -59,11 +59,11 @@
 \newlabel{tab:tech_comparison}{{1.3}{5}{Comparison of EDLC supercapacitor and high-power Li-Po battery technologies for acceleration-only application. Weighted scoring system applied with mass (3×), price (2×), and volume (1×) weightings.\relax }{table.caption.5}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.3}Electrical System Design}{5}{section.1.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.3.1}System Architecture Overview}{5}{subsection.1.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.2}Electrical Power Systems}{5}{subsection.1.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.3.2.1}Pack Configuration \& Power Distribution}{5}{subsubsection.1.3.2.1}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {1.2}{\ignorespaces Top-level electrical system architecture showing energy flow from supercapacitor cells through busbars and segments to the inverter, alongside control and communication pathways within the AMS. Green dots represent 12V battery connection\relax }}{6}{figure.caption.6}\protected@file@percent }
 \newlabel{fig:electronics_architecture}{{1.2}{6}{Top-level electrical system architecture showing energy flow from supercapacitor cells through busbars and segments to the inverter, alongside control and communication pathways within the AMS. Green dots represent 12V battery connection\relax }{figure.caption.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.2}Electrical Power Systems}{7}{subsection.1.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.3.2.1}Pack Configuration \& Power Distribution}{7}{subsubsection.1.3.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.3.2.2}Safety \& Protection Systems}{7}{subsubsection.1.3.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.3.2.2}Safety \& Protection Systems}{6}{subsubsection.1.3.2.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.3.3}Electronic Monitoring \& Control Systems}{7}{subsection.1.3.3}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {1.3}{\ignorespaces Complete segment AMS PCB schematic showing MAX17853 configuration, voltage sensing circuits, and cell balancing topology for 40-cell segment monitoring.\relax }}{7}{figure.caption.7}\protected@file@percent }
 \newlabel{fig:pcb_schematic}{{1.3}{7}{Complete segment AMS PCB schematic showing MAX17853 configuration, voltage sensing circuits, and cell balancing topology for 40-cell segment monitoring.\relax }{figure.caption.7}{}}
@@ -77,32 +77,29 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {1.5}{\ignorespaces Signal conditioning circuits for AMS monitoring\relax }}{9}{figure.caption.9}\protected@file@percent }
 \newlabel{fig:signal_conditioning}{{1.5}{9}{Signal conditioning circuits for AMS monitoring\relax }{figure.caption.9}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {1.3.3.2}Temperature Monitoring}{9}{subsubsection.1.3.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.4}System Integration \& Validation}{10}{subsection.1.3.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.3.4.1}Modular Interconnection Design}{10}{subsubsection.1.3.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {1.3.4.2}Tolerance Analysis \& Design Margins}{10}{subsubsection.1.3.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.4}Tolerance Analysis}{9}{subsection.1.3.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1.4}{\ignorespaces Accumulator performance comparison for nominal and binned (average) capacitance scenarios. Relative differences are reported against the nominal case. Constants: constant power = 80 kW, total voltage = 600 V, finish time = 3.5 s, $R_{total}=0.16\,\Omega $.\relax }}{10}{table.caption.10}\protected@file@percent }
+\newlabel{tab:capacitance_binning_results}{{1.4}{10}{Accumulator performance comparison for nominal and binned (average) capacitance scenarios. Relative differences are reported against the nominal case. Constants: constant power = 80 kW, total voltage = 600 V, finish time = 3.5 s, $R_{total}=0.16\,\Omega $.\relax }{table.caption.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.5}System Integration}{10}{subsection.1.3.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {1.4}Mechanical Design and Packaging}{10}{section.1.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.4.1}Segment Design}{10}{subsection.1.4.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1.6}{\ignorespaces Accumulator segment design without enclosure and busbar connections.\relax }}{10}{figure.caption.10}\protected@file@percent }
-\newlabel{fig:main_segment}{{1.6}{10}{Accumulator segment design without enclosure and busbar connections.\relax }{figure.caption.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.6}{\ignorespaces Accumulator segment design without enclosure and busbar connections.\relax }}{11}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:main_segment}{{1.6}{11}{Accumulator segment design without enclosure and busbar connections.\relax }{figure.caption.11}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.4.2}Accumulator Container (AC) \& Integration with Vehicle}{11}{subsection.1.4.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1.7}{\ignorespaces Accumulator design with lid removed for visibility.\relax }}{12}{figure.caption.11}\protected@file@percent }
-\newlabel{fig:main_accumulator}{{1.7}{12}{Accumulator design with lid removed for visibility.\relax }{figure.caption.11}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.4.3}Manufacturing Scope}{12}{subsection.1.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {1.5}Design Verification and Validation}{12}{section.1.5}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1.8}{\ignorespaces Fuse plug placement within the accumulator container.\relax }}{13}{figure.caption.12}\protected@file@percent }
-\newlabel{fig:fuse_placement}{{1.8}{13}{Fuse plug placement within the accumulator container.\relax }{figure.caption.12}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.6}Results and Discussion}{13}{section.1.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.6.1}Design Criteria Achievement}{13}{subsection.1.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.6.2}Principal Design Trade-Offs}{13}{subsection.1.6.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1.9}{\ignorespaces Accumulator positioned within the vehicle.\relax }}{14}{figure.caption.13}\protected@file@percent }
-\newlabel{fig:accumulator_in_car}{{1.9}{14}{Accumulator positioned within the vehicle.\relax }{figure.caption.13}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.6.3}Comparison with Lithium-Polymer Baseline}{14}{subsection.1.6.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {1.7}Future Improvements and Conclusion}{15}{section.1.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.7.1}Strategic Refinements for Implementation}{15}{subsection.1.7.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.7.2}Conclusion}{15}{subsection.1.7.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1.7}{\ignorespaces Accumulator design with lid removed for visibility.\relax }}{12}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:main_accumulator}{{1.7}{12}{Accumulator design with lid removed for visibility.\relax }{figure.caption.12}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.5}Results and Discussion}{12}{section.1.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.5.1}Design Criteria Achievement}{12}{subsection.1.5.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1.8}{\ignorespaces Fuse plug placement within the accumulator container.\relax }}{13}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:fuse_placement}{{1.8}{13}{Fuse plug placement within the accumulator container.\relax }{figure.caption.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.5.2}Principal Design Trade-Offs}{13}{subsection.1.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.5.3}Comparison with LiPo Baseline}{13}{subsection.1.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {1.6}Future Improvements and Conclusion}{13}{section.1.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.6.1}Strategic Refinements for Implementation}{13}{subsection.1.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.6.2}Conclusion}{14}{subsection.1.6.2}\protected@file@percent }
 \abx@aux@read@bbl@mdfivesum{9ADFF5177EEB2BB4610116470262AFDB}
 \abx@aux@defaultrefcontext{0}{linden2011}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{miao2019}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{omar2014}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{unmannedsystems2024}{none/global//global/global}
-\gdef \@abspage@last{19}
+\gdef \@abspage@last{18}

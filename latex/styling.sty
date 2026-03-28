@@ -28,6 +28,20 @@
 \RequirePackage[english]{babel}
 \RequirePackage{csquotes} % Required by biblatex when babel is loaded
 \RequirePackage{amsmath}
+% Reduce display equation vertical whitespace globally to save page space.
+\setlength{\abovedisplayskip}{4pt}
+\setlength{\belowdisplayskip}{4pt}
+\setlength{\abovedisplayshortskip}{1pt}
+\setlength{\belowdisplayshortskip}{1pt}
+\setlength{\jot}{1pt}
+\setdisplayskipstretch{0.35}
+\AtBeginDocument{%
+  \setlength{\abovedisplayskip}{8pt}%
+  \setlength{\belowdisplayskip}{8pt}%
+  \setlength{\abovedisplayshortskip}{4pt}%
+  \setlength{\belowdisplayshortskip}{4pt}%
+  \setlength{\jot}{2pt}%
+}
 \RequirePackage{graphicx}
 \RequirePackage{float}
 \RequirePackage{subcaption}
