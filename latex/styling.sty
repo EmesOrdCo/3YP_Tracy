@@ -25,8 +25,8 @@
 
 % --- Essential Packages ---
 \RequirePackage[utf8]{inputenc}
-\RequirePackage[english]{babel}
 \RequirePackage{csquotes} % Required by biblatex when babel is loaded
+\RequirePackage[english]{babel}
 \RequirePackage{amsmath}
 \RequirePackage{graphicx}
 \RequirePackage{float}
@@ -36,7 +36,6 @@
 \RequirePackage{makecell}
 \RequirePackage[table]{xcolor}
 \RequirePackage{arydshln}
-\RequirePackage{hyperref}
 
 % --- Captions ---
 \RequirePackage{caption}
@@ -57,3 +56,6 @@
 \DefineBibliographyStrings{english}{%
   bibliography = {References},
 }
+
+% Load hyperref last to avoid conflicts
+\RequirePackage{hyperref}
