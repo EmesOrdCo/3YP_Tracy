@@ -32,26 +32,59 @@ class SuspensionModel:
     def calculate_anti_squat_effect(
         self,
         longitudinal_acceleration: float,
-        normal_force_rear: float
+        normal_force_rear: float,
     ) -> float:
         """
-        Calculate anti-squat effect on rear axle.
-        
-        Simplified model - full implementation would consider instant center geometry.
-        
-        Args:
-            longitudinal_acceleration: Longitudinal acceleration (m/s²)
-            normal_force_rear: Rear normal force (N)
-            
-        Returns:
-            Additional normal force due to anti-squat (N)
+        Legacy API: return a small positive load "added" to the rear axle that
+        scales with anti_squat_ratio. Kept for compatibility; new code should
+        use :meth:`load_transfer_correction` instead.
         """
-        # Anti-squat reduces load transfer during acceleration
-        # This is a simplified model - full implementation requires geometry
         if self.anti_squat_ratio > 0:
-            # Anti-squat reduces rear load transfer
-            anti_squat_force = normal_force_rear * self.anti_squat_ratio * 0.1
-            return anti_squat_force
+            return normal_force_rear * self.anti_squat_ratio * 0.1
         return 0.0
+
+    def load_transfer_correction(
+        self,
+        mass: float,
+        longitudinal_acceleration: float,
+        cg_height: float,
+        wheelbase: float,
+    ) -> float:
+        """
+        Return how much of the longitudinal load transfer is handled by
+        suspension geometry rather than spring compression.
+
+        In this simplified model we treat ``anti_squat_ratio`` in [0, 1] as the
+        fraction of the elastic rear load transfer that is replaced by
+        suspension geometry action. The axle LOADS themselves don't change in a
+        strict 2-axle quasi-static model (physics demands the full transfer),
+        but at low fidelity this acts as a tuning knob for how aggressively the
+        rear hooks up off the line:
+
+            rear_gain  = +anti_squat_ratio * (m * a * h_cg / L) * scale
+            front_gain = -rear_gain
+
+        where ``scale`` is a small effective factor (0.2) so that this remains
+        a perturbation. Returns ``rear_gain``.
+
+        A 100% anti-squat setup will therefore see slightly higher rear normal
+        during acceleration in this model — roughly matching the observed
+        on-track benefit of suspensions that maintain rear ride height during
+        launch.
+
+        Args:
+            mass: Vehicle mass (kg).
+            longitudinal_acceleration: Longitudinal acceleration (m/s^2).
+            cg_height: CG height above ground (m).
+            wheelbase: Wheelbase (m).
+
+        Returns:
+            Signed delta to rear normal force (N). Front delta = -rear_delta.
+        """
+        if self.anti_squat_ratio <= 0 or wheelbase <= 0 or longitudinal_acceleration <= 0:
+            return 0.0
+        geometric_fraction = min(1.0, self.anti_squat_ratio) * 0.2
+        elastic_transfer = mass * longitudinal_acceleration * cg_height / wheelbase
+        return float(geometric_fraction * elastic_transfer)
 
 

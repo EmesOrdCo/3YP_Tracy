@@ -179,26 +179,32 @@ class MultiObjectiveOptimizer:
                           f"best so far: {self._best_so_far:.3f}s", end='\r', flush=True)
                     self._last_progress_time = current_time
                 
-                # Add penalty for rule violations
+                # Add penalties for rule violations and physical infeasibility.
+                # Aligns with run_quick_optimization.py so all optimisers share
+                # the same safety contract: a wheelie-prone or short-of-75 m
+                # candidate will never beat a compliant one.
                 penalty = 0.0
-                if not result.power_compliant and self.enforce_rules:
-                    penalty += 1e5  # Large penalty for power violations
-                if not result.time_compliant and self.enforce_rules:
-                    penalty += 1e4  # Penalty for time violations
-                
-                # Calculate objective
-                if self.objective == 'minimize_time':
-                    obj_value = result.final_time + penalty
-                elif self.objective == 'maximize_score':
+                if self.enforce_rules:
+                    if not result.power_compliant:
+                        penalty += 1e5
+                    if not result.time_compliant:
+                        penalty += 1e4
+                    if result.wheelie_detected:
+                        penalty += 1e3
+                    # Sim failed to reach target distance within max_time.
+                    target = getattr(config, "target_distance", 75.0)
+                    if result.final_distance < target - 1e-3:
+                        penalty += 1e6
+
+                # Calculate objective. For minimize_time_with_rules this now
+                # uses a purely additive penalty (rather than a flat 1e6 on
+                # any violation) so the optimiser still has a descent
+                # direction when every sample is infeasible.
+                if self.objective == 'maximize_score':
                     if result.score is None:
                         obj_value = 1e6 + penalty
                     else:
                         obj_value = -result.score + penalty  # Negate for minimization
-                elif self.objective == 'minimize_time_with_rules':
-                    if not result.power_compliant or not result.time_compliant:
-                        obj_value = 1e6 + penalty
-                    else:
-                        obj_value = result.final_time + penalty
                 else:
                     obj_value = result.final_time + penalty
                 

@@ -5,7 +5,6 @@ from .aerodynamics import AerodynamicsModel
 from .mass_properties import MassPropertiesModel
 from .suspension import SuspensionModel
 from .chassis import ChassisGeometry
-from .control import ControlStrategy, LaunchControl, TractionControl
 
 # Note: PowertrainModel, energy_storage, and motor_model are imported
 # directly where needed to avoid circular import issues.
@@ -17,7 +16,4 @@ __all__ = [
     'MassPropertiesModel',
     'SuspensionModel',
     'ChassisGeometry',
-    'ControlStrategy',
-    'LaunchControl',
-    'TractionControl'
 ]

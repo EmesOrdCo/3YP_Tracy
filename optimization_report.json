@@ -1,35 +1,4 @@
 {
-  "best_time_seconds": 3.2289999999997554,
-  "final_velocity_ms": 37.69438197833415,
-  "power_compliant": true,
-  "wheelie_detected": false,
-  "n_evaluations": 11769,
-  "optimization_time_seconds": 2660.4218962192535,
-  "optimized_parameters": {
-    "wheelbase": 1.9931296611032119,
-    "cg_x_ratio": 0.78637257416166,
-    "cg_x": 1.5673425022396896,
-    "gear_ratio": 8.014927070665694,
-    "radius_loaded": 0.2796894939973941,
-    "target_slip_ratio": 0.18643681229918857,
-    "mu_slip_optimal": 0.15917943274857424,
-    "launch_torque_limit": 810.9627673736637,
-    "anti_squat_ratio": 0.2018825032966079
-  },
-  "minimize_targets": {
-    "mass.total_mass": 175.0,
-    "mass.cg_z": 0.22,
-    "mass.unsprung_mass_front": 10.0,
-    "mass.unsprung_mass_rear": 10.0,
-    "mass.i_pitch": 120.0,
-    "tires.rolling_resistance_coeff": 0.01,
-    "powertrain.battery_internal_resistance": 0.008,
-    "powertrain.wheel_inertia": 0.05,
-    "aerodynamics.cda": 0.55
-  },
-  "maximize_targets": {
-    "tires.mu_max": 1.8,
-    "powertrain.motor_efficiency": 0.96,
-    "powertrain.drivetrain_efficiency": 0.97
-  }
-}
+  "best_time_seconds": 3.6079999999997137,
+  "final_velocity_ms": 28.31328418579129,
+  "power_compliant": 

@@ -18,7 +18,7 @@ from pathlib import Path
 try:
     from ..config.vehicle_config import PowertrainProperties
     from .energy_storage import EnergyStorage, BatteryModel, SupercapacitorModel, EnergyStorageState
-    from .motor_model import MotorModel, MotorState, create_yasa_p400r
+    from .motor_model import MotorModel, MotorState, create_yasa_p400r, create_motor_from_config
 except (ImportError, ValueError):
     # Fall back to absolute imports (development mode)
     package_root = Path(__file__).parent.parent.parent.resolve()
@@ -26,7 +26,7 @@ except (ImportError, ValueError):
         sys.path.insert(0, str(package_root))
     from config.vehicle_config import PowertrainProperties
     from vehicle.energy_storage import EnergyStorage, BatteryModel, SupercapacitorModel, EnergyStorageState
-    from vehicle.motor_model import MotorModel, MotorState, create_yasa_p400r
+    from vehicle.motor_model import MotorModel, MotorState, create_yasa_p400r, create_motor_from_config
 
 
 @dataclass
@@ -89,9 +89,12 @@ class PowertrainModel:
         """
         self.config = config
         self.max_power = config.max_power_accumulator_outlet  # 80kW FS limit
-        self.gear_ratio = config.gear_ratio
+        # Overall reduction: final drive = gear_ratio * differential_ratio.
+        self.gear_ratio = config.gear_ratio * config.differential_ratio
         self.drivetrain_efficiency = config.drivetrain_efficiency
         self.wheel_inertia = config.wheel_inertia
+        # Pack-level current limit from config (A).
+        self.battery_max_current = config.battery_max_current
         
         # Energy storage
         if energy_storage is not None:
@@ -105,12 +108,15 @@ class PowertrainModel:
                 min_operating_voltage=config.battery_voltage_nominal * 0.8
             )
         
-        # Motor model
+        # Motor model. If the caller supplies one, use it. Otherwise build from
+        # config (respects motor_torque_constant, motor_max_current,
+        # motor_max_speed, motor_efficiency). Falls back to YASA defaults for
+        # fields that are not on the config.
         self.use_advanced_motor = use_advanced_motor
         if motor is not None:
             self.motor = motor
         elif use_advanced_motor:
-            self.motor = create_yasa_p400r()
+            self.motor = create_motor_from_config(config)
         else:
             self.motor = None
         
@@ -203,15 +209,25 @@ class PowertrainModel:
             power_mechanical = actual_motor_torque * motor_speed
             electrical_power_unlimited = power_mechanical / motor_efficiency if motor_efficiency > 0 else 0.0
         
-        # Apply Formula Student 80kW power limit (EV 2.2)
-        if abs(electrical_power_unlimited) > self.max_power:
-            # Scale down to meet power limit
-            scale_factor = self.max_power / abs(electrical_power_unlimited)
+        # Apply Formula Student 80 kW motoring cap (EV 2.2). Regen is
+        # unrestricted per EV 2.2.2, so only clamp positive (motoring) power.
+        if electrical_power_unlimited > self.max_power:
+            scale_factor = self.max_power / electrical_power_unlimited
             motor_current *= scale_factor
             actual_motor_torque *= scale_factor
-            electrical_power = np.sign(electrical_power_unlimited) * self.max_power
+            electrical_power = self.max_power
         else:
             electrical_power = electrical_power_unlimited
+
+        # Apply pack-level current limit. Battery/supercap current is roughly
+        # |P_electrical| / V_bus; scale down if that exceeds the config max.
+        if self.battery_max_current > 0 and dc_bus_voltage > 1e-3:
+            pack_current = abs(electrical_power) / dc_bus_voltage
+            if pack_current > self.battery_max_current:
+                scale_factor = self.battery_max_current / pack_current
+                motor_current *= scale_factor
+                actual_motor_torque *= scale_factor
+                electrical_power *= scale_factor
         
         # Update energy storage state (skip during RK4 intermediate steps)
         if update_storage:

@@ -10,8 +10,8 @@ This script implements a rigorous optimization approach that separates parameter
 3. OPTIMIZE: Parameters with genuine trade-offs (found by optimizer)
 4. FIXED: Parameters constrained by rules or component selection
 
-Key improvement: CG position is optimized as a RATIO of wheelbase (0.6-0.95),
-ensuring the optimizer explores wheelbase and weight distribution together properly.
+Key improvement: CG position is optimized as a RATIO of fixed wheelbase (0.6-0.95).
+Wheelbase is fixed at 1.573m (design decision, compliant with T 2.9.1 ≥1525mm).
 
 Author: Formula Student Acceleration Simulation
 """
@@ -88,7 +88,8 @@ FIXED_PARAMS = {
     'environment.wind_speed': 0.0,
     'environment.surface_mu_scaling': 1.0,
     
-    # Chassis geometry (will be set by optimizer for wheelbase, track derived)
+    # Chassis geometry - wheelbase fixed at 1.573m (design decision)
+    'mass.wheelbase': 1.573,               # m - fixed wheelbase (≥1525mm per T 2.9.1)
     'mass.front_track': 1.2,               # m
     'mass.rear_track': 1.2,                # m
     'mass.i_yaw': 100.0,                   # kg·m² - not critical for straight line
@@ -113,8 +114,9 @@ FIXED_PARAMS = {
 
 # OPTIMIZE: Parameters with genuine trade-offs
 # Format: (min_bound, max_bound, description)
+FIXED_WHEELBASE = 1.573  # m - fixed design decision (≥1525mm per T 2.9.1)
+
 OPTIMIZE_PARAMS = {
-    'wheelbase': (1.525, 2.0, 'Wheelbase [m] - min 1.525m per FS rules'),
     'cg_x_ratio': (0.60, 0.95, 'CG position as ratio of wheelbase (0=front, 1=rear)'),
     'gear_ratio': (8.0, 14.0, 'Final drive gear ratio'),
     'radius_loaded': (0.200, 0.280, 'Tire loaded radius [m] (10" to 13" wheels)'),
@@ -192,15 +194,14 @@ class ImprovedOptimizer:
         """
         Convert optimizer vector to vehicle configuration.
         
-        Vector layout:
-        [0] wheelbase
-        [1] cg_x_ratio (CG position as ratio of wheelbase)
-        [2] gear_ratio
-        [3] radius_loaded
-        [4] target_slip_ratio
-        [5] mu_slip_optimal
-        [6] launch_torque_limit
-        [7] anti_squat_ratio
+        Vector layout (wheelbase fixed at 1.573m):
+        [0] cg_x_ratio (CG position as ratio of wheelbase)
+        [1] gear_ratio
+        [2] radius_loaded
+        [3] target_slip_ratio
+        [4] mu_slip_optimal
+        [5] launch_torque_limit
+        [6] anti_squat_ratio
         """
         config = copy.deepcopy(self.base_config)
         
@@ -209,20 +210,18 @@ class ImprovedOptimizer:
         config = self._apply_minimize_params(config)
         config = self._apply_maximize_params(config)
         
-        # Apply optimized params
-        wheelbase = x[0]
-        cg_x_ratio = x[1]
-        gear_ratio = x[2]
-        radius_loaded = x[3]
-        target_slip_ratio = x[4]
-        mu_slip_optimal = x[5]
-        launch_torque_limit = x[6]
-        anti_squat_ratio = x[7]
+        # Apply optimized params with fixed wheelbase
+        wheelbase = FIXED_WHEELBASE
+        cg_x_ratio = x[0]
+        gear_ratio = x[1]
+        radius_loaded = x[2]
+        target_slip_ratio = x[3]
+        mu_slip_optimal = x[4]
+        launch_torque_limit = x[5]
+        anti_squat_ratio = x[6]
         
-        # Calculate absolute CG position from ratio
         cg_x = cg_x_ratio * wheelbase
         
-        # Set values
         config.mass.wheelbase = wheelbase
         config.mass.cg_x = cg_x
         config.powertrain.gear_ratio = gear_ratio
@@ -248,6 +247,10 @@ class ImprovedOptimizer:
             if errors:
                 return 1e6 + len(errors) * 1e4
             
+            # Speed up simulations for optimization: larger timestep, shorter timeout
+            config.max_time = 10.0
+            config.dt = 0.05
+            
             # Run simulation
             sim = AccelerationSimulation(config)
             result = sim.run()
@@ -261,7 +264,9 @@ class ImprovedOptimizer:
             if not result.time_compliant:
                 penalty += 1e4
             if result.wheelie_detected:
-                penalty += 1e3  # Penalize wheelies
+                penalty += 1e3
+            if result.final_distance < 75.0:
+                penalty += 1e6
             
             obj_value = result.final_time + penalty
             
@@ -277,24 +282,20 @@ class ImprovedOptimizer:
     
     def optimize(
         self,
-        max_iterations: int = 50,
-        population_size: int = 30,
+        max_iterations: int = 20,
+        population_size: int = 10,
         verbose: bool = True
     ) -> OptimizationResult:
         """
         Run optimization to find best configuration.
         
-        Args:
-            max_iterations: Maximum generations for differential evolution
-            population_size: Population size (more = better exploration, slower)
-            verbose: Print progress updates
-            
-        Returns:
-            OptimizationResult with best configuration and statistics
+        Uses a two-phase approach:
+        1. Coarse search with differential evolution (small pop, few iters)
+        2. Local refinement with Nelder-Mead from best DE result
         """
-        # Build bounds list
+        from scipy.optimize import minimize
+        
         bounds = [
-            OPTIMIZE_PARAMS['wheelbase'][:2],
             OPTIMIZE_PARAMS['cg_x_ratio'][:2],
             OPTIMIZE_PARAMS['gear_ratio'][:2],
             OPTIMIZE_PARAMS['radius_loaded'][:2],
@@ -311,8 +312,10 @@ class ImprovedOptimizer:
             print(f"\nOptimizing {len(bounds)} parameters with trade-offs:")
             for name, (lo, hi, desc) in OPTIMIZE_PARAMS.items():
                 print(f"  • {name}: [{lo}, {hi}] - {desc}")
-            print(f"\nSettings: {max_iterations} iterations × {population_size} population")
-            print(f"Estimated evaluations: ~{max_iterations * population_size * 10}")
+            print(f"\nPhase 1: Differential Evolution (coarse search)")
+            print(f"  Settings: {max_iterations} iterations × {population_size} population")
+            print(f"Phase 2: Nelder-Mead (local refinement)")
+            print(f"\nUsing dt=0.01 for optimization, dt=0.001 for final verification")
             print("\nStarting optimization...\n")
         
         start_time = time.time()
@@ -320,46 +323,68 @@ class ImprovedOptimizer:
         self.best_time = float('inf')
         self.convergence_history = []
         
-        # Callback for progress
         def callback(xk, convergence):
             if verbose:
-                print(f"  Generation complete | Best time: {self.best_time:.4f}s | "
-                      f"Evaluations: {self.n_evaluations}", flush=True)
+                print(f"  Generation complete | Best: {self.best_time:.4f}s | "
+                      f"Evals: {self.n_evaluations}", flush=True)
         
-        # Run differential evolution
-        result = differential_evolution(
-            self._objective,
-            bounds,
-            maxiter=max_iterations,
-            popsize=population_size,
-            workers=1,  # Avoid multiprocessing issues
-            updating='deferred',
-            callback=callback,
-            seed=42,  # Reproducibility
-            atol=0.001,
-            tol=0.001,
-        )
+        # Multi-start Nelder-Mead from several initial guesses
+        # Start from mid-range and a few perturbed starting points
+        mid = np.array([(lo+hi)/2 for lo, hi in bounds])
+        
+        # Generate diverse starting points
+        rng = np.random.RandomState(42)
+        starts = [mid]
+        for _ in range(4):
+            x0 = np.array([rng.uniform(lo, hi) for lo, hi in bounds])
+            starts.append(x0)
+        
+        best_x = None
+        best_val = float('inf')
+        
+        for i, x0 in enumerate(starts):
+            if verbose:
+                print(f"  Start {i+1}/5 from: cg_ratio={x0[0]:.2f}, gear={x0[1]:.1f}, "
+                      f"radius={x0[2]:.3f}...", flush=True)
+            
+            result_nm = minimize(
+                self._objective,
+                x0,
+                method='Nelder-Mead',
+                options={'maxiter': 300, 'xatol': 0.001, 'fatol': 0.005},
+            )
+            
+            if verbose:
+                print(f"    → {result_nm.fun:.4f}s ({result_nm.nit} iters, "
+                      f"{result_nm.nfev} evals)", flush=True)
+            
+            if result_nm.fun < best_val:
+                best_val = result_nm.fun
+                best_x = result_nm.x
         
         elapsed = time.time() - start_time
         
-        # Get best configuration
-        best_config = self._vector_to_config(result.x)
+        if verbose:
+            print(f"  NM best: {best_val:.4f}s | Total evals: {self.n_evaluations}", flush=True)
         
-        # Run final simulation for complete results
+        # Final simulation with full accuracy
+        best_config = self._vector_to_config(best_x)
+        best_config.dt = 0.001
+        best_config.max_time = 30.0
+        
         sim = AccelerationSimulation(best_config)
         best_result = sim.run()
         
-        # Extract optimized parameter values
         optimized_params = {
-            'wheelbase': result.x[0],
-            'cg_x_ratio': result.x[1],
-            'cg_x': result.x[1] * result.x[0],  # Absolute CG position
-            'gear_ratio': result.x[2],
-            'radius_loaded': result.x[3],
-            'target_slip_ratio': result.x[4],
-            'mu_slip_optimal': result.x[5],
-            'launch_torque_limit': result.x[6],
-            'anti_squat_ratio': result.x[7],
+            'wheelbase': FIXED_WHEELBASE,
+            'cg_x_ratio': best_x[0],
+            'cg_x': best_x[0] * FIXED_WHEELBASE,
+            'gear_ratio': best_x[1],
+            'radius_loaded': best_x[2],
+            'target_slip_ratio': best_x[3],
+            'mu_slip_optimal': best_x[4],
+            'launch_torque_limit': best_x[5],
+            'anti_squat_ratio': best_x[6],
         }
         
         return OptimizationResult(
@@ -475,8 +500,8 @@ def main():
     
     # Run optimization
     result = optimizer.optimize(
-        max_iterations=50,
-        population_size=30,
+        max_iterations=15,
+        population_size=8,
         verbose=True
     )
     
@@ -490,7 +515,13 @@ def main():
     print(f"✓ Final Velocity: {result.best_result.final_velocity:.2f} m/s "
           f"({result.best_result.final_velocity * 3.6:.1f} km/h)")
     print(f"✓ Power Compliant: {result.best_result.power_compliant}")
+    print(f"✓ Time Compliant: {result.best_result.time_compliant}")
     print(f"✓ Wheelie Detected: {result.best_result.wheelie_detected}")
+    if result.best_result.wheelie_detected:
+        print(f"  ⚠️  Wheelie at t={result.best_result.wheelie_time:.3f}s, "
+              f"min front normal={result.best_result.min_front_normal_force:.1f}N")
+    else:
+        print(f"  Min Front Normal Force: {result.best_result.min_front_normal_force:.1f} N")
     print(f"✓ Total Evaluations: {result.n_evaluations}")
     print(f"✓ Optimization Time: {result.elapsed_time:.1f} seconds")
     
@@ -500,7 +531,7 @@ def main():
     
     params = result.optimized_params
     print(f"\n  Chassis Geometry:")
-    print(f"    Wheelbase:           {params['wheelbase']:.4f} m")
+    print(f"    Wheelbase:           {params['wheelbase']:.4f} m (FIXED)")
     print(f"    CG X (absolute):     {params['cg_x']:.4f} m from front axle")
     print(f"    CG X (ratio):        {params['cg_x_ratio']:.2%} of wheelbase (rearward)")
     

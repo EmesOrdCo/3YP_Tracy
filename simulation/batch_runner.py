@@ -4,7 +4,7 @@ from typing import Dict, List, Optional, Any, Callable
 from pathlib import Path
 import copy
 import pandas as pd
-from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor
 import multiprocessing
 
 import sys

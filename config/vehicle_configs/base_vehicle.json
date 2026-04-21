@@ -1,25 +1,31 @@
 {
+  "_note": "The real car: YASA P400R motor + BAMOCAR-PG-D3-700/400 inverter + 200-cell supercapacitor stack (600 V nominal). Chassis values from the 3YP team spreadsheet. This is the 'sandbox' config for parameter studies.",
+  "_hardware_sources": {
+    "motor": "yasa-p400rdatasheet-rev-14.pdf (370 Nm @ 450 A, Kt = 0.822, 8000 rpm = 838 rad/s, 160 kW peak @ 700 V).",
+    "inverter": "BAMOCAR-PG-D3-700_EN.pdf (supply 12-700 V DC, peak 285 A RMS, continuous 200 A RMS).",
+    "supercap_cell": "Eaton/Maxwell C46W-3R0-0600 (3.0 V, 600 F, 0.7 mOhm ESR per cell), 200 cells in series -> 600 V, 3 F, 0.14 Ohm."
+  },
   "mass": {
-    "total_mass": 200.0,
-    "cg_x": 1.2,
-    "cg_z": 0.3,
+    "total_mass": 250.0,
+    "cg_x": 1.3,
+    "cg_z": 0.22,
     "wheelbase": 1.6,
     "front_track": 1.2,
     "rear_track": 1.2,
     "i_yaw": 100.0,
-    "i_pitch": 200.0,
-    "unsprung_mass_front": 15.0,
-    "unsprung_mass_rear": 15.0
+    "i_pitch": 150.0,
+    "unsprung_mass_front": 12.0,
+    "unsprung_mass_rear": 12.0
   },
   "tires": {
-    "radius_loaded": 0.2286,
+    "radius_loaded": 0.247409,
     "mass": 3.0,
-    "mu_max": 1.5,
-    "mu_slip_optimal": 0.12,
-    "rolling_resistance_coeff": 0.015,
+    "mu_max": 1.7,
+    "mu_slip_optimal": 0.139754,
+    "rolling_resistance_coeff": 0.01,
     "tire_model_type": "pacejka",
     "pacejka_C": 1.65,
-    "pacejka_pDx1": 1.45,
+    "pacejka_pDx1": 1.7,
     "pacejka_pDx2": -0.12,
     "pacejka_pKx1": 35000.0,
     "pacejka_pKx2": -3000.0,
@@ -27,19 +33,24 @@
     "pacejka_Fz0": 1500.0
   },
   "powertrain": {
-    "motor_torque_constant": 0.82,
-    "motor_max_current": 450.0,
+    "motor_torque_constant": 0.822,
+    "motor_max_current": 285.0,
     "motor_max_speed": 838.0,
     "motor_efficiency": 0.95,
     "battery_voltage_nominal": 600.0,
-    "battery_internal_resistance": 0.01,
+    "battery_internal_resistance": 0.14,
     "battery_max_current": 300.0,
-    "gear_ratio": 4.5,
+    "gear_ratio": 5.5,
     "drivetrain_efficiency": 0.95,
     "differential_ratio": 1.0,
     "max_power_accumulator_outlet": 80000.0,
     "wheel_inertia": 0.1,
-    "energy_storage_type": "battery"
+    "energy_storage_type": "supercapacitor",
+    "supercap_cell_voltage": 3.0,
+    "supercap_cell_capacitance": 600.0,
+    "supercap_cell_esr": 0.0007,
+    "supercap_num_cells": 200,
+    "supercap_min_voltage": 350.0
   },
   "aerodynamics": {
     "cda": 0.8,
@@ -56,8 +67,6 @@
   },
   "control": {
     "launch_torque_limit": 1000.0,
-    "target_slip_ratio": 0.15,
-    "torque_ramp_rate": 500.0,
     "traction_control_enabled": true
   },
   "environment": {

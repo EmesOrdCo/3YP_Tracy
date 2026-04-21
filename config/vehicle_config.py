@@ -113,11 +113,19 @@ class SuspensionProperties:
 
 @dataclass
 class ControlProperties:
-    """Control strategy parameters."""
-    launch_torque_limit: float = 1000.0  # N·m
-    target_slip_ratio: float = 0.15
-    torque_ramp_rate: float = 500.0  # N·m/s
+    """Control strategy parameters.
+
+    Only ``launch_torque_limit`` and ``traction_control_enabled`` are read by
+    the default Pacejka-based solver. ``target_slip_ratio`` and
+    ``torque_ramp_rate`` remain here for backward compatibility with older
+    JSON configs and optimiser scripts; the solver internally uses the
+    Pacejka-optimal slip ratio (load-dependent) and a fixed 50 ms torque
+    ramp, so these two fields are informational only.
+    """
+    launch_torque_limit: float = 1000.0  # N.m
     traction_control_enabled: bool = True
+    target_slip_ratio: float = 0.15  # Informational; solver uses Pacejka optimum.
+    torque_ramp_rate: float = 500.0  # Informational; solver uses 50 ms ramp.
 
 
 @dataclass

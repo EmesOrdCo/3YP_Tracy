@@ -44,9 +44,9 @@ class MassPropertiesModel:
         g = 9.81  # m/s²
         total_weight = self.mass * g
         
-        # Distance from CG to rear axle
+        # cg_x = distance from front axle to CG; used as lever arm for rear load
         a = self.cg_x
-        # Distance from CG to front axle
+        # Distance from CG to rear axle; used as lever arm for front load
         b = self.wheelbase - self.cg_x
         
         # Load distribution (assuming level ground)

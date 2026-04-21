@@ -35,24 +35,30 @@ class AerodynamicsModel:
     def calculate_forces(self, velocity: float) -> Tuple[float, float, float]:
         """
         Calculate aerodynamic drag and downforce.
-        
+
+        Sign conventions:
+            - drag_force < 0 when moving forward (opposes motion).
+            - downforce_* > 0 means the force pushes the axle DOWN (increases
+              tyre normal load), which is how :class:`MassPropertiesModel`
+              expects it. Set ``cl_front``/``cl_rear`` > 0 for downforce and
+              < 0 for lift. This matches the typical FS convention of quoting
+              CL magnitudes as positive numbers for wings producing downforce.
+
         Args:
             velocity: Vehicle velocity (m/s)
-            
+
         Returns:
-            Tuple of (drag_force, downforce_front, downforce_rear) in N
+            Tuple of (drag_force, downforce_front, downforce_rear) in N.
         """
         # Dynamic pressure
         q = 0.5 * self.air_density * velocity ** 2
-        
+
         # Drag force (opposes motion)
         drag_force = -self.cda * q * np.sign(velocity) if velocity != 0 else 0.0
-        
-        # Downforce (negative lift)
-        # Simple model: downforce proportional to velocity squared
-        # More complex models can include ride height effects, etc.
-        downforce_front = -self.cl_front * q  # Negative = down
-        downforce_rear = -self.cl_rear * q
-        
+
+        # Downforce: positive cl -> positive downforce (adds to normal load).
+        downforce_front = self.cl_front * q
+        downforce_rear = self.cl_rear * q
+
         return drag_force, downforce_front, downforce_rear
 
