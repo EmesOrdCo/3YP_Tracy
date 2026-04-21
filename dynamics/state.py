@@ -1,8 +1,7 @@
 """Simulation state management."""
 
-import numpy as np
 from dataclasses import dataclass
-from typing import Dict, List
+from typing import Dict
 
 
 @dataclass
@@ -21,6 +20,25 @@ class SimulationState:
     motor_speed: float = 0.0  # rad/s
     motor_current: float = 0.0  # A
     motor_torque: float = 0.0  # N·m
+
+    # Driveline torsional state. Only integrated when
+    # powertrain.driveline_compliance_enabled is True; otherwise the rigid
+    # coupling motor_speed = wheel_speed_rear * gear_ratio is used and this
+    # stays at its default 0.
+    driveline_twist: float = 0.0  # rad at wheel hub (motor side - wheel side)
+
+    # Derivative carriers (populated by _calculate_derivatives so that
+    # _rk4_step can integrate motor_speed and driveline_twist without
+    # overloading the value slots above).
+    motor_alpha: float = 0.0  # rad/s^2 - motor angular acceleration
+    driveline_twist_rate: float = 0.0  # rad/s - dtheta_twist/dt
+
+    # Tyre thermal state. Value slot (°C) when tires.thermal_model_enabled is
+    # True. dT/dt is carried via the corresponding *_rate fields.
+    tyre_temp_front: float = 25.0  # °C
+    tyre_temp_rear: float = 25.0   # °C
+    tyre_temp_front_rate: float = 0.0  # K/s
+    tyre_temp_rear_rate: float = 0.0   # K/s
     
     # Forces
     drive_force: float = 0.0  # N
@@ -76,7 +94,10 @@ class SimulationState:
             'dc_bus_voltage': self.dc_bus_voltage,
             'energy_storage_soc': self.energy_storage_soc,
             'energy_storage_loss': self.energy_storage_loss,
-            'in_field_weakening': self.in_field_weakening
+            'in_field_weakening': self.in_field_weakening,
+            'driveline_twist': self.driveline_twist,
+            'tyre_temp_front': self.tyre_temp_front,
+            'tyre_temp_rear': self.tyre_temp_rear,
         }
     
     def copy(self) -> 'SimulationState':
@@ -104,6 +125,13 @@ class SimulationState:
             energy_storage_soc=self.energy_storage_soc,
             energy_storage_loss=self.energy_storage_loss,
             in_field_weakening=self.in_field_weakening,
+            driveline_twist=self.driveline_twist,
+            motor_alpha=self.motor_alpha,
+            driveline_twist_rate=self.driveline_twist_rate,
+            tyre_temp_front=self.tyre_temp_front,
+            tyre_temp_rear=self.tyre_temp_rear,
+            tyre_temp_front_rate=self.tyre_temp_front_rate,
+            tyre_temp_rear_rate=self.tyre_temp_rear_rate,
             time=self.time
         )
 

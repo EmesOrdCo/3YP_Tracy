@@ -1,0 +1,156 @@
+FORMULA STUDENT RULES - KEY ENGINEERING CONSTRAINTS FOR ACCUMULATOR DESIGN
+Extracted and cross-referenced with report scope: technology selection, electrical architecture, 
+mechanical packaging, and performance verification.
+
+═══════════════════════════════════════════════════════════════════════════════
+
+VOLTAGE & POWER CONSTRAINTS
+
+EV4.1.1  Maximum TS voltage: 600VDC (430VDC internal low-power control signals)
+         → Design constraint: Cell stacking to 600V must be verified
+
+EV4.1.2  All components must be rated for maximum TS voltage
+         → Design constraint: Component datasheets must confirm 600V rating
+
+EV4.1.3  All components must be rated for maximum possible temperature during use
+         → Design constraint: Thermal operating window must be validated
+
+Power Limit (referenced in report as FS-EV 7.2.4):
+         Accumulator output power limited to 80 kW
+         → Design constraint: Used for energy requirement calculations (320 kJ / 89 Wh)
+
+
+ELECTRICAL ISOLATION & SAFETY SYSTEMS
+
+EV4.3.1  TS and LVS must be galvanically isolated
+         → Design constraint: AMS communication must not create TS-LVS ground shortcuts
+
+EV4.3.2  All external connections (e.g., BMS Master to laptop) must include galvanic isolation
+         → Design constraint: BMS-vehicle ECU interface must use isolated communication
+
+EV4.3.3  TS and LVS circuits must be physically segregated (not in same conduit except interlocks)
+         → Design constraint: PCB and harness routing must separate TS and LV domains
+
+
+INSULATION & PHYSICAL PROTECTION
+
+EV4.5.1  All live TS parts protected from contact: tested with 100mm long, 6mm diameter probe
+         → Design constraint: All HV connections inside enclosure must pass probe test
+
+EV4.5.2  Insulation material must be rated for maximum TS voltage (600V)
+         → Design constraint: Tape/paint alone is insufficient; proper insulation required
+
+EV4.5.4  TS components must be protected from moisture (minimum IPX2 rating)
+         → Design constraint: Accumulator container must meet IPX2 water ingress protection
+
+EV4.5.8  External TS wiring must use orange non-conductive conduit or shielded cable
+         → Design constraint: Busbar/harness routing outside enclosure must use orange conduit
+
+
+HIGH CURRENT CONNECTIONS & MECHANICAL INTEGRITY
+
+EV4.5.11 TS connections must use intentional current paths (copper/aluminium conductors)
+         → Design constraint: Cannot rely on steel bolts as primary conductors in series path
+
+EV4.5.12 TS connections must NOT include compressible material (plastic, etc.) in stack
+         → Design constraint: Busbar connections must use direct metal-to-metal compression
+
+EV4.5.14 All electrical connections in high-current path must use positive locking mechanisms
+         → Design constraint: Busbar bolts must have positive locking (lock-washers, thread-locker, Belleville washers)
+
+EV4.5.15 Teams must demonstrate positive locking (photographs for inaccessible connections)
+         → Documentation constraint: Photos of busbar assembly required
+
+
+ACCUMULATOR CONTAINER POSITIONING & MECHANICAL
+
+EV4.4.1  TS components including accumulator must be within rollover protection envelope
+         → Design constraint: Accumulator container must fit within chassis rollover hoop
+
+EV4.4.2  TS parts <350 mm above ground must be impact-protected
+         → Design constraint: If accumulator is <350 mm high, impact protection structure required
+
+EV4.4.4  Positioning rules for outboard systems (applies to modular segments if distributed)
+         → Design constraint: If segments outside main accumulator, additional interlock/routing rules apply
+
+EV4.4.5  In side/front view, no TS part may project below chassis lower surface
+         → Design constraint: Accumulator height and mounting bracket must not violate this
+
+EV4.4.6  Additional regulations apply for TS accumulators (see EV5.5)
+         → Reference: Full accumulator regulations in EV5 section (not included in extracted rules)
+
+
+FUSING & OVERCURRENT PROTECTION
+
+EV3.2.1  All electrical systems must have appropriate overcurrent protection
+         → Design constraint: Main fuse on accumulator discharge path required
+
+EV3.2.2  Continuous current rating of fuse ≤ continuous rating of any protected component
+         → Design constraint: Fuse rating must match weakest link (wire, busbar, connector)
+
+EV3.2.3  Fuse interrupt rating > theoretical short-circuit current
+         → Design constraint: dc-link fuse must be rated for maximum achievable fault current
+
+EV3.2.4  All overcurrent protection rated for highest voltage in system (600V) and DC
+         → Design constraint: HV fuse must be 600V DC rated
+
+EV3.2.7  TS high-current path through accumulator must be fused
+         → Design constraint: Main series fuse on discharge path is mandatory
+
+
+DISCHARGE CIRCUIT (if capacitive load exists)
+
+EV4.9.2  Discharge circuit must always be active when shutdown circuit is open
+         → Design constraint: Supercapacitors require active discharge path for safety
+
+EV4.9.2  Discharge must be fail-safe: still discharges if HVD opened or accumulator disconnected
+         → Design constraint: Discharge path topology must not depend on series disconnect
+
+
+ENERGY METER INTEGRATION
+
+EV4.6.3  Energy Meter must NOT be installed within TSAC (accumulator enclosure)
+         → Design constraint: Energy Meter location must be outside accumulator container
+
+EV4.6.4  All TS current must pass through Energy Meter (placed between AIR and inverter)
+         → Design constraint: Accumulator discharge path must interface with external Energy Meter
+
+
+TRACTIVE SYSTEM MEASURING POINTS (TSMP)
+
+EV4.7.2  TSMPs must be directly connected to intermediate circuit capacitors
+         → Design constraint: Sense points must measure actual accumulator voltage terminals
+
+EV4.7.6  TSMP security resistor: Use 15kΩ for 400-600V systems
+         → Design constraint: 15kΩ current-limiting resistor on each TSMP
+
+═══════════════════════════════════════════════════════════════════════════════
+
+DESIGN VERIFICATION CHECKLIST (for your report)
+
+☐ Voltage: Cells stacked to ≤600V, component datasheets confirm 600V rating
+☐ Power: Design validated for 80 kW peak output
+☐ Energy: Calculated for minimum 320 kJ (89 Wh) over 4 s event
+☐ Isolation: TS-LVS galvanic isolation confirmed in architecture (EV4.3.1)
+☐ Enclosure: IPX2 water resistance validated
+☐ Components: All rated for 600V and full operating temperature range
+☐ Insulation: Proper voltage-rated insulation (not tape/paint alone)
+☐ Connections: All HV connections use metal-to-metal with positive locking
+☐ Fusing: Main fuse rated ≤ component ratings and >fault current capability
+☐ Discharge: Active discharge path for supercapacitor energy
+☐ Positioning: Accumulator within rollover envelope, above 350 mm if required
+☐ External routing: Any external harness uses orange conduit
+
+═══════════════════════════════════════════════════════════════════════════════
+
+RULES INTENTIONALLY EXCLUDED (not core engineering constraints for report scope):
+
+• EV4.10 (TSAL - Tractive System Active Light) - Status indication, not accumulator design
+• EV4.2 (Labeling requirements) - Formality, not engineering constraint
+• EV4.5.10 (Interlock contacts on connectors) - Vehicle integration detail outside accumulator design
+• EV4.8 (High Voltage Disconnect mechanism) - Vehicle integration, not accumulator itself
+• EV3.1 (Grounding to vehicle chassis) - Full vehicle integration topic
+• Detailed TS/LVS PCB spacing rules (Table 4) - Applies if AMS PCB exists, otherwise peripheral
+• TSAL power supply rules - Vehicle integration
+
+═══════════════════════════════════════════════════════════════════════════════

@@ -29,8 +29,9 @@ setup(
     python_requires=">=3.7",
     entry_points={
         'console_scripts': [
-            'fs-optimize=examples.quick_optimization:main',
+            'fs-optimize=run_quick_optimization:main',
             'fs-simulate=examples.basic_run:main',
+            'fs-gui=gui.app:_cli_entry',
         ],
     },
     classifiers=[

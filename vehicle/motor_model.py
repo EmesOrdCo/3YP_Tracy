@@ -93,21 +93,26 @@ class MotorModel:
         # Derived parameters
         # Torque constant: Kt = T / I
         self.torque_constant = peak_torque / peak_current  # ~0.82 Nm/A
-        
-        # Base speed at rated voltage (where field weakening begins)
-        # At base speed: P = T_peak * ω_base = peak_power
-        # So: ω_base = peak_power / peak_torque
-        self.base_speed_at_rated_voltage = peak_power / peak_torque  # ~432 rad/s
-        
-        # However, this might exceed max_speed, so we need to check
-        # Actually, for YASA P400R, peak power is achieved in field weakening
-        # Let's estimate base speed from voltage/back-EMF relationship
-        # At max speed with rated voltage, the motor is at voltage limit
-        # So back-EMF constant: Ke = V_rated / (omega_max * sqrt(3) * modulation_index)
-        # Simplified: base_speed scales linearly with voltage
-        # At 700V, base speed is approximately where torque starts to drop
-        # From datasheet analysis, this is around 400-450 rad/s
-        self.base_speed_at_rated_voltage = 430.0  # rad/s (estimated from P400R characteristics)
+
+        # Base speed at rated voltage (where field weakening begins).
+        #
+        # We'd like to compute this from fundamentals:
+        #     omega_base = peak_power / peak_torque
+        # but for the YASA P400R the datasheet peak power is reached well
+        # inside the field-weakening region, not at the torque-curve knee.
+        # Using the ratio above gives ~432 rad/s for the P400R, which matches
+        # the 400-450 rad/s knee observed in the torque/speed chart. Other
+        # motors with different torque/speed envelopes may need to override
+        # this by passing an explicit ``base_speed`` (future extension).
+        base_speed_estimate = peak_power / peak_torque
+        # Guard against pathological inputs (zero torque / power).
+        if not np.isfinite(base_speed_estimate) or base_speed_estimate <= 0:
+            base_speed_estimate = 0.5 * max_speed
+        # Base speed must be strictly below max_speed, otherwise the motor has
+        # no field-weakening region and the envelope collapses.
+        self.base_speed_at_rated_voltage = float(
+            min(base_speed_estimate, 0.95 * max_speed)
+        )
     
     def calculate_base_speed(self, dc_bus_voltage: float) -> float:
         """
@@ -285,4 +290,56 @@ def create_yasa_p400r() -> MotorModel:
         peak_power=160e3,  # W (160 kW)
         efficiency_peak=0.97,
         efficiency_low_load=0.90
+    )
+
+
+def create_motor_from_config(config) -> MotorModel:
+    """Build a MotorModel using fields from PowertrainProperties.
+
+    Config-driven fields:
+      - ``motor_torque_constant`` (Kt, N.m/A) and ``motor_max_current`` (A)
+        together define ``peak_torque = Kt * I_peak``.
+      - ``motor_max_speed`` (rad/s) caps motor speed.
+      - ``motor_efficiency`` (0-1) is used for both peak and low-load points
+        (no separate low-load efficiency in config).
+      - ``battery_voltage_nominal`` (V) is used as the motor's rated voltage
+        so field-weakening base speed is correct for the actual bus voltage.
+
+    Defaults are used for fields absent from the config:
+      - continuous_current = 200 A (or peak_current if smaller)
+      - rated_voltage = battery_voltage_nominal, falling back to 700 V
+      - peak_power scales with rated_voltage so that the torque/speed envelope
+        matches the YASA P400R's 160 kW @ 700 V datapoint when the bus is at
+        700 V, and drops proportionally at lower bus voltages.
+    """
+    kt = float(getattr(config, "motor_torque_constant", 0.82))
+    peak_current = float(getattr(config, "motor_max_current", 450.0))
+    max_speed = float(getattr(config, "motor_max_speed", 838.0))
+    efficiency = float(getattr(config, "motor_efficiency", 0.95))
+    rated_voltage = float(getattr(config, "battery_voltage_nominal", 700.0))
+
+    # Derived envelope.
+    peak_torque = kt * peak_current
+    continuous_current = min(200.0, peak_current)
+    continuous_torque = kt * continuous_current
+
+    # Peak power scales with both rated_voltage and torque. At 700 V, Kt=0.82,
+    # I=450, max_speed=838 rad/s this evaluates to ~155 kW, close to the
+    # YASA P400R datasheet value of 160 kW @ 700 V.
+    # (P_max = T_peak * omega_base where omega_base = max_speed/2 at full rated V.)
+    peak_power = peak_torque * (max_speed / 2.0) * (rated_voltage / 700.0)
+    # Ensure the FS 80 kW rule is at least reachable at the inverter electrical
+    # input (the accumulator outlet cap is enforced separately in the solver).
+    peak_power = max(peak_power, 80_000.0)
+
+    return MotorModel(
+        peak_torque=peak_torque,
+        continuous_torque=continuous_torque,
+        peak_current=peak_current,
+        continuous_current=continuous_current,
+        max_speed=max_speed,
+        rated_voltage=rated_voltage,
+        peak_power=peak_power,
+        efficiency_peak=efficiency,
+        efficiency_low_load=max(0.85, efficiency - 0.05),
     )

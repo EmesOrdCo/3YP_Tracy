@@ -122,8 +122,10 @@ class AccelerationSimulation:
             self.solver.state_history
         )
         
-        # Overall compliance
-        compliant = power_compliant and time_compliant
+        # Overall compliance. A wheelie (front Fz -> 0) invalidates the run
+        # because it indicates the vehicle lost steering / stability; we also
+        # can't trust the longitudinal dynamics in that regime.
+        compliant = power_compliant and time_compliant and not wheelie_detected
         
         # Calculate score if fastest time provided
         score = None

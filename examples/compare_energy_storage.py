@@ -26,12 +26,13 @@ from config.config_loader import load_config
 from dynamics.solver import DynamicsSolver
 
 
-def run_simulation(config_name: str) -> dict:
+def run_simulation(config_name: str, surface_mu_scaling: float = 1.0) -> dict:
     """
     Run acceleration simulation with specified config.
     
     Args:
         config_name: Name of config file (without .json extension)
+        surface_mu_scaling: Grip multiplier (1.0=dry, 0.6=wet)
         
     Returns:
         Dictionary with simulation results
@@ -39,6 +40,7 @@ def run_simulation(config_name: str) -> dict:
     # Load configuration from vehicle_configs directory
     config_path = package_root / "config" / "vehicle_configs" / f"{config_name}.json"
     config = load_config(config_path)
+    config.environment.surface_mu_scaling = surface_mu_scaling
     
     # Create solver and run
     solver = DynamicsSolver(config)
@@ -138,16 +140,21 @@ def moving_average(data: list, window: int = 50) -> list:
     return result
 
 
-def plot_comparison(battery_results: dict, supercap_results: dict, save_path: str = None):
+def plot_comparison(battery_results: dict, supercap_results: dict, save_path: str = None, title_suffix: str = ''):
     """Create comparison plots with downsampled/smoothed data for clarity."""
     fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-    fig.suptitle('Battery vs Supercapacitor: 75m Acceleration Comparison', fontsize=14, fontweight='bold')
+    title = 'Battery vs Supercapacitor: 75m Acceleration Comparison'
+    if title_suffix:
+        title += f' ({title_suffix})'
+    fig.suptitle(title, fontsize=14, fontweight='bold')
     
     # Downsample factor (reduces 4600 points to ~460)
     ds = 10
     
-    # Smooth window for noisy signals
+    # Smooth window for noisy signals (power, voltage, SOC)
     smooth_window = 100
+    # Shorter window for acceleration: preserves 50ms torque ramp (avoids 100ms visual lag)
+    accel_smooth_window = 20
     
     # Plot 1: Position vs Time (smooth, use all points - not noisy)
     ax1 = axes[0, 0]
@@ -178,10 +185,10 @@ def plot_comparison(battery_results: dict, supercap_results: dict, save_path: st
     ax2.legend()
     ax2.grid(True, alpha=0.3)
     
-    # Plot 3: Acceleration vs Time (SMOOTHED - oscillates at max speed)
+    # Plot 3: Acceleration vs Time (light smoothing to preserve 50ms ramp)
     ax3 = axes[0, 2]
-    batt_accel_smooth = moving_average(battery_results['accelerations'], smooth_window)
-    cap_accel_smooth = moving_average(supercap_results['accelerations'], smooth_window)
+    batt_accel_smooth = moving_average(battery_results['accelerations'], accel_smooth_window)
+    cap_accel_smooth = moving_average(supercap_results['accelerations'], accel_smooth_window)
     ax3.plot(downsample(battery_results['times'], ds), 
              downsample(batt_accel_smooth, ds), 
              'b-', label='Battery', linewidth=2)
@@ -190,7 +197,7 @@ def plot_comparison(battery_results: dict, supercap_results: dict, save_path: st
              'r--', label='Supercapacitor', linewidth=2)
     ax3.set_xlabel('Time (s)')
     ax3.set_ylabel('Acceleration (m/s²)')
-    ax3.set_title('Acceleration vs Time (smoothed)')
+    ax3.set_title('Acceleration vs Time')
     ax3.legend()
     ax3.grid(True, alpha=0.3)
     
@@ -249,7 +256,7 @@ def plot_comparison(battery_results: dict, supercap_results: dict, save_path: st
         plt.savefig(save_path, dpi=150, bbox_inches='tight')
         print(f"\nPlot saved to: {save_path}")
     
-    plt.show()
+    plt.close()
 
 
 def main():
@@ -278,9 +285,17 @@ def main():
     # Compare results
     compare_results(battery_results, supercap_results)
     
-    # Plot comparison
+    # Plot comparison (dry)
     save_path = package_root / 'figures' / 'energy_storage_comparison.png'
     plot_comparison(battery_results, supercap_results, str(save_path))
+    
+    # Run wet (battery vs supercap, same 6-panel layout)
+    print("\n3. Running WET (surface_mu_scaling=0.6)...")
+    battery_wet = run_simulation('base_vehicle', surface_mu_scaling=0.6)
+    supercap_wet = run_simulation('supercapacitor_vehicle', surface_mu_scaling=0.6)
+    print(f"   Battery: {battery_wet['final_time']:.4f}s, Supercap: {supercap_wet['final_time']:.4f}s")
+    save_path_wet = package_root / 'figures' / 'energy_storage_comparison_wet.png'
+    plot_comparison(battery_wet, supercap_wet, str(save_path_wet), title_suffix='Wet Track')
 
 
 if __name__ == '__main__':

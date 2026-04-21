@@ -1,9 +1,9 @@
 {
   "mass": {
-    "total_mass": 175.0,
-    "cg_x": 1.5673425022396896,
+    "total_mass": 200.0,
+    "cg_x": 1.0126132700885162,
     "cg_z": 0.22,
-    "wheelbase": 1.9931296611032119,
+    "wheelbase": 1.6,
     "front_track": 1.2,
     "rear_track": 1.2,
     "i_yaw": 100.0,
@@ -12,33 +12,39 @@
     "unsprung_mass_rear": 10.0
   },
   "tires": {
-    "radius_loaded": 0.2796894939973941,
+    "radius_loaded": 0.22658492922048226,
     "mass": 3.0,
     "mu_max": 1.8,
-    "mu_slip_optimal": 0.12,
+    "mu_slip_optimal": 0.13231807416369393,
     "rolling_resistance_coeff": 0.01,
     "tire_model_type": "pacejka",
     "pacejka_C": 1.65,
-    "pacejka_pDx1": 1.55,
-    "pacejka_pDx2": -0.10,
-    "pacejka_pKx1": 40000.0,
-    "pacejka_pKx2": -2500.0,
-    "pacejka_E": 0.05,
+    "pacejka_pDx1": 1.7,
+    "pacejka_pDx2": -0.12,
+    "pacejka_pKx1": 35000.0,
+    "pacejka_pKx2": -3000.0,
+    "pacejka_E": 0.1,
     "pacejka_Fz0": 1500.0
   },
   "powertrain": {
-    "motor_torque_constant": 0.5,
-    "motor_max_current": 200.0,
-    "motor_max_speed": 1000.0,
+    "motor_torque_constant": 0.822,
+    "motor_max_current": 285.0,
+    "motor_max_speed": 838.0,
     "motor_efficiency": 0.96,
-    "battery_voltage_nominal": 300.0,
+    "battery_voltage_nominal": 600.0,
     "battery_internal_resistance": 0.008,
     "battery_max_current": 300.0,
-    "gear_ratio": 8.014927070665694,
+    "gear_ratio": 4.25,
     "drivetrain_efficiency": 0.97,
     "differential_ratio": 1.0,
     "max_power_accumulator_outlet": 80000.0,
-    "wheel_inertia": 0.05
+    "wheel_inertia": 0.05,
+    "energy_storage_type": "supercapacitor",
+    "supercap_cell_voltage": 3.0,
+    "supercap_cell_capacitance": 600.0,
+    "supercap_cell_esr": 0.0007,
+    "supercap_num_cells": 200,
+    "supercap_min_voltage": 350.0
   },
   "aerodynamics": {
     "cda": 0.55,
@@ -47,16 +53,14 @@
     "air_density": 1.225
   },
   "suspension": {
-    "anti_squat_ratio": 0.2018825032966079,
+    "anti_squat_ratio": 0.35860129939953644,
     "ride_height_front": 0.05,
     "ride_height_rear": 0.05,
     "wheel_rate_front": 35000.0,
     "wheel_rate_rear": 35000.0
   },
   "control": {
-    "launch_torque_limit": 810.9627673736637,
-    "target_slip_ratio": 0.18643681229918857,
-    "torque_ramp_rate": 1000.0,
+    "launch_torque_limit": 720.6075201873784,
     "traction_control_enabled": true
   },
   "environment": {

@@ -63,11 +63,11 @@ def main():
     times = np.array([s.time for s in solver.state_history])
     accels = np.array([s.acceleration for s in solver.state_history])
     
-    # Causal smoothing (no future-looking) - avoids boundary artifact at t=0
+    # Causal smoothing (no future-looking) - short window preserves 50ms torque ramp
     def causal_avg(data, window):
         return [sum(data[max(0,i-window+1):i+1]) / (i+1 - max(0,i-window+1)) 
                 for i in range(len(data))]
-    accels_smooth = np.array(causal_avg(accels.tolist(), 50))
+    accels_smooth = np.array(causal_avg(accels.tolist(), 20))
     
     # Tesla data
     t_tesla, a_tesla = tesla_plaid_acceleration_profile()

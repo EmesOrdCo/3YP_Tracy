@@ -1,0 +1,66 @@
+FS RULES COMPLIANCE CHECKLIST — QUICK REFERENCE
+═══════════════════════════════════════════════════════════════════════════════
+Print this page and check off rules as you add them to main.tex
+
+VOLTAGE & POWER CONSTRAINTS
+───────────────────────────────────────────────────────────────────────────────
+  ✅ EV4.1.1   — Max voltage 600V DC
+     Status: ✓ Justified (line ~102)
+     Action: Add inline citation (FS-EV 4.1.1) → 2 min
+
+  ⚠️  EV4.1.2   — Components rated for 600V
+     Status: Implied but not explicit
+     Action: Add to component section → 5 min
+
+  ⚠️  EV4.1.3   — Components rated for max operating temperature
+     Status: NOT mentioned
+     Action: Add statement to Safety section → 5 min
+
+  ✅ FS-EV 7.2.4 — Power limit 80 kW
+     Status: ✓ Justified & cited (line ~75)
+     Action: Nothing needed
+
+
+ELECTRICAL ISOLATION & SAFETY
+───────────────────────────────────────────────────────────────────────────────
+  ⚠️  EV4.3.1   — TS-LVS galvanic isolation
+     Status: Mentioned (line ~310), no citation
+     Action: Add "(FS-EV 4.3.1)" → 1 min
+
+  ⚠️  EV4.3.2   — External connections isolated (e.g., BMS-ECU)
+     Status: NOT mentioned
+     Action: Add note in System Integration → 5 min
+
+  ⚠️  EV4.3.3   — TS-LVS physically segregated
+     Status: Partially mentioned (communication only)
+     Action: Expand to general principle + cite → 5 min
+
+
+HIGH CURRENT CONNECTIONS & MECHANICAL
+───────────────────────────────────────────────────────────────────────────────
+  ✅ EV4.5.11  — Copper/aluminum conductors (not steel bolts)
+     Status: ✓ Justified (line ~250)
+     Action: Add inline citation "(FS-EV 4.5.11)" → 2 min
+
+  ⚠️  EV4.5.12  — No compressible material in stack
+     Status: Implied in busbar design, not explicit
+     Action: Add statement with FS-EV reference → 5 min
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PRIORITY TAGS FOR MARKER
+
+✅ FULLY JUSTIFIED (Ready to cite):
+   • EV4.1.1 (600V limit)
+   • FS-EV 7.2.4 (80 kW power)
+   • EV4.5.11 (aluminum conductors)
+
+⚠️  PARTIALLY JUSTIFIED (Need TODO + clarification):
+   • EV4.1.2 (component ratings)
+   • EV4.1.3 (temperature rating)
+   • EV4.3.1 (galvanic isolation)
+   • EV4.3.3 (segregation)
+   • EV4.5.12 (no compressible material)
+
+═══════════════════════════════════════════════════════════════════════════════
