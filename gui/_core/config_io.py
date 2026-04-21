@@ -67,9 +67,18 @@ def save_config(name: str, data: Dict) -> Path:
 
 
 def dict_to_config(data: Dict) -> VehicleConfig:
-    """Build a VehicleConfig from a nested dict (does not run validation)."""
+    """Build a VehicleConfig from a nested dict (does not run validation).
+
+    Unknown keys in each section are ignored so old configs (e.g. files with
+    the retired ``control.target_slip_ratio`` field) still load cleanly.
+    """
+    def _filter(cls, section: Dict) -> Dict:
+        allowed = set(cls.__dataclass_fields__.keys())
+        return {k: v for k, v in (section or {}).items() if k in allowed}
+
     sections = {
-        key: cls(**data.get(key, {})) for key, cls in SECTION_CLASSES.items()
+        key: cls(**_filter(cls, data.get(key, {})))
+        for key, cls in SECTION_CLASSES.items()
     }
     sim_params = data.get("simulation", {})
     return VehicleConfig(

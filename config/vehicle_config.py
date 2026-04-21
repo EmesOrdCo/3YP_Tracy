@@ -115,17 +115,16 @@ class SuspensionProperties:
 class ControlProperties:
     """Control strategy parameters.
 
-    Only ``launch_torque_limit`` and ``traction_control_enabled`` are read by
-    the default Pacejka-based solver. ``target_slip_ratio`` and
-    ``torque_ramp_rate`` remain here for backward compatibility with older
-    JSON configs and optimiser scripts; the solver internally uses the
-    Pacejka-optimal slip ratio (load-dependent) and a fixed 50 ms torque
-    ramp, so these two fields are informational only.
+    The solver reads:
+      * ``launch_torque_limit`` - hard upper bound on requested wheel torque.
+      * ``traction_control_enabled`` - if False, slip governor is bypassed.
+
+    Slip targeting and torque ramp timing are handled internally:
+      * Target slip ratio: Pacejka-optimal (load-dependent, per tyre).
+      * Launch ramp: fixed 80 ms.
     """
     launch_torque_limit: float = 1000.0  # N.m
     traction_control_enabled: bool = True
-    target_slip_ratio: float = 0.15  # Informational; solver uses Pacejka optimum.
-    torque_ramp_rate: float = 500.0  # Informational; solver uses 50 ms ramp.
 
 
 @dataclass
@@ -155,27 +154,108 @@ class VehicleConfig:
     target_distance: float = 75.0  # m (Formula Student acceleration distance)
     
     def validate(self) -> List[str]:
-        """Validate configuration and return list of errors."""
-        errors = []
-        
-        # Check power limit (EV 2.2)
-        if self.powertrain.max_power_accumulator_outlet > 80e3:
-            errors.append("Power limit exceeds 80 kW (EV 2.2)")
-        
-        # Check mass properties
+        """Return a list of human-readable configuration errors (empty = valid).
+
+        Designed to catch problems at load time (before the solver runs),
+        since many of the knobs silently produce garbage results if zeroed or
+        negated rather than raising.
+        """
+        errors: List[str] = []
+
+        # --- FS rule: accumulator outlet cap (EV 2.2) ---
+        if self.powertrain.max_power_accumulator_outlet > 80e3 + 1.0:
+            errors.append("powertrain.max_power_accumulator_outlet exceeds FS 80 kW cap (EV 2.2).")
+
+        # --- Mass / geometry ---
         if self.mass.total_mass <= 0:
-            errors.append("Total mass must be positive")
-        
-        if self.mass.cg_x < 0 or self.mass.cg_x > self.mass.wheelbase:
-            errors.append("CG X position must be within wheelbase")
-        
-        # Check tire properties
+            errors.append("mass.total_mass must be positive.")
+        if self.mass.wheelbase <= 0:
+            errors.append("mass.wheelbase must be positive.")
+        if not (0 < self.mass.cg_x < self.mass.wheelbase):
+            errors.append("mass.cg_x must lie strictly between the axles (0 < cg_x < wheelbase).")
+        if self.mass.cg_z <= 0:
+            errors.append("mass.cg_z must be positive (CG height above ground).")
+        if self.mass.front_track <= 0 or self.mass.rear_track <= 0:
+            errors.append("mass.front_track and rear_track must be positive.")
+        if self.mass.i_yaw <= 0 or self.mass.i_pitch <= 0:
+            errors.append("mass inertias (i_yaw, i_pitch) must be positive.")
+        if self.mass.unsprung_mass_front < 0 or self.mass.unsprung_mass_rear < 0:
+            errors.append("unsprung masses must be non-negative.")
+        if (self.mass.unsprung_mass_front + self.mass.unsprung_mass_rear
+                > self.mass.total_mass):
+            errors.append("unsprung_mass_front + unsprung_mass_rear exceeds total_mass.")
+
+        # --- Tyres ---
         if self.tires.radius_loaded <= 0:
-            errors.append("Tire radius must be positive")
-        
-        # Check powertrain
-        if self.powertrain.gear_ratio <= 0:
-            errors.append("Gear ratio must be positive")
-        
+            errors.append("tires.radius_loaded must be positive.")
+        if self.tires.mu_max <= 0:
+            errors.append("tires.mu_max must be positive.")
+        if not (0 < self.tires.mu_slip_optimal < 1):
+            errors.append("tires.mu_slip_optimal must be in (0, 1).")
+        if self.tires.rolling_resistance_coeff < 0:
+            errors.append("tires.rolling_resistance_coeff must be non-negative.")
+        if self.tires.tire_model_type not in ("pacejka", "simple"):
+            errors.append("tires.tire_model_type must be 'pacejka' or 'simple'.")
+
+        # --- Powertrain ---
+        pt = self.powertrain
+        if pt.gear_ratio <= 0:
+            errors.append("powertrain.gear_ratio must be positive.")
+        if pt.motor_torque_constant <= 0:
+            errors.append("powertrain.motor_torque_constant must be positive.")
+        if pt.motor_max_current <= 0:
+            errors.append("powertrain.motor_max_current must be positive.")
+        if pt.motor_max_speed <= 0:
+            errors.append("powertrain.motor_max_speed must be positive.")
+        if not (0 < pt.motor_efficiency <= 1):
+            errors.append("powertrain.motor_efficiency must be in (0, 1].")
+        if not (0 < pt.drivetrain_efficiency <= 1):
+            errors.append("powertrain.drivetrain_efficiency must be in (0, 1].")
+        if pt.battery_voltage_nominal <= 0:
+            errors.append("powertrain.battery_voltage_nominal must be positive.")
+        if pt.battery_internal_resistance < 0:
+            errors.append("powertrain.battery_internal_resistance must be non-negative.")
+        if pt.battery_max_current <= 0:
+            errors.append("powertrain.battery_max_current must be positive.")
+        if pt.wheel_inertia <= 0:
+            errors.append("powertrain.wheel_inertia must be positive.")
+        if pt.energy_storage_type not in ("battery", "supercapacitor"):
+            errors.append("powertrain.energy_storage_type must be 'battery' or 'supercapacitor'.")
+        if pt.energy_storage_type == "supercapacitor":
+            if pt.supercap_num_cells <= 0:
+                errors.append("powertrain.supercap_num_cells must be positive.")
+            if pt.supercap_cell_voltage <= 0 or pt.supercap_cell_capacitance <= 0:
+                errors.append("supercap cell voltage and capacitance must be positive.")
+            full_stack_v = pt.supercap_cell_voltage * pt.supercap_num_cells
+            if pt.supercap_min_voltage >= full_stack_v:
+                errors.append(
+                    "powertrain.supercap_min_voltage must be below full-stack voltage "
+                    f"({full_stack_v:.1f} V)."
+                )
+
+        # --- Aero ---
+        if self.aerodynamics.cda < 0:
+            errors.append("aerodynamics.cda must be non-negative.")
+        if self.aerodynamics.air_density <= 0:
+            errors.append("aerodynamics.air_density must be positive.")
+
+        # --- Suspension ---
+        if not (0 <= self.suspension.anti_squat_ratio <= 1):
+            errors.append("suspension.anti_squat_ratio must be in [0, 1].")
+
+        # --- Environment ---
+        if not (0 < self.environment.surface_mu_scaling <= 1.5):
+            errors.append("environment.surface_mu_scaling must be in (0, 1.5].")
+        if self.environment.air_density <= 0:
+            errors.append("environment.air_density must be positive.")
+
+        # --- Simulation ---
+        if self.dt <= 0:
+            errors.append("simulation.dt must be positive.")
+        if self.max_time <= 0:
+            errors.append("simulation.max_time must be positive.")
+        if self.target_distance <= 0:
+            errors.append("simulation.target_distance must be positive.")
+
         return errors
 

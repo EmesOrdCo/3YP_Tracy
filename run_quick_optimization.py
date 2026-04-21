@@ -73,7 +73,6 @@ BOUNDS = {
     'cg_x_ratio': (0.55, 0.90),     # less rear-biased than before to tame wheelies
     'gear_ratio': (4.0, 10.0),      # stronger motor -> shorter gears work
     'radius_loaded': (0.200, 0.260),  # 19" tyres ~ 0.247 m
-    'target_slip_ratio': (0.08, 0.20),
     'mu_slip_optimal': (0.08, 0.20),
     'launch_torque_limit': (400.0, 1500.0),
     'anti_squat_ratio': (0.0, 0.6),
@@ -94,14 +93,14 @@ def make_config(x, base, dt=0.005):
     for p, v in MINIMIZE_PARAMS.items(): set_param(config, p, v)
     for p, v in MAXIMIZE_PARAMS.items(): set_param(config, p, v)
     
+    # Decision variable order matches BOUNDS keys.
     config.mass.wheelbase = FIXED_WHEELBASE
     config.mass.cg_x = x[0] * FIXED_WHEELBASE
     config.powertrain.gear_ratio = x[1]
     config.tires.radius_loaded = x[2]
-    config.control.target_slip_ratio = x[3]
-    config.tires.mu_slip_optimal = x[4]
-    config.control.launch_torque_limit = x[5]
-    config.suspension.anti_squat_ratio = x[6]
+    config.tires.mu_slip_optimal = x[3]
+    config.control.launch_torque_limit = x[4]
+    config.suspension.anti_squat_ratio = x[5]
     config.dt = dt
     config.max_time = 10.0
     return config
@@ -120,7 +119,7 @@ def objective(x, base):
         penalty = 0.0
         if not result.power_compliant: penalty += 1e5
         if not result.time_compliant: penalty += 1e4
-        if result.wheelie_detected: penalty += 1e3
+        if result.wheelie_detected: penalty += 1e6  # wheelie -> invalid run
         if result.final_distance < 75.0: penalty += 1e6
         
         val = result.final_time + penalty
@@ -145,9 +144,22 @@ def main():
     
     bounds_list = list(BOUNDS.values())
     mid = np.array([(lo+hi)/2 for lo, hi in bounds_list])
-    
+
+    # Nelder-Mead is a local search. Without a low-gear seed the optimiser has
+    # previously converged to gear_ratio ~ 5 where the motor saturates before
+    # 75 m (wheel speed clamped, slip collapses, a(t) has an unphysical "4th
+    # phase" drop at the end). Seed an explicit low-gear start so the basin
+    # around gear ~ 4.2 (motor still inside envelope at the finish line) is
+    # always explored.
+    low_gear_seed = mid.copy()
+    bounds_index = {name: i for i, name in enumerate(BOUNDS.keys())}
+    low_gear_seed[bounds_index['gear_ratio']] = 4.2
+    low_gear_seed[bounds_index['cg_x_ratio']] = 0.63  # forward CG (wheelie-safe)
+    low_gear_seed[bounds_index['anti_squat_ratio']] = 0.35
+    low_gear_seed[bounds_index['launch_torque_limit']] = 700.0
+
     rng = np.random.RandomState(42)
-    starts = [mid]
+    starts = [mid, low_gear_seed]
     for _ in range(4):
         starts.append(np.array([rng.uniform(lo, hi) for lo, hi in bounds_list]))
     
@@ -155,8 +167,8 @@ def main():
     best_val = float('inf')
     
     for i, x0 in enumerate(starts):
-        print(f"\n  Start {i+1}/5: cg_ratio={x0[0]:.2f}, gear={x0[1]:.1f}, "
-              f"radius={x0[2]:.3f}, slip={x0[3]:.3f}", flush=True)
+        print(f"\n  Start {i+1}/{len(starts)}: cg_ratio={x0[0]:.2f}, gear={x0[1]:.1f}, "
+              f"radius={x0[2]:.3f}, mu_slip_opt={x0[3]:.3f}", flush=True)
         
         res = minimize(objective, x0, args=(base,), method='Nelder-Mead',
                        options={'maxiter': 200, 'xatol': 0.002, 'fatol': 0.01})
@@ -207,12 +219,11 @@ def main():
     print(f"    Gear Ratio:          {best_x[1]:.3f}", flush=True)
     print(f"\n  Tires:", flush=True)
     print(f"    Loaded Radius:       {best_x[2]:.4f} m ({best_x[2]*1000:.1f} mm)", flush=True)
-    print(f"    Optimal Slip Ratio:  {best_x[4]:.4f}", flush=True)
+    print(f"    Optimal Slip Ratio:  {best_x[3]:.4f}", flush=True)
     print(f"\n  Control Strategy:", flush=True)
-    print(f"    Target Slip Ratio:   {best_x[3]:.4f}", flush=True)
-    print(f"    Launch Torque Limit: {best_x[5]:.1f} N·m", flush=True)
+    print(f"    Launch Torque Limit: {best_x[4]:.1f} N·m", flush=True)
     print(f"\n  Suspension:", flush=True)
-    print(f"    Anti-Squat Ratio:    {best_x[6]:.4f}", flush=True)
+    print(f"    Anti-Squat Ratio:    {best_x[5]:.4f}", flush=True)
     
     # Save config
     config_dict = {
@@ -304,10 +315,9 @@ def main():
             'cg_x': float(cg_x),
             'gear_ratio': float(best_x[1]),
             'radius_loaded': float(best_x[2]),
-            'target_slip_ratio': float(best_x[3]),
-            'mu_slip_optimal': float(best_x[4]),
-            'launch_torque_limit': float(best_x[5]),
-            'anti_squat_ratio': float(best_x[6]),
+            'mu_slip_optimal': float(best_x[3]),
+            'launch_torque_limit': float(best_x[4]),
+            'anti_squat_ratio': float(best_x[5]),
         },
     }
     with open(PACKAGE_ROOT / "optimization_report.json", 'w') as f:

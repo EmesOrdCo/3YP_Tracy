@@ -106,8 +106,21 @@ df = outcome.history
 
 # --- Top row: headline metrics --------------------------------------------
 
+if r.wheelie_detected:
+    st.error(
+        "Wheelie detected — this run is **invalid**. Front wheels lifted at "
+        f"t = {r.wheelie_time:.3f} s, so lateral stability and steering are "
+        "lost. The reported time below is not physically meaningful; treat it "
+        "as DNF. Reduce launch torque, shift CG forward, add anti-squat or "
+        "lower CG height to keep the front planted."
+    )
+
+time_label = "Final time" if not r.wheelie_detected else "Final time (INVALID)"
+time_str = (f"{r.final_time:.3f} s" if not r.wheelie_detected
+            else f"{r.final_time:.3f} s — DNF")
+
 m1, m2, m3, m4 = st.columns(4)
-m1.metric("Final time", f"{r.final_time:.3f} s")
+m1.metric(time_label, time_str)
 m2.metric("Final velocity", f"{r.final_velocity:.1f} m/s",
           f"{r.final_velocity * 3.6:.1f} km/h")
 m3.metric("Max power", f"{r.max_power_used / 1000:.2f} kW")

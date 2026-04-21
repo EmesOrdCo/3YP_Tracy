@@ -105,10 +105,16 @@ class MassPropertiesModel:
         # Total normal forces
         front_normal = front_static + front_transfer + front_downforce
         rear_normal = rear_static + rear_transfer + rear_downforce
-        
-        # Ensure forces are positive (vehicle can't lift off ground in this model)
+
+        # Clamp to zero: the model has no rotational pitch DOF, so a negative
+        # front Fz would correspond to the car pitching over backwards
+        # (wheelie). We don't model that dynamically; instead we clamp here
+        # and rely on the wheelie detector (rules/wheelie_check.py) to flag
+        # any state whose pre-clamp value touched zero. The solver therefore
+        # keeps integrating longitudinal motion in that regime, but the run
+        # will be marked non-compliant via SimulationResult.compliant.
         front_normal = max(0.0, front_normal)
         rear_normal = max(0.0, rear_normal)
-        
+
         return front_normal, rear_normal
 

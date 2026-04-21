@@ -114,8 +114,7 @@ if best:
         "aerodynamics": {"cda": 0.55, "cl_front": 0.0, "cl_rear": 0.0, "air_density": 1.225},
         "suspension": {"anti_squat_ratio": 0.3, "ride_height_front": 0.05,
                        "ride_height_rear": 0.05, "wheel_rate_front": 35000.0, "wheel_rate_rear": 35000.0},
-        "control": {"launch_torque_limit": 1000.0, "target_slip_ratio": 0.12,
-                    "torque_ramp_rate": 1000.0, "traction_control_enabled": True},
+        "control": {"launch_torque_limit": 1000.0, "traction_control_enabled": True},
         "environment": {"air_density": 1.225, "ambient_temperature": 20.0,
                         "track_grade": 0.0, "wind_speed": 0.0, "surface_mu_scaling": 1.0},
         "simulation": {"dt": 0.001, "max_time": 30.0, "target_distance": 75.0}

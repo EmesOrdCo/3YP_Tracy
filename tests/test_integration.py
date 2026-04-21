@@ -53,13 +53,14 @@ class TestWheelieDetection(unittest.TestCase):
         self.assertFalse(detected)
         self.assertEqual(t_first, -1.0)
 
-    def test_full_sim_base_vehicle_wheelies(self):
-        """base_vehicle is rear-biased enough that it wheelies; flag it."""
+    def test_full_sim_base_vehicle_no_wheelie(self):
+        """base_vehicle CG / anti-squat chosen so the sandbox stays on four wheels."""
         sim = AccelerationSimulation(_base_config())
         r = sim.run()
-        self.assertTrue(r.wheelie_detected,
-                        "base_vehicle (76% rear bias) is expected to wheelie")
-        self.assertGreater(r.wheelie_time, 0.0)
+        self.assertFalse(r.wheelie_detected,
+                         "base_vehicle should not wheelie (stable sandbox)")
+        self.assertTrue(r.compliant)
+        self.assertGreater(r.min_front_normal_force, 50.0)
 
 
 class TestPowerLimit(unittest.TestCase):
@@ -176,7 +177,14 @@ class TestAeroDownforceConvention(unittest.TestCase):
     """cl > 0 must mean downforce (faster time, higher rear normal)."""
 
     def test_rear_downforce_reduces_time(self):
+        # Start from base_vehicle but move the CG forward so the test chassis
+        # is grip-limited, not wheelie-limited. On a wheelie-limited car the
+        # launch controller caps torque to prevent front lift-off regardless
+        # of rear grip, so extra rear downforce is neutral or slightly
+        # negative (extra Fz with no extra torque = more rolling drag).
         cfg_baseline = _base_config()
+        cfg_baseline.mass.cg_x = 0.55 * cfg_baseline.mass.wheelbase
+
         cfg_downforce = copy.deepcopy(cfg_baseline)
         cfg_downforce.aerodynamics.cl_rear = 2.0
 
@@ -193,7 +201,14 @@ class TestAntiSquatEffect(unittest.TestCase):
     """anti_squat_ratio must have a measurable, monotone effect on time."""
 
     def test_higher_anti_squat_helps_launch(self):
+        # Use a forward-CG (grip-limited) variant of the base config so this
+        # test actually exercises the anti-squat rear-grip knob. On the
+        # wheelie-limited base chassis extra rear load can't be used because
+        # the launch controller is already capping torque on front-lift, so
+        # anti-squat is neutral/slightly negative there and the test becomes
+        # meaningless.
         cfg_low = _base_config()
+        cfg_low.mass.cg_x = 0.55 * cfg_low.mass.wheelbase
         cfg_low.suspension.anti_squat_ratio = 0.0
 
         cfg_high = copy.deepcopy(cfg_low)
@@ -203,10 +218,8 @@ class TestAntiSquatEffect(unittest.TestCase):
         r_high = AccelerationSimulation(cfg_high).run()
 
         # Anti-squat boosts rear normal during acceleration. On a grip-limited
-        # chassis this should make the car quicker; on a wheelie-limited chassis
-        # it's roughly neutral (extra rear load doesn't help if the tyres are
-        # already at saturation). Either way, it shouldn't make things clearly
-        # worse - allow a 10 ms wash.
+        # chassis this should make the car quicker, or at worst be a wash; a
+        # 10 ms tolerance absorbs dt-level numerical noise.
         self.assertLessEqual(
             r_high.final_time, r_low.final_time + 0.010,
             f"anti_squat=0.6 materially slower than 0.0 "

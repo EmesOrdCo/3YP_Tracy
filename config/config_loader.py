@@ -54,14 +54,28 @@ def load_config(config_path: Union[str, Path]) -> VehicleConfig:
     else:
         raise ValueError(f"Unsupported config file format: {config_path.suffix}")
     
-    # Build configuration objects
-    mass = MassProperties(**data.get('mass', {}))
-    tires = TireProperties(**data.get('tires', {}))
-    powertrain = PowertrainProperties(**data.get('powertrain', {}))
-    aerodynamics = AerodynamicsProperties(**data.get('aerodynamics', {}))
-    suspension = SuspensionProperties(**data.get('suspension', {}))
-    control = ControlProperties(**data.get('control', {}))
-    environment = EnvironmentProperties(**data.get('environment', {}))
+    # Build configuration objects. Unknown keys (from legacy configs written
+    # before the schema evolved) are silently dropped so the loader stays
+    # forward-compatible with old files.
+    def _filter(cls, section: dict) -> dict:
+        allowed = set(cls.__dataclass_fields__.keys())
+        return {k: v for k, v in (section or {}).items() if k in allowed}
+
+    mass = MassProperties(**_filter(MassProperties, data.get('mass', {})))
+    tires = TireProperties(**_filter(TireProperties, data.get('tires', {})))
+    powertrain = PowertrainProperties(
+        **_filter(PowertrainProperties, data.get('powertrain', {}))
+    )
+    aerodynamics = AerodynamicsProperties(
+        **_filter(AerodynamicsProperties, data.get('aerodynamics', {}))
+    )
+    suspension = SuspensionProperties(
+        **_filter(SuspensionProperties, data.get('suspension', {}))
+    )
+    control = ControlProperties(**_filter(ControlProperties, data.get('control', {})))
+    environment = EnvironmentProperties(
+        **_filter(EnvironmentProperties, data.get('environment', {}))
+    )
     
     # Simulation parameters
     sim_params = data.get('simulation', {})

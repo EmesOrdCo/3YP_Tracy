@@ -94,7 +94,19 @@ class DynamicsSolver:
         self.dt = config.dt
         self.max_time = config.max_time
         self.target_distance = config.target_distance
-        
+
+        # Anti-wheelie feedback: closed-loop torque reduction kicks in once
+        # measured front Fz drops below this threshold (N). Chosen so that the
+        # 50 N static cap margin has plenty of headroom before activation.
+        self._fz_feedback_threshold = 150.0
+
+        # Tracks the last converged front Fz across integrator sub-steps so
+        # the closed-loop anti-wheelie feedback sees a consistent value
+        # regardless of which RK4 mid-point is currently being evaluated.
+        # Initialised to a large sentinel so the feedback is inactive until
+        # the first real step populates it.
+        self._last_fz_front = float("inf")
+
         # State history
         self.state_history: List[SimulationState] = []
     
@@ -112,16 +124,26 @@ class DynamicsSolver:
         state = SimulationState()
         state.dc_bus_voltage = self.powertrain.get_dc_bus_voltage()  # Initial voltage
         state.energy_storage_soc = 1.0  # Start fully charged
+        # Seed the normal loads with the static distribution so the anti-
+        # wheelie feedback sees a sensible previous-step value on the very
+        # first integrator iteration (rather than the dataclass default of 0).
+        front_static, rear_static = self.mass_model.calculate_static_load_distribution()
+        state.normal_force_front = front_static
+        state.normal_force_rear = rear_static
+        self._last_fz_front = front_static
         self.state_history = [state.copy()]
         
         # Simulation loop
         while state.position < self.target_distance and state.time < self.max_time:
             # Calculate derivatives
             dstate_dt = self._calculate_derivatives(state)
-            
+
             # Integrate using RK4
             state = self._rk4_step(state, dstate_dt, self.dt)
-            
+
+            # Refresh the feedback reference for the next step's sub-evals.
+            self._last_fz_front = state.normal_force_front
+
             # Store state
             self.state_history.append(state.copy())
         
@@ -204,9 +226,18 @@ class DynamicsSolver:
                 normal_rear, slip_rear, state.velocity,
             )
 
+            # Anti-wheelie torque cap: limit rear drive so front Fz stays
+            # above a safety margin. See _wheelie_torque_cap docstring.
+            wheelie_cap = self._wheelie_torque_cap(
+                downforce_front=downforce_front,
+                drag_force=drag_force,
+                rr_total=rr_front + rr_rear,
+                effective_mass=effective_mass,
+            )
+
             # Traction control uses the converged rear normal load.
             requested_torque = self._calculate_requested_torque(
-                state, normal_rear, slip_rear,
+                state, normal_rear, slip_rear, wheelie_cap,
             )
             wheel_torque, motor_current, power = self.powertrain.calculate_torque(
                 requested_torque,
@@ -282,11 +313,73 @@ class DynamicsSolver:
         
         return dstate
     
+    def _wheelie_torque_cap(
+        self,
+        downforce_front: float,
+        drag_force: float,
+        rr_total: float,
+        effective_mass: float,
+    ) -> float:
+        """Return the maximum wheel torque that keeps front Fz above a margin.
+
+        Moment balance about the rear contact patch (steady-state, per the
+        same model used by ``MassPropertiesModel.calculate_normal_forces``)
+        gives the vehicle longitudinal acceleration at which front Fz hits a
+        chosen safety margin ``Fz_margin``:
+
+            Fz_front = m*g*(L - cg_x)/L - (1 - k_as_eff)*m*a*cg_z/L
+                       + F_df_front
+            => a_max = (m*g*(L - cg_x) + F_df_front*L - Fz_margin*L)
+                       / ((1 - k_as_eff) * m * cg_z)
+
+        ``k_as_eff = 0.2 * anti_squat_ratio`` mirrors the scaling used in
+        ``SuspensionModel.load_transfer_correction``.
+
+        That acceleration is then converted to an equivalent wheel torque via
+        Newton's second law: the rear drive force must overcome drag and
+        rolling resistance and still deliver ``a_max`` to the vehicle:
+
+            F_drive_max = effective_mass * a_max + drag + rolling_resistance
+            T_wheel_max = F_drive_max * tyre_radius
+
+        ``Fz_margin`` is held at 50 N so numerical float noise and the RK4
+        mid-points don't occasionally dip below zero and trip the wheelie
+        detector. Returns ``+inf`` if the geometry makes a wheelie impossible
+        (e.g. cg_z = 0 or front-heavy CG that can't be lifted).
+        """
+        g = 9.81
+        m = self.config.mass.total_mass
+        L = self.config.mass.wheelbase
+        cg_x = self.config.mass.cg_x
+        cg_z = self.config.mass.cg_z
+
+        if cg_z <= 0.0 or L <= 0.0 or m <= 0.0:
+            return float("inf")
+
+        fz_margin = 50.0  # N — keep a small positive front load
+        k_as = getattr(self.config.suspension, "anti_squat_ratio", 0.0)
+        k_as_eff = max(0.0, min(1.0, k_as)) * 0.2
+        transfer_denom = (1.0 - k_as_eff) * m * cg_z
+        if transfer_denom <= 0.0:
+            return float("inf")
+
+        stabilising = m * g * (L - cg_x) + downforce_front * L - fz_margin * L
+        if stabilising <= 0.0:
+            # CG so far back that front Fz never positive — any throttle
+            # wheelies. Return 0 so the controller cuts torque completely.
+            return 0.0
+
+        a_max = stabilising / transfer_denom
+        f_drive_max = effective_mass * a_max + max(0.0, drag_force) + max(0.0, rr_total)
+        t_wheel_max = f_drive_max * self.tire_model.radius
+        return max(0.0, t_wheel_max)
+
     def _calculate_requested_torque(
         self,
         state: SimulationState,
         normal_force_rear: float,
-        current_slip_ratio: float
+        current_slip_ratio: float,
+        wheelie_torque_cap: float = float("inf"),
     ) -> float:
         """
         Calculate requested torque with Pacejka-aware traction control.
@@ -316,31 +409,68 @@ class DynamicsSolver:
         max_tire_force = mu_peak * normal_force_rear
         max_torque_grip = max_tire_force * self.tire_model.radius
         
-        # Base torque limit
-        base_torque = min(self.config.control.launch_torque_limit, max_torque_grip)
+        # Base torque limit. ``wheelie_torque_cap`` is derived from a pitch
+        # moment balance (see :meth:`_wheelie_torque_cap`) and is applied
+        # before launch ramping so that the transient is also wheelie-safe.
+        base_torque = min(
+            self.config.control.launch_torque_limit,
+            max_torque_grip,
+            wheelie_torque_cap,
+        )
+
+        # Closed-loop anti-wheelie feedback on observed front Fz. The static
+        # cap is correct for steady-state longitudinal dynamics, but at launch
+        # the wheel spins through the Pacejka peak (slip ~0.15) and delivers
+        # transient tyre forces that exceed the cap's implied drive force.
+        # Real launch controllers use IMU pitch/vertical-load feedback; here
+        # we track the last-converged ``normal_force_front`` on the solver
+        # (``_last_fz_front``) so every RK4 sub-evaluation sees the same
+        # physically meaningful value rather than a freshly-defaulted zero.
+        fz_front_prev = self._last_fz_front
+        if state.time > 0.0 and fz_front_prev < self._fz_feedback_threshold:
+            fz_scale = max(0.0, fz_front_prev / self._fz_feedback_threshold)
+            base_torque *= fz_scale
         
         # === TORQUE RAMP AT LAUNCH (optimal FS practice) ===
-        # Ramp torque over first 50ms to reduce jerk, avoid slip overshoot.
-        ramp_duration = 0.05  # s
+        # Ramp torque over the first 80 ms to reduce jerk and give the rear
+        # wheel inertia time to track vehicle speed without overshoot. A
+        # shorter ramp tends to spin the wheels through the Pacejka peak
+        # before the controller can react, producing transient wheelies.
+        ramp_duration = 0.08  # s
         if state.time < ramp_duration:
             ramp = state.time / ramp_duration
             base_torque *= ramp
-        
+
         if not self.config.control.traction_control_enabled:
             return base_torque
-        
+
+        # === SLIP-RATIO GOVERNOR ===
+        # Pacejka peak sits around slip ~= optimal_slip (typically 0.13-0.17).
+        # Above that, tyre force drops off; below it, force is a monotone
+        # function of slip. We never want to run *past* the peak because the
+        # trip through the peak dumps max grip into the chassis, which on a
+        # rear-biased CG lifts the front. Collapse torque to zero any time
+        # slip rises well above optimal so the wheel slows back into the safe
+        # regime — functionally equivalent to real slip-based launch control.
+        slip_ceiling = 2.0 * max(0.05, optimal_slip)
+        if current_slip_ratio > slip_ceiling:
+            return 0.0
+
         # === OPTIMAL SLIP-TRACKING TRACTION CONTROL ===
         #
         # Physics: Tire force is maximized at optimal slip (~15%).
         # Strategy: Track wheel velocity to maintain optimal slip.
         # Target: wheel_v = vehicle_v * (1 + optimal_slip)
-        
+
         wheel_velocity = state.wheel_angular_velocity_rear * self.tire_model.radius
         target_wheel_v = state.velocity * (1.0 + optimal_slip)
         wheel_error = wheel_velocity - target_wheel_v
-        
+
         if wheel_error > 0.05:
-            reduction = max(0.1, 1.0 - wheel_error * 2.0)
+            # Collapse all the way to zero under strong overspeed — the
+            # previous 0.1 floor left enough residual torque to keep the
+            # slip oscillation running on wheelie-prone chassis.
+            reduction = max(0.0, 1.0 - wheel_error * 2.0)
             return base_torque * reduction
         else:
             return base_torque

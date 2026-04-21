@@ -1,7 +1,7 @@
 {
   "mass": {
     "total_mass": 200.0,
-    "cg_x": 1.157797991642562,
+    "cg_x": 1.0126132700885162,
     "cg_z": 0.22,
     "wheelbase": 1.6,
     "front_track": 1.2,
@@ -12,10 +12,10 @@
     "unsprung_mass_rear": 10.0
   },
   "tires": {
-    "radius_loaded": 0.2368096250727304,
+    "radius_loaded": 0.22658492922048226,
     "mass": 3.0,
     "mu_max": 1.8,
-    "mu_slip_optimal": 0.13991039407293468,
+    "mu_slip_optimal": 0.13231807416369393,
     "rolling_resistance_coeff": 0.01,
     "tire_model_type": "pacejka",
     "pacejka_C": 1.65,
@@ -34,7 +34,7 @@
     "battery_voltage_nominal": 600.0,
     "battery_internal_resistance": 0.008,
     "battery_max_current": 300.0,
-    "gear_ratio": 7.032269900533832,
+    "gear_ratio": 4.25,
     "drivetrain_efficiency": 0.97,
     "differential_ratio": 1.0,
     "max_power_accumulator_outlet": 80000.0,
@@ -53,14 +53,14 @@
     "air_density": 1.225
   },
   "suspension": {
-    "anti_squat_ratio": 0.30138309427788934,
+    "anti_squat_ratio": 0.35860129939953644,
     "ride_height_front": 0.05,
     "ride_height_rear": 0.05,
     "wheel_rate_front": 35000.0,
     "wheel_rate_rear": 35000.0
   },
   "control": {
-    "launch_torque_limit": 947.9666122786351,
+    "launch_torque_limit": 720.6075201873784,
     "traction_control_enabled": true
   },
   "environment": {

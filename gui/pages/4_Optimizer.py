@@ -51,7 +51,7 @@ for idx, (name, meta) in enumerate(optimizer.VARIABLES.items()):
     with col:
         with st.container(border=True):
             default_on = name in ("cg_x_ratio", "gear_ratio", "radius_loaded",
-                                  "target_slip_ratio", "launch_torque_limit")
+                                  "launch_torque_limit", "anti_squat_ratio")
             enabled = st.checkbox(meta["label"], value=default_on, key=f"opt_use_{name}")
             lo_default, hi_default = meta["bounds"]
             try:

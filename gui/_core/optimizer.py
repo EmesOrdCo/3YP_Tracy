@@ -207,7 +207,7 @@ def _evaluate(candidate_dict: Dict) -> Tuple[float, Optional[object]]:
     if not result.time_compliant:
         penalty += 1e4
     if result.wheelie_detected:
-        penalty += 1e3
+        penalty += 1e6  # wheelie -> invalid run (no steering / unphysical)
     target = cfg.target_distance
     if result.final_distance < target - 1e-3:
         penalty += 1e6

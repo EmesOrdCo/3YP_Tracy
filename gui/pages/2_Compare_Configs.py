@@ -69,9 +69,15 @@ if not good_runs:
 rows = []
 for lbl, o in good_runs:
     r = o.result
+    # Runs that wheelie are physically invalid; the longitudinal time
+    # produced by the solver no longer reflects a drivable lap, so surface
+    # it as "DNF" in the summary rather than a plain number.
+    time_display = (f"{r.final_time:.3f}" if not r.wheelie_detected
+                    else f"DNF ({r.final_time:.3f})")
     rows.append({
         "Config": lbl,
-        "Time (s)": round(r.final_time, 3),
+        "Time (s)": time_display,
+        "Valid": bool(r.compliant),
         "Velocity (m/s)": round(r.final_velocity, 2),
         "Velocity (km/h)": round(r.final_velocity * 3.6, 1),
         "Max power (kW)": round(r.max_power_used / 1000, 2),
@@ -82,6 +88,8 @@ for lbl, o in good_runs:
     })
 summary = pd.DataFrame(rows).set_index("Config")
 st.subheader("Summary")
+st.caption("Runs flagged as wheelie are treated as **DNF** — the car loses "
+           "front-wheel contact, so the acceleration time is not drivable.")
 st.dataframe(summary, use_container_width=True)
 
 # --- Overlaid plots -------------------------------------------------------

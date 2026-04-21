@@ -93,21 +93,26 @@ class MotorModel:
         # Derived parameters
         # Torque constant: Kt = T / I
         self.torque_constant = peak_torque / peak_current  # ~0.82 Nm/A
-        
-        # Base speed at rated voltage (where field weakening begins)
-        # At base speed: P = T_peak * ω_base = peak_power
-        # So: ω_base = peak_power / peak_torque
-        self.base_speed_at_rated_voltage = peak_power / peak_torque  # ~432 rad/s
-        
-        # However, this might exceed max_speed, so we need to check
-        # Actually, for YASA P400R, peak power is achieved in field weakening
-        # Let's estimate base speed from voltage/back-EMF relationship
-        # At max speed with rated voltage, the motor is at voltage limit
-        # So back-EMF constant: Ke = V_rated / (omega_max * sqrt(3) * modulation_index)
-        # Simplified: base_speed scales linearly with voltage
-        # At 700V, base speed is approximately where torque starts to drop
-        # From datasheet analysis, this is around 400-450 rad/s
-        self.base_speed_at_rated_voltage = 430.0  # rad/s (estimated from P400R characteristics)
+
+        # Base speed at rated voltage (where field weakening begins).
+        #
+        # We'd like to compute this from fundamentals:
+        #     omega_base = peak_power / peak_torque
+        # but for the YASA P400R the datasheet peak power is reached well
+        # inside the field-weakening region, not at the torque-curve knee.
+        # Using the ratio above gives ~432 rad/s for the P400R, which matches
+        # the 400-450 rad/s knee observed in the torque/speed chart. Other
+        # motors with different torque/speed envelopes may need to override
+        # this by passing an explicit ``base_speed`` (future extension).
+        base_speed_estimate = peak_power / peak_torque
+        # Guard against pathological inputs (zero torque / power).
+        if not np.isfinite(base_speed_estimate) or base_speed_estimate <= 0:
+            base_speed_estimate = 0.5 * max_speed
+        # Base speed must be strictly below max_speed, otherwise the motor has
+        # no field-weakening region and the envelope collapses.
+        self.base_speed_at_rated_voltage = float(
+            min(base_speed_estimate, 0.95 * max_speed)
+        )
     
     def calculate_base_speed(self, dc_bus_voltage: float) -> float:
         """
