@@ -484,34 +484,63 @@ class TireModel:
         self.radius = config.radius_loaded
         self.use_pacejka = use_pacejka
         self.surface_mu_scaling = surface_mu_scaling
-        
+
         if use_pacejka:
             self._model = PacejkaTireModel(config, pacejka_coefficients, surface_mu_scaling)
         else:
             self._model = SimpleTireModel(config)
-        
+
         # Expose legacy attributes for backward compatibility
         self.mu_max = config.mu_max
         self.mu_slip_optimal = config.mu_slip_optimal
         self.rolling_resistance_coeff = config.rolling_resistance_coeff
+
+        # Thermal multiplier cached so repeated calls within a step are O(1).
+        self._thermal_enabled = bool(getattr(config, "thermal_model_enabled", False))
+        self._thermal_opt = float(getattr(config, "thermal_optimal_temp", 80.0))
+        self._thermal_sigma = max(1.0, float(getattr(config, "thermal_sigma", 60.0)))
+
+    def thermal_mu_factor(self, tyre_temp_c: float) -> float:
+        """Gaussian grip window around the optimal tyre temperature.
+
+        Returns 1.0 when the thermal model is off, so legacy paths are
+        untouched. When enabled, peak grip drops smoothly away from the
+        optimal temperature in both directions (cold AND over-heated tyres
+        are slower). See Section 3 of the project report.
+        """
+        if not self._thermal_enabled:
+            return 1.0
+        z = (tyre_temp_c - self._thermal_opt) / self._thermal_sigma
+        return float(np.exp(-0.5 * z * z))
     
     def calculate_longitudinal_force(
         self,
         normal_force: float,
         slip_ratio: float,
-        velocity: float
+        velocity: float,
+        tyre_temp_c: Optional[float] = None,
     ) -> Tuple[float, float]:
         """Calculate longitudinal tire force and rolling resistance.
-        
+
         Args:
             normal_force: Normal force on tire (N)
             slip_ratio: Slip ratio (0 = no slip, 1 = wheel spinning, tire stationary)
             velocity: Vehicle velocity (m/s)
-            
+            tyre_temp_c: Tyre carcass temperature (°C). When the thermal
+                model is enabled, Fx and peak mu are scaled by a Gaussian
+                window around the optimal temperature. ``None`` disables the
+                thermal scaling (legacy callers).
+
         Returns:
             Tuple of (longitudinal_force, rolling_resistance_force) in N
         """
-        return self._model.calculate_longitudinal_force(normal_force, slip_ratio, velocity)
+        fx, frr = self._model.calculate_longitudinal_force(normal_force, slip_ratio, velocity)
+        if tyre_temp_c is not None and self._thermal_enabled:
+            factor = self.thermal_mu_factor(tyre_temp_c)
+            fx *= factor
+            # Rolling resistance isn't strongly temperature-dependent within
+            # the operating window, leave it alone.
+        return fx, frr
     
     def calculate_slip_ratio(
         self,

@@ -119,3 +119,19 @@ def distance_plot(df: pd.DataFrame, label: Optional[str] = None,
     fig = fig or _new_fig("Distance vs time", "Distance (m)")
     _add_trace(fig, df, "position", label=label, default_name="Distance")
     return fig
+
+
+def tyre_temp_plot(df: pd.DataFrame, label: Optional[str] = None,
+                   fig: Optional[go.Figure] = None) -> go.Figure:
+    """Front / rear tyre carcass temperature across the run.
+
+    Only really informative when ``tires.thermal_model_enabled`` is True;
+    otherwise the two series stay flat at the initial temperature.
+    """
+    fig = fig or _new_fig("Tyre temperature vs time", "Temperature (°C)")
+    prefix = f"{label} " if label else ""
+    _add_trace(fig, df, "tyre_temp_front", label=f"{prefix}Front",
+               default_name="Front")
+    _add_trace(fig, df, "tyre_temp_rear", label=f"{prefix}Rear",
+               default_name="Rear", dash="dash")
+    return fig

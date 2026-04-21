@@ -32,6 +32,13 @@ class SimulationState:
     # overloading the value slots above).
     motor_alpha: float = 0.0  # rad/s^2 - motor angular acceleration
     driveline_twist_rate: float = 0.0  # rad/s - dtheta_twist/dt
+
+    # Tyre thermal state. Value slot (°C) when tires.thermal_model_enabled is
+    # True. dT/dt is carried via the corresponding *_rate fields.
+    tyre_temp_front: float = 25.0  # °C
+    tyre_temp_rear: float = 25.0   # °C
+    tyre_temp_front_rate: float = 0.0  # K/s
+    tyre_temp_rear_rate: float = 0.0   # K/s
     
     # Forces
     drive_force: float = 0.0  # N
@@ -89,6 +96,8 @@ class SimulationState:
             'energy_storage_loss': self.energy_storage_loss,
             'in_field_weakening': self.in_field_weakening,
             'driveline_twist': self.driveline_twist,
+            'tyre_temp_front': self.tyre_temp_front,
+            'tyre_temp_rear': self.tyre_temp_rear,
         }
     
     def copy(self) -> 'SimulationState':
@@ -119,6 +128,10 @@ class SimulationState:
             driveline_twist=self.driveline_twist,
             motor_alpha=self.motor_alpha,
             driveline_twist_rate=self.driveline_twist_rate,
+            tyre_temp_front=self.tyre_temp_front,
+            tyre_temp_rear=self.tyre_temp_rear,
+            tyre_temp_front_rate=self.tyre_temp_front_rate,
+            tyre_temp_rear_rate=self.tyre_temp_rear_rate,
             time=self.time
         )
 

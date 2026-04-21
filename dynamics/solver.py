@@ -107,6 +107,12 @@ class DynamicsSolver:
         self._driveline_K = float(getattr(config.powertrain, "driveline_stiffness", 5000.0))
         self._driveline_C = float(getattr(config.powertrain, "driveline_damping", 30.0))
 
+        # --- Tyre thermal configuration ---
+        self._use_thermal = bool(getattr(config.tires, "thermal_model_enabled", False))
+        self._thermal_ambient = float(getattr(config.tires, "thermal_ambient_temp", 25.0))
+        self._thermal_capacity = float(getattr(config.tires, "thermal_capacity", 3600.0))
+        self._thermal_cooling = float(getattr(config.tires, "thermal_cooling_coefficient", 15.0))
+
         # Anti-wheelie feedback: closed-loop torque reduction kicks in once
         # measured front Fz drops below this threshold (N). Chosen so that the
         # 50 N static cap margin has plenty of headroom before activation.
@@ -147,6 +153,13 @@ class DynamicsSolver:
         # no pre-load in the driveline spring.
         state.motor_speed = 0.0
         state.driveline_twist = 0.0
+        # Thermal model initial condition: both axles at the specified
+        # ``thermal_initial_temp``. When the thermal model is disabled the
+        # fields still carry sensible default values so logging/plotting
+        # code that reads them doesn't trip.
+        initial_temp = float(getattr(self.config.tires, "thermal_initial_temp", 25.0))
+        state.tyre_temp_front = initial_temp
+        state.tyre_temp_rear = initial_temp
         self.state_history = [state.copy()]
         
         # Simulation loop
@@ -166,16 +179,19 @@ class DynamicsSolver:
         return state
     
     def _axle_tire_force(self, normal_axle: float, slip: float,
-                         velocity: float) -> Tuple[float, float]:
+                         velocity: float,
+                         tyre_temp_c: Optional[float] = None) -> Tuple[float, float]:
         """Return (axle_long_force, axle_rolling_resistance) for one axle.
 
         Pacejka is a per-tyre curve with a load-sensitive peak (pDx2). Feeding
         the whole axle Fz into it biases the peak force; instead evaluate the
-        curve at Fz/2 per tyre and double the result.
+        curve at Fz/2 per tyre and double the result. Temperature, if
+        supplied, is forwarded to the tyre model and applied as a grip-window
+        multiplier by ``TireModel.thermal_mu_factor``.
         """
         per_tyre_fz = max(0.0, normal_axle) / 2.0
         fx_one, rr_one = self.tire_model.calculate_longitudinal_force(
-            per_tyre_fz, slip, velocity,
+            per_tyre_fz, slip, velocity, tyre_temp_c=tyre_temp_c,
         )
         return 2.0 * fx_one, 2.0 * rr_one
 
@@ -244,12 +260,16 @@ class DynamicsSolver:
             normal_rear += anti_squat_delta
             normal_front = max(0.0, normal_front - anti_squat_delta)
 
-            # Per-tyre Pacejka (see _axle_tire_force docstring).
+            # Per-tyre Pacejka (see _axle_tire_force docstring). Temperature
+            # is passed when the thermal model is enabled; the tyre model
+            # applies a Gaussian grip-window multiplier to Fx.
+            t_front = state.tyre_temp_front if self._use_thermal else None
+            t_rear = state.tyre_temp_rear if self._use_thermal else None
             tire_force_front, rr_front = self._axle_tire_force(
-                normal_front, slip_front, state.velocity,
+                normal_front, slip_front, state.velocity, tyre_temp_c=t_front,
             )
             tire_force_rear, rr_rear = self._axle_tire_force(
-                normal_rear, slip_rear, state.velocity,
+                normal_rear, slip_rear, state.velocity, tyre_temp_c=t_rear,
             )
 
             # Anti-wheelie torque cap: limit rear drive so front Fz stays
@@ -341,6 +361,32 @@ class DynamicsSolver:
         # Get optimal slip for logging (per-tyre load).
         optimal_slip = self.tire_model.get_optimal_slip_ratio(normal_rear / 2.0)
 
+        # --- Tyre thermal rates ---
+        # Heat into the tyres is the sliding friction work at the contact
+        # patch: P_sliding = |F_long| * |slip_velocity|. slip_velocity is
+        # the difference between wheel surface speed and vehicle speed.
+        # Cooling is linear in (T - T_ambient) with coefficient h.
+        if self._use_thermal:
+            slip_v_front = abs(
+                wheel_speed_front * self.tire_model.radius - state.velocity
+            )
+            slip_v_rear = abs(
+                wheel_speed_rear * self.tire_model.radius - state.velocity
+            )
+            q_in_front = abs(tire_force_front) * slip_v_front
+            q_in_rear = abs(tire_force_rear) * slip_v_rear
+            q_out_front = self._thermal_cooling * (
+                state.tyre_temp_front - self._thermal_ambient
+            )
+            q_out_rear = self._thermal_cooling * (
+                state.tyre_temp_rear - self._thermal_ambient
+            )
+            dT_front = (q_in_front - q_out_front) / max(1e-3, self._thermal_capacity)
+            dT_rear = (q_in_rear - q_out_rear) / max(1e-3, self._thermal_capacity)
+        else:
+            dT_front = 0.0
+            dT_rear = 0.0
+
         # Create derivative state. For integrated quantities (position,
         # velocity, wheel_angular_velocity_rear) the named slot holds the
         # derivative. For logging-only slots (motor_speed, forces, ...) it
@@ -356,6 +402,10 @@ class DynamicsSolver:
         dstate.motor_alpha = motor_alpha
         dstate.driveline_twist_rate = twist_rate
         dstate.driveline_twist = state.driveline_twist  # current value (not integrated here)
+        dstate.tyre_temp_front = state.tyre_temp_front  # value carried forward
+        dstate.tyre_temp_rear = state.tyre_temp_rear
+        dstate.tyre_temp_front_rate = dT_front
+        dstate.tyre_temp_rear_rate = dT_rear
         dstate.acceleration = acceleration
         dstate.drive_force = total_tire_force
         dstate.drag_force = drag_force
@@ -605,6 +655,13 @@ class DynamicsSolver:
             new_state.motor_speed = state.motor_speed + avg_motor_alpha * dt
             new_state.driveline_twist = state.driveline_twist + avg_twist_rate * dt
 
+        # Tyre temperature: always integrated (rates are zero when the thermal
+        # model is disabled so this is a no-op in that case).
+        avg_dT_front = _avg("tyre_temp_front_rate")
+        avg_dT_rear = _avg("tyre_temp_rear_rate")
+        new_state.tyre_temp_front = state.tyre_temp_front + avg_dT_front * dt
+        new_state.tyre_temp_rear = state.tyre_temp_rear + avg_dT_rear * dt
+
         # Front wheels are free-rolling (velocity / tire_radius)
         new_state.wheel_angular_velocity_front = new_state.velocity / self.tire_model.radius if new_state.velocity > 0 else 0.0
         
@@ -625,6 +682,8 @@ class DynamicsSolver:
         # In rigid mode, final_derivatives.motor_speed is the fresh
         # wheel_speed*gear value; in compliant mode we *already* have the
         # integrated motor_speed on new_state and must not overwrite it.
+        # tyre_temp_* are always integrated, so never overwrite from
+        # final_derivatives (which holds only the value-slot carry).
         if not self._use_compliance:
             new_state.motor_speed = final_derivatives.motor_speed
         new_state.motor_current = final_derivatives.motor_current
@@ -687,6 +746,12 @@ class DynamicsSolver:
                 result.wheel_angular_velocity_rear * self._drive_ratio
             )
             result.driveline_twist = 0.0
+
+        # Tyre temperature (integrated regardless of thermal model: the rates
+        # are zero when the thermal model is disabled, so this is a no-op in
+        # that case and stays exact).
+        result.tyre_temp_front = state.tyre_temp_front + derivatives.tyre_temp_front_rate * dt
+        result.tyre_temp_rear = state.tyre_temp_rear + derivatives.tyre_temp_rear_rate * dt
 
         # Time
         result.time = state.time + dt

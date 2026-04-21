@@ -70,6 +70,32 @@ PARAMS: List[ParamSpec] = [
     ParamSpec("tires", "pacejka_pKx2", "Pacejka pKx2", "N/rad", min=-10000.0, max=5000.0, step=100.0),
     ParamSpec("tires", "pacejka_Fz0", "Pacejka Fz0 (nominal load)", "N", min=500.0, max=3000.0, step=50.0),
 
+    # --- Tyre thermal model ---
+    ParamSpec("tires", "thermal_model_enabled", "Thermal model", "",
+              widget="bool",
+              help="Enable lumped-thermal grip-window model. mu(T) falls off "
+                   "away from the optimum; friction work heats the tyres, "
+                   "convection cools them. Simulates cold starts and pre-warming."),
+    ParamSpec("tires", "thermal_initial_temp", "Initial tyre temp", "C",
+              min=-10.0, max=150.0, step=1.0,
+              help="Pre-run tyre carcass temperature. Ambient cold day ~10 C, "
+                   "garage ~25 C, pre-warmed in the pit ~60-80 C."),
+    ParamSpec("tires", "thermal_ambient_temp", "Ambient temperature", "C",
+              min=-20.0, max=50.0, step=1.0,
+              help="Air temperature that cools the tyres during the run."),
+    ParamSpec("tires", "thermal_optimal_temp", "Optimal tyre temp", "C",
+              min=40.0, max=120.0, step=1.0,
+              help="Temperature where mu_peak is reached. FS slicks: ~80 C."),
+    ParamSpec("tires", "thermal_sigma", "Thermal width (sigma)", "K",
+              min=20.0, max=120.0, step=1.0,
+              help="Width of the mu(T) Gaussian. sigma=60 K => ~66% of peak at ambient 25 C."),
+    ParamSpec("tires", "thermal_capacity", "Thermal capacity (per axle)", "J/K",
+              min=500.0, max=20000.0, step=50.0,
+              help="Heat capacity of the combined tyres on one axle."),
+    ParamSpec("tires", "thermal_cooling_coefficient", "Cooling coefficient (per axle)", "W/K",
+              min=1.0, max=200.0, step=1.0,
+              help="Effective convection+radiation rate to ambient, per axle."),
+
     # --- Powertrain ---
     ParamSpec("powertrain", "motor_torque_constant", "Motor Kt", "N.m/A", min=0.1, max=2.0, step=0.01),
     ParamSpec("powertrain", "motor_max_current", "Motor max current", "A", min=50.0, max=800.0, step=5.0),

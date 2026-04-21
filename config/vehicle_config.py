@@ -56,6 +56,22 @@ class TireProperties:
     pacejka_pKx1: Optional[float] = None  # Longitudinal slip stiffness
     pacejka_pKx2: Optional[float] = None  # Variation with load
 
+    # --- Tyre thermal model ---
+    # When enabled, a lumped thermal mass per axle tracks temperature (°C)
+    # driven by friction work at the contact patch and cooled by convection.
+    # Peak friction becomes a Gaussian window around ``thermal_optimal_temp``:
+    #     mu_peak(T) = mu_peak_0 * exp(-(T - T_opt)^2 / (2 * sigma^2))
+    # so cold or overheated tyres lose grip.
+    # Off by default to preserve existing results; turn on to study pre-warm
+    # strategies or cold starts.
+    thermal_model_enabled: bool = False
+    thermal_initial_temp: float = 25.0      # °C at start of run
+    thermal_ambient_temp: float = 25.0      # °C (atmosphere)
+    thermal_optimal_temp: float = 80.0      # °C for peak grip
+    thermal_sigma: float = 60.0             # K - width of grip window
+    thermal_capacity: float = 3600.0        # J/K per driven axle (both tyres)
+    thermal_cooling_coefficient: float = 15.0  # W/K per axle - convection to air
+
 
 @dataclass
 class PowertrainProperties:
@@ -212,6 +228,17 @@ class VehicleConfig:
             errors.append("tires.rolling_resistance_coeff must be non-negative.")
         if self.tires.tire_model_type not in ("pacejka", "simple"):
             errors.append("tires.tire_model_type must be 'pacejka' or 'simple'.")
+        if self.tires.thermal_model_enabled:
+            if self.tires.thermal_capacity <= 0:
+                errors.append("tires.thermal_capacity must be positive when thermal model is on.")
+            if self.tires.thermal_cooling_coefficient < 0:
+                errors.append("tires.thermal_cooling_coefficient must be non-negative.")
+            if self.tires.thermal_sigma <= 0:
+                errors.append("tires.thermal_sigma must be positive (width of grip vs temp window).")
+            if self.tires.thermal_initial_temp < -50.0 or self.tires.thermal_initial_temp > 200.0:
+                errors.append("tires.thermal_initial_temp outside plausible range (-50..200 °C).")
+            if self.tires.thermal_ambient_temp < -50.0 or self.tires.thermal_ambient_temp > 60.0:
+                errors.append("tires.thermal_ambient_temp outside plausible range (-50..60 °C).")
 
         # --- Powertrain ---
         pt = self.powertrain

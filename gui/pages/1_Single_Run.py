@@ -160,27 +160,51 @@ tab_labels = ["Velocity", "Acceleration", "Power", "Normal forces",
               "Tire forces", "Slip", "Distance"]
 is_supercap = (current_data.get("powertrain", {}).get("energy_storage_type")
                == "supercapacitor")
+thermal_on = bool(current_data.get("tires", {}).get("thermal_model_enabled", False))
+if thermal_on:
+    tab_labels += ["Tyre temperature"]
 if is_supercap:
     tab_labels += ["Energy storage"]
 
 tabs = st.tabs(tab_labels)
 
-with tabs[0]:
+tab_idx = 0
+with tabs[tab_idx]:
     st.plotly_chart(plots.velocity_plot(df), use_container_width=True)
-with tabs[1]:
+tab_idx += 1
+with tabs[tab_idx]:
     st.plotly_chart(plots.acceleration_plot(df), use_container_width=True)
-with tabs[2]:
+tab_idx += 1
+with tabs[tab_idx]:
     st.plotly_chart(plots.power_plot(df), use_container_width=True)
-with tabs[3]:
+tab_idx += 1
+with tabs[tab_idx]:
     st.plotly_chart(plots.normal_forces_plot(df), use_container_width=True)
-with tabs[4]:
+tab_idx += 1
+with tabs[tab_idx]:
     st.plotly_chart(plots.tire_forces_plot(df), use_container_width=True)
-with tabs[5]:
+tab_idx += 1
+with tabs[tab_idx]:
     st.plotly_chart(plots.slip_plot(df), use_container_width=True)
-with tabs[6]:
+tab_idx += 1
+with tabs[tab_idx]:
     st.plotly_chart(plots.distance_plot(df), use_container_width=True)
+tab_idx += 1
+if thermal_on:
+    with tabs[tab_idx]:
+        st.plotly_chart(plots.tyre_temp_plot(df), use_container_width=True)
+        rear_rise = df["tyre_temp_rear"].iloc[-1] - df["tyre_temp_rear"].iloc[0]
+        front_rise = df["tyre_temp_front"].iloc[-1] - df["tyre_temp_front"].iloc[0]
+        st.caption(
+            f"Rear tyres: {df['tyre_temp_rear'].iloc[0]:.1f} °C → "
+            f"{df['tyre_temp_rear'].iloc[-1]:.1f} °C (+{rear_rise:.2f} °C). "
+            f"Front tyres: {df['tyre_temp_front'].iloc[0]:.1f} °C → "
+            f"{df['tyre_temp_front'].iloc[-1]:.1f} °C (+{front_rise:.2f} °C). "
+            f"Rear heats under slip; front free-rolls."
+        )
+    tab_idx += 1
 if is_supercap:
-    with tabs[7]:
+    with tabs[tab_idx]:
         c1, c2 = st.columns(2)
         with c1:
             st.plotly_chart(plots.soc_plot(df), use_container_width=True)
