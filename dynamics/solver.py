@@ -95,6 +95,18 @@ class DynamicsSolver:
         self.max_time = config.max_time
         self.target_distance = config.target_distance
 
+        # --- Driveline compliance configuration ---
+        # Effective gear ratio (matches PowertrainModel): gear_ratio * differential.
+        self._drive_ratio = (
+            config.powertrain.gear_ratio * config.powertrain.differential_ratio
+        )
+        self._use_compliance = bool(
+            getattr(config.powertrain, "driveline_compliance_enabled", False)
+        )
+        self._motor_inertia = float(getattr(config.powertrain, "motor_inertia", 0.077))
+        self._driveline_K = float(getattr(config.powertrain, "driveline_stiffness", 5000.0))
+        self._driveline_C = float(getattr(config.powertrain, "driveline_damping", 30.0))
+
         # Anti-wheelie feedback: closed-loop torque reduction kicks in once
         # measured front Fz drops below this threshold (N). Chosen so that the
         # 50 N static cap margin has plenty of headroom before activation.
@@ -131,6 +143,10 @@ class DynamicsSolver:
         state.normal_force_front = front_static
         state.normal_force_rear = rear_static
         self._last_fz_front = front_static
+        # Compliance-mode initial conditions: motor and wheel both at rest,
+        # no pre-load in the driveline spring.
+        state.motor_speed = 0.0
+        state.driveline_twist = 0.0
         self.state_history = [state.copy()]
         
         # Simulation loop
@@ -184,9 +200,19 @@ class DynamicsSolver:
         slip_front = self.tire_model.calculate_slip_ratio(wheel_speed_front, state.velocity)
         slip_rear = self.tire_model.calculate_slip_ratio(wheel_speed_rear, state.velocity)
 
-        # Motor speed is a function of the (known) rear wheel speed, so it's
-        # constant across the fixed-point iteration below.
-        motor_speed = self.powertrain.calculate_motor_speed(wheel_speed_rear)
+        # Motor speed.
+        #
+        # Rigid mode (compliance off): motor speed is directly tied to rear
+        # wheel speed through the gearing. This is how the solver has always
+        # worked and matches the historical results.
+        #
+        # Compliant mode: motor speed is an independent integrated state,
+        # exposed via ``SimulationState.motor_speed``. The spring-damper
+        # between rotor and hub is evaluated below.
+        if self._use_compliance:
+            motor_speed = state.motor_speed
+        else:
+            motor_speed = self.powertrain.calculate_motor_speed(wheel_speed_rear)
 
         # Vehicle effective mass (includes 2 front wheels rotating with vehicle)
         wheel_inertia = self.config.powertrain.wheel_inertia
@@ -258,36 +284,78 @@ class DynamicsSolver:
             accel = new_accel
 
         acceleration = accel
-        
-        # === WHEEL ANGULAR ACCELERATION (allows slip to develop) ===
-        # The rear wheel accelerates based on torque imbalance:
-        # Angular accel = (motor_torque - tire_reaction_torque) / I_wheel
-        #
-        # Where tire_reaction_torque = tire_force × radius
-        # 
-        # If motor_torque > grip, wheel spins up faster (positive slip)
-        # If motor_torque < grip, wheel slows relative to vehicle (slip decreases)
-        
-        tire_reaction_torque = tire_force_rear * self.tire_model.radius
-        
-        # Total rear wheel inertia (2 driven wheels)
+
+        # === WHEEL / MOTOR ANGULAR ACCELERATION ===
+        # Total rear wheel inertia (both driven wheels).
         rear_wheel_inertia = 2.0 * wheel_inertia
-        
-        # Wheel angular acceleration
-        wheel_alpha_rear = (wheel_torque - tire_reaction_torque) / rear_wheel_inertia
-        
-        # Get powertrain state for energy storage tracking
+        tire_reaction_torque = tire_force_rear * self.tire_model.radius
+
+        # Pull motor torque (raw shaft torque, before gear reduction) off the
+        # powertrain's last state. calculate_torque populates ``motor_torque``
+        # whenever the advanced motor model is used; for the legacy model it
+        # still reflects the torque actually applied at the motor shaft.
         pt_state = self.powertrain.get_last_state()
-        
+        motor_shaft_torque = (
+            pt_state.motor_torque if pt_state is not None else 0.0
+        )
+
+        if self._use_compliance:
+            # Drive torque at the wheel hub from the spring-damper.
+            rel_speed_hub = motor_speed / self._drive_ratio - wheel_speed_rear
+            drive_torque_at_hub = (
+                self._driveline_K * state.driveline_twist
+                + self._driveline_C * rel_speed_hub
+            )
+            # Reaction back onto the motor shaft: reduce by gear * efficiency
+            # so that steady-state power balance matches the rigid case (in
+            # the limit of very stiff K, the two ODEs collapse to the rigid
+            # coupling).
+            eta = max(1e-3, self.config.powertrain.drivetrain_efficiency)
+            drive_torque_at_motor = drive_torque_at_hub / (self._drive_ratio * eta)
+
+            wheel_alpha_rear = (
+                drive_torque_at_hub - tire_reaction_torque
+            ) / rear_wheel_inertia
+            motor_alpha = (
+                motor_shaft_torque - drive_torque_at_motor
+            ) / max(1e-6, self._motor_inertia)
+            twist_rate = rel_speed_hub
+            applied_wheel_torque = drive_torque_at_hub
+        else:
+            # Rigid coupling: motor and wheels rotate in fixed ratio. The
+            # motor's rotational inertia reflects onto the wheel hub as
+            # ``I_motor * gear_ratio^2``; neglecting it (as the legacy solver
+            # did) undercounts rotating inertia by ~15x for a typical
+            # geared EV powertrain. Total effective inertia at the hub is
+            # therefore ``2 * I_wheel + I_motor * gear^2``.
+            effective_rear_inertia = (
+                rear_wheel_inertia + self._motor_inertia * self._drive_ratio ** 2
+            )
+            wheel_alpha_rear = (
+                wheel_torque - tire_reaction_torque
+            ) / effective_rear_inertia
+            motor_alpha = 0.0
+            twist_rate = 0.0
+            applied_wheel_torque = wheel_torque
+
         # Get optimal slip for logging (per-tyre load).
         optimal_slip = self.tire_model.get_optimal_slip_ratio(normal_rear / 2.0)
-        
-        # Create derivative state
+
+        # Create derivative state. For integrated quantities (position,
+        # velocity, wheel_angular_velocity_rear) the named slot holds the
+        # derivative. For logging-only slots (motor_speed, forces, ...) it
+        # holds the value. motor_speed and driveline_twist are a special
+        # case: their *values* are written into those slots for logging, and
+        # their *derivatives* are carried in motor_alpha / driveline_twist_rate
+        # which _rk4_step reads when compliance is enabled.
         dstate = SimulationState()
         dstate.velocity = acceleration
         dstate.position = state.velocity
         dstate.wheel_angular_velocity_rear = wheel_alpha_rear
         dstate.wheel_angular_velocity_front = 0.0  # Free-rolling
+        dstate.motor_alpha = motor_alpha
+        dstate.driveline_twist_rate = twist_rate
+        dstate.driveline_twist = state.driveline_twist  # current value (not integrated here)
         dstate.acceleration = acceleration
         dstate.drive_force = total_tire_force
         dstate.drag_force = drag_force
@@ -300,7 +368,7 @@ class DynamicsSolver:
         dstate.optimal_slip_ratio = optimal_slip
         dstate.motor_speed = motor_speed
         dstate.motor_current = motor_current
-        dstate.motor_torque = wheel_torque
+        dstate.motor_torque = applied_wheel_torque  # torque delivered to wheels
         dstate.power_consumed = power
         dstate.time = 1.0  # dt will be applied in integration
         
@@ -513,18 +581,30 @@ class DynamicsSolver:
         
         # RK4 weighted average of derivatives
         # d/dt = (k1 + 2*k2 + 2*k3 + k4) / 6
-        avg_d_position = (k1.position + 2*k2.position + 2*k3.position + k4.position) / 6.0
-        avg_d_velocity = (k1.velocity + 2*k2.velocity + 2*k3.velocity + k4.velocity) / 6.0
-        avg_d_wheel_rear = (k1.wheel_angular_velocity_rear + 2*k2.wheel_angular_velocity_rear + 
-                           2*k3.wheel_angular_velocity_rear + k4.wheel_angular_velocity_rear) / 6.0
-        
+        def _avg(field: str) -> float:
+            return (
+                getattr(k1, field) + 2 * getattr(k2, field)
+                + 2 * getattr(k3, field) + getattr(k4, field)
+            ) / 6.0
+
+        avg_d_position = _avg("position")
+        avg_d_velocity = _avg("velocity")
+        avg_d_wheel_rear = _avg("wheel_angular_velocity_rear")
+
         # Create new state with integrated values
         new_state = SimulationState()
         new_state.time = state.time + dt
         new_state.position = state.position + avg_d_position * dt
         new_state.velocity = state.velocity + avg_d_velocity * dt
         new_state.wheel_angular_velocity_rear = state.wheel_angular_velocity_rear + avg_d_wheel_rear * dt
-        
+
+        # Driveline torsional states are only integrated when compliance is on.
+        if self._use_compliance:
+            avg_motor_alpha = _avg("motor_alpha")
+            avg_twist_rate = _avg("driveline_twist_rate")
+            new_state.motor_speed = state.motor_speed + avg_motor_alpha * dt
+            new_state.driveline_twist = state.driveline_twist + avg_twist_rate * dt
+
         # Front wheels are free-rolling (velocity / tire_radius)
         new_state.wheel_angular_velocity_front = new_state.velocity / self.tire_model.radius if new_state.velocity > 0 else 0.0
         
@@ -540,9 +620,13 @@ class DynamicsSolver:
         # Recalculate all derived quantities at the NEW state
         # This ensures motor_speed, forces, power etc. are correct for the new velocity
         final_derivatives = self._calculate_derivatives(new_state)
-        
-        # Copy derived (non-integrated) values from final calculation
-        new_state.motor_speed = final_derivatives.motor_speed
+
+        # Copy derived (non-integrated) values from final calculation.
+        # In rigid mode, final_derivatives.motor_speed is the fresh
+        # wheel_speed*gear value; in compliant mode we *already* have the
+        # integrated motor_speed on new_state and must not overwrite it.
+        if not self._use_compliance:
+            new_state.motor_speed = final_derivatives.motor_speed
         new_state.motor_current = final_derivatives.motor_current
         new_state.motor_torque = final_derivatives.motor_torque
         new_state.drive_force = final_derivatives.drive_force
@@ -583,19 +667,32 @@ class DynamicsSolver:
             New state with integrated values (other fields copied from derivatives)
         """
         result = SimulationState()
-        
+
         # Integrate only the true state variables
         result.position = state.position + derivatives.position * dt
         result.velocity = state.velocity + derivatives.velocity * dt
         result.wheel_angular_velocity_rear = state.wheel_angular_velocity_rear + derivatives.wheel_angular_velocity_rear * dt
         result.wheel_angular_velocity_front = result.velocity / self.tire_model.radius if result.velocity > 0 else 0.0
-        
+
+        # Driveline torsional states (compliance mode): integrate using the
+        # dedicated derivative carriers stashed by _calculate_derivatives.
+        if self._use_compliance:
+            result.motor_speed = state.motor_speed + derivatives.motor_alpha * dt
+            result.driveline_twist = state.driveline_twist + derivatives.driveline_twist_rate * dt
+        else:
+            # Rigid mode: motor_speed is algebraically tied to wheel speed.
+            # Derive it from the freshly-integrated wheel speed so every RK4
+            # mid-point sees the correct motor speed.
+            result.motor_speed = (
+                result.wheel_angular_velocity_rear * self._drive_ratio
+            )
+            result.driveline_twist = 0.0
+
         # Time
         result.time = state.time + dt
-        
+
         # Copy non-integrated values from derivatives (they'll be recalculated anyway)
         result.acceleration = derivatives.acceleration
-        result.motor_speed = derivatives.motor_speed
         result.motor_current = derivatives.motor_current
         result.motor_torque = derivatives.motor_torque
         result.drive_force = derivatives.drive_force

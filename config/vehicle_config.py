@@ -78,7 +78,23 @@ class PowertrainProperties:
     drivetrain_efficiency: float = 0.95
     differential_ratio: float = 1.0
     max_power_accumulator_outlet: float = 80e3  # W (80 kW) - Formula Student rule EV 2.2
-    wheel_inertia: float = 0.1  # kg·m²
+    wheel_inertia: float = 0.1  # kg·m² (per pair of driven wheels, so total 2 * wheel_inertia)
+
+    # --- Driveline torsional compliance ---
+    # When enabled, motor and rear-wheel angular velocities become separate
+    # integrated states coupled by a spring-damper. Off by default so legacy
+    # results remain identical; flip the flag (or set
+    # ``driveline_compliance_enabled: true`` in JSON) to get the higher-
+    # fidelity launch dynamics.
+    driveline_compliance_enabled: bool = False
+    motor_inertia: float = 0.077  # kg·m² - YASA P400R rotor inertia (datasheet)
+    # Combined gearbox + two-halfshaft torsional stiffness, reflected to the
+    # rear wheel hub. 15 000 N·m/rad matches a typical FS setup (two 25 mm
+    # steel halfshafts in parallel plus a stiff single-stage reduction).
+    driveline_stiffness: float = 15000.0  # N·m / rad at the wheel hub
+    # Damping tuned for zeta ~ 0.7 against 15 000 N·m/rad and the reduced
+    # inertia of motor+wheel (~0.09 kg·m²), giving a well-damped ~65 Hz mode.
+    driveline_damping: float = 50.0  # N·m·s / rad at the wheel hub
     
     # Energy storage type selection
     energy_storage_type: str = "battery"  # "battery" or "supercapacitor"
@@ -219,6 +235,13 @@ class VehicleConfig:
             errors.append("powertrain.battery_max_current must be positive.")
         if pt.wheel_inertia <= 0:
             errors.append("powertrain.wheel_inertia must be positive.")
+        if pt.driveline_compliance_enabled:
+            if pt.motor_inertia <= 0:
+                errors.append("powertrain.motor_inertia must be positive when driveline compliance is on.")
+            if pt.driveline_stiffness <= 0:
+                errors.append("powertrain.driveline_stiffness must be positive when driveline compliance is on.")
+            if pt.driveline_damping < 0:
+                errors.append("powertrain.driveline_damping must be non-negative.")
         if pt.energy_storage_type not in ("battery", "supercapacitor"):
             errors.append("powertrain.energy_storage_type must be 'battery' or 'supercapacitor'.")
         if pt.energy_storage_type == "supercapacitor":

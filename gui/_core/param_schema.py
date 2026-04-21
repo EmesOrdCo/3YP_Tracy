@@ -89,7 +89,26 @@ PARAMS: List[ParamSpec] = [
     ParamSpec("powertrain", "max_power_accumulator_outlet", "Max accumulator power", "W",
               min=10000.0, max=80000.0, step=1000.0,
               help="EV 2.2 rule: must not exceed 80 kW."),
-    ParamSpec("powertrain", "wheel_inertia", "Wheel inertia", "kg.m^2", min=0.01, max=1.0, step=0.01),
+    ParamSpec("powertrain", "wheel_inertia", "Wheel inertia (per driven wheel)", "kg.m^2",
+              min=0.01, max=1.0, step=0.01,
+              help="Rotational inertia of one driven wheel + hub; total rear inertia is 2x this."),
+    ParamSpec("powertrain", "driveline_compliance_enabled", "Driveline compliance", "",
+              widget="bool",
+              help="Model halfshafts + gearbox as a torsional spring-damper between "
+                   "motor and wheel. Off = rigid coupling. Enable for realistic launch "
+                   "transients, smoother torque trace, and to see driveline ringing."),
+    ParamSpec("powertrain", "motor_inertia", "Motor rotor inertia", "kg.m^2",
+              min=0.001, max=0.5, step=0.001,
+              help="YASA P400R datasheet rotor inertia is ~0.077 kg.m^2. Reflected onto the "
+                   "wheel hub as I_motor * gear_ratio^2, so it dominates rotating inertia."),
+    ParamSpec("powertrain", "driveline_stiffness", "Driveline stiffness", "N.m/rad",
+              min=500.0, max=100000.0, step=500.0,
+              help="Combined halfshaft + gearbox torsional stiffness at the wheel hub. "
+                   "Only active when driveline compliance is enabled."),
+    ParamSpec("powertrain", "driveline_damping", "Driveline damping", "N.m.s/rad",
+              min=0.0, max=500.0, step=1.0,
+              help="Viscous damping in the driveline spring. Tune with stiffness for critical or "
+                   "near-critical damping."),
     ParamSpec("powertrain", "energy_storage_type", "Energy storage", "", widget="choice",
               choices=("battery", "supercapacitor")),
     ParamSpec("powertrain", "supercap_cell_voltage", "Supercap cell voltage", "V",

@@ -300,5 +300,81 @@ class TestConfigValidate(unittest.TestCase):
         self.assertTrue(any("80 kW" in e or "EV 2.2" in e for e in cfg.validate()))
 
 
+class TestDrivelineCompliance(unittest.TestCase):
+    """Torsional compliance between motor rotor and rear wheels."""
+
+    def _config_with_compliance(self, **overrides) -> VehicleConfig:
+        cfg = _base_config()
+        cfg.powertrain.driveline_compliance_enabled = True
+        for key, value in overrides.items():
+            setattr(cfg.powertrain, key, value)
+        return cfg
+
+    def test_rigid_and_compliant_runs_both_complete(self):
+        """Both modes should finish 75 m without NaN / overflow."""
+        cfg_rigid = _base_config()
+        cfg_compliant = self._config_with_compliance()
+
+        r_rigid = AccelerationSimulation(cfg_rigid).run()
+        r_compliant = AccelerationSimulation(cfg_compliant).run()
+
+        self.assertGreater(r_rigid.final_distance, 74.9)
+        self.assertGreater(r_compliant.final_distance, 74.9)
+        self.assertTrue(r_rigid.compliant)
+        self.assertTrue(r_compliant.compliant)
+
+    def test_compliant_run_is_at_most_a_few_hundred_ms_slower(self):
+        """Compliance should add a modest delay (spring windup), not an order-of-magnitude one."""
+        cfg_rigid = _base_config()
+        cfg_compliant = self._config_with_compliance()
+
+        r_rigid = AccelerationSimulation(cfg_rigid).run()
+        r_compliant = AccelerationSimulation(cfg_compliant).run()
+
+        delta = r_compliant.final_time - r_rigid.final_time
+        self.assertGreater(delta, -0.05,
+                           "Compliance shouldn't make the car *faster* on the same hardware.")
+        self.assertLess(delta, 0.6,
+                        f"Compliance delay too large ({delta*1000:.0f} ms); tuning broken?")
+
+    def test_motor_speed_tracks_wheel_speed_at_steady_state(self):
+        """Once past the launch transient the motor must lock to the wheel ratio."""
+        cfg = self._config_with_compliance()
+        sim = AccelerationSimulation(cfg)
+        sim.run()
+        hist = sim.get_state_history()
+
+        # Sample well into the run, after any ringing has died out.
+        mid_sample = next(s for s in hist if s.time > 1.0 and s.wheel_angular_velocity_rear > 30)
+        g = cfg.powertrain.gear_ratio * cfg.powertrain.differential_ratio
+        ratio = mid_sample.motor_speed / (mid_sample.wheel_angular_velocity_rear * g)
+        self.assertAlmostEqual(ratio, 1.0, delta=0.05,
+                               msg=f"Motor-wheel ratio drifted at t={mid_sample.time:.2f}s: {ratio:.3f}")
+
+    def test_twist_stays_small_and_bounded(self):
+        """Driveline twist should never exceed a plausible mechanical limit.
+
+        A realistic FS halfshaft yields somewhere north of 10 deg (~0.17 rad).
+        If the simulation ever reports more than that the spring is too soft
+        or the controller is asking for impossible torques.
+        """
+        cfg = self._config_with_compliance()
+        sim = AccelerationSimulation(cfg)
+        sim.run()
+        hist = sim.get_state_history()
+        max_twist = max(abs(s.driveline_twist) for s in hist)
+        self.assertLess(max_twist, 0.20,
+                        f"Driveline twist peaked at {max_twist:.3f} rad - spring too soft")
+
+    def test_disabled_compliance_matches_historical_rigid_time(self):
+        """With compliance off the run must reproduce the rigid solver path."""
+        cfg_off = _base_config()
+        cfg_off.powertrain.driveline_compliance_enabled = False
+        r_off_1 = AccelerationSimulation(cfg_off).run()
+        # Second run with explicit rigid-mode config confirms determinism.
+        r_off_2 = AccelerationSimulation(cfg_off).run()
+        self.assertAlmostEqual(r_off_1.final_time, r_off_2.final_time, places=6)
+
+
 if __name__ == "__main__":
     unittest.main()

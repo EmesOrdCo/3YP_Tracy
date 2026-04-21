@@ -20,6 +20,18 @@ class SimulationState:
     motor_speed: float = 0.0  # rad/s
     motor_current: float = 0.0  # A
     motor_torque: float = 0.0  # N·m
+
+    # Driveline torsional state. Only integrated when
+    # powertrain.driveline_compliance_enabled is True; otherwise the rigid
+    # coupling motor_speed = wheel_speed_rear * gear_ratio is used and this
+    # stays at its default 0.
+    driveline_twist: float = 0.0  # rad at wheel hub (motor side - wheel side)
+
+    # Derivative carriers (populated by _calculate_derivatives so that
+    # _rk4_step can integrate motor_speed and driveline_twist without
+    # overloading the value slots above).
+    motor_alpha: float = 0.0  # rad/s^2 - motor angular acceleration
+    driveline_twist_rate: float = 0.0  # rad/s - dtheta_twist/dt
     
     # Forces
     drive_force: float = 0.0  # N
@@ -75,7 +87,8 @@ class SimulationState:
             'dc_bus_voltage': self.dc_bus_voltage,
             'energy_storage_soc': self.energy_storage_soc,
             'energy_storage_loss': self.energy_storage_loss,
-            'in_field_weakening': self.in_field_weakening
+            'in_field_weakening': self.in_field_weakening,
+            'driveline_twist': self.driveline_twist,
         }
     
     def copy(self) -> 'SimulationState':
@@ -103,6 +116,9 @@ class SimulationState:
             energy_storage_soc=self.energy_storage_soc,
             energy_storage_loss=self.energy_storage_loss,
             in_field_weakening=self.in_field_weakening,
+            driveline_twist=self.driveline_twist,
+            motor_alpha=self.motor_alpha,
+            driveline_twist_rate=self.driveline_twist_rate,
             time=self.time
         )
 
