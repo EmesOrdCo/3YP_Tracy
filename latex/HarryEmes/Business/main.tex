@@ -1,0 +1,868 @@
+% =====================================================================
+%  Harry Emes -- 3YP Business Chapter
+%  Financial Evaluation of the AEB Rabbit TaaS Business
+%  Build: biber main && pdflatex main && pdflatex main
+% =====================================================================
+
+\documentclass[11pt, a4paper]{report}
+\usepackage{../../styling}
+
+\usepackage{xspace}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{rotating}
+
+% Inline chapters: no forced page break and a compact heading.
+\makeatletter
+\renewcommand\chapter{\par%
+  \thispagestyle{plain}%
+  \global\@topnum\z@
+  \@afterindentfalse
+  \secdef\@chapter\@schapter}
+\renewcommand{\@makechapterhead}[1]{%
+  \vspace*{10pt}%
+  {\parindent \z@ \raggedright \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+      \Large\bfseries \@chapapp\ \thechapter: \ #1%
+    \else
+      \Large\bfseries #1%
+    \fi
+    \par\nobreak
+    \vskip 8pt}}
+\renewcommand{\@makeschapterhead}[1]{%
+  \vspace*{10pt}%
+  {\parindent \z@ \raggedright
+    \normalfont
+    \Large\bfseries #1\par\nobreak
+    \vskip 8pt}}
+\makeatother
+
+% Shallower ToC: section-level only.
+\setcounter{tocdepth}{1}
+
+% Compact list environments (vanilla; avoids enumitem dependency).
+\newenvironment{tightitemize}%
+  {\begin{itemize}\setlength{\itemsep}{2pt}\setlength{\parskip}{0pt}\setlength{\topsep}{4pt}}%
+  {\end{itemize}}
+\newenvironment{tightenumerate}%
+  {\begin{enumerate}\setlength{\itemsep}{2pt}\setlength{\parskip}{0pt}\setlength{\topsep}{4pt}}%
+  {\end{enumerate}}
+
+\numberwithin{equation}{section}
+
+\addbibresource{references.bib}
+
+\graphicspath{{figures/}}
+
+% Numbers and headline £ figures pulled from the Python model
+\input{report_numbers.tex}
+
+\title{Financial Evaluation of the AEB Rabbit \\
+       Testing-as-a-Service Business}
+\author{Harry Emes}
+\date{\today}
+
+\begin{document}
+
+\pagenumbering{gobble}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% =====================================================================
+\chapter*{Executive Summary}
+\addcontentsline{toc}{chapter}{Executive Summary}
+% =====================================================================
+
+\noindent The AEB~Rabbit is a supercapacitor-powered Automated Emergency
+Braking (AEB) target vehicle engineered for explosive, six-second
+``panic'' manoeuvres on behalf of autonomous-vehicle (AV)
+developers. It is commercialised as a Testing-as-a-Service (TaaS)
+/ Product--Service System~\cite{tukker2004}: the operator retains
+ownership of the fleet and sells test-days to AV developers, who
+absorb none of the capital or maintenance burden. The market
+analysis~\cite{mcconnell_business} estimates a
+\textdollar 1.5--2\,bn global AV-validation market; this chapter
+evaluates whether the specific financial structure of the TaaS
+build-out -- front-loaded CAPEX, utilisation-tethered revenue,
+maintenance-dependent uptime, and terminal-value-dominated returns
+-- clears standard capital-budgeting thresholds.%
+\footnote{This chapter, the Python financial model, all figures
+and prose, is the sole work of Harry Emes. Market material cited
+here is the work of Toby McConnell~\cite{mcconnell_business};
+prototype and supply-chain context is owed to the engineering
+chapters of the group report.}
+
+\medskip
+
+\noindent \textbf{Headline financial evaluation}:
+
+\begin{tightitemize}
+  \item \textbf{CAPEX commitment:} \totalCapex over five years
+        (\capexPerVehicle per vehicle $\times$ 3 vehicles +
+        \pounds50\,k Y1 setup). Cumulative revenue first exceeds
+        cumulative CAPEX in \inversionCrossover.
+  \item \textbf{Five-year trajectory:} \yOneRevenue revenue $\to$
+        \yFiveRevenue; break-even in \breakEvenYear at
+        \breakEvenDays test days/year (contribution
+        \contributionMargin per day).
+  \item \textbf{Funding:} \seedRound seed + \seriesARound Series~A,
+        total \totalRaise equity. Peak cumulative cash outflow
+        occurs end-Y2 ($\sim$\pounds90\,k residual).
+  \item \textbf{Capital return:} project NPV \npvBase at a 20\% VC
+        discount rate, \npvHurdle at a 25\% hurdle rate, IRR \irr,
+        all including a \terminalValue terminal value at $2.5\times$
+        Y5 revenue.
+  \item \textbf{Sensitivity:} day-rate and utilisation dominate; a
+        $\pm 20\%$ swing in either drives $\sim$\pounds 270--370\,k
+        in Y3 EBIT.
+  \item \textbf{Downtime sensitivity:} NPV stays positive through
+        \downtimeBreak unplanned fleet downtime, but Y5~EBIT turns
+        negative once downtime exceeds $\sim$20\%. Fleet-maintenance
+        protocols are therefore the single most binding execution
+        dependency on the financial plan.
+\end{tightitemize}
+
+\noindent \textbf{Conclusion}: the TaaS financial structure clears
+standard venture-capital thresholds in the base case and is
+robust to Bull/Bear excursions. The business is most exposed to
+compounded shortfalls in day-rate and utilisation (external)
+or fleet downtime (internal), and financial viability in both
+directions is dominated by a single assumption -- the peer-group
+terminal-value multiple. Recommendations in
+Chapter~\ref{ch:concl}.
+
+% =====================================================================
+\chapter{Scope and methodology}
+\label{ch:intro}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\section{Why the TaaS structure requires dedicated financial evaluation}
+\label{sec:why_taas}
+% ---------------------------------------------------------------------
+
+Conventional automotive-testing equipment is sold as a capital good:
+the OEM or testbed buyer pays once, depreciates the asset, and owns
+both the utilisation upside and the maintenance downside. The
+AEB~Rabbit is instead delivered as a Testing-as-a-Service / Product
+Service System~\cite{tukker2004,sakao2019}: the operator retains
+the asset, sells the usage, and absorbs the full capital and
+maintenance risk. This inverts the financial structure of the
+business in three ways that conventional hardware-sale financial
+analysis does not capture:
+
+\begin{tightenumerate}
+  \item \textbf{CAPEX inversion.} The full fleet must be built and
+        made operational \emph{before} a billable hour is executed.
+        The operator therefore finances the asset across its useful
+        life from revenue that only flows if utilisation hits
+        plan.
+  \item \textbf{Utilisation-tethered revenue.} Every day the fleet
+        is not earning revenue is a day the fleet is still
+        depreciating, consuming fixed cost, and eroding unit
+        economics. Revenue is a function not just of customer
+        demand but of operational availability.
+  \item \textbf{Terminal-value dominance.} The five-year operational
+        free cash flow is loss-making until Y4; the NPV is
+        almost entirely the present value of the Y5 exit (terminal
+        value). Conventional accounting-profit analysis is
+        insufficient to assess investability.
+\end{tightenumerate}
+
+This chapter therefore extends the standard financial-plan toolkit
+(cost model, P\&L, cash flow) with three TaaS-specific analyses:
+a CAPEX-inversion timeline (Section~\ref{sec:inversion}), a
+utilisation-tethered break-even + sensitivity (Sections
+\ref{sec:breakeven}--\ref{sec:sensitivity}), and a full NPV / IRR
+capital-budgeting assessment (Section~\ref{sec:npv}) with a
+dedicated downtime-sensitivity treatment
+(Section~\ref{sec:downtime}) to quantify the cost of
+maintenance-protocol failure.
+
+% ---------------------------------------------------------------------
+\section{Model scope and handoffs}
+\label{sec:scope}
+% ---------------------------------------------------------------------
+
+The financial model is the single source of truth for every number
+in this chapter: a driver-based Python script emits tables, figures
+and in-line macros from one shared driver set, so a change to Y1
+utilisation regenerates the whole plan consistently. The
+methodology mirrors the engineering chapter's simulation
+toolchain~\cite{emes_engineering}, where a single simulator drives
+the sensitivity ranking, compliance arbiter, and final-vehicle
+prediction.
+
+The chapter is deliberately scoped to financial evaluation and
+depends on four external inputs from co-authors, cited inline
+throughout rather than re-derived:
+
+\begin{tightitemize}
+  \item \textbf{Market sizing, competitor day-rate benchmarks,
+        segmentation and phased customer
+        targeting}~\cite{mcconnell_business}.
+  \item \textbf{Prototype functional requirements, PAS-standards
+        compliance timeline, and ALARP-safety validation
+        cycles}~\cite{pas1882,pas1883,pas1885,alarp}
+        (Ziyang Xing, engineering chapter).
+  \item \textbf{Fleet supply-chain design, $<$30-minute quick-recovery
+        protocol, and 9R-framework refurbishment loops} (Yuze
+        Jiang, supply-chain chapter).
+  \item \textbf{Fleet maintenance protocols and downtime assumptions}
+        (David, reliability chapter).
+\end{tightitemize}
+
+The financial analysis is then validated against the market-access
+gatekeepers identified by McConnell: CAM Testbed UK, the Centre for
+Connected and Autonomous Vehicles (CCAV), and Thatcham
+Research~\cite{cam_testbed_uk,ccav,thatcham} -- their acceptance is
+a hard gate on OEM-scale revenue and drives the Y3-onwards
+revenue trajectory.
+
+% ---------------------------------------------------------------------
+\section{Document roadmap}
+\label{sec:roadmap}
+% ---------------------------------------------------------------------
+
+Chapter~\ref{ch:cost_revenue} specifies the CAPEX-inverted cost
+model, the utilisation-driven revenue model, and the resulting
+five-year P\&L and cash-flow forecast. Chapter~\ref{ch:be_npv}
+applies capital-budgeting analysis: break-even, NPV, IRR, and
+scenario analysis. Chapter~\ref{ch:risk_fin} treats the financial
+risk lens, including the downtime-sensitivity analysis Paul's brief
+calls out explicitly. Chapter~\ref{ch:funding} closes with the
+funding strategy, valuation discussion, and the financial KPIs the
+investor should track.
+
+% =====================================================================
+\chapter{Cost structure, revenue model and five-year forecast}
+\label{ch:cost_revenue}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\section{CAPEX model: the cost of ownership the operator absorbs}
+\label{sec:capex}
+% ---------------------------------------------------------------------
+
+The operator owns the fleet; the customer rents days. Every pound
+of AEB~Rabbit capital therefore sits on our balance sheet, is
+financed from equity until the business turns cash-positive, and is
+recovered through the day-rate. Per-vehicle build is
+\capexPerVehicle, itemised in Table~\ref{tab:capex_breakdown}; the
+Y1 setup adds \pounds50\,k in workshop fit-out and data-platform
+infrastructure. Fleet growth (2nd vehicle in Y3, 3rd in Y5) drives
+a further \pounds620\,k of capex over Y3--Y5, summarised in
+Table~\ref{tab:capex_schedule}. Total capex over the five-year
+plan: \totalCapex.
+
+\input{tables/capex_breakdown.tex}
+
+\input{tables/capex_schedule.tex}
+
+Capital is depreciated on a five-year straight-line basis. No
+residual value is modelled at Y5: in a PSS business, the physical
+asset is either refurbished in place under Yuze Jiang's 9R-framework
+loop (and therefore stays in service beyond the modelled window) or
+retired in line with safety-critical-testing industry norms.
+
+% ---------------------------------------------------------------------
+\section{OPEX model: a fixed-cost-heavy delivery operation}
+\label{sec:opex}
+% ---------------------------------------------------------------------
+
+Fixed opex is dominated by headcount (60\% of the Y1 opex base of
+\fixedOpexYOne), with the remainder split across workshop rent,
+insurance, certification fees, data-platform hosting, marketing,
+vehicle maintenance, and professional services.
+Table~\ref{tab:opex_breakdown} shows the Y1 build-up; the model
+inflates fixed opex at 3\% per year (UK CPIH 2023--25 trend) and
+adds step-changes for each fleet-growth hire.
+
+\input{tables/opex_breakdown.tex}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{cost_structure.pdf}
+\caption{Y1 CAPEX build-up (left) and Y1 fixed-OPEX build-up
+  (right). The opex donut shows that 60\% of Y1 fixed costs are
+  salaries plus employer NI -- the reason utilisation (revenue per
+  engineer per year) is the highest-leverage financial driver in
+  the sensitivity analysis (Section~\ref{sec:sensitivity}).}
+\label{fig:cost_structure}
+\end{figure}
+
+Variable cost per test day is \pounds2,300 (Y1), comprising tyres
+and consumables (\pounds800), transport (\pounds600), crew
+travel-and-subsistence (\pounds400), and amortised vehicle wear
+(\pounds500). The resulting contribution margin per test day is
+\contributionMargin at Y2 -- this is the single number that drives
+the break-even analysis below.
+
+% ---------------------------------------------------------------------
+\section{Revenue model: every pound tethered to fleet utilisation}
+\label{sec:revenue}
+% ---------------------------------------------------------------------
+
+Revenue is modelled bottom-up from three driver arrays: test days
+sold, fleet size, and blended day-rate. Day-rate is the
+mix-weighted average of the Bronze / Silver / Gold packages
+(\pounds6\,k / \pounds8\,k / \pounds10\,k) benchmarked against
+the competitor set in McConnell's analysis~\cite{mcconnell_business}
+(AB~Dynamics~\cite{abdynamics_ar2024},
+UTAC~\cite{utac_facilities},
+HORIBA~\cite{horiba_brake}, and AVL~\cite{avl_profile}). Mix-shift
+from Bronze-heavy to Gold-heavy over five years drives blended
+day-rate from \pounds7.5\,k (Y1) to \pounds9.5\,k (Y5) without
+any individual-tier price movement -- important for the pricing
+discipline discussed in Section~\ref{sec:sensitivity}.
+
+\input{tables/revenue.tex}
+
+\paragraph{Reconciliation with McConnell's SOM.} Y5 forecast
+revenue of \yFiveRevenue ($\approx$\textdollar 2.7\,M) sits at
+\mbox{10--14\%} of McConnell's serviceable-obtainable-market
+estimate of \textdollar 26\,M~\cite{mcconnell_business} -- a
+penetration consistent with a credible early-stage entrant and
+providing headroom for the bull-scenario analysis in
+Section~\ref{sec:scenarios}.
+
+% ---------------------------------------------------------------------
+\section{CAPEX inversion timeline}
+\label{sec:inversion}
+% ---------------------------------------------------------------------
+
+Figure~\ref{fig:inversion} makes the TaaS CAPEX-inversion concrete.
+Annual CAPEX is heavily front-loaded (Y1 = \pounds360\,k) and then
+steps at each fleet expansion; annual revenue ramps
+gradually with utilisation. Cumulative revenue crosses cumulative
+CAPEX in \inversionCrossover -- faster than a naive reading of the
+plan would suggest, because the pilot-year utilisation of 40 test
+days already generates \yOneRevenue against a Y1 CAPEX spend of
+\pounds360\,k.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{capex_inversion.pdf}
+\caption{CAPEX-inversion timeline. Left: annual CAPEX out vs.
+  annual revenue in. Right: cumulative CAPEX (red) vs. cumulative
+  revenue (green). The red-shaded region is the ``TaaS burden''
+  period during which cumulative CAPEX exceeds cumulative revenue;
+  the green region is the ``recouped'' period after
+  \inversionCrossover.}
+\label{fig:inversion}
+\end{figure}
+
+The inversion analysis should not be confused with profitability:
+cumulative revenue crosses cumulative CAPEX in \inversionCrossover
+but cumulative \emph{gross profit} does not cross cumulative CAPEX
+until Y3, and cumulative \emph{EBIT} does not cross cumulative
+CAPEX until Y5. The CAPEX inversion is therefore a necessary but
+not sufficient condition for financial viability; the break-even
+and NPV analyses in Chapter~\ref{ch:be_npv} assess the sufficient
+condition.
+
+% ---------------------------------------------------------------------
+\section{Five-year profit \& loss forecast}
+\label{sec:pnl}
+% ---------------------------------------------------------------------
+
+Table~\ref{tab:pnl} is the five-year P\&L summary; every column is
+a downstream result of the cost and revenue models above. Three
+features are worth noting:
+
+\begin{tightitemize}
+  \item \textbf{EBITDA turns positive in Y4}, well before net
+        profit, reflecting the drag of depreciation in a
+        capex-heavy service business.
+  \item \textbf{Operating-leverage tipping point at Y3.} Gross
+        profit grows faster than fixed opex from Y3 onwards;
+        Y3 is the \emph{commercial} break-even year, Y4 is the
+        \emph{accounting} break-even year.
+  \item \textbf{Corporation tax kicks in at Y4} (UK small-profits
+        rate 19\% in the 2025/26 regime). The Y5 net profit
+        of \pounds293\,k is reported after tax.
+\end{tightitemize}
+
+\input{tables/pnl.tex}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{revenue_ramp.pdf}
+\caption{Five-year revenue (blue) against the full cost stack
+  (variable, fixed, depreciation) with net-profit trajectory
+  overlaid (red, right axis). Net profit crosses zero in Y4 --
+  the accounting break-even year -- and reaches \pounds293\,k
+  net of tax in Y5.}
+\label{fig:revenue_ramp}
+\end{figure}
+
+% ---------------------------------------------------------------------
+\section{Five-year cash-flow forecast}
+\label{sec:cash_flow}
+% ---------------------------------------------------------------------
+
+A capex-heavy TaaS business lives or dies on cash, not on
+accounting profit. Table~\ref{tab:cashflow} tracks free cash flow,
+equity raises, and cumulative cash balance.
+
+\input{tables/cashflow.tex}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{cash_waterfall.pdf}
+\caption{Annual free cash flow (green/red bars), equity rounds
+  (blue stacked bars), and cumulative cash balance (black line).
+  Cumulative cash reaches its minimum of \pounds90\,k at end-Y2 --
+  the trigger point for Series~A close -- and turns structurally
+  positive from Y3 onwards once the Series~A has closed.}
+\label{fig:cash}
+\end{figure}
+
+Two moments deserve attention. First, end-Y2 cash balance is
+\pounds90\,k -- the tightest point in the plan, after absorbing
+two years of operating loss. A delayed Series~A would push the
+company into a bridge-round conversation; the Series~A
+therefore targets a Q4-Y2 close rather than a Y3 close.
+Second, Y5 free cash flow is \pounds179\,k positive even after the
+\capexPerVehicle third-vehicle purchase -- the plan is genuinely
+self-funding by Y5.
+
+% =====================================================================
+\chapter{Capital-budgeting assessment}
+\label{ch:be_npv}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\section{Break-even analysis}
+\label{sec:breakeven}
+% ---------------------------------------------------------------------
+
+Break-even on the Y2 fixed-cost base occurs at \breakEvenDays test
+days per year. This is the number of days the fleet must sell
+annually to cover fixed opex and depreciation:
+
+\begin{equation}
+\mathrm{BE_{days}} \;=\; \frac{F + D}{p_{\mathrm{day}} - c_{\mathrm{var}}}
+\end{equation}
+
+\noindent where $F$ is annual fixed opex, $D$ annual depreciation,
+$p_{\mathrm{day}}$ the Y2 blended day-rate, and $c_{\mathrm{var}}$
+the Y2 variable cost per day. The resulting contribution margin
+per day is \contributionMargin; fixed costs plus depreciation total
+\pounds690\,k~Y2.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{break_even.pdf}
+\caption{Break-even curve -- annual EBIT at the Y2 cost base as a
+  function of annual test days. The vertical red dashed line marks
+  the \breakEvenDays-day break-even point; orange markers show the
+  plan's Y1--Y5 planned utilisation trajectory.}
+\label{fig:break_even}
+\end{figure}
+
+Y1--Y3 sit below break-even (as expected for an early-stage TaaS
+build-out); Y4 is above; Y5 is comfortably above. The gap between
+the \breakEvenDays-day requirement and the Y1 plan of 40 days is
+the explicit financial quantification of the ``TaaS burden''
+period discussed in Section~\ref{sec:inversion}.
+
+% ---------------------------------------------------------------------
+\section{NPV and IRR -- the capital-budgeting view}
+\label{sec:npv}
+% ---------------------------------------------------------------------
+
+Because the five-year operational FCFs are loss-making until Y4,
+accounting profit is an insufficient test of investability. The
+appropriate test is discounted cash flow~\cite{brealey2020}:
+can the project, including its terminal value, return more than the
+investor's hurdle rate?
+
+\paragraph{Method.} Free cash flows (pre-equity, post-CAPEX) are
+taken from Table~\ref{tab:cashflow}. A terminal value is added to
+Y5 at the peer-group median EV/Revenue multiple of $2.5\times$
+Y5 revenue~\cite{abdynamics_ar2024,damodaran2012}, yielding
+\terminalValue. The project NPV at a discount rate $r$ is then
+
+\begin{equation}
+\mathrm{NPV}(r) \;=\; \sum_{t=1}^{5} \frac{\mathrm{FCF}_t}{(1 + r)^t} \;+\; \frac{\mathrm{TV}}{(1 + r)^5}.
+\end{equation}
+
+\noindent The project IRR is the discount rate at which NPV$=0$.
+
+\paragraph{Result.} NPV at benchmark discount rates is tabulated in
+Table~\ref{tab:npv} and visualised in Figure~\ref{fig:npv}. At the
+20\% VC-central rate the project NPV is \npvBase; at the 25\%
+high-hurdle rate it is \npvHurdle; IRR is \irr.
+
+\input{tables/npv.tex}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{npv_curve.pdf}
+\caption{Project NPV as a function of discount rate. The 10\% /
+  20\% / 30\% hurdle points are annotated; the IRR (\irr) is
+  marked with the red vertical dashed line. NPV remains positive
+  at discount rates well above typical VC hurdles, driven by the
+  present value of the Y5 terminal value.}
+\label{fig:npv}
+\end{figure}
+
+\paragraph{Interpretation.} The project clears standard VC-hurdle
+tests comfortably. Two caveats apply. First, \textbf{almost all
+of the NPV is present-value terminal value}, not operational cash
+flow: at 20\% the PV of the \terminalValue terminal alone is
+\pounds2.1\,M, against \pounds0.8\,M of negative PV from the Y1--Y3
+cash outflows. NPV is therefore only as robust as the
+exit-multiple assumption. Second, the \irr IRR reflects that a
+TaaS project that turns cash-positive in Y5 is, arithmetically, a
+very-high-return asset if it can be sold at the terminal multiple;
+it does not imply year-by-year operating returns at that level.
+
+% ---------------------------------------------------------------------
+\section{Sensitivity analysis}
+\label{sec:sensitivity}
+% ---------------------------------------------------------------------
+
+Following the one-at-a-time methodology of the engineering
+chapter's sensitivity ranking~\cite{emes_engineering}, each driver
+is perturbed by $\pm 20\%$ ($\pm 50\%$ for inflation) and the
+resulting Y3 EBIT recorded.
+
+\input{tables/sensitivity.tex}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{tornado.pdf}
+\caption{Tornado sensitivity of Y3 EBIT to $\pm 20\%$ (or
+  $\pm 50\%$) perturbation of each driver. Blended day-rate and
+  utilisation dominate; fixed opex is second-order; CAPEX and
+  inflation are third-order.}
+\label{fig:tornado}
+\end{figure}
+
+Two implications follow. First, \textbf{pricing discipline matters
+more than cost discipline}: a 20\% day-rate swing is worth
+\pounds374\,k of Y3 EBIT whereas a 20\% fixed-opex swing is worth
+\pounds228\,k. Second, the two top drivers (day-rate and
+utilisation) are the two most directly in the operating team's
+control -- management attention earns the highest marginal return
+there, rather than on cost-out or CAPEX engineering.
+
+% ---------------------------------------------------------------------
+\section{Scenario analysis}
+\label{sec:scenarios}
+% ---------------------------------------------------------------------
+
+One-at-a-time sensitivity isolates drivers; scenarios combine
+plausible joint perturbations. Three are modelled:
+
+\begin{tightitemize}
+  \item \textbf{Base}: the central plan.
+  \item \textbf{Bull}: utilisation $+25\%$, day-rate $+10\%$,
+        variable cost $-5\%$. Represents strong product-market fit,
+        two retainer conversions by Y3, and competitive pricing
+        power.
+  \item \textbf{Bear}: utilisation $-30\%$, day-rate $-10\%$,
+        variable cost $+10\%$. Represents a slow AV investment
+        cycle, discounted Bronze-heavy mix, and logistics / tyre
+        cost inflation.
+\end{tightitemize}
+
+\input{tables/scenarios.tex}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{scenarios.pdf}
+\caption{Scenario net-profit trajectories. The grey band is the
+  bear-to-bull envelope. The Bull case reaches positive net
+  profit in Y3 and $\sim$\pounds700\,k in Y5; the Bear case
+  remains loss-making through Y5 and would necessitate a
+  cost-base reset or a bridge round.}
+\label{fig:scenarios}
+\end{figure}
+
+% =====================================================================
+\chapter{Financial risk: the downtime case}
+\label{ch:risk_fin}
+% =====================================================================
+
+McConnell's risk taxonomy~\cite{mcconnell_business} treats the
+industry-level risk environment. This chapter adds the
+financial-risk view: how robust are the NPV and EBIT forecasts to
+an \emph{execution}-side failure on the fleet-maintenance
+dependency? In a TaaS business where revenue is utilisation-tethered
+(Section~\ref{sec:why_taas}), this is the single most important
+execution-risk question.
+
+% ---------------------------------------------------------------------
+\section{Downtime sensitivity -- quantifying the maintenance dependency}
+\label{sec:downtime}
+% ---------------------------------------------------------------------
+
+David's maintenance protocols target a $<$30-minute fleet-recovery
+time on any single failure, which underpins the planned
+utilisation arrays in Table~\ref{tab:revenue}. Downtime is modelled
+as a fractional reduction in billable days: a downtime rate of
+$d\%$ delivers $(1-d)\cdot D_t$ billable days in year $t$. The fixed
+cost base is unchanged (the crew is still paid while the vehicle is
+grounded), so every percentage point of downtime translates
+one-for-one into lost gross profit.
+
+\input{tables/downtime.tex}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{downtime.pdf}
+\caption{Downtime sensitivity. Left: Y3 (red) and Y5 (green)
+  EBIT as a function of unplanned downtime. Y5 EBIT turns
+  negative at $\sim$20\% downtime. Right: project NPV at 20\%
+  discount rate (blue, left axis) and Y5 revenue (orange, right
+  axis) vs. downtime. NPV stays positive through \downtimeBreak
+  downtime, driven almost entirely by the preserved terminal-value
+  contribution even at reduced Y5 revenue.}
+\label{fig:downtime}
+\end{figure}
+
+\paragraph{Interpretation.}
+\begin{tightitemize}
+  \item \textbf{EBIT is brittle.} Y3 EBIT deteriorates from
+        $-$\pounds156\,k to $-$\pounds357\,k as downtime rises
+        from 0 to 30\%; Y5 EBIT turns negative at $\sim$20\%
+        downtime.
+  \item \textbf{NPV is less brittle -- but only as long as the
+        exit multiple holds.} NPV@20\% falls from
+        \pounds1.32\,M to \pounds0.14\,M at 30\% downtime, still
+        positive but with little margin. If the downtime event
+        also compresses the exit multiple
+        (acquirers discount unreliability), NPV can flip negative
+        at lower downtime levels.
+  \item \textbf{The financial cost of a maintenance-protocol
+        failure is asymmetric.} A 10\% systematic downtime costs
+        \pounds190\,k of Y5 revenue, \pounds154\,k of Y5 EBIT,
+        and \pounds390\,k of NPV@20\%. A 20\% systematic downtime
+        costs \pounds418\,k, \pounds308\,k, and \pounds781\,k
+        respectively.
+\end{tightitemize}
+
+\paragraph{Implication for the maintenance budget.} The financial
+cost of a 10\% systematic downtime (\pounds390\,k NPV reduction) is
+more than double the total Y1 vehicle-maintenance contract
+(\pounds20\,k) and an order of magnitude above the incremental
+cost of a spare-vehicle strategy. Investment in maintenance
+capability should be benchmarked against this NPV-protection
+value, not the headline opex line.
+
+% ---------------------------------------------------------------------
+\section{Financial risk: cash-headroom assessment}
+\label{sec:cash_risk}
+% ---------------------------------------------------------------------
+
+The cash forecast (Section~\ref{sec:cash_flow}) identified
+end-Y2 cash balance of \pounds90\,k as the tightest point of the
+plan. A compounded shock at that moment -- for example, a
+Series~A close three months late plus a reportable safety
+incident -- is sufficient to push the business into bridge-round
+territory. Three specific financial exposures follow:
+
+\begin{tightitemize}
+  \item \textbf{Series~A timing.} Only \pounds90\,k buffer at
+        Y2/Y3 boundary. Series~A prep therefore starts at Month~15
+        to target a Q4-Y2 close; bridge-round authorisation is
+        pre-negotiated with seed investors in the seed term sheet.
+  \item \textbf{Reportable safety incident.} A single incident can
+        increase insurance premium by $2$--$5\times$ (shifting the
+        insurance line from $\sim$\pounds20\,k/year to
+        $\sim$\pounds50--100\,k/year) and close the OEM
+        supplier-approval pathway -- gating the
+        Phase~3~Y4+ revenue ramp.
+  \item \textbf{Anchor-customer concentration.} In Y1,
+        $>$30\% of revenue is from a single pilot customer. The
+        Series~A trigger therefore requires \emph{two} retainer
+        conversions, not one, to decouple the capital raise from
+        single-customer concentration.
+\end{tightitemize}
+
+These financial-risk mitigations tie back to the execution plan
+but are deliberately framed here in cash terms, because
+cash-runway protection is the financial-evaluation lens that
+McConnell's industry-risk taxonomy does not cover.
+
+% =====================================================================
+\chapter{Funding strategy, valuation and financial KPIs}
+\label{ch:funding}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\section{Funding strategy and use of funds}
+\label{sec:funding}
+% ---------------------------------------------------------------------
+
+The plan requires a total of \totalRaise of equity, in two
+rounds.
+
+\begin{tightitemize}
+  \item \textbf{Seed, \seedRound at incorporation.} Used for Y1
+        vehicle build (\capexPerVehicle), Y1 workshop / data-platform
+        setup (\pounds50\,k), and $\sim$18 months of runway
+        ($\sim$\pounds600\,k). Indicative pre-money valuation
+        \pounds4\,M $\Rightarrow$ 20\% equity round.
+  \item \textbf{Series~A, \seriesARound at Q4-Y2 / Q1-Y3.} Used
+        for the second-vehicle build, Y3--Y4 headcount additions
+        (BD/Sales, second test engineer), and a further $\sim$18
+        months of runway. Indicative pre-money valuation
+        \pounds6\,M $\Rightarrow$ 20\% equity round.
+\end{tightitemize}
+
+\noindent The \textbf{Series~A trigger is revenue-based, not
+runway-based}: $\geq$\pounds400\,k ARR and $\geq$ 2 retainer
+customers. Missing the trigger implies a bridge round from seed
+investors rather than a Series~A at a compressed valuation; the
+seed term sheet should pre-authorise this bridge.
+
+\medskip
+
+\noindent \textbf{Unit economics.} Using an average customer of
+$\sim$8 test days/year at a blended day-rate of \pounds7.5\,k,
+three-year average relationship, and 70\% revenue-weighted gross
+margin:
+
+\begin{equation}
+\mathrm{LTV} = (8 \times 7{,}500) \times 3 \times 0.70 = \ltv,
+\qquad
+\frac{\mathrm{LTV}}{\mathrm{CAC}} = \ltvCac,
+\qquad
+\mathrm{Payback} = \paybackMonths \text{ months}.
+\end{equation}
+
+Both metrics clear standard B2B-services investability
+thresholds~\cite{gompers2020} by a wide margin; a doubling of CAC
+still clears the 3$\times$ LTV/CAC rule.
+
+% ---------------------------------------------------------------------
+\section{Valuation (comparable multiples)}
+\label{sec:valuation}
+% ---------------------------------------------------------------------
+
+Indicative Y5 valuation uses listed-peer EV/Revenue multiples,
+benchmarked against AB~Dynamics (LSE:~ABDP), Spirent Communications
+(LSE:~SPT), and AVL~List~\cite{abdynamics_ar2024,avl_profile}.
+
+\input{tables/valuation.tex}
+
+At the peer-group median of $2.5\times$ Y5 revenue, the indicative
+Y5 enterprise value is \terminalValue; the AB~Dynamics multiple
+(3.5$\times$) yields \pounds7.3\,M. This range bracketed the
+terminal-value assumption used in the NPV analysis
+(Section~\ref{sec:npv}); the NPV conclusion is robust within this
+band but sensitive to a compression below the peer-group floor
+(AVL at 1.8$\times$).
+
+% ---------------------------------------------------------------------
+\section{Financial KPIs}
+\label{sec:kpi}
+% ---------------------------------------------------------------------
+
+Eight financial KPIs are tracked monthly (Table~\ref{tab:kpi}).
+The first six are operational and map directly to drivers in the
+financial model; the last two -- \emph{incident-free test days}
+and \emph{unplanned fleet downtime} -- are the
+execution-level signals that protect the financial plan's
+downside case described in Chapter~\ref{ch:risk_fin}.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Financial KPI dashboard. Red-amber-green thresholds are
+  set against the base-case financial plan; a red reading on any
+  one triggers a board-level review.}
+\label{tab:kpi}
+\begin{tabularx}{\textwidth}{lXl}
+\toprule
+\textbf{KPI} & \textbf{Definition} & \textbf{Source} \\
+\midrule
+Revenue (monthly) & Invoiced revenue, accrual basis & Accounting system \\
+Blended day-rate & Revenue / test days sold & Accounting \\
+Test-days sold & Billable fleet days in month & CRM / ops \\
+Gross margin & (Revenue $-$ variable cost) / revenue & Accounting \\
+Fixed-opex burn & Monthly fixed-opex spend & Accounting \\
+Cash runway & Cash balance / monthly burn & Finance \\
+Incident-free test days & Consecutive test days without reportable incident & Safety log \\
+Unplanned downtime & Lost test days / planned test days & Maintenance log \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% =====================================================================
+\chapter{Conclusions and Recommendations}
+\label{ch:concl}
+% =====================================================================
+
+The AEB~Rabbit TaaS business clears standard capital-budgeting
+thresholds in the base case: project NPV of \npvBase at a 20\%
+VC-central discount rate, IRR of \irr, and break-even in
+\breakEvenYear at \breakEvenDays test days/year. The financial
+structure is typical of a capex-inverted services build-out -- loss
+through Y3, cash-thin at the Y2/Y3 boundary, and NPV dominated by
+the present value of the Y5 exit. Six recommendations follow, each
+paired with the Y1 financial action it drives.
+
+\begin{tightenumerate}
+  \item \textbf{Raise \seedRound at incorporation and
+        \seriesARound in Q4-Y2 / Q1-Y3.} Series~A trigger is
+        revenue-based ($>$\pounds400\,k ARR, two retainer customers),
+        not runway-based. \emph{Y1 action}: close the seed round on
+        the term sheet; pre-authorise seed bridge.
+  \item \textbf{Invest ahead of the maintenance-protocol budget.}
+        A 10\% systematic downtime costs \pounds390\,k of NPV --
+        an order of magnitude above the baseline maintenance-opex
+        line. \emph{Y1 action}: scope a spare-vehicle strategy
+        and benchmark it against the NPV-protection value, not
+        the accounting opex.
+  \item \textbf{Prioritise pricing discipline over cost discipline
+        in management incentives.} The sensitivity ranking
+        identifies blended day-rate as the highest-leverage
+        financial driver; the commercial team should be
+        compensated on mix-shift to Silver/Gold, not only on
+        volume. \emph{Y1 action}: incentive plan pays on blended
+        day-rate, not bookings.
+  \item \textbf{Gate Y4+ revenue on CAM~Testbed~UK / CCAV /
+        Thatcham acceptance.} The terminal-value assumption
+        (2.5$\times$ Y5 revenue) only holds if the platform is
+        regulator-approved. \emph{Y1 action}: commission the ISO /
+        IEC~17025 gap-analysis and initiate the CAM~Testbed~UK
+        relationship.
+  \item \textbf{Protect the Y2/Y3 cash boundary at all costs.}
+        Only \pounds90\,k of buffer; compound shocks can
+        cascade into a bridge round at a compressed valuation.
+        \emph{Y1 action}: target Series~A close at Q4-Y2, not Y3.
+  \item \textbf{Design the exit from Day 1.} Almost all of the
+        NPV is terminal-value-driven; the operating company is
+        therefore only as investable as the clarity of its
+        trade-sale pathway to AB~Dynamics / AVL / Spirent.
+        \emph{Y1 action}: include exit-readiness KPIs
+        (ISO~17025 accreditation track, data-corpus size,
+        OEM-framework pipeline) in the board pack from Month~1.
+\end{tightenumerate}
+
+\medskip
+
+\noindent The TaaS financial structure is viable and
+defensible. The single biggest threat to financial returns is not
+the external market, the competitors, or the cost base -- it is
+the execution of the maintenance protocol the model assumes.
+Protecting that assumption is both the cheapest and
+highest-leverage financial action the operator can take.
+
+% =====================================================================
+\printbibliography[heading=bibintoc]
+% =====================================================================
+
+\end{document}
