@@ -1,7 +1,418 @@
-\documentclass{article}
+\documentclass[11pt, a4paper]{report}
+\usepackage{../../styling}
+
+\usepackage{tabularx}
+\usepackage{array}
+
+\numberwithin{equation}{section}
+
+\addbibresource{references.bib}
+
+\title{Tracey - EEM Report}
+\author{Toby McConnell}
+\date{\today}
 
 \begin{document}
 
-Hello World!
+\pagenumbering{gobble}
+
+\maketitle
+
+\newpage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\chapter{Market Analysis}
+
+\section{Introduction and Executive Summary}
+
+The business proposed in the following paper is based around adapting the Formula Student car that has been designed for the sprint event into a high-performance modified testing vehicle developed as a multi-purpose platform for advanced brake testing and autonomous vehicle validation in a business-to-business context. This section introduces the value proposition and applies a market segmentation framework to analyse potential markets for the product, ultimately justifying a focus on advanced autonomous vehicle testing. It then identifies appropriate entry points and target customers using competitive landscape analysis, personas, and user journey mapping.
+
+\section{Product Overview and Value Proposition}
+
+The proposed offering is a platform-based testing service utilizing a modified high-performance vehicle to deliver high-speed braking validation with an adaptable testing architecture.
+
+LIST ASSUMPTIONS AND WHAT WE WILL HAVE TO ADD TO PRODUCT
+
+Unlike traditional brake dynamometers or fixed proving grounds, the service provides real-world dynamic testing under controlled, repeatable conditions, bridging the gap between software simulation and physical reality.
+
+The core value proposition is structured around three primary customer benefits:
+
+\begin{itemize}
+\item \textbf{High-speed repeatability} -- The service enables consistent braking tests due to the supercapacitor power supply and can operate under extreme conditions enabled by tyre and chassis design. This improves validation accuracy and reduces uncertainty in performance evaluation.
+
+\item \textbf{Adaptable testing architecture} -- Modular configuration allows clients to simulate different braking conditions and edge cases without the overhead of large-scale facility changes.
+
+\item \textbf{Real-world scenario simulation} -- Physical testing reduces reliance on software-only validation and helps close the simulation-to-reality gap in autonomous systems development. These tests provide a more accurate representation of real-world decision-making, braking, and crash scenarios, which simulations cannot fully replicate. This makes the service particularly valuable for final-stage vehicle validation.
+\end{itemize}
+
+Additional value is created through cost efficiency, as clients avoid the capital expenditure and operational burden associated with maintaining dedicated proving-ground infrastructure, instead accessing testing capabilities on demand. Faster testing turnaround also supports shorter development timelines, which is particularly valuable in innovation-driven markets such as electric and autonomous vehicles.
+
+The service therefore acts as both a pain reliever and a gain creator. It relieves the industry-wide pains of slow testing cycles, limited facility flexibility, and high infrastructure costs. Simultaneously, it creates gains through improved safety validation confidence, accelerated development timelines, and enhanced competitive differentiation for the client. These benefits form the foundation for the segmentation strategy developed in subsequent sections. Our goal is for this value to be delivered through a service-based model, allowing clients to access advanced testing capabilities without the ongoing maintenance or capital requirements associated with in-house facilities. This positioning underpins the market segmentation analysis and informs the identification of the most suitable target customers.
+
+\section{Market Segmentation Strategy Overview}
+
+Market segmentation is essential for identifying groups of customers who seek similar benefits and features from a product. Rather than treating the market as homogeneous, segmentation enables organisations to tailor value propositions and targeting strategies to distinct user needs. A strong segmentation should be mutually exclusive, collectively exhaustive and align with the product’s core value proposition.
+
+In this project, demographic segmentation is not appropriate due to the business-to-business nature of the proposed testing platform targeting at organisations rather than individuals, meaning factors such as age or gender provide limited strategic insight. Instead, a hybrid segmentation approach is adopted, combining user-based segmentation with benefits-based segmentation and occasion-based segmentation. This allows identification of both the types of organisations using the product and the specific outcomes they seek. 
+
+\begin{itemize}
+    \item \textbf{User-based segmentation:} Categorizes customers by their role within the automotive ecosystem. This includes regulatory agencies, Original Equipment Manufacturers (OEMs), EV startups, and autonomous technology firms. For example, regulatory bodies prioritize certification reliability, whereas AI validation teams require rapid iteration and flexibility.
+    
+    \item \textbf{Benefits-based segmentation:} This focuses on the value delivered by the platform. Key benefits include high-speed repeatability, real-world testing conditions, adaptability of test scenarios, and cost efficiency relative to large proving grounds. These benefits do not hold equal importance across all user groups, helping identify customers most aligned with the product’s capabilities.
+    
+    \item \textbf{Occasion-based segmentation:} Testing needs vary depending on context, such as regulatory certification, early-stage research and development, or edge-case AI validation. Each occasion places different emphasis on flexibility, repeatability, and testing speed.
+\end{itemize}
+
+Combining these approaches enables a structured segmentation strategy. This hybrid framework ensures that segments are defined both by who uses the product and by why they value it. This segmentation analysis forms the basis for comparing the government brake testing market with the AI and autonomous vehicle validation market in the following section and, to consoldate this approach, in section \ref{sec:personas} personas will be developed to represent typical users and their testing requirements.
+
+\section{Market Option 1: Government Brake Testing Market}
+
+\subsection{Market Overview and Size Estimation} 
+
+The government brake testing market includes organisations responsible for validating vehicle braking performance against safety standards. This market spans multiple stages, each relying on established methods designed to prioritise repeatability and regulatory acceptance:
+
+\begin{itemize}
+    \item \textbf{Manufacturer pre-certification testing:} Automotive manufacturers typically conduct in--house braking validation before certification using track--based testing, dynamometers, and simulation tools such as finite element modelling (FEM). These simulations allow engineers to model braking behaviour and reduce the number of physical tests required. Companies such as Ansys and MSC Software provide braking and vehicle dynamics simulation tools widely used during development. Increasing simulation capability reduces demand for new physical braking platforms.
+    
+    \item \textbf{Government-regulated certification testing:} Certification bodies, like the Driver and Vehicle Standards Agency (DVSA) in the UK, use standardised equipment such as roller brake testers and calibrated decelerometers to measure braking performance. Roller brake testers measure wheel braking force using rotating rollers, while decelerometers record vehicle deceleration during controlled stops. Equipment suppliers such as MAHA Maschinenbau Haldenwang and Bosch Automotive Service Solutions provide certified systems used by testing facilities.
+    
+    \item \textbf{Periodic roadworthiness inspection (e.g. MOT testing):} These tests typically use compact roller brake testers or portable decelerometers rather than track-based testing. Suppliers such as Tecalemit Garage Equipment and Capelec provide brake testing hardware commonly used in inspection centres. These low-speed, standardised tests offer limited alignment with a high-speed dynamic platform.
+\end{itemize}
+
+To estimate the size of this market we use a top-down estimation approach. The global brake tester market is estimated at approximately {\href{https://www.promarketreports.com/reports/brake-tester-232522}{\$1.5 billion}}. These three applications collectively represent a significant proportion of brake testing demand. As the majority of brake testing equipment is used in manufacturer validation, certification testing, and periodic inspection, this segment is estimated to account for $\sim$40\% of the total brake testing market. Therefore:
+
+\begin{equation}
+\begin{aligned}
+\text{Gov. Brake Testing Market} &= 1.5 \times 0.40 \\
+&= 0.60 \text{ billion USD}
+\end{aligned}
+\end{equation}
+
+This yields an estimated addressable market of approximately \$600 million globally.
+
+\subsection{Market Segmentation}
+
+User-based segmentation identifies regulatory agencies, certification laboratories, and vehicle inspection operators as primary customers. These organisations operate within structured compliance environments and rely on validated testing infrastructure.
+Benefits-based segmentation shows that customers prioritise reliability, regulatory acceptance, and traceability of results. Flexibility and rapid iteration are less important, creating partial misalignment with the proposed platform’s adaptable testing capability.
+Occasion-based segmentation further highlights that testing typically occurs during certification approval or periodic compliance checks. These occasions require standardised procedures rather than exploratory testing, reducing demand for configurable testing scenarios.
+Together, these segmentation perspectives indicate limited alignment between the market’s priorities and the platform’s core value proposition.
+
+\subsection{Commercial Challenges}
+
+Despite technical relevance, this market presents significant commercial challenges. Entry barriers are high due to certification requirements and the need to demonstrate equivalence with established testing methods. Procurement cycles are typically long, involving formal tender processes and extended evaluation periods.
+Segmentation analysis also highlights limited product–market fit. Regulatory organisations prioritise consistency and risk minimisation, while a lot of the platform’s main advantages lie in flexibility and adaptability. These benefits are less valuable in standardised compliance testing environments.
+Additionally, scalability is limited. The number of potential customers is small, and adoption may require customisation and compliance validation as well as the fact regulations are different for different countries which could add challenges to scaling internationally. These factors increases cost and slows market entry.
+Overall, although the government brake testing market aligns functionally with braking validation, high barriers, slow adoption, and limited scalability make it commercially challenging for an early-stage product.
+
+\section{Market Option 2: AI and Autonomous Vehicle Testing Market}
+
+\subsection{Market Overview and Size Estimation}
+
+The AI and autonomous vehicle testing market consists of automotive manufacturers, electric vehicle startups, and technology firms developing automated driving systems that require validation in complex real-world scenarios. As investment in automated driving has increased, organisations have placed greater emphasis on testing environments capable of validating decision-making, perception systems, and emergency braking behaviour.
+
+The autonomous vehicle testing market can be estimated using a top-down approach.
+The global autonomous vehicle market is valued at {\href{https://www.grandviewresearch.com/industry-analysis/autonomous-vehicles-market}{$\sim$ \$68.09 billion}}. Automotive manufacturers typically allocate approximately {\href{https://kene.partners/insights/how-to-know-your-r-d-spend-is-appropriate}{5–10\%}} of revenue to research and development, with higher values observed in innovation-intensive areas such as autonomous driving. A value of 10\% is therefore assumed:
+
+\begin{equation}
+\begin{aligned}
+\text{R\&D Budget} &= 68.09 \times 0.10 \\
+&= 6.81 \text{ billion USD}
+\end{aligned}
+\end{equation}
+
+Testing and validation activities often account for {\href{https://www.mckinsey.com/~/media/McKinsey/Business%20Functions/Operations/Our%20Insights/Testing%20and%20validation%20From%20hardware%20focus%20to%20full%20virtualization/c0b944bf6469c86cd9ba6d87f078424f.pdf}{$\sim$  20–30\%}} of development effort in safety-critical automotive systems. Using a midpoint value of 25\%, the addressable testing market can be estimated.
+
+\begin{equation}
+\begin{aligned}
+\text{Testing Market} &= 6.81 \times 0.25 \\
+&= 1.70 \text{ billion USD}
+\end{aligned}
+\end{equation}
+
+Therefore, the autonomous vehicle testing market is estimated at approximately \$1.5--2 billion globally and is projected to grow at a compound annual growth rate (CAGR) of {\href{https://www.grandviewresearch.com/industry-analysis/autonomous-vehicles-market}{19.9\%} from 2025 to 2030. 
+
+%\begin{table}[h]
+%\centering
+%\caption{Market Size Comparison}
+%\begin{tabular}{|l|c|c|c|}
+%\hline
+%\textbf{Market} & \textbf{Estimated Size} & \textbf{Growth Rate} & \textbf{Attractiveness} \\
+%\hline
+%Government Brake Testing & \$0.5--0.7B & Low & Limited scalability \\
+%\hline
+%AI \& Autonomous Testing & \$1.5--2B & High & Strong growth potential \\
+%\hline
+%end{tabular}
+%\label{tab:market_comparison}
+%\end{table}
+
+\subsection{Market Segmentation}
+
+User-based segmentation identifies autonomous vehicle R\&D teams, EV startups, and automotive innovation divisions as primary customers. These organisations are actively developing automated driving systems and require frequent testing during development. Compared with regulatory bodies, they typically have faster decision-making processes and a greater willingness to adopt new testing technologies.
+Benefits-based segmentation highlights that customers prioritise flexibility, rapid iteration, and real-world validation. Autonomous systems must be tested across a wide range of edge cases, including emergency braking scenarios. These requirements align closely with a platform capable of repeatable high-speed testing and configurable conditions.
+Occasion-based segmentation further reinforces this alignment. Testing occurs during algorithm validation, edge-case scenario development, and system integration phases. These occasions require adaptable testing environments that complement simulation-based workflows. A platform that enables repeatable physical testing under configurable conditions directly supports these activities.
+Overall, segmentation analysis indicates strong alignment between this market’s priorities and the platform’s core value proposition. Further analysis in the following sections will also evaluate the strategic fit and competitive positioning within this segment.
+
+\section{Competitive Landscape Analysis}
+
+\subsection{Macro Analysis: Porter's 5 Forces}
+
+The following analysis applies Porter’s Five Forces framework to evaluate the macro-level industry pressures influencing the proposed platform.
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth}{|p{3.5cm}|p{1.7cm}|X|}
+\hline
+\textbf{Force} & \textbf{Strength} & \textbf{Analysis} \\
+\hline
+Threat of New Entrants & Low--Moderate & High capital requirements, specialised engineering expertise, and the need for industry credibility and safety validation limit new entrants. However, the nascent nature of the market reduces accumulated experience, creating some opportunity for new players. \\
+\hline
+Bargaining Power of Suppliers & Moderate & Some high-performance components (e.g. sensors, braking systems) are specialised, increasing dependency, though broader automotive supply chains provide alternative sourcing options. \\
+\hline
+Bargaining Power of Buyers & High & OEMs and technology firms possess significant resources and access to alternative testing methods, increasing price sensitivity. Buyer power is further reinforced by regulatory stakeholders and testbed operators, who influence which testing approaches are accepted. \\
+\hline
+Threat of Substitutes & High & Alternative testing methods, including simulation, proving grounds, and dynamometer testing, act as substitutes by offering cost or flexibility advantages, although often with reduced physical realism. \\
+\hline
+Competitive Rivalry & Moderate & Competition is driven by a mix of testing providers, consultancies, and in-house capabilities. While few direct equivalents exist, indirect competition is strong, requiring clear differentiation in service offering. \\
+\hline
+\end{tabularx}
+\caption{Porter’s Five Forces analysis of the advanced vehicle testing industry}
+\end{table}
+
+The analysis indicates that high buyer power and the threat of substitutes—primarily software-based simulation—represent the most significant commercial hurdles. To mitigate these pressures, the platform must transition from a standard equipment vendor to an integrated validation partner. By providing "ground-truth" physical data that digital environments cannot fully replicate, the service reduces the efficacy of substitutes and establishes a specialized competitive niche. Furthermore, as the autonomous vehicle testing market remains nascent, few firms have accumulated significant long-term operational experience. This limits the extent of established best practices, creating a distinct opportunity for new entrants to shape emerging standards.
+
+\subsection{Micro Analysis: Direct Competitors}
+
+Having established the broader industry dynamics at a macro level, the analysis now turns to the micro-level competitive landscape, focusing on key direct competitors operating within this space. Direct competitors include traditional brake dynamometers, automotive proving grounds, and dedicated testing facilities. 
+%Brake dynamometers provide controlled laboratory testing but lack real-world dynamic conditions. Proving grounds offer high realism but are costly and difficult to adapt to new scenarios. Automotive testing facilities often provide specialised infrastructure but may require significant scheduling and operational costs.
+
+\begin{table}[h]
+\centering
+\label{tab:direct_competitors}
+\footnotesize
+\singlespacing
+\begin{tabularx}{\textwidth}{|p{2.8cm}|p{3.2cm}|X|}
+\hline
+\textbf{Competitor} & \textbf{Solution Type} & \textbf{Competitive Implication} \\
+\hline
+AB Dynamics & Driving robots and ADAS test platforms & Provides highly repeatable automated vehicle control for braking and ADAS scenarios, but typically operates within controlled speeds and requires supporting infrastructure. \\
+\hline
+4activeSystems & Soft crash targets and pedestrian dummies & Enables realistic safety and braking validation scenarios but does not provide full vehicle dynamic testing capability. \\
+\hline
+Humanetics & Anthropomorphic test devices and robotics & Industry standard safety validation tools focused on component-level testing rather than full dynamic vehicle performance. \\
+\hline
+UTAC & Full-scale proving ground facilitys & Offers high realism testing but is expensive and difficult to reconfigure quickly, limiting iteration speed. \\
+\hline
+HORIBA & Brake dynamometers & Provides controlled laboratory testing but lacks real-world high-speed vehicle dynamics. \\
+\hline
+AVL List & Vehicle testing and dynamometer systems & Established engineering validation systems with strong credibility but limited flexibility for rapid scenario adaptation. \\
+\hline
+\end{tabularx}
+\caption{Direct Competitors in Physical Vehicle Testing}
+\end{table}
+
+%These solutions typically involve trade-offs between realism, flexibility, and cost. As a result, none fully addresses the need for adaptable high-speed testing environments.
+
+\subsection{Micro Analysis: Indirect Competitors}
+
+Indirect competitors include software-based simulation platforms and in-house OEM testing systems. 
+%Simulation tools offer high flexibility and low marginal cost but cannot fully replicate physical braking dynamics. In-house testing rigs provide tailored solutions but require substantial investment and may lack adaptability across different testing scenarios.
+
+\begin{table}[h]
+\centering
+\label{tab:indirect_competitors}
+\footnotesize
+\singlespacing
+\begin{tabularx}{\textwidth}{|p{2.8cm}|p{3.2cm}|X|}
+\hline
+\textbf{Competitor Type} & \textbf{Example Providers} & \textbf{Competitive Implication} \\
+\hline
+Software Simulation Platforms & NVIDIA, dSPACE & Provide flexible virtual testing environments allowing rapid iteration but lack physical realism for braking dynamics validation. \\
+\hline
+Physics-based Simulation & Ansys & Enables digital twin modelling and early-stage validation but cannot capture full real-world vehicle behaviour. \\
+\hline
+In-house OEM Testing Rigs & Tesla, Toyota & Tailored testing infrastructure with strong integration but requires high capital investment and limited flexibility. \\
+\hline
+Contract Proving Ground Services & Applus IDIADA, UTAC & High realism physical testing but expensive and constrained by scheduling limitations. \\
+\hline
+\end{tabularx}
+\caption{Indirect Competitors in Autonomous Vehicle Validation}
+\end{table}
+
+These indirect competitors highlight the broader validation ecosystem, where organisations combine multiple tools to achieve comprehensive testing. The proposed platform aims to complement rather than replace these solutions by providing a hybrid physical testing capability.
+
+\section{Strategic Positioning}
+
+To visualise the competitive landscape, a market segmentation map can be constructed based on two key dimensions: testing realism and scenario flexibility. This map (Figure \ref{fig:segmentation_map})helps identify where different solutions are positioned and where gaps exist in the market.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/graph2.png}
+    \caption{Market Segmentation Map for Autonomous Vehicle Validation Solutions}
+    \label{fig:segmentation_map}
+\end{figure}
+
+This highlights a gap in the upper-right region where both attributes are high. Proving ground facilities (e.g. UTAC) occupy the high-realism but low-flexibility quadrant, while simulation platforms (e.g. NVIDIA) provide high flexibility but limited physical fidelity. Laboratory dynamometer systems typically fall in the low-flexibility, moderate-realism region.
+Our proposed product is positioned within this high-realism, high-flexibility gap and therefore occupies a useful gap in the market. 
+
+There are some close competitors such as AB Dynamics and 4activeSystems, but these solutions typically focus on specific testing scenarios or require supporting infrastructure, whereas our product offers a more generalised and adaptable testing environment. -HOW?
+
+PAUL : Crucially, the platform must also be positioned not only as a testing solution for manufacturers, but as an integrated validation tool that aligns with the requirements of regulatory bodies and testbed operators. Acceptance by these stakeholders is essential for market access, as they effectively act as gatekeepers to industry adoption.
+
+\section{Target Market Selection}
+
+Following the strategic positioning analysis, a clear target market must be defined. The segmentation map identified the strongest alignment within the AI and autonomous vehicle validation space, where organisations prioritise flexible, high-realism testing environments. Within this broader market, further distinction is required to determine which customer groups offer the most suitable entry opportunities.
+
+Three primary customer groups are considered which each differ in procurement complexity, risk tolerance, infrastructure ownership, and testing requirements.
+
+\subsection{Large Automotive OEMs}
+
+Established automotive manufacturers developing autonomous driving capabilities, such as BMW, Toyota, Volkswagen Group, and Ford, represent a significant potential customer group. These organisations typically operate large R\&D divisions and already maintain extensive validation infrastructure. They tend to prioritise reliability, integration with existing workflows, and long-term supplier relationships, particularly where testing data must fit into established validation pipelines.
+
+However, procurement processes within large OEMs are often complex and involve multiple stakeholders. This can lead to long adoption timelines and higher barriers for new technologies. These organisations are also generally risk-averse and prefer proven suppliers.
+
+\subsection{Electric Vehicle Startups}
+
+Electric vehicle (EV) startups, like Rivian, Lucid Motors, NIO, and Polestar, operate with smaller teams and shorter development cycles. These organisations often prioritise rapid iteration, flexibility and cost efficiency and are more willing to adopt novel testing solutions that provide competitive advantage. 
+
+Also, unlike established OEMs they lack extensive in-house testing infrastructure, increasing reliance on external validation platforms. Decision-making processes are also typically faster, allowing pilot projects and early adoption.
+
+It is important to note that startups may have more constrained budgets, limiting large-scale deployment but they still offer strong opportunities for early validation, data generation, and demonstration of capability.
+
+\subsection{Independent AI Technology Firms}
+
+Companies focused on autonomous driving software development like Waymo, Cruise and Mobileye are another possible segment. Unlike automotive manufacturers, these firms often do not own physical testing infrastructure. This increases reliance on external testing platforms that bridge simulation and real-world validation.
+
+Like the EV startups these organisations are typically innovation-driven and more willing to trial new technologies. Procurement processes are generally simpler than those of large OEMs, enabling faster engagement. However our product is specialised for autonomous vehicle testing and so might not be ideal for a company with a broad range of tests in mind and potentail customers will have to be carefully selected. - EXAMPLE?
+
+\subsection{Targeting Strategy}
+
+Comparing these segments highlights differences in adoption speed, revenue potential, and strategic value. EV startups offer the fastest entry opportunities due to their flexibility and need for external testing solutions, and are well positioned as early adopters, as they are typically more willing to engage with emerging technologies and tolerate early-stage limitations in exchange for potential competitive advantage. Independent AI technology firms should be considered a secondary entry-level customer group; while their priorities align with the platform’s strengths, the product does not fully match broader AI testing requirements. Despite slower adoption, OEMs represent high-value long-term customers. If the platform is successfully integrated into early segments and credibility is established, OEMs should then be targeted for long-term contracts.
+
+Based on this analysis, a phased targeting strategy is appropriate. Initial focus should be placed on EV startups and some specific AI technology firms to generate validation data, refine the platform, and establish market credibility. This early adoption can then support engagement with large OEMs as long-term strategic customers. This approach balances rapid entry with scalable growth. SEE OTHER PERSON
+
+\subsection{Servicable Obtainable Market (SOM) Estimation}
+
+Having established a phased targeting strategy, the market opportunity can be refined further by estimating the serviceable available market (SAM) and serviceable obtainable market (SOM).
+
+Not all testing activities require high-performance physical validation. Assuming that approximately 30\% of testing demand involves complex, high-speed, or safety-critical scenarios aligned with the proposed platform’s capabilities, the SAM can be estimated as:
+
+\begin{equation}
+\begin{aligned}
+\text{Serviceable Available Market (SAM)} &= 1.70 \times 0.30 \\
+&= 0.51 \text{ billion USD}
+\end{aligned}
+\end{equation}
+
+As an early-stage entrant targeting a niche segment of the market, a conservative penetration rate is assumed. Taking 5\% of the SAM as a realistic short- to medium-term capture, the SOM is estimated as:
+
+\begin{equation}
+\begin{aligned}
+\text{Serviceable Obtainable Market (SOM)} &= 0.51 \times 0.05 \\
+&= 0.026 \text{ billion USD}
+\end{aligned}
+\end{equation}
+
+This represents a realistic initial revenue opportunity, reflecting both the focused targeting strategy and the constraints associated with entering a nascent and rapidly evolving market.
+
+\section{Personas and User Journey}
+\label{sec:personas}
+
+To help humanize the market segments and guide product development, three personas have been developed. These represent the specific behaviors, motivations, and pain points of key stakeholders, grounding the platform's value proposition in the practical requirements of vehicle validation:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/persona1.png}
+    %\caption{Market Segmentation Map for Autonomous Vehicle Validation Solutions}
+    \label{fig:persona1}
+\end{figure}
+\vspace{-1cm}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/persona2.png}
+    %\caption{Market Segmentation Map for Autonomous Vehicle Validation Solutions}
+    \label{fig:persona2}
+\end{figure}
+
+These personas highlight different priorities across stakeholders and support user-centred design decisions. They also reinforce the segmentation analysis by demonstrating how value proposition elements align with specific customer needs.
+
+Integrating the commercial targets identified in Section \ref{sec:personas} with the broader stakeholder ecosystem analyzed in Section 2 REFERENCE, the following journey mapping highlights how the product navigates both market adoption and regulatory validation. It helps identify pain points, decision stages, and opportunities for value creation. The user journey for the platform adoption process is structured as follows:
+
+\begin{table}[h!]
+\centering
+\caption{User Journey}
+\label{tab:user_journey}
+\begin{tabularx}{\textwidth}{|l|X|l|}
+\hline
+\textbf{Phase} & \textbf{Action} & \textbf{Primary Stakeholder} \\ \hline
+\textbf{Discovery} & Identifies simulation gaps in emergency braking and edge-case scenarios. & Kelly (Engineer) \\ \hline
+\textbf{Evaluation} & Conducts cost-benefit analysis vs. traditional proving-ground infrastructure. & Daniel (Procurement) \\ \hline
+\textbf{Integration} & Technical synchronization of AI software with the platform's modular hardware. & Kelly \& Ops Team \\ \hline
+\textbf{Execution} & High-speed repeatable braking tests conducted within secure, state-backed track environments. & Kelly \& Testbed Ops Director \\ \hline
+\textbf{Expansion} & Integration of validation data into official safety and regulatory certifications. & Independent Liability Assessor \\ \hline
+\end{tabularx}
+\end{table}
+
+\section{Role of Users in Development}
+
+DISCUSS WHOLE SECTION WITH TEAM!!!!!
+
+Understanding how target customers influence product development is important when entering a market where testing workflows, integration requirements, and validation priorities differ across organisations. During early development, it makes most sense to use a user-based approach. At this stage, users act as informants, providing insights into testing challenges and validation requirements. Interviews with engineers, safety specialists, and validation teams can help identify key needs such as repeatability, data integration, and scenario flexibility. This stage will ensure the product evolves to best meet the customer businesses needs
+
+As the product evolves, a co-design approach could be adopted. In this phase, users actively contribute to shaping testing features and interface requirements. For example, validation engineers may suggest specific braking scenarios or data outputs required for AI model verification. This collaborative approach ensures that the platform aligns closely with real-world workflows.
+
+In later stages, elements of user-led design may emerge. Organisations may develop their own testing scenarios using the platform, effectively instigating new applications. This level of participation increases adoption and encourages innovation beyond the initial concept.
+
+However, reliance on user input also has limitations. Users may focus on incremental improvements rather than transformative solutions. Over-reliance on current user needs risks constraining innovation. Therefore, user participation should be balanced with strategic foresight to ensure the platform addresses both current and emerging validation challenges. 
+
+DISCUSS WITH TEAM
+
+\section{Intellectual Property and Barriers to Entry}
+
+Intellectual property plays a role in protecting the commercial value of the proposed testing platform, although broad patent protection may be difficult. The core concept combines existing elements, such as a high-performance vehicle, modular testing configuration, and data acquisition systems, which limits the scope for strong standalone patents. While specific mechanical interfaces or testing architectures may be protectable, competitors could develop alternative implementations.
+
+As a result, competitive advantage is more likely to rely on trade secrets and accumulated testing data. Proprietary scenario configuration methods, control strategies, and performance datasets can be retained internally. Over time, the data generated through repeated high-speed testing may become a valuable asset, improving validation accuracy and creating switching costs for customers.
+
+Additional barriers to entry arise from the specialised engineering integration required and the need for early partnerships with automotive manufacturers. Consequently, IP protection should be viewed as supportive rather than primary, with competitive advantage driven by technical know-how, data, and early market adoption.
+
+\section{Risk Analysis and Strategic Trade-offs}
+
+A range of risks must be considered when assessing the feasibility and commercialisation of the product.
+
+\subsection{Initial Product Development Risk}
+
+When adapting our FS car for integration with the testing platform, modifications will be required to accommodate data acquisition systems, safety redundancies, modular test interfaces, and repeatable control systems. These adaptations could introduce additional engineering complexity and extend development timelines. Furthermore, user-based development may reveal requirements not anticipated during the initial design phase, potentially requiring redesign of key subsystems.
+
+\subsection{Market Risk}
+
+The nascent nature of the market introduces a degree of uncertainty in demand, technology evolution, and regulatory direction. Demand for physical autonomous vehicle validation testing is closely linked to investment trends in automated driving technologies. Furthemore, a reduction in R\&D spending or a slowdown in autonomous vehicle deployment could reduce demand for specialised testing platforms. This risk is particularly relevant given the cyclical nature of investment in emerging technologies.
+
+This risk can be mitigated by targeting multiple customer groups. EV startups and AI technology firms may experience different investment cycles, reducing reliance on a single segment. However, a broader downturn in autonomous vehicle investment would still impact overall demand.
+
+\subsection{Technological Risk}
+
+Advances in software simulation may reduce the need for physical testing, acting as a potential substitute. If simulation tools achieve sufficient realism, the platform’s value proposition may weaken. In this scenario, the platform could focus on scenarios where physical validation remains essential, such as extreme braking conditions, tyre–road interactions, environmental variability, and real--time decision--making under uncertain conditions. However, a reduction in demand may still occur as the overall market for physical validation decreases.
+
+\subsection{Strategy and Operational Risk}
+
+Developing and maintaining a high-performance testing platform requires significant engineering resources, and operational costs may exceed initial estimates. This risk is closely linked to the chosen market entry strategy. Focusing on EV startups enables faster adoption and early validation but may limit short-term revenue due to smaller budgets. Conversely, targeting large OEMs offers higher contract value but involves longer procurement cycles and higher barriers to entry.
+
+The proposed strategy prioritises early adoption among EV startups and selected AI technology firms to generate validation data and establish credibility. This foundation can then support engagement with larger OEMs. However, if the balance is misjudged, risks emerge. Over-reliance on startups may slow revenue growth and place strain on operational resources, while premature focus on OEMs may delay market entry and prolong development without customer validation. Careful sequencing of customer engagement is therefore essential.
+
+\subsection{Regulatory Risk}
+
+Autonomous vehicles operate within a rapidly evolving regulatory environment. Changes in safety certification requirements could affect testing methodologies and validation expectations. If regulatory bodies require specific validation procedures, adaptation may be necessary. Early engagement with industry stakeholders can reduce this risk and may provide a competitive advantage if the platform aligns quickly with emerging standards, positioning it as a preferred testing solution.
+
+\subsection{Competitive Risk}
+
+Competitors may develop alternative hybrid testing solutions that combine physical testing with configurable scenarios. Established testing equipment providers may leverage existing customer relationships and infrastructure to introduce similar offerings. This could reduce differentiation and increase price competition.
+
+To maintain a competitive advantage, the platform must emphasise flexibility and rapid, repeatable testing iterations. Accumulating validation data and continuously refining testing scenarios through user-influenced development can further strengthen differentiation and create barriers to entry.
+
+\section{Conclusion}
+
+blah blah ..
 
 \end{document}

@@ -46,13 +46,13 @@
 
 ### Tire Model: Simple → Pacejka
 
-![Pacejka Comprehensive](figures/pacejka_comprehensive.png)
+![Simple vs Pacejka](figures/simple_vs_pacejka.png)
 
 **What each panel shows:**
-- **Top-left:** Simple vs Pacejka force curves — different shapes and optimal slip points
-- **Top-right:** Pacejka at different loads — force increases but not linearly
-- **Bottom-left:** Load sensitivity — μ decreases as load increases (key improvement)
-- **Bottom-right:** Optimal slip varies with load in Pacejka model
+- **Top-left:** Simple vs Pacejka force curves — both peak at ~12% slip, Pacejka has smoother post-peak drop
+- **Top-right:** Pacejka at different loads — force increases, peaks shift slightly right with load
+- **Bottom-left:** Load sensitivity — μ decreases as load increases (key improvement over simple model)
+- **Bottom-right:** Optimal slip varies mildly with load (~11% at 500N → ~15% at 3500N) vs fixed 12% for simple
 
 **Key insight:** Under hard acceleration, weight transfers to rear → Fz increases → μ decreases. Pacejka captures this diminishing returns effect that the simple model missed.
 
@@ -80,6 +80,66 @@
 
 ---
 
+## Slide 3: Simulation vs Reality — Oxford Brookes Comparison
+
+### Title
+"Why Our Simulation (3.56 s) vs Oxford Brookes (4.28 s)?"
+
+### The Gap
+| Metric | Our Simulation | Oxford Brookes (FS UK 2025) |
+|--------|----------------|------------------------------|
+| **75m Time** | 3.557 s (supercap) | 4.284 s |
+| **Difference** | — | ~0.7 s slower in reality |
+
+### Factors Explaining the Gap
+
+| Factor | Effect | Typical contribution |
+|--------|--------|----------------------|
+| **Reaction + staging** | Green light to first motion | 0.25–0.40 s |
+| **Extra mass** | Driver + fluids (we model car only) | 0.10–0.15 s |
+| **Non-ideal traction** | Wheelspin, cold tires, TC overshoot | 0.10–0.20 s |
+| **Other losses** | Transients, voltage sag, derating | 0.10–0.20 s |
+
+### Simulation Assumptions (Ideal)
+
+- No reaction time — acceleration starts at t = 0
+- Car mass only (180–200 kg) — no driver
+- Perfect traction — optimal slip, no wheelspin
+- Instant torque response — no motor/inverter delay
+
+### Talking Points
+- "Simulation is an ideal, repeatable run — real events include human and environmental factors"
+- "~0.7 s gap is consistent with reaction time, driver mass, and real-world losses"
+- "Oxford Brookes 4.28 s is fastest FS UK 2025 — our sim shows theoretical potential"
+
+---
+
+## Slide 4: Wet Track (Battery vs Supercapacitor)
+
+### Title
+"Wet Track: Battery vs Supercapacitor (same 6-panel layout)"
+
+### Figure
+![Energy Storage Comparison Wet](figures/energy_storage_comparison_wet.png)
+
+### Results (Wet, μ = 0.6)
+
+| Metric | Battery | Supercapacitor |
+|--------|---------|----------------|
+| **75m Time** | 4.843 s | 4.849 s |
+| **Final Velocity** | ~106 km/h | ~106 km/h |
+
+### Implementation
+
+- `surface_mu_scaling` applied to μ_peak in Pacejka model (not final force)
+- Toggle: set `surface_mu_scaling: 0.6` in config for wet (1.0 = dry)
+
+### Talking Points
+- "Same 6-panel layout as dry — Battery vs Supercapacitor under wet conditions"
+- "Wet adds ~1.3 s to 75m run — traction-limited for longer"
+
+---
+
 ## Summary
 
 | Parameter | Battery | Supercapacitor |
@@ -98,8 +158,11 @@
 ### Figure 1: Energy Storage Comparison
 ![Energy Storage Comparison](figures/energy_storage_comparison.png)
 
-### Figure 2: Pacejka Tire Model (Comprehensive)
-![Pacejka Comprehensive](figures/pacejka_comprehensive.png)
+### Figure 2: Simple vs Pacejka Tire Model
+![Simple vs Pacejka](figures/simple_vs_pacejka.png)
 
 ### Figure 3: Gear Ratio vs Time
 ![Gear Ratio Optimization](figures/gear_ratio_optimization.png)
+
+### Figure 4: Battery vs Supercapacitor (Wet)
+![Energy Storage Comparison Wet](figures/energy_storage_comparison_wet.png)

@@ -38,8 +38,10 @@ def calculate_acceleration_score(
     
     score = 0.95 * max_points * ((t_max / t_team - 1) / 0.5) + 0.05 * max_points
     
-    # Ensure score is non-negative
-    return max(0.0, score)
+    # Clamp to [0, max_points]. The formula can exceed max_points when the team
+    # time beats the reference fastest_time; in Formula Student the fastest team
+    # is awarded Pmax, so the score should not exceed it.
+    return max(0.0, min(float(max_points), score))
 
 
 def calculate_tmax(fastest_time: float) -> float:

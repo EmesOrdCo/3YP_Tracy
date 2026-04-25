@@ -94,7 +94,7 @@ def calculate_wheelie_limit_acceleration(
     total_weight = mass * g
     
     # Static front load
-    b = wheelbase - cg_x  # Distance from CG to front axle
+    b = wheelbase - cg_x  # Distance from CG to rear axle (lever arm for front load)
     front_static = total_weight * (b / wheelbase)
     
     # Load transfer formula: ΔFz = (m * a * h_cg) / wheelbase
