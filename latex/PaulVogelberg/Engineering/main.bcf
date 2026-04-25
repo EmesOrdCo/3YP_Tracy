@@ -2361,14 +2361,26 @@
     <bcf:datasource type="file" datatype="bibtex" glob="false">references.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1" intorder="1">linden2011</bcf:citekey>
-    <bcf:citekey order="1" intorder="2">miao2019</bcf:citekey>
-    <bcf:citekey order="1" intorder="3">omar2014</bcf:citekey>
-    <bcf:citekey order="1" intorder="4">unmannedsystems2024</bcf:citekey>
-    <bcf:citekey order="2" intorder="1">linden2011</bcf:citekey>
-    <bcf:citekey order="2" intorder="2">miao2019</bcf:citekey>
-    <bcf:citekey order="2" intorder="3">omar2014</bcf:citekey>
-    <bcf:citekey order="2" intorder="4">unmannedsystems2024</bcf:citekey>
+    <bcf:citekey order="1" intorder="1">kalaiarasi2024tale</bcf:citekey>
+    <bcf:citekey order="2" intorder="1">kalaiarasi2024tale</bcf:citekey>
+    <bcf:citekey order="3" intorder="1">kalaiarasi2024tale</bcf:citekey>
+    <bcf:citekey order="4" intorder="1">sech-c46w-3r0-0600</bcf:citekey>
+    <bcf:citekey order="5" intorder="1">gmcc-c35s-3r0-0600</bcf:citekey>
+    <bcf:citekey order="6" intorder="1">cda-chq-3r0607r-tw</bcf:citekey>
+    <bcf:citekey order="7" intorder="1">batpac2022manual</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">batpac2022manual</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">batpac2022manual</bcf:citekey>
+    <bcf:citekey order="10" intorder="1">sech-c46w-3r0-0600</bcf:citekey>
+    <bcf:citekey order="11" intorder="1">nxp-mc33771-ds</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">stm32-nucleo-f4</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">ti-sn65hvd230-ds</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">eaton-bussmann-170m1759-ds</bcf:citekey>
+    <bcf:citekey order="15" intorder="1">earthx-etx12a-ds</bcf:citekey>
+    <bcf:citekey order="16" intorder="1">nxp-mc33771-ds</bcf:citekey>
+    <bcf:citekey order="17" intorder="1">nxp-mc33664-ds</bcf:citekey>
+    <bcf:citekey order="18" intorder="1">batpac2022manual</bcf:citekey>
+    <bcf:citekey order="19" intorder="1">batpac2022manual</bcf:citekey>
+    <bcf:citekey order="20" intorder="1">epp_multiphysical_battery</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

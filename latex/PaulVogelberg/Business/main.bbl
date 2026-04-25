@@ -16,5 +16,422 @@
   {}
 \endgroup
 
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{zenzic_about}{online}{}
+      \list{organization}{1}{%
+        {Zenzic}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{About Zenzic}
+      \field{year}{2026}
+      \verb{urlraw}
+      \verb https://zenzic.io/about/
+      \endverb
+      \verb{url}
+      \verb https://zenzic.io/about/
+      \endverb
+    \endentry
+    \entry{cracknell_2023}{report}{}
+      \name{author}{1}{}{%
+        {{hash=bc17671480a9f5e0345c6e29907d81f1}{%
+           family={Cracknell},
+           familyi={C\bibinitperiod},
+           given={Mark},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Zenzic}%
+      }
+      \strng{namehash}{bc17671480a9f5e0345c6e29907d81f1}
+      \strng{fullhash}{bc17671480a9f5e0345c6e29907d81f1}
+      \strng{bibnamehash}{bc17671480a9f5e0345c6e29907d81f1}
+      \strng{authorbibnamehash}{bc17671480a9f5e0345c6e29907d81f1}
+      \strng{authornamehash}{bc17671480a9f5e0345c6e29907d81f1}
+      \strng{authorfullhash}{bc17671480a9f5e0345c6e29907d81f1}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The UK CAM Roadmap to 2035 - Executive Summary}
+      \field{year}{2023}
+    \endentry
+    \entry{wef_2021}{report}{}
+      \name{author}{1}{}{%
+        {{hash=9f6d16e0eaf271813481bd46be0c7a35}{%
+           family={{World Economic Forum}},
+           familyi={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{9f6d16e0eaf271813481bd46be0c7a35}
+      \strng{fullhash}{9f6d16e0eaf271813481bd46be0c7a35}
+      \strng{bibnamehash}{9f6d16e0eaf271813481bd46be0c7a35}
+      \strng{authorbibnamehash}{9f6d16e0eaf271813481bd46be0c7a35}
+      \strng{authornamehash}{9f6d16e0eaf271813481bd46be0c7a35}
+      \strng{authorfullhash}{9f6d16e0eaf271813481bd46be0c7a35}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Autonomous Trucks: An Opportunity to Make Road Freight Safer, Cleaner and More Efficient}
+      \field{year}{2021}
+    \endentry
+    \entry{lawcom_avs_2024}{online}{}
+      \list{organization}{1}{%
+        {Law Commission}%
+      }
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labeltitlesource}{title}
+      \field{title}{Automated vehicles}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://lawcom.gov.uk/project/automated-vehicles/
+      \endverb
+      \verb{url}
+      \verb https://lawcom.gov.uk/project/automated-vehicles/
+      \endverb
+    \endentry
+    \entry{pockney_2026}{online}{}
+      \name{author}{1}{}{%
+        {{hash=362978fab7c01666696efa1412b9b403}{%
+           family={Pockney},
+           familyi={P\bibinitperiod},
+           given={Tim},
+           giveni={T\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Zenzic}%
+      }
+      \strng{namehash}{362978fab7c01666696efa1412b9b403}
+      \strng{fullhash}{362978fab7c01666696efa1412b9b403}
+      \strng{bibnamehash}{362978fab7c01666696efa1412b9b403}
+      \strng{authorbibnamehash}{362978fab7c01666696efa1412b9b403}
+      \strng{authornamehash}{362978fab7c01666696efa1412b9b403}
+      \strng{authorfullhash}{362978fab7c01666696efa1412b9b403}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Funding to accelerate UK autonomous vehicle market readiness}
+      \field{year}{2026}
+      \verb{urlraw}
+      \verb https://zenzic.io/news/funding-to-accelerate-uk-autonomous-vehicle-market-readiness/
+      \endverb
+      \verb{url}
+      \verb https://zenzic.io/news/funding-to-accelerate-uk-autonomous-vehicle-market-readiness/
+      \endverb
+    \endentry
+    \entry{chen_2024}{article}{}
+      \name{author}{1}{}{%
+        {{hash=685d97480ebafb5a158e7c3dfdcb69a8}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Li},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{685d97480ebafb5a158e7c3dfdcb69a8}
+      \strng{fullhash}{685d97480ebafb5a158e7c3dfdcb69a8}
+      \strng{bibnamehash}{685d97480ebafb5a158e7c3dfdcb69a8}
+      \strng{authorbibnamehash}{685d97480ebafb5a158e7c3dfdcb69a8}
+      \strng{authornamehash}{685d97480ebafb5a158e7c3dfdcb69a8}
+      \strng{authorfullhash}{685d97480ebafb5a158e7c3dfdcb69a8}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{End-to-end Autonomous Driving: Challenges and Frontiers}
+      \field{year}{2024}
+    \endentry
+    \entry{pas1881}{manual}{}
+      \list{organization}{1}{%
+        {BSI}%
+      }
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labeltitlesource}{title}
+      \field{title}{Safety Management Systems. BSI PAS 1881}
+      \field{year}{2026}
+    \endentry
+    \entry{culham_2024}{report}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{CONNECTED \& AUTONOMOUS VEHICLES - CAV (CULHAM)}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.oxfordshirelep.com/wp-content/uploads/2024/03/connected-and-autonomous-vehicles-testing-facilities-evaluation-report.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.oxfordshirelep.com/wp-content/uploads/2024/03/connected-and-autonomous-vehicles-testing-facilities-evaluation-report.pdf
+      \endverb
+    \endentry
+    \entry{pas1884}{manual}{}
+      \list{organization}{1}{%
+        {BSI}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Requirements for Trained Safety Operators. BSI PAS 1884}
+      \field{year}{2021}
+    \endentry
+    \entry{pas1882}{manual}{}
+      \list{organization}{1}{%
+        {BSI}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Immutable Telemetry \& Data Logging. BSI PAS 1882}
+      \field{year}{2021}
+    \endentry
+    \entry{mitchell_1997}{article}{}
+      \name{author}{3}{}{%
+        {{hash=1c736da6b2a634a847614ad8d98a4d02}{%
+           family={Mitchell},
+           familyi={M\bibinitperiod},
+           given={Ronald\bibnamedelima K.},
+           giveni={R\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=9aada874c4037a657f4889dd2c00d5ca}{%
+           family={Agle},
+           familyi={A\bibinitperiod},
+           given={Bradley\bibnamedelima R.},
+           giveni={B\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=887d561642cf511d705f300fc816d1cf}{%
+           family={Wood},
+           familyi={W\bibinitperiod},
+           given={Donna\bibnamedelima J.},
+           giveni={D\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \strng{namehash}{8990e057f82da84fbd75fbd29551f8a1}
+      \strng{fullhash}{8990e057f82da84fbd75fbd29551f8a1}
+      \strng{bibnamehash}{8990e057f82da84fbd75fbd29551f8a1}
+      \strng{authorbibnamehash}{8990e057f82da84fbd75fbd29551f8a1}
+      \strng{authornamehash}{8990e057f82da84fbd75fbd29551f8a1}
+      \strng{authorfullhash}{8990e057f82da84fbd75fbd29551f8a1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Academy of Management Review}
+      \field{title}{Toward a Theory of Stakeholder Identification and Salience: Defining the Principle of Who and What Really Counts}
+      \field{year}{1997}
+    \endentry
+    \entry{pas1883}{manual}{}
+      \list{organization}{1}{%
+        {BSI}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Operational Design Domains. BSI PAS 1883}
+      \field{year}{2025}
+    \endentry
+    \entry{pas1885}{manual}{}
+      \list{organization}{1}{%
+        {BSI}%
+      }
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{title}{The fundamental principles of automotive cyber security. BSI PAS 1885}
+      \field{year}{2018}
+    \endentry
+    \entry{fassin_2009}{article}{}
+      \name{author}{1}{}{%
+        {{hash=2b4fe31551531becd9856b07a829d2fd}{%
+           family={Fassin},
+           familyi={F\bibinitperiod},
+           given={Yves},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{2b4fe31551531becd9856b07a829d2fd}
+      \strng{fullhash}{2b4fe31551531becd9856b07a829d2fd}
+      \strng{bibnamehash}{2b4fe31551531becd9856b07a829d2fd}
+      \strng{authorbibnamehash}{2b4fe31551531becd9856b07a829d2fd}
+      \strng{authornamehash}{2b4fe31551531becd9856b07a829d2fd}
+      \strng{authorfullhash}{2b4fe31551531becd9856b07a829d2fd}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Business Ethics}
+      \field{title}{The Stakeholder Model Redefined}
+      \field{volume}{84}
+      \field{year}{2009}
+    \endentry
+    \entry{thatcham_2026}{online}{}
+      \list{organization}{1}{%
+        {Thatcham Research}%
+      }
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labeltitlesource}{title}
+      \field{title}{Thatcham Research welcomes assent of Automated Vehicles Bill}
+      \verb{urlraw}
+      \verb https://www.thatcham.org/thatcham-research-welcomes-assent-of-automated-vehicles-bill/#_ftnref4
+      \endverb
+      \verb{url}
+      \verb https://www.thatcham.org/thatcham-research-welcomes-assent-of-automated-vehicles-bill/#_ftnref4
+      \endverb
+    \endentry
+    \entry{lawcom_2022}{report}{}
+      \list{organization}{1}{%
+        {Law Commission}%
+      }
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labeltitlesource}{title}
+      \field{title}{Automated Vehicles: Joint report}
+      \field{year}{2022}
+    \endentry
+    \entry{hawkins_2013}{article}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=d058d3656940925b8b755876a21ac792}{%
+           family={Hawkins},
+           familyi={H\bibinitperiod},
+           given={Troy\bibnamedelima R.},
+           giveni={T\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \strng{namehash}{629d81dd7e681f6020f708a5a888c9fa}
+      \strng{fullhash}{629d81dd7e681f6020f708a5a888c9fa}
+      \strng{bibnamehash}{629d81dd7e681f6020f708a5a888c9fa}
+      \strng{authorbibnamehash}{629d81dd7e681f6020f708a5a888c9fa}
+      \strng{authornamehash}{629d81dd7e681f6020f708a5a888c9fa}
+      \strng{authorfullhash}{629d81dd7e681f6020f708a5a888c9fa}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Industrial Ecology}
+      \field{title}{Comparative Environmental Life Cycle Assessment of Conventional and Electric Vehicles}
+      \field{volume}{17}
+      \field{year}{2013}
+      \field{pages}{53\bibrangedash 64}
+      \range{pages}{12}
+    \endentry
+    \entry{tukker}{article}{}
+      \name{author}{1}{}{%
+        {{hash=d5334eef47c31dab5bef9e0b70ab54de}{%
+           family={Tukker},
+           familyi={T\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{d5334eef47c31dab5bef9e0b70ab54de}
+      \strng{fullhash}{d5334eef47c31dab5bef9e0b70ab54de}
+      \strng{bibnamehash}{d5334eef47c31dab5bef9e0b70ab54de}
+      \strng{authorbibnamehash}{d5334eef47c31dab5bef9e0b70ab54de}
+      \strng{authornamehash}{d5334eef47c31dab5bef9e0b70ab54de}
+      \strng{authorfullhash}{d5334eef47c31dab5bef9e0b70ab54de}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Business Strategy and the Environment}
+      \field{title}{Eight types of product-service system: eight ways to sustainability? Experiences from SusProNet}
+      \field{volume}{13}
+      \field{pages}{246\bibrangedash 260}
+      \range{pages}{15}
+    \endentry
+    \entry{potting_2017}{report}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=8c8611d7c38a71200989cb324aa28617}{%
+           family={Potting},
+           familyi={P\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {PBL Netherlands Environmental Assessment Agency}%
+      }
+      \list{location}{1}{%
+        {The Hague}%
+      }
+      \strng{namehash}{82325ef68ec1f6f6073d369dc2bff245}
+      \strng{fullhash}{82325ef68ec1f6f6073d369dc2bff245}
+      \strng{bibnamehash}{82325ef68ec1f6f6073d369dc2bff245}
+      \strng{authorbibnamehash}{82325ef68ec1f6f6073d369dc2bff245}
+      \strng{authornamehash}{82325ef68ec1f6f6073d369dc2bff245}
+      \strng{authorfullhash}{82325ef68ec1f6f6073d369dc2bff245}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Circular economy: measuring innovation in the product chain}
+      \field{year}{2017}
+    \endentry
+    \entry{morici_2022}{article}{}
+      \name{author}{1}{}{%
+        {{hash=69ab05ca9e0271ee0a9babe9e2cd5994}{%
+           family={Morici},
+           familyi={M\bibinitperiod},
+           given={E.},
+           giveni={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{69ab05ca9e0271ee0a9babe9e2cd5994}
+      \strng{fullhash}{69ab05ca9e0271ee0a9babe9e2cd5994}
+      \strng{bibnamehash}{69ab05ca9e0271ee0a9babe9e2cd5994}
+      \strng{authorbibnamehash}{69ab05ca9e0271ee0a9babe9e2cd5994}
+      \strng{authornamehash}{69ab05ca9e0271ee0a9babe9e2cd5994}
+      \strng{authorfullhash}{69ab05ca9e0271ee0a9babe9e2cd5994}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Recycling of Thermoset Materials and Thermoset-Based Composites: Challenge and Opportunity}
+      \field{year}{2022}
+    \endentry
+    \entry{ramaswamy_2017}{article}{}
+      \name{author}{1}{}{%
+        {{hash=25bfe1f1f7c40c0a4ceb9316fa51df19}{%
+           family={Ramaswamy},
+           familyi={R\bibinitperiod},
+           given={K.},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{25bfe1f1f7c40c0a4ceb9316fa51df19}
+      \strng{fullhash}{25bfe1f1f7c40c0a4ceb9316fa51df19}
+      \strng{bibnamehash}{25bfe1f1f7c40c0a4ceb9316fa51df19}
+      \strng{authorbibnamehash}{25bfe1f1f7c40c0a4ceb9316fa51df19}
+      \strng{authornamehash}{25bfe1f1f7c40c0a4ceb9316fa51df19}
+      \strng{authorfullhash}{25bfe1f1f7c40c0a4ceb9316fa51df19}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Validation of Expanded Polypropylene (EPP) Foam Material Models for Low Speed Bumper and Pedestrian Protection Applications}
+      \field{year}{2017}
+    \endentry
+    \entry{handtke_2024}{thesis}{}
+      \name{author}{1}{}{%
+        {{hash=a975c7a7ee0e71fa4cbe996d4d261720}{%
+           family={Handtke},
+           familyi={H\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{a975c7a7ee0e71fa4cbe996d4d261720}
+      \strng{fullhash}{a975c7a7ee0e71fa4cbe996d4d261720}
+      \strng{bibnamehash}{a975c7a7ee0e71fa4cbe996d4d261720}
+      \strng{authorbibnamehash}{a975c7a7ee0e71fa4cbe996d4d261720}
+      \strng{authornamehash}{a975c7a7ee0e71fa4cbe996d4d261720}
+      \strng{authorfullhash}{a975c7a7ee0e71fa4cbe996d4d261720}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Influence of Two Closed Recycling-Loops on the Mechanical and Material Properties of Expanded Polypropylene Beads}
+      \field{year}{2024}
+    \endentry
+  \enddatalist
+\endrefsection
 \endinput
 
