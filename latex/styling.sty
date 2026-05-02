@@ -96,13 +96,16 @@
 % --- Referencing ---
 % Requirement: Vancouver/Numeric style with square brackets [cite: 79, 82]
 % Requirement: References NOT Bibliography [cite: 77]
-\RequirePackage[style=numeric, sorting=none, backend=biber]{biblatex}
+%\RequirePackage[style=numeric, sorting=none, backend=biber]{biblatex}
 
 % --- Individual Identifiability ---
 % Requirement: Individual contributions must be clearly identifiable [cite: 18]
-\newcommand{\contribution}[1]{\medskip\noindent\textbf{Section Contribution: #1}\par}
+%\newcommand{\contribution}[1]{\medskip\noindent\textbf{Section Contribution: #1}\par}
 
 % Ensure the heading is "References", not "Bibliography"
-\DefineBibliographyStrings{english}{%
-  bibliography = {References},
-}
+%\DefineBibliographyStrings{english}{%
+  %bibliography = {References},
+%}
+
+% Load hyperref last to avoid conflicts
+\RequirePackage{hyperref}
