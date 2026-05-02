@@ -105,6 +105,15 @@ HEADCOUNT_ADDITIONS_COST = {
 
 INFLATION_RATE = 0.03  # applied to fixed opex and variable cost
 
+# --- Y6–Y10 extension (VC horizon; five-year chapter unchanged) ----------
+# Extrapolates sold test-days and pricing after the published Y5 plan.
+# Fleet remains 3 vehicles; no further vehicle capex; no new equity rounds.
+# Sold days Y6–Y10: compound growth (not linear): D[y] = round(D[y-1]*(1+g)).
+Y6_10_UTILISATION_CAGR = 0.12     # annual compound growth on total sold test-days
+Y6_10_BLENDED_RATE_STEP = 200     # £/year on blended day rate
+Y6_10_VARIABLE_COST_STEP = 50     # £/day per year (consumables + inflation)
+MAX_BLENDED_DAY_RATE_Y10 = 12_000  # cap near Gold-tier ceiling
+
 # --- Pricing benchmarks (for pricing-strategy table) -----------------
 PRICING_BENCHMARKS = [
     # (competitor,            typical day-rate £,  positioning)
@@ -161,7 +170,8 @@ def build_capex_schedule() -> pd.DataFrame:
         "Vehicle capex (\\pounds k)":  [FLEET_SIZE[0] * CAPEX_PER_VEHICLE_TOTAL / 1000] +
                                         [(FLEET_SIZE[i] - FLEET_SIZE[i - 1]) * CAPEX_PER_VEHICLE_TOTAL / 1000
                                          for i in range(1, N_YEARS)],
-        "Other setup capex (\\pounds k)": [OFFICE_SETUP_Y1_TOTAL / 1000] + [0] * 4,
+        "Other setup capex (\\pounds k)": [OFFICE_SETUP_Y1_TOTAL / 1000]
+                                        + [0] * (N_YEARS - 1),
         "Total capex (\\pounds k)":    capex / 1000,
     })
 
@@ -438,6 +448,100 @@ def compute_npv_irr(terminal_multiple: float = TERMINAL_EV_REVENUE_MULTIPLE
         "npv_curve_rates":     r_grid.tolist(),
         "npv_curve_k":         npv_curve,
     }
+
+
+def compute_year_10_projection() -> Dict:
+    """Project revenue / EBIT / terminal-style EV at Y10 using extended drivers.
+
+    The Financial Evaluation chapter remains Y1--Y5 only; this block is an
+    optional **10-year lens** for investor narrative. Assumptions:
+
+    * Sold test-day volume compounds annually after Y5:
+      ``D[y] = round(D[y-1] * (1 + Y6_10_UTILISATION_CAGR))``.
+    * Blended day rate rises £200/year (mix uplift + inflation), capped.
+    * Variable cost per day +£50/year.
+    * Fleet size 3 throughout Y6--Y10; **no** additional vehicle capex.
+    * No further equity raises; headcount additions after Y5 are zero
+      (only CPI on the fixed stack).
+
+    Terminal enterprise value at Y10 uses the same peer multiple as Y5
+    NPV (``TERMINAL_EV_REVENUE_MULTIPLE``) applied to **Y10 revenue** —
+    illustrative only; not part of the chapter's five-year NPV.
+    """
+    g = globals()
+    backup = {
+        "UTILISATION_DAYS": list(UTILISATION_DAYS),
+        "BLENDED_DAY_RATE": list(BLENDED_DAY_RATE),
+        "VARIABLE_COST_PER_DAY": list(VARIABLE_COST_PER_DAY),
+        "FLEET_SIZE": list(FLEET_SIZE),
+        "YEARS": list(YEARS),
+        "N_YEARS": N_YEARS,
+        "HEADCOUNT_ADDITIONS_COST": dict(HEADCOUNT_ADDITIONS_COST),
+    }
+
+    util = backup["UTILISATION_DAYS"][:]
+    rate = backup["BLENDED_DAY_RATE"][:]
+    vcd = backup["VARIABLE_COST_PER_DAY"][:]
+    fleet = backup["FLEET_SIZE"][:] + [3, 3, 3, 3, 3]
+
+    for _ in range(5):
+        util.append(int(round(util[-1] * (1 + Y6_10_UTILISATION_CAGR))))
+        nr = rate[-1] + Y6_10_BLENDED_RATE_STEP
+        rate.append(min(nr, MAX_BLENDED_DAY_RATE_Y10))
+        vcd.append(vcd[-1] + Y6_10_VARIABLE_COST_STEP)
+
+    hc = dict(HEADCOUNT_ADDITIONS_COST)
+    for k in range(6, 11):
+        hc[k] = 0
+
+    try:
+        g["UTILISATION_DAYS"] = util
+        g["BLENDED_DAY_RATE"] = rate
+        g["VARIABLE_COST_PER_DAY"] = vcd
+        g["FLEET_SIZE"] = fleet
+        g["YEARS"] = list(range(1, 11))
+        g["N_YEARS"] = 10
+        g["HEADCOUNT_ADDITIONS_COST"] = hc
+
+        pnl = build_pnl()
+        rev_df = build_revenue_schedule()
+
+        y10_rev_k = float(
+            pnl.loc[pnl["Year"] == 10, "Revenue (\\pounds k)"].values[0]
+        )
+        y10_ebit_k = float(
+            pnl.loc[pnl["Year"] == 10, "EBIT (\\pounds k)"].values[0]
+        )
+        y10_net_k = float(
+            pnl.loc[pnl["Year"] == 10, "Net profit (\\pounds k)"].values[0]
+        )
+        terminal_ev_y10_k = y10_rev_k * TERMINAL_EV_REVENUE_MULTIPLE
+        days_y10 = util[-1]
+        rate_y10 = rate[-1]
+        days_per_vehicle_y10 = days_y10 / fleet[-1]
+
+        return {
+            "assumptions_summary": (
+                "Y6–Y10: fleet fixed at 3 vehicles; sold test-days grow "
+                f"compounding {Y6_10_UTILISATION_CAGR:.0%}/yr after Y5; "
+                "blended rate +£200/yr (capped £12k); variable cost/day +£50/yr; "
+                "no new capex or equity; headcount adds only through Y5."
+            ),
+            "y6_10_utilisation_cagr": Y6_10_UTILISATION_CAGR,
+            "year_10_revenue_k": y10_rev_k,
+            "year_10_ebit_k": y10_ebit_k,
+            "year_10_net_profit_k": y10_net_k,
+            "year_10_total_test_days_sold": days_y10,
+            "year_10_blended_day_rate": rate_y10,
+            "year_10_days_per_vehicle": round(days_per_vehicle_y10, 1),
+            "terminal_ev_revenue_multiple": TERMINAL_EV_REVENUE_MULTIPLE,
+            "year_10_terminal_enterprise_value_k": terminal_ev_y10_k,
+            "extended_utilisation_days_y1_y10": util,
+            "extended_blended_day_rate_y1_y10": rate,
+        }
+    finally:
+        for k, v in backup.items():
+            g[k] = v
 
 
 def run_downtime_sensitivity() -> pd.DataFrame:
@@ -965,6 +1069,7 @@ def main() -> None:
     npv       = compute_npv_irr()
     dt_df     = run_downtime_sensitivity()
     inversion = compute_capex_inversion()
+    y10_proj  = compute_year_10_projection()
 
     # LaTeX tables
     write_table_capex(capex_df)
@@ -1020,6 +1125,7 @@ def main() -> None:
         },
         "downtime_sensitivity": dt_df.to_dict(orient="list"),
         "capex_inversion":     inversion,
+        "year_10_projection":  y10_proj,
     }
     (HERE / "financial_model.json").write_text(json.dumps(out, indent=2, default=float))
 
@@ -1044,6 +1150,8 @@ def main() -> None:
     print(f"\n-- NPV at 20%: GBP {npv['npv_at_rate'][0.20]:,.0f}k, "
           f"IRR: {npv['irr']*100:.1f}% --")
     print(f"-- Terminal value at Y5: GBP {npv['terminal_value_k']:,.0f}k --")
+    print(f"-- Y10 (extended horizon): revenue GBP {y10_proj['year_10_revenue_k']:,.0f}k, "
+          f"terminal EV (2.5x rev) GBP {y10_proj['year_10_terminal_enterprise_value_k']:,.0f}k --")
     print(f"-- CAPEX inversion: cumulative revenue overtakes cumulative capex in "
           f"Y{inversion['crossover_year']} --")
     print("\n-- Downtime sensitivity --")

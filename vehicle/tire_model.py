@@ -175,6 +175,29 @@ AVON_FSAE_COEFFICIENTS = PacejkaCoefficients(
 )
 
 
+def longitudinal_slip_ratio(wheel_velocity: float, vehicle_velocity: float) -> float:
+    """Longitudinal slip with a stable reference speed near rest.
+
+    For ``|v_vehicle| >= v_switch`` the denominator is road speed (classic
+    slip). When the vehicle is nearly stationary, the wheel circumferential
+    speed is used instead so tiny RK4 undershoots of velocity (slightly
+    negative ``v``) do not explode slip and excite tyre-force limit cycles at
+    launch.
+    """
+    eps = 0.05
+    v_switch = 1.0
+    if abs(vehicle_velocity) >= v_switch:
+        v_ref = max(abs(vehicle_velocity), eps)
+    else:
+        wv_abs = abs(wheel_velocity)
+        if wv_abs > eps:
+            v_ref = max(wv_abs, eps)
+        else:
+            v_ref = max(abs(vehicle_velocity), eps)
+    slip = (wheel_velocity - vehicle_velocity) / v_ref
+    return float(np.clip(slip, -1.0, 1.0))
+
+
 class PacejkaTireModel:
     """Pacejka Magic Formula tire model for longitudinal forces.
     
@@ -309,15 +332,7 @@ class PacejkaTireModel:
             Slip ratio
         """
         wheel_velocity = wheel_angular_velocity * self.radius
-        
-        if abs(vehicle_velocity) < 0.1:
-            if abs(wheel_velocity) > 0.1:
-                return 1.0 if wheel_velocity > 0 else -1.0
-            else:
-                return 0.0
-        
-        slip = (wheel_velocity - vehicle_velocity) / abs(vehicle_velocity)
-        return np.clip(slip, -1.0, 1.0)
+        return longitudinal_slip_ratio(wheel_velocity, vehicle_velocity)
     
     def get_optimal_slip_ratio(self, normal_force: float = None) -> float:
         """Calculate the slip ratio that produces maximum force.
@@ -447,15 +462,7 @@ class SimpleTireModel:
     ) -> float:
         """Calculate slip ratio from wheel and vehicle velocities."""
         wheel_velocity = wheel_angular_velocity * self.radius
-        
-        if abs(vehicle_velocity) < 0.1:
-            if abs(wheel_velocity) > 0.1:
-                return 1.0 if wheel_velocity > 0 else -1.0
-            else:
-                return 0.0
-        
-        slip = (wheel_velocity - vehicle_velocity) / abs(vehicle_velocity)
-        return np.clip(slip, -1.0, 1.0)
+        return longitudinal_slip_ratio(wheel_velocity, vehicle_velocity)
 
 
 class TireModel:

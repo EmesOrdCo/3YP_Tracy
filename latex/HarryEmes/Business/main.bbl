@@ -106,30 +106,6 @@
       \verb 10.1007/s13243-019-0063-8
       \endverb
     \endentry
-    \entry{emes_engineering}{unpublished}{}{}
-      \name{author}{1}{}{%
-        {{hash=81880f28ee4c657bbd15bb81d6a011bc}{%
-           family={Emes},
-           familyi={E\bibinitperiod},
-           given={Harry},
-           giveni={H\bibinitperiod}}}%
-      }
-      \strng{namehash}{81880f28ee4c657bbd15bb81d6a011bc}
-      \strng{fullhash}{81880f28ee4c657bbd15bb81d6a011bc}
-      \strng{fullhashraw}{81880f28ee4c657bbd15bb81d6a011bc}
-      \strng{bibnamehash}{81880f28ee4c657bbd15bb81d6a011bc}
-      \strng{authorbibnamehash}{81880f28ee4c657bbd15bb81d6a011bc}
-      \strng{authornamehash}{81880f28ee4c657bbd15bb81d6a011bc}
-      \strng{authorfullhash}{81880f28ee4c657bbd15bb81d6a011bc}
-      \strng{authorfullhashraw}{81880f28ee4c657bbd15bb81d6a011bc}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{note}{Oxford 3YP group report, Engineering chapter}
-      \field{title}{Vehicle Dynamics Simulation and Compliance Analysis for the Formula Student Acceleration Event}
-      \field{year}{2026}
-    \endentry
     \entry{pas1882}{misc}{}{}
       \name{author}{1}{}{%
         {{hash=44ea1b356dcd7bfe0ece54601fb6bcec}{%
@@ -145,8 +121,8 @@
       \strng{authorfullhash}{44ea1b356dcd7bfe0ece54601fb6bcec}
       \strng{authorfullhashraw}{44ea1b356dcd7bfe0ece54601fb6bcec}
       \field{extraname}{1}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{\url{https://www.bsigroup.com/en-GB/standards/pas-1882/}}
@@ -172,8 +148,8 @@
       \strng{authorfullhash}{44ea1b356dcd7bfe0ece54601fb6bcec}
       \strng{authorfullhashraw}{44ea1b356dcd7bfe0ece54601fb6bcec}
       \field{extraname}{2}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{\url{https://www.bsigroup.com/en-GB/standards/pas-1883/}}
@@ -199,8 +175,8 @@
       \strng{authorfullhash}{44ea1b356dcd7bfe0ece54601fb6bcec}
       \strng{authorfullhashraw}{44ea1b356dcd7bfe0ece54601fb6bcec}
       \field{extraname}{3}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{\url{https://www.bsigroup.com/en-GB/standards/pas-1885/}}
@@ -225,8 +201,8 @@
       \strng{authornamehash}{3256355703adaa49eb6d0d1d4465c842}
       \strng{authorfullhash}{3256355703adaa49eb6d0d1d4465c842}
       \strng{authorfullhashraw}{3256355703adaa49eb6d0d1d4465c842}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{\url{https://www.hse.gov.uk/managing/theory/alarpglance.htm}}
@@ -236,6 +212,30 @@
       \field{urlyear}{2026}
       \field{year}{2022}
       \field{urldateera}{ce}
+    \endentry
+    \entry{emes_engineering}{unpublished}{}{}
+      \name{author}{1}{}{%
+        {{hash=81880f28ee4c657bbd15bb81d6a011bc}{%
+           family={Emes},
+           familyi={E\bibinitperiod},
+           given={Harry},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{81880f28ee4c657bbd15bb81d6a011bc}
+      \strng{fullhash}{81880f28ee4c657bbd15bb81d6a011bc}
+      \strng{fullhashraw}{81880f28ee4c657bbd15bb81d6a011bc}
+      \strng{bibnamehash}{81880f28ee4c657bbd15bb81d6a011bc}
+      \strng{authorbibnamehash}{81880f28ee4c657bbd15bb81d6a011bc}
+      \strng{authornamehash}{81880f28ee4c657bbd15bb81d6a011bc}
+      \strng{authorfullhash}{81880f28ee4c657bbd15bb81d6a011bc}
+      \strng{authorfullhashraw}{81880f28ee4c657bbd15bb81d6a011bc}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Oxford 3YP group report, Engineering chapter}
+      \field{title}{Vehicle Dynamics Simulation and Compliance Analysis for the Formula Student Acceleration Event}
+      \field{year}{2026}
     \endentry
     \entry{cam_testbed_uk}{misc}{}{}
       \name{author}{1}{}{%

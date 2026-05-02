@@ -1,5 +1,6 @@
 """Dynamics solver for acceleration simulation."""
 
+import math
 import numpy as np
 from typing import List, Optional, Tuple
 import sys
@@ -215,6 +216,15 @@ class DynamicsSolver:
         # Calculate slip ratios
         slip_front = self.tire_model.calculate_slip_ratio(wheel_speed_front, state.velocity)
         slip_rear = self.tire_model.calculate_slip_ratio(wheel_speed_rear, state.velocity)
+        # Standing-start RWD: large negative κ_rear at crawl is almost always
+        # ω–v inconsistency in the explicit integrator, not a commanded brake
+        # event. Pacejka then produces braking Fx and ±10 m/s² limit cycles.
+        # Below |v| = v_floor, keep κ on a small positive driving branch so the
+        # tyre can transmit torque while slip control still works above κ_opt.
+        _crawl_slip_floor = 0.04
+        _crawl_v = 1.0
+        if state.velocity < _crawl_v and slip_rear < _crawl_slip_floor:
+            slip_rear = _crawl_slip_floor
 
         # Motor speed.
         #
@@ -304,6 +314,28 @@ class DynamicsSolver:
             accel = new_accel
 
         acceleration = accel
+
+        # Envelope: no notable overshoot above the tyre + wheelie ceiling at the
+        # converged normal load. Uses Pacejka Fx at κ*(Fz) (rear axle) and the
+        # same resistive forces as the fixed-point solution; skipped in
+        # driveline-compliance mode where hub dynamics decouple from this bound.
+        if (not self._use_compliance) and state.velocity >= 0.0:
+            fz_per = max(0.0, normal_rear) / 2.0
+            kopt = self.tire_model.get_optimal_slip_ratio(fz_per)
+            t_r = state.tyre_temp_rear if self._use_thermal else None
+            fx1_opt, _ = self.tire_model.calculate_longitudinal_force(
+                fz_per, kopt, state.velocity, tyre_temp_c=t_r,
+            )
+            f_rear_opt = 2.0 * fx1_opt
+            resistive = drag_force + rr_front + rr_rear
+            a_tyre_cap = (f_rear_opt + resistive) / effective_mass
+            a_cap = a_tyre_cap
+            if wheelie_cap < float("inf") and wheelie_cap > 0.0:
+                f_wh = wheelie_cap / self.tire_model.radius
+                a_wh_cap = (f_wh + resistive) / effective_mass
+                a_cap = min(a_cap, a_wh_cap)
+            # ~0.5% margin: hides numerical edge without visibly rounding the plateau.
+            acceleration = min(acceleration, a_cap * 0.995)
 
         # === WHEEL / MOTOR ANGULAR ACCELERATION ===
         # Total rear wheel inertia (both driven wheels).
@@ -550,13 +582,13 @@ class DynamicsSolver:
             base_torque *= fz_scale
         
         # === TORQUE RAMP AT LAUNCH (optimal FS practice) ===
-        # Ramp torque over the first 80 ms to reduce jerk and give the rear
-        # wheel inertia time to track vehicle speed without overshoot. A
-        # shorter ramp tends to spin the wheels through the Pacejka peak
-        # before the controller can react, producing transient wheelies.
-        ramp_duration = 0.08  # s
+        # S-curve in time: zero slope at t=0 and t=T so jerk is continuous,
+        # which reduces overshoot past the Pacejka grip plateau compared to a
+        # linear ramp with the same nominal duration.
+        ramp_duration = 0.065  # s
         if state.time < ramp_duration:
-            ramp = state.time / ramp_duration
+            u = min(1.0, max(0.0, state.time / ramp_duration))
+            ramp = 0.5 * (1.0 - math.cos(math.pi * u))
             base_torque *= ramp
 
         if not self.config.control.traction_control_enabled:
@@ -564,15 +596,17 @@ class DynamicsSolver:
 
         # === SLIP-RATIO GOVERNOR ===
         # Pacejka peak sits around slip ~= optimal_slip (typically 0.13-0.17).
-        # Above that, tyre force drops off; below it, force is a monotone
-        # function of slip. We never want to run *past* the peak because the
-        # trip through the peak dumps max grip into the chassis, which on a
-        # rear-biased CG lifts the front. Collapse torque to zero any time
-        # slip rises well above optimal so the wheel slows back into the safe
-        # regime — functionally equivalent to real slip-based launch control.
+        # Above that, tyre force drops off. A hard torque cut to zero when slip
+        # briefly exceeded the ceiling caused limit cycles at launch; instead
+        # taper torque and keep a small floor so the wheel can recover smoothly.
         slip_ceiling = 2.0 * max(0.05, optimal_slip)
         if current_slip_ratio > slip_ceiling:
-            return 0.0
+            span = max(0.08, slip_ceiling * 0.75)
+            excess = (current_slip_ratio - slip_ceiling) / span
+            # Lower floor ⇒ more torque cut when slip is high ⇒ less overshoot
+            # past the friction peak before the wheel settles back to κ_opt.
+            scale = max(0.08, 1.0 - min(1.0, excess))
+            return base_torque * scale
 
         # === OPTIMAL SLIP-TRACKING TRACTION CONTROL ===
         #
@@ -584,14 +618,14 @@ class DynamicsSolver:
         target_wheel_v = state.velocity * (1.0 + optimal_slip)
         wheel_error = wheel_velocity - target_wheel_v
 
-        if wheel_error > 0.05:
-            # Collapse all the way to zero under strong overspeed — the
-            # previous 0.1 floor left enough residual torque to keep the
-            # slip oscillation running on wheelie-prone chassis.
-            reduction = max(0.0, 1.0 - wheel_error * 2.0)
+        # Deadband grows with |v| so we do not over-react when v≈0 and the
+        # target wheel speed is tiny.
+        err_deadband = max(0.07, 0.22 * abs(state.velocity) + 0.03)
+        if wheel_error > err_deadband:
+            over = wheel_error - err_deadband
+            reduction = max(0.16, 1.0 / (1.0 + over * 7.0))
             return base_torque * reduction
-        else:
-            return base_torque
+        return base_torque
     
     def _rk4_step(
         self,
@@ -646,6 +680,9 @@ class DynamicsSolver:
         new_state.time = state.time + dt
         new_state.position = state.position + avg_d_position * dt
         new_state.velocity = state.velocity + avg_d_velocity * dt
+        # Standing-start drag: forbid small negative v from RK4 undershoot; it
+        # couples badly with slip regularisation and drives launch oscillations.
+        new_state.velocity = max(0.0, new_state.velocity)
         new_state.wheel_angular_velocity_rear = state.wheel_angular_velocity_rear + avg_d_wheel_rear * dt
 
         # Driveline torsional states are only integrated when compliance is on.
@@ -665,9 +702,6 @@ class DynamicsSolver:
         # Front wheels are free-rolling (velocity / tire_radius)
         new_state.wheel_angular_velocity_front = new_state.velocity / self.tire_model.radius if new_state.velocity > 0 else 0.0
         
-        # Calculate TRUE acceleration as dv/dt (not instantaneous force-based)
-        new_state.acceleration = (new_state.velocity - state.velocity) / dt
-        
         # Update energy storage ONCE per timestep
         pt_state = self.powertrain.get_last_state()
         if pt_state is not None:
@@ -677,6 +711,11 @@ class DynamicsSolver:
         # Recalculate all derived quantities at the NEW state
         # This ensures motor_speed, forces, power etc. are correct for the new velocity
         final_derivatives = self._calculate_derivatives(new_state)
+
+        # Log converged force-balance acceleration (F_net / m_eff). Using
+        # (v_new - v_old)/dt at 1 ms RK4 steps exaggerates numerical jitter at
+        # launch; the tyre / load-transfer loop already produced a consistent a.
+        new_state.acceleration = final_derivatives.acceleration
 
         # Copy derived (non-integrated) values from final calculation.
         # In rigid mode, final_derivatives.motor_speed is the fresh

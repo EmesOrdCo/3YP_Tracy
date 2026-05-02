@@ -7,7 +7,13 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from config.vehicle_config import TireProperties
-from vehicle.tire_model import TireModel, SimpleTireModel, PacejkaTireModel, PacejkaCoefficients
+from vehicle.tire_model import (
+    TireModel,
+    SimpleTireModel,
+    PacejkaTireModel,
+    PacejkaCoefficients,
+    longitudinal_slip_ratio,
+)
 
 
 class TestSimpleTireModel(unittest.TestCase):
@@ -265,6 +271,23 @@ class TestTireModelWrapper(unittest.TestCase):
         self.assertEqual(model.mu_slip_optimal, 0.15)
         self.assertEqual(model.rolling_resistance_coeff, 0.015)
         self.assertEqual(model.radius, 0.2286)
+
+
+class TestLongitudinalSlipRegularisation(unittest.TestCase):
+    """Reference-speed behaviour for slip near rest (launch stability)."""
+
+    def test_high_speed_matches_road_reference(self):
+        slip = longitudinal_slip_ratio(10.5, 10.0)
+        self.assertAlmostEqual(slip, 0.05, places=5)
+
+    def test_near_rest_small_positive_slip(self):
+        slip = longitudinal_slip_ratio(0.01, 0.0)
+        self.assertAlmostEqual(slip, 0.2, places=5)
+
+    def test_near_rest_tiny_negative_vehicle_velocity(self):
+        slip = longitudinal_slip_ratio(0.001, -0.0001)
+        self.assertGreater(slip, -0.5)
+        self.assertLess(slip, 0.5)
 
 
 if __name__ == '__main__':

@@ -19,6 +19,7 @@ from pathlib import Path
 import numpy as np
 import matplotlib
 matplotlib.use("Agg")
+import matplotlib.lines as mlines
 import matplotlib.pyplot as plt
 
 # Project root so imports work when run from anywhere.
@@ -33,6 +34,11 @@ from simulation.acceleration_sim import AccelerationSimulation
 HERE = Path(__file__).resolve().parent
 FIG_DIR = HERE / "figures"
 FIG_DIR.mkdir(exist_ok=True)
+# Beamer’s first \graphicspath entry is Presentation/figures, so a stale
+# `final_run_combined.pdf` there overrides a fresh Engineering/figures/ copy
+# (same filename). The generator must write the slide version explicitly.
+PRESENTATION_FIGS = HERE.parent / "Presentation" / "figures"
+SLIDE_BG = "#E8E8E8"  # match beamer `slidebg` in `Presentation/main.tex`
 
 BASE_CONFIG_PATH = REPO_ROOT / "config" / "vehicle_configs" / "base_vehicle.json"
 
@@ -73,11 +79,18 @@ print(f"  v_f   = {base['final_velocity']:.2f} m/s = {base['final_velocity']*3.6
 print(f"  P_max = {base['peak_power']/1e3:.2f} kW")
 print(f"  min Fz_front = {base['min_fz_front']:.1f} N")
 
-# Identify traction-to-power transition: when p first hits 95% of peak.
-p_thresh = 0.95 * base["peak_power"]
-idx_trans = int(np.argmax(base["p"] >= p_thresh))
-t_transition = float(base["t"][idx_trans]) if idx_trans > 0 else 0.0
-print(f"  t_transition (P >= 95% P_peak) = {t_transition:.3f} s")
+# Traction -> power: first time electrical power hits the FS accumulator cap
+# (not 95% of the trace peak: on a linear ramp, 0.95*P_peak is ~0.95*t_to_cap,
+# and mis-aligns t* with the 80 kW kink in the power curve).
+P_cap = float(config_base.powertrain.max_power_accumulator_outlet)
+idx_at_cap = np.where(base["p"] >= 0.999 * P_cap)[0]
+if len(idx_at_cap):
+    t_transition = float(base["t"][idx_at_cap[0]])
+else:
+    p_thresh = 0.95 * base["peak_power"]
+    idx_trans = int(np.argmax(base["p"] >= p_thresh))
+    t_transition = float(base["t"][idx_trans]) if idx_trans > 0 else 0.0
+print(f"  t_transition (P >= 80 kW cap) = {t_transition:.3f} s")
 
 # Time split between regimes.
 t_traction = t_transition
@@ -255,8 +268,9 @@ sens_results.sort(key=lambda r: r["abs_max"], reverse=True)
 print("\n--- 9. Generating figures ---")
 
 # Final-run multi-panel.
-fig, axes = plt.subplots(2, 2, figsize=(10.5, 7.0))
-t, v, a, p, fz_f, fz_r = base["t"], base["v"], base["a"], base["p"], base["fz_f"], base["fz_r"]
+fig, axes = plt.subplots(2, 2, figsize=(11.5, 7.8),
+                         gridspec_kw=dict(hspace=0.45, wspace=0.32))
+t, x, v, a, p = base["t"], base["x"], base["v"], base["a"], base["p"]
 
 ax = axes[0, 0]
 ax.plot(t, v, "C0", lw=1.8)
@@ -274,23 +288,94 @@ ax = axes[1, 0]
 ax.plot(t, p / 1e3, "C2", lw=1.4)
 ax.axhline(80.0, color="r", ls="--", lw=1.0, label="FS-EV 2.2 (80 kW)")
 ax.set(xlabel="Time (s)", ylabel="Electrical power (kW)", title="Power vs time")
-ax.legend(loc="lower right"); ax.grid(alpha=0.3)
+ax.legend(loc="lower right", framealpha=0.92); ax.grid(alpha=0.3)
+ax.set_ylim(0, 95)
 
 ax = axes[1, 1]
-ax.plot(t, fz_f, "C3", lw=1.4, label="Front $F_{z,f}$")
-ax.plot(t, fz_r, "C4", lw=1.4, label="Rear $F_{z,r}$")
-ax.axhline(0.0, color="grey", lw=0.5)
-ax.set(xlabel="Time (s)", ylabel="Normal force (N)", title="Per-axle normal forces")
-ax.legend(loc="center right"); ax.grid(alpha=0.3)
+ax.plot(t, x, "C3", lw=1.8)
+ax.axhline(75.0, color="grey", ls="--", lw=1.0,
+           label=f"75 m at $t={base['final_time']:.2f}$ s")
+ax.set(xlabel="Time (s)", ylabel="Distance (m)", title="Distance vs time")
+ax.legend(loc="lower right", framealpha=0.92); ax.grid(alpha=0.3)
+ax.set_ylim(0, 80)
 
 fig.suptitle(f"Predicted performance of the baseline vehicle "
              f"({base['final_time']:.2f} s, {base['final_velocity']*3.6:.0f} km/h)")
-fig.tight_layout()
 fig.savefig(FIG_DIR / "final_run.pdf", bbox_inches="tight")
 plt.close(fig)
 
+# Shared time axis: acceleration (left) and electrical power (right) only.
+p_kw = np.minimum(p, P_cap) / 1e3
+a_ylim = float((np.ceil((a.max() + 0.4) * 1.0) * 1.0) if a.max() > 0 else 5.0)
+a_ylim = max(5.0, min(25.0, a_ylim))
+P_ylim = 95.0
+c1, c2 = "C1", "C2"
+fig_c = plt.figure(figsize=(10.5, 4.2))
+# Leave extra room on the right for the power-axis ticks and “Power (kW)” label.
+# Larger `bottom` lifts the axes + “Time (s)” so there is clear space above the fig.legend.
+fig_c.subplots_adjust(left=0.1, right=0.82, top=0.9, bottom=0.30)
+
+ax0 = fig_c.add_subplot(111)
+(l1,) = ax0.plot(t, a, c1, lw=1.5, zorder=3, alpha=0.95)
+ax0.set_xlim(0.0, max(float(t.max()), 0.2))
+ax0.set_ylim(0, a_ylim)
+ax0.set_ylabel("Acceleration (m/s$^2$)", color=c1, fontweight="medium", labelpad=3)
+ax0.set_xlabel("Time (s)")
+ax0.set_title("Run overview: acceleration and power")
+ax0.tick_params(axis="y", labelcolor=c1, labelsize=9, length=4)
+ax0.grid(True, alpha=0.28, which="both", zorder=0)
+ax0.axvline(t_transition, color="0.45", ls="--", lw=1, zorder=1, alpha=0.9)
+ax0.set_axisbelow(True)
+
+axp = ax0.twinx()
+(l2,) = axp.plot(t, p_kw, c2, lw=1.7, zorder=2)
+axp.set_ylim(0, P_ylim)
+axp.set_ylabel("Power (kW)", color=c2, fontweight="medium", labelpad=8)
+axp.tick_params(axis="y", labelcolor=c2, labelsize=9, length=4)
+axp.axhline(80.0, color="0.55", ls=":", lw=0.95, alpha=0.5, zorder=1)  # FS-EV 2.2
+
+h_star = mlines.Line2D([0], [0], color="0.45", ls="--", lw=1)
+_legc = fig_c.legend(
+    [l1, l2, h_star],
+    [
+        f"Acceleration (peak {a.max():.1f} m/s$^2$)",
+        f"Power (capped {P_cap/1e3:.0f} kW; dotted: FS cap)",
+        rf"$t^*$ = {t_transition:.2f} s (traction $\to$ power)",
+    ],
+    loc="lower center",
+    bbox_to_anchor=(0.5, 0.02),
+    ncol=3,
+    frameon=True,
+    framealpha=0.95,
+    fontsize=7.2,
+    columnspacing=0.6,
+    handlelength=1.3,
+    borderaxespad=0.0,
+    fancybox=False,
+)
+_save_combined = dict(
+    bbox_inches="tight", pad_inches=0.5, facecolor="white", edgecolor="white",
+    dpi=150,
+)
+fig_c.savefig(FIG_DIR / "final_run_combined.pdf", **_save_combined)
+
+# Slides: same geometry; deck’s first `figures/` must match. Match `slidebg`.
+PRESENTATION_FIGS.mkdir(exist_ok=True, parents=True)
+fig_c.patch.set_facecolor(SLIDE_BG)
+for _ax in fig_c.get_axes():
+    _ax.set_facecolor(SLIDE_BG)
+if _legc is not None and _legc.get_frame() is not None:
+    f = _legc.get_frame()
+    f.set_facecolor(SLIDE_BG)
+    f.set_edgecolor("0.6")
+fig_c.savefig(
+    PRESENTATION_FIGS / "final_run_combined.pdf",
+    bbox_inches="tight", pad_inches=0.5, facecolor=SLIDE_BG, edgecolor=SLIDE_BG, dpi=150,
+)
+plt.close(fig_c)
+
 # Tornado plot.
-fig, ax = plt.subplots(figsize=(7.5, 4.5))
+fig, ax = plt.subplots(figsize=(8.2, 4.6))
 n = len(sens_results)
 labels = [r["label"] for r in sens_results]
 lows = np.array([r["dt_low"] for r in sens_results]) * 1000.0
@@ -298,12 +383,13 @@ highs = np.array([r["dt_high"] for r in sens_results]) * 1000.0
 y = np.arange(n)
 ax.barh(y, highs, color="C0", alpha=0.75, label="+10%")
 ax.barh(y, lows, color="C3", alpha=0.75, label="-10%")
-ax.axvline(0, color="k", lw=0.6)
-ax.set(yticks=y, yticklabels=labels,
-       xlabel="Change in 75 m time vs baseline (ms)",
-       title="Sensitivity of 75 m time to $\\pm 10\\%$ parameter perturbations")
+ax.set(yticks=y, yticklabels=labels)
+ax.set_title("Sensitivity of 75 m time to $\\pm 10\\%$ parameter perturbations", fontsize=13)
+ax.set_xlabel("Change in 75 m time vs baseline (ms)", fontsize=13)
 ax.invert_yaxis()
-ax.legend(loc="lower right")
+ax.tick_params(axis="y", labelsize=12)
+ax.tick_params(axis="x", labelsize=12)
+ax.legend(loc="lower right", fontsize=10, framealpha=0.95)
 ax.grid(axis="x", alpha=0.3)
 fig.tight_layout()
 fig.savefig(FIG_DIR / "tornado.pdf", bbox_inches="tight")

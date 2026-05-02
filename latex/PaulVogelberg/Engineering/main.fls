@@ -1019,11 +1019,11 @@ INPUT ./figures/schematics/TemperatureSensor.png
 INPUT figures/schematics/TemperatureSensor.png
 INPUT ./figures/schematics/TemperatureSensor.png
 INPUT ./figures/schematics/TemperatureSensor.png
-INPUT ./figures/renders/mainsegment1.png
-INPUT ./figures/renders/mainsegment1.png
-INPUT figures/renders/mainsegment1.png
-INPUT ./figures/renders/mainsegment1.png
-INPUT ./figures/renders/mainsegment1.png
+INPUT ./figures/renders/segment.png
+INPUT ./figures/renders/segment.png
+INPUT figures/renders/segment.png
+INPUT ./figures/renders/segment.png
+INPUT ./figures/renders/segment.png
 INPUT ./figures/renders/main4.png
 INPUT ./figures/renders/main4.png
 INPUT figures/renders/main4.png

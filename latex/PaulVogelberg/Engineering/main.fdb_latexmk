@@ -1,14 +1,14 @@
 # Fdb version 4
-["biber main"] 1775822671 "main.bcf" "main.bbl" "main" 1777029291 0
+["biber main"] 1775822671 "main.bcf" "main.bbl" "main" 1777724930 0
   "./references.bib" 1775822669 4233 a68abdfb3149dcf50ed16da134df5f61 ""
-  "main.bcf" 1777029290 108354 9e523a7ee5dc629018d3f5c06fbab45b "pdflatex"
+  "main.bcf" 1777724930 108354 9e523a7ee5dc629018d3f5c06fbab45b "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1777029288 "/Users/paulv/Library/CloudStorage/OneDrive-Nexus365/Documents/Oxford/Year 3/3YPE (B3)/3YP_Tracy/latex/PaulVogelberg/Engineering/main.tex" "main.pdf" "main" 1777029291 0
-  "../..//styling.sty" 1775833159 3860 776ac33f0a4d8424a8be165bf576edba ""
-  "/Users/paulv/Library/CloudStorage/OneDrive-Nexus365/Documents/Oxford/Year 3/3YPE (B3)/3YP_Tracy/latex/PaulVogelberg/Engineering/main.tex" 1777029288 34121 721765790979bf4a2952c71b87cb991e ""
+["pdflatex"] 1777724928 "/Users/paulv/Library/CloudStorage/OneDrive-Nexus365/Documents/Oxford/Year 3/3YPE (B3)/3YP_Tracy/latex/PaulVogelberg/Engineering/main.tex" "main.pdf" "main" 1777724930 0
+  "../..//styling.sty" 1777153448 3860 776ac33f0a4d8424a8be165bf576edba ""
+  "/Users/paulv/Library/CloudStorage/OneDrive-Nexus365/Documents/Oxford/Year 3/3YPE (B3)/3YP_Tracy/latex/PaulVogelberg/Engineering/main.tex" 1777724925 34116 54f11bdafcc8db2bac572766ca56e080 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/tfm/adobe/helvetic/phvb7t.tfm" 1136768653 2240 eb56c13537f4d8a0bd3fafc25572b1bd ""
@@ -154,18 +154,18 @@
   "/usr/local/texlive/2023/texmf.cnf" 1678822455 577 1b2b1af17af2508fb20dd85783af4050 ""
   "figures/Supercapcaitor_discharge.png" 1774951523 89796 3bb29b75629105471d452d4bb06a1489 ""
   "figures/renders/main4.png" 1773424309 374977 110d09007c41de903e599439022b2801 ""
-  "figures/renders/mainsegment1.png" 1775208645 746949 2c9be87fccd8cfd785863e2a6f27eace ""
+  "figures/renders/segment.png" 1777724899 1588797 e3c2e227323589c844941d2bdf2c7d6f ""
   "figures/schematics/Electronics_architecture.png" 1775652826 356186 24ff568424797b1e6d6c546506af7770 ""
   "figures/schematics/PCB.pdf" 1769455074 64421 e00b03761626826b3f2bbfe632a52743 ""
   "figures/schematics/PMIC2.pdf" 1774282373 177416 5f2805cc2ec5a19a77aa59b67f77313d ""
   "figures/schematics/TemperatureSensor.png" 1775824601 55475 e5a7e40b5c06c982fba76c92078345d8 ""
   "figures/schematics/VoltageFilter.png" 1775826177 101662 813b7098f4e1610953691af87f70891f ""
-  "main.aux" 1777029290 14948 68d22492e0f3d3b0ee0ea1961982ca91 "pdflatex"
+  "main.aux" 1777724930 14948 68d22492e0f3d3b0ee0ea1961982ca91 "pdflatex"
   "main.bbl" 1775822673 14945 cabdb0842de8c25b561815311c6d1076 "biber main"
-  "main.out" 1777029290 4829 a0a7ebb8c5e3b390d96fba6fc01c0359 "pdflatex"
-  "main.run.xml" 1777029290 2305 52095dfad395b381e9a32937e764a41c "pdflatex"
-  "main.tex" 1777029288 34121 721765790979bf4a2952c71b87cb991e ""
-  "main.toc" 1777029290 2414 21ba4608fac6f2a1f4a92a5a27a8a202 "pdflatex"
+  "main.out" 1777724930 4829 a0a7ebb8c5e3b390d96fba6fc01c0359 "pdflatex"
+  "main.run.xml" 1777724930 2305 52095dfad395b381e9a32937e764a41c "pdflatex"
+  "main.tex" 1777724925 34116 54f11bdafcc8db2bac572766ca56e080 ""
+  "main.toc" 1777724930 2414 21ba4608fac6f2a1f4a92a5a27a8a202 "pdflatex"
   (generated)
   "main.aux"
   "main.bcf"
