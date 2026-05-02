@@ -5,7 +5,7 @@ These tests pin the behaviour of the three guards added to `DynamicsSolver`:
 1. ``_wheelie_torque_cap`` - static pitch-moment balance.
 2. Closed-loop front-Fz feedback - scales torque when measured front load
    drops toward the wheelie threshold.
-3. Slip-ratio governor - zeros torque if rear slip exceeds ~2x optimum.
+3. Slip-ratio governor - tapers torque if rear slip exceeds ~2× optimum.
 
 Also covers the motor field-weakening envelope (``create_motor_from_config``)
 and the supercapacitor voltage-decay behaviour, since those sit upstream of
@@ -15,6 +15,8 @@ the controller and directly shape the torque request.
 import copy
 import sys
 import unittest
+
+import numpy as np
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -135,22 +137,37 @@ class TestFzFeedback(unittest.TestCase):
 
 
 class TestSlipGovernor(unittest.TestCase):
-    """Slip-ratio governor cuts torque above 2x optimal slip."""
+    """Slip-ratio governor tapers torque above ~2x optimal slip (soft floor, no hard zero)."""
 
-    def test_torque_is_zero_when_slip_exceeds_ceiling(self):
+    def test_torque_is_reduced_when_slip_exceeds_ceiling(self):
         cfg = _base_config()
         solver = DynamicsSolver(cfg)
-
-        class _State:
-            time = 0.5
-            velocity = 5.0
-            wheel_angular_velocity_rear = 60.0  # wheel spinning fast -> slip > ceiling
-
         solver._last_fz_front = 1e6  # disable Fz feedback so we only test the governor
 
-        # current_slip_ratio = 0.5 (well above ~2 * 0.13 = 0.26 ceiling).
-        torque = solver._calculate_requested_torque(_State(), 900.0, 0.5, float("inf"))
-        self.assertEqual(torque, 0.0)
+        v = 5.0
+        r = solver.tire_model.radius
+        # Slip consistent with state (same convention as the dynamics solver).
+        omega_lo = v * 1.17 / r   # κ slightly below typical ~2×κ_opt ceiling
+        omega_hi = v * 2.2 / r    # κ → 1 after clip
+
+        class _Lo:
+            time = 0.5
+            velocity = v
+            wheel_angular_velocity_rear = omega_lo
+
+        class _Hi:
+            time = 0.5
+            velocity = v
+            wheel_angular_velocity_rear = omega_hi
+
+        slip_lo = (omega_lo * r - v) / max(abs(v), 0.04)
+        slip_hi = float(np.clip((omega_hi * r - v) / max(abs(v), 0.04), -1.0, 1.0))
+
+        t_moderate = solver._calculate_requested_torque(_Lo(), 900.0, slip_lo, float("inf"))
+        t_high_slip = solver._calculate_requested_torque(_Hi(), 900.0, slip_hi, float("inf"))
+        self.assertGreater(t_moderate, 0.0)
+        self.assertLess(t_high_slip, t_moderate)
+        self.assertGreater(t_high_slip, 0.0)
 
     def test_torque_nonzero_at_moderate_slip(self):
         cfg = _base_config()

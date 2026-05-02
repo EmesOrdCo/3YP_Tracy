@@ -1,0 +1,56 @@
+% ============================================================
+% 2.5-minute engineering presentation - 2 landscape slides
+% Harry Emes - Formula Student Acceleration Simulation
+% Minimal keynote aesthetic on #E8E8E8 background.
+% ============================================================
+
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{microtype}
+\renewcommand{\familydefault}{\sfdefault}
+
+\definecolor{slidebg}{HTML}{E8E8E8}
+\definecolor{accent} {HTML}{1F4E79}
+\definecolor{ink}    {HTML}{1A1A1A}
+\definecolor{muted}  {HTML}{6B6B6B}
+\definecolor{red}    {HTML}{C0392B}
+
+\setbeamercolor{background canvas}{bg=slidebg}
+\setbeamercolor{normal text}{fg=ink}
+\setbeamercolor{frametitle}{fg=accent}
+\setbeamercolor{structure}{fg=accent}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{frametitle}{}
+\setbeamertemplate{footline}{}
+
+\graphicspath{{figures/}{../Engineering/figures/}}
+
+\newcommand{\figlabel}[1]{{\fontsize{24pt}{28pt}\selectfont\color{muted}\MakeUppercase{#1}}}
+
+\begin{document}
+
+% Helper: full-bleed single-diagram slide.
+\newcommand{\soloslide}[1]{%
+  \begin{frame}[plain]
+    \begin{center}
+      \includegraphics[width=0.98\paperwidth,height=0.96\paperheight,keepaspectratio]{#1}
+    \end{center}
+  \end{frame}%
+}
+
+% ============================================================
+% One diagram per slide -- 6 slides total
+% ============================================================
+\soloslide{harry_architecture.pdf}    % 1. Software architecture
+\soloslide{pacejka_slide.pdf}         % 2. Pacejka tyre model
+\soloslide{final_run_combined.pdf}   % 3. Run traces (single normalised plot)
+\soloslide{tornado.pdf}               % 4. Sensitivity tornado
+\soloslide{optim_convergence.pdf}     % 5. Nelder-Mead convergence
+\soloslide{mc_histogram.pdf}          % 6. Monte Carlo robustness
+
+\end{document}
