@@ -3,16 +3,24 @@
 \def\input@path{{../}}
 \makeatother
 \usepackage{styling}
+% styling.sty no longer loads biblatex (Toby commented it out so he can configure it himself).
+\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
+\DefineBibliographyStrings{english}{bibliography = {References}}
+\providecommand{\contribution}[1]{\medskip\noindent\textbf{Section Contribution: #1}\par}
 \usepackage{tocloft}
 \setlength{\cftbeforetoctitleskip}{0pt}
 \setlength{\cftaftertoctitleskip}{6pt}
 \usepackage{tabularx}
 \usepackage{array}
 \usepackage{multirow}
+% Toby's recovered Engineering body uses xurl, multicol, and singlespace.
+\usepackage{xurl}
+\usepackage{multicol}
 
 \numberwithin{equation}{section}
 
 \addbibresource{../TobyMcConnell/Engineering/references.bib}
+\addbibresource{../MichaelZiyangXing/references_engineering.bib}
 \addbibresource{yuze_references.bib}
 \addbibresource{../PaulVogelberg/Engineering/references.bib}
 \addbibresource{../HarryEmes/Engineering/references.bib}
@@ -20,7 +28,7 @@
 \defbibnote{urlcheck}{All URLs were last accessed and verified on 01/04/2026.}
 
 \title{Tracy --- Combined Engineering Report \\ Formula Student Acceleration Event}
-\author{Toby McConnell, Yuze Jiang, Paul Vogelberg, Harry Emes}
+\author{Toby McConnell, Ziyang Xing, Yuze Jiang, Paul Vogelberg, Harry Emes}
 \date{\today}
 
 \begin{document}
@@ -39,6 +47,12 @@
 \begin{refsection}
 \graphicspath{{../TobyMcConnell/Engineering/}}
 \input{../TobyMcConnell/Engineering/toby_body}
+\end{refsection}
+
+\begin{refsection}
+\graphicspath{{../MichaelZiyangXing/}}
+\input{../MichaelZiyangXing/fs_engineering_suspension_braking_compact}
+\printbibliography
 \end{refsection}
 
 \begin{refsection}

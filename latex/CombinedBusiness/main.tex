@@ -1,0 +1,81 @@
+\documentclass[11pt, a4paper]{report}
+\makeatletter
+\def\input@path{{../}}
+\makeatother
+% longtable before styling.sty (arydshln) — required for Paul’s longtable + \hline
+\usepackage{longtable}
+\usepackage{xspace}
+\usepackage{rotating}
+\usepackage{styling}
+% styling.sty no longer loads biblatex (Toby commented it out so he can configure it himself).
+\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
+\DefineBibliographyStrings{english}{bibliography = {References}}
+\providecommand{\contribution}[1]{\medskip\noindent\textbf{Section Contribution: #1}\par}
+\usepackage{xurl}
+\usepackage{multicol}
+\usepackage{tocloft}
+\setlength{\cftbeforetoctitleskip}{0pt}
+\setlength{\cftaftertoctitleskip}{6pt}
+\usepackage{tabularx}
+\usepackage{array}
+
+\numberwithin{equation}{section}
+
+\addbibresource{../TobyMcConnell/Business/references.bib}
+\addbibresource{../PaulVogelberg/Business/references.bib}
+\addbibresource{../MichaelZiyangXing/references_eem_design.bib}
+\addbibresource{yuze_business_references.bib}
+\addbibresource{../HarryEmes/Business/references.bib}
+
+\defbibnote{urlcheck}{All URLs were last accessed and verified on 01/04/2026.}
+
+% Financial headline numbers for Harry's chapter (same as standalone Business/main.tex).
+\input{../HarryEmes/Business/report_numbers.tex}
+
+\title{Tracy --- Combined Business Report \\ Formula Student Acceleration Event}
+\author{Toby McConnell, Paul Vogelberg, Ziyang Xing, Yuze Jiang, Harry Emes}
+\date{\today}
+
+\begin{document}
+
+\pagenumbering{gobble}
+
+\maketitle
+\newpage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\tableofcontents
+\newpage
+
+\begin{refsection}
+\graphicspath{{../TobyMcConnell/Business/}}
+\input{../TobyMcConnell/Business/toby_business_body}
+\end{refsection}
+
+\begin{refsection}
+\graphicspath{{../PaulVogelberg/Business/}}
+\input{../PaulVogelberg/Business/paul_business_body}
+\printbibliography
+\end{refsection}
+
+\begin{refsection}
+\graphicspath{{../MichaelZiyangXing/}}
+\input{../MichaelZiyangXing/eem_design_requirements_prototype_planning_compact}
+\printbibliography
+\end{refsection}
+
+\begin{refsection}
+\graphicspath{{yuze_assets/}}
+\input{yuze_business_body.tex}
+\end{refsection}
+
+\input{../HarryEmes/Business/harry_business_macros.tex}
+
+\begin{refsection}
+\graphicspath{{../HarryEmes/Business/figures/}{../HarryEmes/Business/}}
+\input{../HarryEmes/Business/harry_business_body}
+\end{refsection}
+
+\end{document}
