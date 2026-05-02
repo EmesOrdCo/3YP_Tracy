@@ -24,6 +24,24 @@
 
 \numberwithin{equation}{section}
 
+% Uniform compact 2-column References block (modelled on Toby's Engineering chapter).
+% Use \compactbib instead of \printbibliography wherever possible.
+\newcommand{\compactbib}{%
+  \vspace{-16pt}%
+  \enlargethispage{20pt}%
+  \section*{References}%
+  \vspace{-33pt}%
+  \begingroup
+    \begin{singlespace}%
+      \begin{multicols}{2}%
+        \scriptsize
+        \setlength{\bibitemsep}{0pt}%
+        \printbibliography[heading=none]%
+      \end{multicols}%
+    \end{singlespace}%
+  \endgroup
+}
+
 % --- Bibliographies (one entry per file; Yuze's bib is shared by his two chapters) ---
 \addbibresource{../TobyMcConnell/Engineering/references.bib}
 \addbibresource{../MichaelZiyangXing/references_engineering.bib}
@@ -74,21 +92,24 @@
 \maketitle
 \newpage
 
-\pagenumbering{arabic}
+% Front matter (TOC) in roman numerals, body resets to arabic.
+\pagenumbering{roman}
 \setcounter{page}{1}
 
 \tableofcontents
 \newpage
 
-% =====================================================================
-\part{Engineering Report}
-% Order: Toby, Ziyang Xing, Yuze, Paul, Harry
-% =====================================================================
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% --------------------------------------------------------------------
+% Engineering chapters: Toby, Ziyang Xing, Yuze, Paul, Harry
+% --------------------------------------------------------------------
 
 \begin{refsection}
 \graphicspath{{../TobyMcConnell/Engineering/}}
 % --- BEGIN INLINE: TobyMcConnell/Engineering/toby_body.tex ---
-\chapter{Chassis Design}
+\chapterauthor{Chassis Design}{Toby McConnell}
 \vspace{-25pt}
 \section{Introduction and Design Philosophy}
 
@@ -167,6 +188,8 @@ The weighting is heavily biased toward Cost and Manufacturing (65 \% total). Tab
 
 \begin{table}[h]
 \centering
+\caption{Cost-per-second of improvement for Lighter Chassis Option}
+\label{tab:chassis_cost_performance}
 \begin{tabular}{|l|c|c|c|c|}
 \hline
 \textbf{Chassis Type} & \makecell{\textbf{Weight Est.} \\ \textbf{(kg)}} & \makecell{\textbf{Price Est.} \\ \textbf{(£)}} & \makecell{\textbf{Finish Time Est.} \\ \textbf{(s)}} & \makecell{\textbf{£ per s} \\ \textbf{lost}} \\
@@ -175,10 +198,6 @@ Heavy Steel Spaceframe (Baseline) & 50 & 1000 & 3.60 & -- \\
 Light Carbon Monocoque & 20 & 2500 & 3.56 & 37500 \\
 \hline
 \end{tabular}
-\vspace{+8pt}
-\caption{Cost-per-second of improvement for Lighter Chassis Option}
-\label{tab:chassis_cost_performance}
-\vspace{-16pt}
 \end{table}
 
 Strength was weighted highly to ensure driver safety, perfomance in crashes, and compliance with regulations. Stiffness is typically prioritised in circuit-focused vehicles to improve cornering performance; however, this is less critical for a drag-optimised design. It was still assigned a rating of 2, as sufficient stiffness is required to ensure drivetrain loads are efficiently transferred to the wheels rather than being absorbed through chassis deflection. Factors like Material Cost, Availability, and Manufacturing Simplicity ensure focus on a practical, cost-efficient design. The Steel Spaceframe scored highest in the Pugh Matrix and was the chosen option because it offers the most balanced approach: trading the marginal performance gains of composites for its reliability, simplicity and price \cite{racecar_engineering_oxford_brookes} \cite{tutf_composite_build}.
@@ -211,6 +230,7 @@ Using a preliminary CAD model for the spaceframe built on SolidWorks using weldm
 
 \begin{table}[h]
     \centering
+    \caption{Comparison of candidate chassis materials}
     \label{tab:chassis_materials}
     \footnotesize
     \begin{tabular}{|l|c|c|c|c|c|}
@@ -223,9 +243,6 @@ Using a preliminary CAD model for the spaceframe built on SolidWorks using weldm
         {Docol R8}\cite{aedmetals_docol_r8} & 30 & 1,200 & 800 & 3.57 & Moderate (TIG/MIG) \\
         \hline
     \end{tabular}
-    \vspace{+8pt}
-    \caption{Comparison of candidate chassis materials}
-    \vspace{-16pt}
 \end{table}
 
 The manufacturing complexity scores are due to the fact that 4130 chromoly requires careful control of welding heat input and cooling rates to avoid embrittlement in the heat-affected zone, typically necessitating TIG welding and greater operator skill. Docol R8, while less sensitive to heat-affected zone effects, has very high strength and hardness which increases tool wear during cutting, drilling, and notching \cite{millerwelds2024}.
@@ -245,7 +262,8 @@ See the different tube diameters used in Table \ref{tab:tube_diameter_strategy}
 
 \begin{table}[h]
     \centering
-    %\caption{Tube diameter strategy}
+    \caption{Tube diameter strategy}
+    \label{tab:tube_diameter_strategy}
     \footnotesize
     \begin{tabular}{|l|c|p{4.2cm}|p{6.2cm}|}
         \hline
@@ -258,10 +276,6 @@ See the different tube diameters used in Table \ref{tab:tube_diameter_strategy}
         Secondary Bracing & 20 $\times$ 2.0 & No direct regulatory requirement for non-impact structural members. & Used for non-critical bracing to reduce mass while maintaining adequate stiffness. See \ref{sec:chassis_architecture} \\
         \hline
     \end{tabular}
-    \vspace{+8pt}
-    \caption{Tube diameter strategy}
-    \vspace{-16pt}
-    \label{tab:tube_diameter_strategy}
 \end{table}
  \vspace{-16pt}
 \section{Chassis Architecture}
@@ -320,6 +334,8 @@ A 200 ± 50 mm by 450 ± 100 mm template provided by the wheel team was used to 
 
 \begin{table}[h]
     \centering
+    \caption{Final chassis layout and mass distribution summary}
+    \label{tab:layout_summary}
     \begin{tabular}{|l|c|}
         \hline
         \textbf{Parameter} & \textbf{Value} \\
@@ -332,10 +348,6 @@ A 200 ± 50 mm by 450 ± 100 mm template provided by the wheel team was used to 
         Rear Weight Distribution & 69.5 \% \\
         \hline
     \end{tabular}
-    \vspace{+8pt}
-    \caption{Final chassis layout and mass distribution summary}
-    \vspace{-16pt}
-    \label{tab:layout_summary}
 \end{table}
 \vspace{-16pt}
 \section{Manufacturing and Structural Integrity Report}
@@ -344,8 +356,8 @@ When constructing the chassis the strength of the welds is critical. The princip
 
 \subsection{Tube and Weld Capacity Calculation}
 
-\textbf{Tube Properties}
-\vspace{-16pt}
+\noindent\textbf{Tube Properties}\par
+\vspace{4pt}
 \begin{table}[h]
     \centering
     \begin{tabular}{|l|c|}
@@ -360,10 +372,10 @@ When constructing the chassis the strength of the welds is critical. The princip
         \hline
     \end{tabular}
 \end{table}
-\vspace{-8pt}
+\vspace{6pt}
 
-\textbf{Tube Section Properties}
-\vspace{-10pt}
+\noindent\textbf{Tube Section Properties}\par
+\vspace{4pt}
 \begin{align*}
 A &= \frac{\pi}{4}(D^2 - d^2)
 = \frac{\pi}{4}(25^2 - 21^2)
@@ -373,8 +385,8 @@ Z &= \frac{\pi (D^4 - d^4)}{32D}
 = 763.5\ \text{mm}^3
 \end{align*}
 
-\textbf{Tube Capacity}
-\vspace{-10pt}
+\noindent\textbf{Tube Capacity}\par
+\vspace{4pt}
 \begin{align*}
 F_{\text{tube}} &= A \sigma_y
 = 50\,575\ \text{N} \ (50.6\ \text{kN}) \\
@@ -382,8 +394,8 @@ M_{\text{tube}} &= Z \sigma_y
 = 267\,225\ \text{N·mm} \ (267.2\ \text{Nm})
 \end{align*}
 
-\textbf{Weld Properties}
-\vspace{-10pt}
+\noindent\textbf{Weld Properties}\par
+\vspace{4pt}
 \begin{table}[h]
     \centering
     \begin{tabular}{|l|c|}
@@ -396,10 +408,10 @@ M_{\text{tube}} &= Z \sigma_y
         \hline
     \end{tabular}
 \end{table}
-\vspace{-8pt}
+\vspace{6pt}
 
-\textbf{Weld Capacity}
-\vspace{-10pt}
+\noindent\textbf{Weld Capacity}\par
+\vspace{4pt}
 \begin{align*}
 A_w &= \pi D t_e
 = 194.0\ \text{mm}^2 \\
@@ -411,10 +423,12 @@ M_{\text{weld}} &= Z_w \tau_{\text{allow}}
 = 307\,890\ \text{N·mm} \ (307.9\ \text{Nm})
 \end{align*}
 
-\vspace{-10pt}
+\vspace{6pt}
 
 \begin{table}[H]
     \centering
+    \caption{Comparative safety margin between tube and weld capacities.}
+    \label{tab:weld_vs_tube}
         \footnotesize
         \singlespacing
         \begin{tabular}{|l|c|c|c|}
@@ -425,16 +439,14 @@ M_{\text{weld}} &= Z_w \tau_{\text{allow}}
         Bending Moment & 267.2 Nm & 307.9 Nm & Tube Fails First \\
         \hline
     \end{tabular}
-    \vspace{+8pt}
-    \caption{Comparative safety margin between tube and weld capacities.}
-    \label{tab:weld_vs_tube}
-    \vspace{-20pt}
 \end{table}
 
 Having justified the safety of the welds, practical fabrication considerations were addressed to maximise the quality of the chassis construction. The design features a lot of multi-member nodes, where up to five tubes intersect: this introduces geometric interference that restricts MIG torch access and increases the risk of poor penetration, therefore eccentricities or slight offsets between tubes are introduced to maintain weld accessibility. These nodes also act as large heat sinks, creating thermal distortion during cooling; this is mitigated through a balanced welding sequence applied in staggered increments to distribute heat evenly. A controlled bottom-up fabrication workflow is used, beginning with jigging the floor structure on a flat table with dummy suspension tabs to establish a rigid reference plane, followed by precision hole-saw notching and CAD generates templates for the complex joints, such as in the roll hoops, and finally full chassis tacking prior to final welding to verify squareness and maintain suspension hardpoint tolerances. See table \ref{tab:chassis_cost_breakdown} for the estimated total cost of this construction.
 
 \begin{table}[h]
     \centering
+    \caption{Estimated fabrication cost breakdown for chassis.}
+    \label{tab:chassis_cost_breakdown}
     \footnotesize
     \begin{tabular}{|l|l|c|}
         \hline
@@ -450,10 +462,6 @@ Having justified the safety of the welds, practical fabrication considerations w
         \textbf{TOTAL} &  & \textbf{£833} \\
         \hline
     \end{tabular}
-    \vspace{+8pt}
-    \caption{Estimated fabrication cost breakdown for chassis.}
-    \label{tab:chassis_cost_breakdown}
-    \vspace{-25pt}
 \end{table}
 
 \section{Chassis Performance Verification with Finite Element Analysis}
@@ -492,13 +500,11 @@ It is important to note that lateral stiffness simulations were not deemed necce
     %\label{fig:both}
 \end{figure}
 
-\subsubsection{Resting Load Case}
-
+\noindent\textbf{Resting Load Case.}
 The first simulation considered the static resting condition of the vehicle. This load case represents the forces acting on the chassis due to the weight of the chassis itself (red), driver (pink), motor (black), and inverter + coolant + supercapcitors (grey) when the car is stationary (fig. \ref{fig:resting_forces}) .
 These loads were included in all of the following simulations to ensure they were all accurate.
 
-\subsubsection{Acceleration Load Case}
-\label{sec:acceleration_load_case}
+\noindent\textbf{Acceleration Load Case.}\label{sec:acceleration_load_case}
 
 The primary operational load case for a sprint-optimised vehicle is the longitudinal force generated during maximum acceleration. When the vehicle accelerates, inertia produces a rearward force on the chassis that must be resisted by the structural members connecting the drivetrain and suspension mounts.
 This force was calculated using Newton’s second law: $F = m \cdot a$ Where m is each components mass. Using the simulated peak acceleration: a = 1.33 \( g\), the resulting force was applied through the drivetrain mounting points and transmitted through the frame toward the suspension nodes.
@@ -621,26 +627,14 @@ The only region with elevated stress occurred near the suspension mounting point
 
 The final design complies with the required regulations, including angle of main roll hoop support, helmet clearance, main roll hoop angle, side impact structure, IAP size (square with length in figure), fully triangulated structure {fig. \ref{fig:Compliance}}. As well as cockpit opening dimensions, front bulkhead/leg cross-section, steering wheel clearance, seatbelt mount positioning (at main roll hoop cross-bar intersection), pedal box clearance, and packaging of all major components verified in CAD. While the current design provides a robust and cost-effective structural foundation, further work could focus on the integration of lightweight composite bodyworks, verified powertrain mounting structures and targeted aerodynamic packages to further reduce drag, alongside a physical testing phase to validate FEA predictions.
 
-\vspace{-16pt}
-\enlargethispage{20pt} 
-\section*{References}
-\vspace{-33pt}
-\begingroup
-    \begin{singlespace} % Overrides global double spacing
-        \begin{multicols}{2}
-            \scriptsize 
-            \setlength{\bibitemsep}{0pt} % Removes gap between entries% This forces the bibliography text to be small
-            \printbibliography[heading=none]
-        \end{multicols}
-    \end{singlespace}
-\endgroup
+\compactbib
 % --- END INLINE: TobyMcConnell/Engineering/toby_body.tex ---
 \end{refsection}
 
 \begin{refsection}
 \graphicspath{{../MichaelZiyangXing/}}
 % --- BEGIN INLINE: MichaelZiyangXing/fs_engineering_suspension_braking_compact.tex ---
-\chapter{Suspension, Steering and Rear Axle Design}
+\chapterauthor{Suspension, Steering and Rear Axle Design}{Ziyang Xing}
 \contribution{This chapter presents the author's individual engineering contribution to the Formula Student acceleration vehicle: the complete suspension, steering and braking layout, with detailed focus on the rear multi-link suspension, anti-squat/toe strategy, and inboard differential brake integration.}
 
 \newcommand{\checkme}[1]{\par\noindent\textbf{FACT-CHECK / TEAM INPUT REQUIRED:} #1\par}
@@ -878,13 +872,13 @@ The selected rear design uses a multi-link suspension with 100\% anti-squat, cor
 
 The design therefore provides an acceleration-event-specific rear axle concept rather than a generic Formula Student suspension. Its originality lies in combining suspension kinematics, brake packaging and drivetrain integration to support a single performance objective: minimising the \SI{75}{m} acceleration time while remaining rule compliant. The remaining work is to replace the marked factual placeholders with final team values and to validate the anti-squat, toe and inboard brake assumptions through calculation, simulation and final CAD checks.
 % --- END INLINE: MichaelZiyangXing/fs_engineering_suspension_braking_compact.tex ---
-\printbibliography
+\compactbib
 \end{refsection}
 
 \begin{refsection}
 \graphicspath{{yuze_assets/}}
 % --- BEGIN INLINE: Yuze Jiang/yuze_body.tex ---
-\chapter{Powertrain Design}
+\chapterauthor{Powertrain Design}{Yuze Jiang}
 
 \section{Powertrain Overview}
 
@@ -1345,14 +1339,14 @@ Overall, the design demonstrates an integrated approach that balances performanc
 
 This section is intentionally left blank to accommodate references and any potential updates or modifications that may be required during subsequent stages of the project.
 
-\printbibliography
+\compactbib
 % --- END INLINE: Yuze Jiang/yuze_body.tex ---
 \end{refsection}
 
 \begin{refsection}
 \graphicspath{{../PaulVogelberg/Engineering/}}
 % --- BEGIN INLINE: PaulVogelberg/Engineering/paul_body.tex ---
-\chapter{Accumulator Design}
+\chapterauthor{Accumulator Design}{Paul Vogelberg}
 
 \section{Introduction}
 This report presents the accumulator design for a Formula Student electric vehicle under an acceleration-event-only scenario.
@@ -1782,7 +1776,7 @@ Our current implementation, during the race, the car is only ever traction or po
 \subsection{Conclusion}
 The accumulator system design successfully combines proven supercapacitor technology with modular electrical and mechanical architecture to meet Formula Student requirements, optimised for the acceleration application. The analysis demonstrates that SCs provide equally effective quantitative performance as LiPo batteries, whilst providing a more affordable and reliable solution. The design provides a well-thought-out system that could be manufactured and integrated into the vehicle. Subsequent development phases should focus on prototype validation, thermal characterisation in realistic vehicle operating conditions, and iterative refinement based on test data.
 
-\printbibliography[title={References},prenote=urlcheck]
+\compactbib
 % --- END INLINE: PaulVogelberg/Engineering/paul_body.tex ---
 \end{refsection}
 
@@ -1790,7 +1784,7 @@ The accumulator system design successfully combines proven supercapacitor techno
 % Body uses `figures/...` paths; prefix must be Engineering root (not .../figures/).
 \graphicspath{{../HarryEmes/Engineering/}{../../figures/}}
 % --- BEGIN INLINE: HarryEmes/Engineering/harry_body.tex ---
-\chapter{Vehicle Dynamics Simulation}
+\chapterauthor{Vehicle Dynamics Simulation}{Harry Emes}
 % =====================================================================
 
 % ---------------------------------------------------------------------
@@ -3100,20 +3094,19 @@ Sections~\ref{sec:vv}--\ref{sec:discussion}:
 \end{itemize}
 
 % ---------------------------------------------------------------------
-\printbibliography
+\compactbib
 % ---------------------------------------------------------------------
 % --- END INLINE: HarryEmes/Engineering/harry_body.tex ---
 \end{refsection}
 
-% =====================================================================
-\part{Business Report}
-% Order: Toby, Paul, Ziyang Xing, Yuze, Harry
-% =====================================================================
+% --------------------------------------------------------------------
+% Business chapters: Toby, Paul, Ziyang Xing, Yuze, Harry
+% --------------------------------------------------------------------
 
 \begin{refsection}
 \graphicspath{{../TobyMcConnell/Business/}}
 % --- BEGIN INLINE: TobyMcConnell/Business/toby_business_body.tex ---
-\chapter{Market Analysis and Competition Analysis}
+\chapterauthor{Market Analysis and Competition Analysis}{Toby McConnell}
 
 \section{Introduction and Executive Summary}
 
@@ -3248,6 +3241,7 @@ The following analysis applies Porter’s Five Forces framework to evaluate the 
 
 \begin{table}[h]
 \centering
+\caption{Porter’s Five Forces analysis of the advanced vehicle testing industry}
 \footnotesize
 \singlespacing
 \begin{tabularx}{\textwidth}{|p{3.5cm}|p{1.7cm}|X|}
@@ -3265,9 +3259,6 @@ Threat of Substitutes & High & Alternative testing methods, including simulation
 Competitive Rivalry & Moderate & Competition is driven by a mix of testing providers, consultancies, and in-house capabilities. While few direct equivalents exist, indirect competition is strong, requiring clear differentiation in service offering. \\
 \hline
 \end{tabularx}
-\vspace{+8pt}
-\caption{Porter’s Five Forces analysis of the advanced vehicle testing industry}
-\vspace{-14pt}
 \end{table}
 
 The analysis indicates that high buyer power and the threat of substitutes—primarily software-based simulation—represent the most significant commercial hurdles. To mitigate these pressures, the platform must transition from a standard equipment vendor to an integrated validation partner. By providing "ground-truth" physical data that digital environments cannot fully replicate, the service reduces the efficacy of substitutes and establishes a specialized competitive niche. Furthermore, as the autonomous vehicle testing market remains nascent, few firms have accumulated significant long-term operational experience. This limits the extent of established best practices, creating a distinct opportunity for new entrants to shape emerging standards.
@@ -3279,6 +3270,7 @@ Having established the broader industry dynamics at a macro level, the analysis 
 
 \begin{table}[h]
 \centering
+\caption{Direct Competitors in Physical Vehicle Testing}
 \label{tab:direct_competitors}
 \footnotesize
 \singlespacing
@@ -3299,9 +3291,6 @@ HORIBA \cite{horiba_mobility} & Brake dynamometers & Provides controlled laborat
 AVL List & Vehicle testing and dynamometer systems & Established engineering validation systems with strong credibility but limited flexibility for rapid scenario adaptation. \\
 \hline
 \end{tabularx}
-\vspace{+8pt}
-\caption{Direct Competitors in Physical Vehicle Testing}
-\vspace{-30pt}
 \end{table}
 
 %These solutions typically involve trade-offs between realism, flexibility, and cost. As a result, none fully addresses the need for adaptable high-speed testing environments.
@@ -3313,6 +3302,7 @@ Indirect competitors include software-based simulation platforms and in-house OE
 
 \begin{table}[h]
 \centering
+\caption{Indirect Competitors in Autonomous Vehicle Validation}
 \label{tab:indirect_competitors}
 \footnotesize
 \singlespacing
@@ -3329,9 +3319,6 @@ In-house OEM Testing Rigs & Tesla, Toyota & Tailored testing infrastructure with
 Contract Proving Ground Services & Applus IDIADA, UTAC \cite{utac_millbrook} & High realism physical testing but expensive and constrained by scheduling limitations. \\
 \hline
 \end{tabularx}
-\vspace{+8pt}
-\caption{Indirect Competitors in Autonomous Vehicle Validation}
-\vspace{-16pt}
 \end{table}
 
 These indirect competitors highlight the broader validation ecosystem, where organisations combine multiple tools to achieve comprehensive testing. The proposed platform aims to complement rather than replace these solutions by providing a hybrid physical testing capability.
@@ -3497,26 +3484,14 @@ To maintain a competitive advantage, the platform must emphasise flexibility and
 
 The proposed platform fills a critical market gap by combining high realism with scenario flexibility for autonomous vehicle validation. With an estimated initial UK SOM of \$26 million, the business is positioned to capture a high-value niche by prioritizing agile EV startups as early adopters. To realize this commercial opportunity, the following section outlines the Strategy and Stakeholder Analysis required to manage industry gatekeepers and execute the long-term project roadmap.
 CHECK WITH PAUL!
-\vspace{-16pt}
-\enlargethispage{20pt} 
-\section*{References}
-\vspace{-33pt}
-\begingroup
-    \begin{singlespace} % Overrides global double spacing
-        \begin{multicols}{2}
-            \scriptsize 
-            \setlength{\bibitemsep}{0pt} % Removes gap between entries% This forces the bibliography text to be small
-            \printbibliography[heading=none]
-        \end{multicols}
-    \end{singlespace}
-\endgroup
+\compactbib
 % --- END INLINE: TobyMcConnell/Business/toby_business_body.tex ---
 \end{refsection}
 
 \begin{refsection}
 \graphicspath{{../PaulVogelberg/Business/}}
 % --- BEGIN INLINE: PaulVogelberg/Business/paul_business_body.tex ---
-\chapter{Strategy \& Stakeholder Analysis}
+\chapterauthor{Strategy \& Stakeholder Analysis}{Paul Vogelberg}
 \contribution{Paul Vogelberg}
 
 \section{Introduction to the Strategic Pivot}
@@ -3750,7 +3725,7 @@ Finally, the strategy to natively integrate into established CAM Testbed UK faci
 
 
 % --- END INLINE: PaulVogelberg/Business/paul_business_body.tex ---
-\printbibliography
+\compactbib
 \end{refsection}
 
 \begin{refsection}
@@ -3762,7 +3737,7 @@ Finally, the strategy to natively integrate into established CAM Testbed UK faci
 % Target length: approximately 14--15 pages with styling.sty, figures, and references
 % -----------------------------------------------------------------------------
 
-\chapter{Commercially Driven Design Requirements and Prototype Planning}
+\chapterauthor{Commercially Driven Design Requirements and Prototype Planning}{Ziyang Xing}
 \contribution{This chapter frames the design requirements and prototype plan for the autonomous emergency braking (AEB) test carrier from an Engineering Entrepreneurship and Management (EEM) perspective. It links technical requirements to UK customer needs, standards-led testing expectations, prototype-risk reduction, and commercialisation logic.}
 
 \section{Purpose and commercial framing}
@@ -3999,13 +3974,13 @@ Ethical issues arise because AEB testing is safety-related. Poor testing could c
 This chapter has argued that the AEB test carrier should be developed through a commercially driven requirements process. The UK market context creates a plausible opportunity for a lower-cost, modular, standards-aware platform that can support repeatable active-safety testing. The requirements are therefore not only technical specifications; they are conditions for customer confidence. The staged roadmap from Explore to Validate, Demonstrate, and Convince reduces early financial risk while building towards a customer-ready evidence package. The project remains dependent on validation of performance, demand, cost, and safety assumptions, but the proposed plan provides a coherent route from an engineering prototype to a commercially meaningful UK testing proposition.
 
 % --- END INLINE: MichaelZiyangXing/eem_design_requirements_prototype_planning_compact.tex ---
-\printbibliography
+\compactbib
 \end{refsection}
 
 \begin{refsection}
 \graphicspath{{yuze_assets/}}
 % --- BEGIN INLINE: Yuze Jiang/yuze_business_body.tex ---
-\chapter{Supply Chain Design}
+\chapterauthor{Supply Chain Design}{Yuze Jiang}
 
 \section{Introduction}
 
@@ -4296,39 +4271,18 @@ The data for different subsystems were provided by team members responsible for 
 
 Detailed data sources should be provided in the references for each corresponding section.
 
-\printbibliography
+\compactbib
 % --- END INLINE: Yuze Jiang/yuze_business_body.tex ---
 \end{refsection}
 
-% Harry's Business chapter uses inline-style chapters via these macros.
-% Loaded last so it only affects the remaining (final) refsection.
+% Harry's Business chapter uses helper environments from this file
+% (tightitemize, tightenumerate). Loaded only just before his refsection.
 % --- BEGIN INLINE: HarryEmes/Business/harry_business_macros.tex ---
-% Shared compact chapter headings + list helpers for Harry's business chapter.
-% Loaded by standalone main.tex and by CombinedBusiness before Harry's refsection.
-
-\makeatletter
-\renewcommand\chapter{\par%
-  \thispagestyle{plain}%
-  \global\@topnum\z@
-  \@afterindentfalse
-  \secdef\@chapter\@schapter}
-\renewcommand{\@makechapterhead}[1]{%
-  \vspace*{10pt}%
-  {\parindent \z@ \raggedright \normalfont
-    \ifnum \c@secnumdepth >\m@ne
-      \Large\bfseries \@chapapp\ \thechapter: \ #1%
-    \else
-      \Large\bfseries #1%
-    \fi
-    \par\nobreak
-    \vskip 8pt}}
-\renewcommand{\@makeschapterhead}[1]{%
-  \vspace*{10pt}%
-  {\parindent \z@ \raggedright
-    \normalfont
-    \Large\bfseries #1\par\nobreak
-    \vskip 8pt}}
-\makeatother
+% Helper environments for Harry's business chapter (tight lists).
+% In the merged build the chapter formatting matches every other chapter
+% (no compact-heading override), per the user's "same numbering style"
+% requirement. The original compact-chapter override is intentionally
+% omitted here.
 
 \newenvironment{tightitemize}%
   {\begin{itemize}\setlength{\itemsep}{2pt}\setlength{\parskip}{0pt}\setlength{\topsep}{4pt}}%
@@ -4342,8 +4296,7 @@ Detailed data sources should be provided in the references for each correspondin
 \graphicspath{{../HarryEmes/Business/figures/}{../HarryEmes/Business/}}
 % --- BEGIN INLINE: HarryEmes/Business/harry_business_body.tex ---
 % =====================================================================
-\chapter*{Executive Summary}
-\addcontentsline{toc}{chapter}{Executive Summary}
+\chapterauthor{Financial Analysis}{Harry Emes}
 % =====================================================================
 
 \noindent The AEB~Rabbit is a supercapacitor-powered Automated Emergency
@@ -4402,15 +4355,15 @@ compounded shortfalls in day-rate and utilisation (external)
 or fleet downtime (internal), and financial viability in both
 directions is dominated by a single assumption -- the peer-group
 terminal-value multiple. Recommendations in
-Chapter~\ref{ch:concl}.
+Section~\ref{ch:concl}.
 
 % =====================================================================
-\chapter{Scope and methodology}
+\section{Scope and methodology}
 \label{ch:intro}
 % =====================================================================
 
 % ---------------------------------------------------------------------
-\section{Why the TaaS structure requires dedicated financial evaluation}
+\subsection{Why the TaaS structure requires dedicated financial evaluation}
 \label{sec:why_taas}
 % ---------------------------------------------------------------------
 
@@ -4468,12 +4421,12 @@ acceptance by the UK market-access gatekeepers McConnell identifies
 Thatcham~\cite{cam_testbed_uk,ccav,thatcham}.
 
 % =====================================================================
-\chapter{Cost structure, revenue model and five-year forecast}
+\section{Cost structure, revenue model and five-year forecast}
 \label{ch:cost_revenue}
 % =====================================================================
 
 % ---------------------------------------------------------------------
-\section{CAPEX model: the cost of ownership the operator absorbs}
+\subsection{CAPEX model: the cost of ownership the operator absorbs}
 \label{sec:capex}
 % ---------------------------------------------------------------------
 
@@ -4544,7 +4497,7 @@ loop (and therefore stays in service beyond the modelled window) or
 retired in line with safety-critical-testing industry norms.
 
 % ---------------------------------------------------------------------
-\section{OPEX model: a fixed-cost-heavy delivery operation}
+\subsection{OPEX model: a fixed-cost-heavy delivery operation}
 \label{sec:opex}
 % ---------------------------------------------------------------------
 
@@ -4608,7 +4561,7 @@ travel-and-subsistence (\pounds400), and amortised vehicle wear
 the break-even analysis below.
 
 % ---------------------------------------------------------------------
-\section{Revenue model: every pound tethered to fleet utilisation}
+\subsection{Revenue model: every pound tethered to fleet utilisation}
 \label{sec:revenue}
 % ---------------------------------------------------------------------
 
@@ -4658,7 +4611,7 @@ providing headroom for the bull-scenario analysis in
 Section~\ref{sec:scenarios}.
 
 % ---------------------------------------------------------------------
-\section{CAPEX inversion timeline}
+\subsection{CAPEX inversion timeline}
 \label{sec:inversion}
 % ---------------------------------------------------------------------
 
@@ -4689,11 +4642,11 @@ but cumulative \emph{gross profit} does not cross cumulative CAPEX
 until Y3, and cumulative \emph{EBIT} does not cross cumulative
 CAPEX until Y5. The CAPEX inversion is therefore a necessary but
 not sufficient condition for financial viability; the break-even
-and NPV analyses in Chapter~\ref{ch:be_npv} assess the sufficient
+and NPV analyses in Section~\ref{ch:be_npv} assess the sufficient
 condition.
 
 % ---------------------------------------------------------------------
-\section{Five-year profit \& loss forecast}
+\subsection{Five-year profit \& loss forecast}
 \label{sec:pnl}
 % ---------------------------------------------------------------------
 
@@ -4751,7 +4704,7 @@ Net profit & -402 & -292 & -156 & 12 & 293 \\
 \end{figure}
 
 % ---------------------------------------------------------------------
-\section{Five-year cash-flow forecast}
+\subsection{Five-year cash-flow forecast}
 \label{sec:cash_flow}
 % ---------------------------------------------------------------------
 
@@ -4805,12 +4758,12 @@ Second, Y5 free cash flow is \pounds179\,k positive even after the
 self-funding by Y5.
 
 % =====================================================================
-\chapter{Capital-budgeting assessment}
+\section{Capital-budgeting assessment}
 \label{ch:be_npv}
 % =====================================================================
 
 % ---------------------------------------------------------------------
-\section{Break-even analysis}
+\subsection{Break-even analysis}
 \label{sec:breakeven}
 % ---------------------------------------------------------------------
 
@@ -4845,7 +4798,7 @@ the explicit financial quantification of the ``TaaS burden''
 period discussed in Section~\ref{sec:inversion}.
 
 % ---------------------------------------------------------------------
-\section{NPV and IRR -- the capital-budgeting view}
+\subsection{NPV and IRR -- the capital-budgeting view}
 \label{sec:npv}
 % ---------------------------------------------------------------------
 
@@ -4921,7 +4874,7 @@ very-high-return asset if it can be sold at the terminal multiple;
 it does not imply year-by-year operating returns at that level.
 
 % ---------------------------------------------------------------------
-\section{Sensitivity analysis}
+\subsection{Sensitivity analysis}
 \label{sec:sensitivity}
 % ---------------------------------------------------------------------
 
@@ -4973,7 +4926,7 @@ control -- management attention earns the highest marginal return
 there, rather than on cost-out or CAPEX engineering.
 
 % ---------------------------------------------------------------------
-\section{Scenario analysis}
+\subsection{Scenario analysis}
 \label{sec:scenarios}
 % ---------------------------------------------------------------------
 
@@ -5023,12 +4976,12 @@ Bear (-30\% days, -10\% rate, +10\% var cost) & -492 & -462 & -441 & -400 & -285
 \end{figure}
 
 % =====================================================================
-\chapter{Financial risk: the downtime case}
+\section{Financial risk: the downtime case}
 \label{ch:risk_fin}
 % =====================================================================
 
 McConnell's risk taxonomy~\cite{mcconnell_business} treats the
-industry-level risk environment. This chapter adds the
+industry-level risk environment. This section adds the
 financial-risk view: how robust are the NPV and EBIT forecasts to
 an \emph{execution}-side failure on the fleet-maintenance
 dependency? In a TaaS business where revenue is utilisation-tethered
@@ -5036,7 +4989,7 @@ dependency? In a TaaS business where revenue is utilisation-tethered
 execution-risk question.
 
 % ---------------------------------------------------------------------
-\section{Downtime sensitivity -- quantifying the maintenance dependency}
+\subsection{Downtime sensitivity -- quantifying the maintenance dependency}
 \label{sec:downtime}
 % ---------------------------------------------------------------------
 
@@ -5118,7 +5071,7 @@ capability should be benchmarked against this NPV-protection
 value, not the headline opex line.
 
 % ---------------------------------------------------------------------
-\section{Financial risk: cash-headroom assessment}
+\subsection{Financial risk: cash-headroom assessment}
 \label{sec:cash_risk}
 % ---------------------------------------------------------------------
 
@@ -5153,12 +5106,12 @@ cash-runway protection is the financial-evaluation lens that
 McConnell's industry-risk taxonomy does not cover.
 
 % =====================================================================
-\chapter{Funding strategy, valuation and financial KPIs}
+\section{Funding strategy, valuation and financial KPIs}
 \label{ch:funding}
 % =====================================================================
 
 % ---------------------------------------------------------------------
-\section{Funding strategy and use of funds}
+\subsection{Funding strategy and use of funds}
 \label{sec:funding}
 % ---------------------------------------------------------------------
 
@@ -5204,7 +5157,7 @@ thresholds~\cite{gompers2020} by a wide margin; a doubling of CAC
 still clears the 3$\times$ LTV/CAC rule.
 
 % ---------------------------------------------------------------------
-\section{Valuation (comparable multiples)}
+\subsection{Valuation (comparable multiples)}
 \label{sec:valuation}
 % ---------------------------------------------------------------------
 
@@ -5249,11 +5202,11 @@ The plan is tracked on eight KPIs: \emph{revenue},
 model), plus \emph{incident-free test days} and
 \emph{unplanned fleet downtime} -- the two execution-level signals
 that protect the financial downside case from
-Chapter~\ref{ch:risk_fin}. A red reading on any one triggers a
+Section~\ref{ch:risk_fin}. A red reading on any one triggers a
 board-level review.
 
 % =====================================================================
-\chapter{Conclusions and Recommendations}
+\section{Conclusions and Recommendations}
 \label{ch:concl}
 % =====================================================================
 
@@ -5314,7 +5267,7 @@ Protecting that assumption is both the cheapest and
 highest-leverage financial action the operator can take.
 
 % =====================================================================
-\printbibliography[heading=bibintoc]
+\compactbib
 % --- END INLINE: HarryEmes/Business/harry_business_body.tex ---
 \end{refsection}
 

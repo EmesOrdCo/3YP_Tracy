@@ -1,4 +1,4 @@
-\chapter{Chassis Design}
+\chapterauthor{Chassis Design}{Toby McConnell}
 \vspace{-25pt}
 \section{Introduction and Design Philosophy}
 
@@ -77,6 +77,8 @@ The weighting is heavily biased toward Cost and Manufacturing (65 \% total). Tab
 
 \begin{table}[h]
 \centering
+\caption{Cost-per-second of improvement for Lighter Chassis Option}
+\label{tab:chassis_cost_performance}
 \begin{tabular}{|l|c|c|c|c|}
 \hline
 \textbf{Chassis Type} & \makecell{\textbf{Weight Est.} \\ \textbf{(kg)}} & \makecell{\textbf{Price Est.} \\ \textbf{(£)}} & \makecell{\textbf{Finish Time Est.} \\ \textbf{(s)}} & \makecell{\textbf{£ per s} \\ \textbf{lost}} \\
@@ -85,10 +87,6 @@ Heavy Steel Spaceframe (Baseline) & 50 & 1000 & 3.60 & -- \\
 Light Carbon Monocoque & 20 & 2500 & 3.56 & 37500 \\
 \hline
 \end{tabular}
-\vspace{+8pt}
-\caption{Cost-per-second of improvement for Lighter Chassis Option}
-\label{tab:chassis_cost_performance}
-\vspace{-16pt}
 \end{table}
 
 Strength was weighted highly to ensure driver safety, perfomance in crashes, and compliance with regulations. Stiffness is typically prioritised in circuit-focused vehicles to improve cornering performance; however, this is less critical for a drag-optimised design. It was still assigned a rating of 2, as sufficient stiffness is required to ensure drivetrain loads are efficiently transferred to the wheels rather than being absorbed through chassis deflection. Factors like Material Cost, Availability, and Manufacturing Simplicity ensure focus on a practical, cost-efficient design. The Steel Spaceframe scored highest in the Pugh Matrix and was the chosen option because it offers the most balanced approach: trading the marginal performance gains of composites for its reliability, simplicity and price \cite{racecar_engineering_oxford_brookes} \cite{tutf_composite_build}.
@@ -121,6 +119,7 @@ Using a preliminary CAD model for the spaceframe built on SolidWorks using weldm
 
 \begin{table}[h]
     \centering
+    \caption{Comparison of candidate chassis materials}
     \label{tab:chassis_materials}
     \footnotesize
     \begin{tabular}{|l|c|c|c|c|c|}
@@ -133,9 +132,6 @@ Using a preliminary CAD model for the spaceframe built on SolidWorks using weldm
         {Docol R8}\cite{aedmetals_docol_r8} & 30 & 1,200 & 800 & 3.57 & Moderate (TIG/MIG) \\
         \hline
     \end{tabular}
-    \vspace{+8pt}
-    \caption{Comparison of candidate chassis materials}
-    \vspace{-16pt}
 \end{table}
 
 The manufacturing complexity scores are due to the fact that 4130 chromoly requires careful control of welding heat input and cooling rates to avoid embrittlement in the heat-affected zone, typically necessitating TIG welding and greater operator skill. Docol R8, while less sensitive to heat-affected zone effects, has very high strength and hardness which increases tool wear during cutting, drilling, and notching \cite{millerwelds2024}.
@@ -155,7 +151,8 @@ See the different tube diameters used in Table \ref{tab:tube_diameter_strategy}
 
 \begin{table}[h]
     \centering
-    %\caption{Tube diameter strategy}
+    \caption{Tube diameter strategy}
+    \label{tab:tube_diameter_strategy}
     \footnotesize
     \begin{tabular}{|l|c|p{4.2cm}|p{6.2cm}|}
         \hline
@@ -168,10 +165,6 @@ See the different tube diameters used in Table \ref{tab:tube_diameter_strategy}
         Secondary Bracing & 20 $\times$ 2.0 & No direct regulatory requirement for non-impact structural members. & Used for non-critical bracing to reduce mass while maintaining adequate stiffness. See \ref{sec:chassis_architecture} \\
         \hline
     \end{tabular}
-    \vspace{+8pt}
-    \caption{Tube diameter strategy}
-    \vspace{-16pt}
-    \label{tab:tube_diameter_strategy}
 \end{table}
  \vspace{-16pt}
 \section{Chassis Architecture}
@@ -230,6 +223,8 @@ A 200 ± 50 mm by 450 ± 100 mm template provided by the wheel team was used to 
 
 \begin{table}[h]
     \centering
+    \caption{Final chassis layout and mass distribution summary}
+    \label{tab:layout_summary}
     \begin{tabular}{|l|c|}
         \hline
         \textbf{Parameter} & \textbf{Value} \\
@@ -242,10 +237,6 @@ A 200 ± 50 mm by 450 ± 100 mm template provided by the wheel team was used to 
         Rear Weight Distribution & 69.5 \% \\
         \hline
     \end{tabular}
-    \vspace{+8pt}
-    \caption{Final chassis layout and mass distribution summary}
-    \vspace{-16pt}
-    \label{tab:layout_summary}
 \end{table}
 \vspace{-16pt}
 \section{Manufacturing and Structural Integrity Report}
@@ -254,8 +245,8 @@ When constructing the chassis the strength of the welds is critical. The princip
 
 \subsection{Tube and Weld Capacity Calculation}
 
-\textbf{Tube Properties}
-\vspace{-16pt}
+\noindent\textbf{Tube Properties}\par
+\vspace{4pt}
 \begin{table}[h]
     \centering
     \begin{tabular}{|l|c|}
@@ -270,10 +261,10 @@ When constructing the chassis the strength of the welds is critical. The princip
         \hline
     \end{tabular}
 \end{table}
-\vspace{-8pt}
+\vspace{6pt}
 
-\textbf{Tube Section Properties}
-\vspace{-10pt}
+\noindent\textbf{Tube Section Properties}\par
+\vspace{4pt}
 \begin{align*}
 A &= \frac{\pi}{4}(D^2 - d^2)
 = \frac{\pi}{4}(25^2 - 21^2)
@@ -283,8 +274,8 @@ Z &= \frac{\pi (D^4 - d^4)}{32D}
 = 763.5\ \text{mm}^3
 \end{align*}
 
-\textbf{Tube Capacity}
-\vspace{-10pt}
+\noindent\textbf{Tube Capacity}\par
+\vspace{4pt}
 \begin{align*}
 F_{\text{tube}} &= A \sigma_y
 = 50\,575\ \text{N} \ (50.6\ \text{kN}) \\
@@ -292,8 +283,8 @@ M_{\text{tube}} &= Z \sigma_y
 = 267\,225\ \text{N·mm} \ (267.2\ \text{Nm})
 \end{align*}
 
-\textbf{Weld Properties}
-\vspace{-10pt}
+\noindent\textbf{Weld Properties}\par
+\vspace{4pt}
 \begin{table}[h]
     \centering
     \begin{tabular}{|l|c|}
@@ -306,10 +297,10 @@ M_{\text{tube}} &= Z \sigma_y
         \hline
     \end{tabular}
 \end{table}
-\vspace{-8pt}
+\vspace{6pt}
 
-\textbf{Weld Capacity}
-\vspace{-10pt}
+\noindent\textbf{Weld Capacity}\par
+\vspace{4pt}
 \begin{align*}
 A_w &= \pi D t_e
 = 194.0\ \text{mm}^2 \\
@@ -321,10 +312,12 @@ M_{\text{weld}} &= Z_w \tau_{\text{allow}}
 = 307\,890\ \text{N·mm} \ (307.9\ \text{Nm})
 \end{align*}
 
-\vspace{-10pt}
+\vspace{6pt}
 
 \begin{table}[H]
     \centering
+    \caption{Comparative safety margin between tube and weld capacities.}
+    \label{tab:weld_vs_tube}
         \footnotesize
         \singlespacing
         \begin{tabular}{|l|c|c|c|}
@@ -335,16 +328,14 @@ M_{\text{weld}} &= Z_w \tau_{\text{allow}}
         Bending Moment & 267.2 Nm & 307.9 Nm & Tube Fails First \\
         \hline
     \end{tabular}
-    \vspace{+8pt}
-    \caption{Comparative safety margin between tube and weld capacities.}
-    \label{tab:weld_vs_tube}
-    \vspace{-20pt}
 \end{table}
 
 Having justified the safety of the welds, practical fabrication considerations were addressed to maximise the quality of the chassis construction. The design features a lot of multi-member nodes, where up to five tubes intersect: this introduces geometric interference that restricts MIG torch access and increases the risk of poor penetration, therefore eccentricities or slight offsets between tubes are introduced to maintain weld accessibility. These nodes also act as large heat sinks, creating thermal distortion during cooling; this is mitigated through a balanced welding sequence applied in staggered increments to distribute heat evenly. A controlled bottom-up fabrication workflow is used, beginning with jigging the floor structure on a flat table with dummy suspension tabs to establish a rigid reference plane, followed by precision hole-saw notching and CAD generates templates for the complex joints, such as in the roll hoops, and finally full chassis tacking prior to final welding to verify squareness and maintain suspension hardpoint tolerances. See table \ref{tab:chassis_cost_breakdown} for the estimated total cost of this construction.
 
 \begin{table}[h]
     \centering
+    \caption{Estimated fabrication cost breakdown for chassis.}
+    \label{tab:chassis_cost_breakdown}
     \footnotesize
     \begin{tabular}{|l|l|c|}
         \hline
@@ -360,10 +351,6 @@ Having justified the safety of the welds, practical fabrication considerations w
         \textbf{TOTAL} &  & \textbf{£833} \\
         \hline
     \end{tabular}
-    \vspace{+8pt}
-    \caption{Estimated fabrication cost breakdown for chassis.}
-    \label{tab:chassis_cost_breakdown}
-    \vspace{-25pt}
 \end{table}
 
 \section{Chassis Performance Verification with Finite Element Analysis}
@@ -402,13 +389,11 @@ It is important to note that lateral stiffness simulations were not deemed necce
     %\label{fig:both}
 \end{figure}
 
-\subsubsection{Resting Load Case}
-
+\noindent\textbf{Resting Load Case.}
 The first simulation considered the static resting condition of the vehicle. This load case represents the forces acting on the chassis due to the weight of the chassis itself (red), driver (pink), motor (black), and inverter + coolant + supercapcitors (grey) when the car is stationary (fig. \ref{fig:resting_forces}) .
 These loads were included in all of the following simulations to ensure they were all accurate.
 
-\subsubsection{Acceleration Load Case}
-\label{sec:acceleration_load_case}
+\noindent\textbf{Acceleration Load Case.}\label{sec:acceleration_load_case}
 
 The primary operational load case for a sprint-optimised vehicle is the longitudinal force generated during maximum acceleration. When the vehicle accelerates, inertia produces a rearward force on the chassis that must be resisted by the structural members connecting the drivetrain and suspension mounts.
 This force was calculated using Newton’s second law: $F = m \cdot a$ Where m is each components mass. Using the simulated peak acceleration: a = 1.33 \( g\), the resulting force was applied through the drivetrain mounting points and transmitted through the frame toward the suspension nodes.
@@ -531,16 +516,4 @@ The only region with elevated stress occurred near the suspension mounting point
 
 The final design complies with the required regulations, including angle of main roll hoop support, helmet clearance, main roll hoop angle, side impact structure, IAP size (square with length in figure), fully triangulated structure {fig. \ref{fig:Compliance}}. As well as cockpit opening dimensions, front bulkhead/leg cross-section, steering wheel clearance, seatbelt mount positioning (at main roll hoop cross-bar intersection), pedal box clearance, and packaging of all major components verified in CAD. While the current design provides a robust and cost-effective structural foundation, further work could focus on the integration of lightweight composite bodyworks, verified powertrain mounting structures and targeted aerodynamic packages to further reduce drag, alongside a physical testing phase to validate FEA predictions.
 
-\vspace{-16pt}
-\enlargethispage{20pt} 
-\section*{References}
-\vspace{-33pt}
-\begingroup
-    \begin{singlespace} % Overrides global double spacing
-        \begin{multicols}{2}
-            \scriptsize 
-            \setlength{\bibitemsep}{0pt} % Removes gap between entries% This forces the bibliography text to be small
-            \printbibliography[heading=none]
-        \end{multicols}
-    \end{singlespace}
-\endgroup
+\compactbib

@@ -61,10 +61,29 @@
 % --- Heading Spacing ---
 % Keep global double spacing, but reduce excessive whitespace around headings.
 \titleformat{\chapter}[hang]{\Huge\bfseries}{\chaptername\ \thechapter}{1em}{}
-\titlespacing*{\chapter}{0pt}{0pt}{10pt}
+% Extra space below chapter block so first section sits clearly below the author line.
+\titlespacing*{\chapter}{0pt}{0pt}{24pt}
 \titlespacing*{\section}{0pt}{10pt}{4pt}
 \titlespacing*{\subsection}{0pt}{8pt}{3pt}
 \titlespacing*{\subsubsection}{0pt}{6pt}{2pt}
+
+% Chapter title + author line. TOC / PDF bookmark: "Title (Author)".
+% Author line: bold, larger; tight to title; extra space before first section (see \titlespacing*{\chapter}).
+\newcommand{\chapterauthor}[2]{%
+  \chapter[#1 (#2)]{%
+    \begingroup
+    \hyphenpenalty=10000\exhyphenpenalty=10000\relax
+    #1%
+    \endgroup
+    \texorpdfstring{%
+      \mbox{}\\[2pt]%
+      \begingroup
+      \setstretch{1}\selectfont
+      \normalfont\Large\bfseries Section Author: #2%
+      \endgroup
+    }{Section Author: #2}%
+  }%
+}
 
 % --- Float Packing (page-limited report) ---
 % Balanced float profile: improve local order without large page-count penalty.
@@ -83,6 +102,8 @@
 \RequirePackage{caption}
 \DeclareCaptionFont{reportdoublespacing}{\doublespacing}
 % Requirement: Table captions above, Figure captions below [cite: 74, 75]
+% Note: caption package's position=above only sets spacing; the caption must
+% appear \emph{before} \begin{tabular} in source for it to print above the grid.
 \captionsetup{font={normalsize,reportdoublespacing}, labelfont={bf,normalsize}}
 \captionsetup[sub]{font={normalsize,reportdoublespacing}, labelfont={bf,normalsize}}
 \captionsetup[table]{position=above, skip=10pt}

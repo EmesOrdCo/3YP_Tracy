@@ -1,29 +1,8 @@
-% Shared compact chapter headings + list helpers for Harry's business chapter.
-% Loaded by standalone main.tex and by CombinedBusiness before Harry's refsection.
-
-\makeatletter
-\renewcommand\chapter{\par%
-  \thispagestyle{plain}%
-  \global\@topnum\z@
-  \@afterindentfalse
-  \secdef\@chapter\@schapter}
-\renewcommand{\@makechapterhead}[1]{%
-  \vspace*{10pt}%
-  {\parindent \z@ \raggedright \normalfont
-    \ifnum \c@secnumdepth >\m@ne
-      \Large\bfseries \@chapapp\ \thechapter: \ #1%
-    \else
-      \Large\bfseries #1%
-    \fi
-    \par\nobreak
-    \vskip 8pt}}
-\renewcommand{\@makeschapterhead}[1]{%
-  \vspace*{10pt}%
-  {\parindent \z@ \raggedright
-    \normalfont
-    \Large\bfseries #1\par\nobreak
-    \vskip 8pt}}
-\makeatother
+% Helper environments for Harry's business chapter (tight lists).
+% In the merged build the chapter formatting matches every other chapter
+% (no compact-heading override), per the user's "same numbering style"
+% requirement. The original compact-chapter override is intentionally
+% omitted here.
 
 \newenvironment{tightitemize}%
   {\begin{itemize}\setlength{\itemsep}{2pt}\setlength{\parskip}{0pt}\setlength{\topsep}{4pt}}%

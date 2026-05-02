@@ -24,6 +24,24 @@
 
 \numberwithin{equation}{section}
 
+% Uniform compact 2-column References block (modelled on Toby's Engineering chapter).
+% Use \compactbib instead of \printbibliography wherever possible.
+\newcommand{\compactbib}{%
+  \vspace{-16pt}%
+  \enlargethispage{20pt}%
+  \section*{References}%
+  \vspace{-33pt}%
+  \begingroup
+    \begin{singlespace}%
+      \begin{multicols}{2}%
+        \scriptsize
+        \setlength{\bibitemsep}{0pt}%
+        \printbibliography[heading=none]%
+      \end{multicols}%
+    \end{singlespace}%
+  \endgroup
+}
+
 % --- Bibliographies (one entry per file; Yuze's bib is shared by his two chapters) ---
 \addbibresource{../TobyMcConnell/Engineering/references.bib}
 \addbibresource{../MichaelZiyangXing/references_engineering.bib}
@@ -51,16 +69,19 @@
 \maketitle
 \newpage
 
-\pagenumbering{arabic}
+% Front matter (TOC) in roman numerals, body resets to arabic.
+\pagenumbering{roman}
 \setcounter{page}{1}
 
 \tableofcontents
 \newpage
 
-% =====================================================================
-\part{Engineering Report}
-% Order: Toby, Ziyang Xing, Yuze, Paul, Harry
-% =====================================================================
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% --------------------------------------------------------------------
+% Engineering chapters: Toby, Ziyang Xing, Yuze, Paul, Harry
+% --------------------------------------------------------------------
 
 \begin{refsection}
 \graphicspath{{../TobyMcConnell/Engineering/}}
@@ -70,7 +91,7 @@
 \begin{refsection}
 \graphicspath{{../MichaelZiyangXing/}}
 \input{../MichaelZiyangXing/fs_engineering_suspension_braking_compact}
-\printbibliography
+\compactbib
 \end{refsection}
 
 \begin{refsection}
@@ -89,10 +110,9 @@
 \input{../HarryEmes/Engineering/harry_body}
 \end{refsection}
 
-% =====================================================================
-\part{Business Report}
-% Order: Toby, Paul, Ziyang Xing, Yuze, Harry
-% =====================================================================
+% --------------------------------------------------------------------
+% Business chapters: Toby, Paul, Ziyang Xing, Yuze, Harry
+% --------------------------------------------------------------------
 
 \begin{refsection}
 \graphicspath{{../TobyMcConnell/Business/}}
@@ -102,13 +122,13 @@
 \begin{refsection}
 \graphicspath{{../PaulVogelberg/Business/}}
 \input{../PaulVogelberg/Business/paul_business_body}
-\printbibliography
+\compactbib
 \end{refsection}
 
 \begin{refsection}
 \graphicspath{{../MichaelZiyangXing/}}
 \input{../MichaelZiyangXing/eem_design_requirements_prototype_planning_compact}
-\printbibliography
+\compactbib
 \end{refsection}
 
 \begin{refsection}
@@ -116,8 +136,8 @@
 \input{yuze_business_body.tex}
 \end{refsection}
 
-% Harry's Business chapter uses inline-style chapters via these macros.
-% Loaded last so it only affects the remaining (final) refsection.
+% Harry's Business chapter uses helper environments from this file
+% (tightitemize, tightenumerate). Loaded only just before his refsection.
 \input{../HarryEmes/Business/harry_business_macros.tex}
 
 \begin{refsection}
