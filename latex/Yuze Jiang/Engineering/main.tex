@@ -1,3 +1,57 @@
+\documentclass[11pt, a4paper]{report}
+\makeatletter
+\def\input@path{{../../}}
+\makeatother
+\usepackage{../../styling}
+\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
+\DefineBibliographyStrings{english}{bibliography = {References}}
+\usepackage{tocloft}
+\usepackage{multirow}
+\usepackage{multicol}
+
+% Reduce vertical space between the Contents title and first entry.
+\setlength{\cftbeforetoctitleskip}{0pt}
+\setlength{\cftaftertoctitleskip}{6pt}
+
+\numberwithin{equation}{section}
+
+% Uniform compact 2-column References block
+\newcommand{\compactbib}{%
+  \vspace{-16pt}%
+  \enlargethispage{20pt}%
+  \section*{References}%
+  \vspace{-33pt}%
+  \begingroup
+    \begin{singlespace}%
+      \begin{multicols}{2}%
+        \scriptsize
+        \setlength{\bibitemsep}{0pt}%
+        \printbibliography[heading=none]%
+      \end{multicols}%
+    \end{singlespace}%
+  \endgroup
+}
+
+\addbibresource{../../yuze_references.bib}
+
+\title{Powertrain Design for Formula Student Acceleration Event}
+\author{Yuze Jiang}
+\date{\today}
+
+\begin{document}
+
+\pagenumbering{gobble}
+
+\maketitle
+
+\newpage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\tableofcontents
+\newpage
+
 \chapterauthor{Powertrain Design}{Yuze Jiang}
 
 \section{Powertrain Overview}
@@ -41,7 +95,7 @@ Other factors, such as cost and component lead time, must also be considered. Tr
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{powertrain_block_diagram_1.png}
+    \includegraphics[width=0.8\textwidth]{figures/powertrain_block_diagram_1.png}
     \caption{Block Diagram for Powertrain System}
     \label{fig:powertrain}
 \end{figure}
@@ -149,7 +203,7 @@ This ensures that the motor operates within the power limit while still deliveri
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{YASA_Motor_Operation_Graph.png}
+    \includegraphics[width=0.5\linewidth]{figures/YASA_Motor_Operation_Graph.png}
     \caption{YASA P400R Operation Curve}
     \label{fig:motor_operation}
 \end{figure}
@@ -259,7 +313,7 @@ The controller processes sensor inputs, including accelerator and brake pedal si
 
 \begin{figure}
         \centering
-        \includegraphics[width=0.5\linewidth]{Block_Diagram_for_Control_System.png}
+        \includegraphics[width=0.5\linewidth]{figures/Block_Diagram_for_Control_System.png}
         \caption{Block Diagram for Control System}
         \label{fig:control_system_block}
 \end{figure}
@@ -348,7 +402,7 @@ The SDC is implemented as a series-connected circuit of safety devices, includin
 %bigger figure
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{Shutdown_Circuit_Design.png}
+    \includegraphics[width=0.5\linewidth]{figures/Shutdown_Circuit_Design.png}
     \caption{ Shutdown Circuit Design\cite{fs-ev-rules2026}
     }
     \label{fig:shutdown_circuit_design}
@@ -436,7 +490,7 @@ The results indicate that the configuration with a differential achieves a lower
 The differential is selected based on minimising weight and cost while ensuring sufficient torque capacity.
 
 A comparison of candidate options shows that the Drexler FSAE LSD \cite{Drexler_FSAE_LSD_data_sheet}
-achieves the highest overall score due to its low mass and adequate torque capability. Therefore, it is selected as the most suitable differential for the drivetrain system.
+achievex the highest overall score due to its low mass and adequate torque capability. Therefore, it is selected as the most suitable differential for the drivetrain system.
 
 \section{Summary}
 
@@ -460,3 +514,5 @@ Overall, the design demonstrates an integrated approach that balances performanc
 This section is intentionally left blank to accommodate references and any potential updates or modifications that may be required during subsequent stages of the project.
 
 \compactbib
+
+\end{document}

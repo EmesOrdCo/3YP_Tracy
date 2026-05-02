@@ -1,8 +1,62 @@
+\documentclass[11pt, a4paper]{report}
+\makeatletter
+\def\input@path{{../../}}
+\makeatother
+\usepackage{../../styling}
+\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
+\DefineBibliographyStrings{english}{bibliography = {References}}
+\usepackage{tocloft}
+\usepackage{tabularx}
+\usepackage{multicol}
+
+% Reduce vertical space between the Contents title and first entry.
+\setlength{\cftbeforetoctitleskip}{0pt}
+\setlength{\cftaftertoctitleskip}{6pt}
+
+\numberwithin{equation}{section}
+
+% Uniform compact 2-column References block
+\newcommand{\compactbib}{%
+  \vspace{-16pt}%
+  \enlargethispage{20pt}%
+  \section*{References}%
+  \vspace{-33pt}%
+  \begingroup
+    \begin{singlespace}%
+      \begin{multicols}{2}%
+        \scriptsize
+        \setlength{\bibitemsep}{0pt}%
+        \printbibliography[heading=none]%
+      \end{multicols}%
+    \end{singlespace}%
+  \endgroup
+}
+
+\addbibresource{../../yuze_references.bib}
+
+\title{Supply Chain Design}
+\author{Yuze Jiang}
+\date{\today}
+
+\begin{document}
+
+\pagenumbering{gobble}
+
+\maketitle
+
+\newpage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\tableofcontents
+\newpage
+
 \chapterauthor{Supply Chain Design}{Yuze Jiang}
 
 \section{Introduction}
 
-This part of the report examines the supply chain design of a Formula Student “rabbit” vehicle used for autonomous emergency braking (AEB) testing.
+This part of the report examines the supply chain design of a Formula Student "rabbit" vehicle used for autonomous emergency braking (AEB) testing.
 
 The vehicle was originally developed for the acceleration event, where the objective is to achieve high acceleration over a short distance of approximately \SI{75}{\meter}. As a result, the design is optimised for short-duration, high-performance operation, with components such as the battery sized specifically for brief usage.
 
@@ -117,7 +171,7 @@ This approach effectively combines principles from failure analysis and supply c
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{Conceptual_classification_of_component_risk.png}
+    \includegraphics[width=0.5\linewidth]{figures/Conceptual_classification_of_component_risk.png}
     \caption{Conceptual classification of component risk}
     \label{fig:riskclassification}
 \end{figure}
@@ -128,7 +182,7 @@ The classification is applied to the system under both non-collision and collisi
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{non_collision.png}
+    \includegraphics[width=0.5\linewidth]{figures/non_collision.png}
     \caption{Component classification under non-collision conditions}
     \label{fig:non-collision}
 \end{figure}
@@ -140,7 +194,7 @@ This classification provides a structured basis for prioritising components and 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{collision.png}
+    \includegraphics[width=0.5\linewidth]{figures/collision.png}
     \caption{Component classification under collision conditions}
     \label{fig:collision}
 \end{figure}
@@ -170,7 +224,7 @@ For frequently failing components, mitigation focuses on reducing failure freque
 
 In contrast, for low-risk components, additional mitigation is limited, as the cost and complexity of further intervention may not be justified by their relatively small impact on system performance.
 
-Overall, these mitigation measures complement the spare strategy by reducing the system’s reliance on inventory alone, enabling a more balanced and efficient allocation of resources.
+Overall, these mitigation measures complement the spare strategy by reducing the system's reliance on inventory alone, enabling a more balanced and efficient allocation of resources.
 
 \subsection{Conclusion}
 
@@ -182,7 +236,7 @@ The planning analysis shows that component prioritisation can be based on failur
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{operation1.png}
+    \includegraphics[width=0.5\linewidth]{figures/operation1.png}
     \caption{Operational cycle and supply chain support structure}
     \label{fig:operation}
 \end{figure}
@@ -264,7 +318,7 @@ Maintenance and recovery activities are also essential, including post-test insp
 
 In addition, system monitoring plays an important role in supporting ongoing operation. Failure data can be recorded and analysed over time, allowing adjustments to spare allocation and risk prioritisation as more information becomes available.
 
-Finally, while most components are sourced externally, sourcing-related activities focus on maintaining flexibility and reducing supply risk. This includes ensuring compatibility across different suppliers, monitoring supplier availability, and favouring standardised components where possible. These actions reduce dependency on specific sources and improve the system’s ability to respond to supply disruptions. Overall, these activities enable the system to operate reliably in practice, ensuring that the supply chain effectively supports continuous testing.
+Finally, while most components are sourced externally, sourcing-related activities focus on maintaining flexibility and reducing supply risk. This includes ensuring compatibility across different suppliers, monitoring supplier availability, and favouring standardised components where possible. These actions reduce dependency on specific sources and improve the system's ability to respond to supply disruptions. Overall, these activities enable the system to operate reliably in practice, ensuring that the supply chain effectively supports continuous testing.
 
 \section{Conclusion}
 
@@ -290,3 +344,5 @@ The data for different subsystems were provided by team members responsible for 
 Detailed data sources should be provided in the references for each corresponding section.
 
 \compactbib
+
+\end{document}
