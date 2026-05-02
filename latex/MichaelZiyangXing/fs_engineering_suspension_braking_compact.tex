@@ -1,0 +1,237 @@
+\chapter{Suspension, Steering and Rear Axle Design}
+\contribution{This chapter presents the author's individual engineering contribution to the Formula Student acceleration vehicle: the complete suspension, steering and braking layout, with detailed focus on the rear multi-link suspension, anti-squat/toe strategy, and inboard differential brake integration.}
+
+\newcommand{\checkme}[1]{\par\noindent\textbf{FACT-CHECK / TEAM INPUT REQUIRED:} #1\par}
+\newcommand{\figbox}[2]{\begin{figure}[H]\centering\fbox{\parbox[c][#1][c]{0.92\linewidth}{\centering #2}}\caption{#2}\end{figure}}
+
+\section{Design objective and system scope}
+
+The objective of the wider project is to design a hypothetical Formula Student UK electric vehicle optimised only for the acceleration event. The vehicle is therefore not intended to be a balanced endurance, skidpad or autocross car. Its design priority is to minimise the time taken to travel the straight-line acceleration distance while remaining compliant with the Formula Student rules and sufficiently safe, inspectable and manufacturable for a credible design submission. The Formula Student rules define the acceleration event as a straight-line sprint over \SI{75}{m}; the same rule set also imposes braking, structural, electrical and safety requirements that cannot be ignored even when the timed event is acceleration only \parencite{imecheFS2026Rules}.
+
+This chapter covers the suspension, steering and braking design work. The front suspension, steering system and front braking layout were designed to complete the vehicle architecture and maintain rule-compliant controllability. However, these subsystems are intentionally treated as conventional elements because the acceleration event places its strongest performance demands on rear traction, longitudinal load transfer, mass reduction and rear-axle stability. The main engineering contribution is therefore the rear axle concept: a rear multi-link suspension with 100\% anti-squat, a static rear toe setting that tends towards zero toe at speed, and a single inboard brake acting on the limited-slip differential.
+
+The design is acceleration-specific. In a conventional Formula Student car, rear suspension geometry would need to compromise between launch traction, corner entry, mid-corner grip, transient yaw response and tyre temperature management. In this project, those competing dynamic requirements are reduced. Straight-line acceleration allows the rear suspension to be biased towards longitudinal force management and low scrub rather than all-round handling. This design freedom is used to tune anti-squat and toe behaviour more aggressively than would normally be appropriate for an endurance-capable car.
+
+\checkme{Insert the final agreed vehicle-level targets here: predicted acceleration time, vehicle mass, wheelbase, centre-of-mass height, static axle distribution, tyre size, motor torque and final drive ratio. These values should match the vehicle dynamics and drivetrain chapters.}
+
+\section{Requirements and design constraints}
+
+The suspension and braking system requirements were derived from three sources: the acceleration-event objective, the Formula Student rule constraints, and the wider group vehicle architecture. For the acceleration event, the most important engineering needs are rear traction, stable launch behaviour, reduced mass and minimal tyre scrub during the high-speed part of the run. For compliance, the vehicle must retain a safe braking system, protected brake components, acceptable steering control and packaging within the permitted vehicle envelope. For team integration, the design must interface with the chassis, powertrain, accumulator, differential, chain drive and wheel package.
+
+Table~\ref{tab:reqs} summarises the flow-down from event need to subsystem design intent. The targets are expressed as design targets rather than final verified values, because some must be confirmed by simulation, CAD mass properties and rule inspection.
+
+\begin{table}[H]
+\caption{Engineering requirements derived from the acceleration-only design objective.}
+\label{tab:reqs}
+\centering
+\begin{tabular}{p{0.23\linewidth}p{0.28\linewidth}p{0.37\linewidth}}
+\toprule
+Requirement area & Target or design intent & Engineering rationale \\
+\midrule
+Rear load-control geometry & 100\% anti-squat, corresponding to a \SI{12.7}{\degree} force line & Reduces rear squat during launch and provides a geometric mechanism for controlled rear ride-height/toe change under longitudinal force. \\
+Rear toe behaviour & Approximately \SI{0.15}{\degree} toe-in at standstill, tending towards approximately zero toe at speed & Provides launch stability while reducing tyre scrub and rolling loss during the later part of the \SI{75}{m} run. \\
+Rear brake architecture & Single inboard brake acting on the limited-slip differential & Uses a rule-permitted layout to reduce wheel-end complexity and mass while retaining mechanical braking capability. \\
+Mass reduction & Estimated saving of \SI{3.6}{kg} unsprung mass and \SI{0.9}{kg} total mass & Improves acceleration performance and reduces the inertia of the rear corner assemblies. \\
+System integration & Suspension, brake, differential and chain layout packaged as one rear module & Prevents the suspension geometry from becoming an isolated optimum that conflicts with drivetrain or chassis constraints. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The rule context is particularly important for the braking system. The Formula Student rules require a functional braking system and, under Rule T6.1.3 in the 2026 Formula Student UK rules, a single brake acting on a limited-slip differential is acceptable \parencite{imecheFS2026Rules}. This rule creates an opportunity to remove two outboard rear brake assemblies and replace them with a single inboard brake acting through the differential. The design still needs careful checking against the surrounding brake rules, especially protection from drivetrain failure, protection from moving parts, surface envelope requirements and inspection access.
+
+\section{Completed front systems and overall vehicle layout}
+
+The complete suspension, steering and braking architecture was developed before the rear optimisation was finalised. This was necessary because the rear design could not be assessed independently from the rest of the car. Front suspension hardpoints influence the vehicle attitude, steering requirements influence the front packaging envelope, and the front brake circuit must remain compatible with the rear braking strategy.
+
+The front suspension follows a conventional lightweight Formula Student approach. Its purpose is to maintain appropriate front wheel control, provide stable straight-line tracking, package within the chassis envelope and support safe steering input during manoeuvring, inspection and recovery. Since the timed acceleration event requires only minimal steering input, the front geometry was not the main opportunity for performance gain. The design was therefore kept simple and robust rather than pursuing highly complex kinematic behaviour.
+
+The steering system was similarly designed as a rule-compliant control system rather than as a performance differentiator. Its main functions are to provide a safe steering envelope, avoid interference with suspension members and chassis tubes, and keep bump-steer within an acceptable range for a straight-line acceleration vehicle. Any small steering correction during the run should not introduce significant tyre scrub or instability. Therefore, steering geometry was reviewed for straight-line stability, packaging and inspection rather than for aggressive cornering response.
+
+The braking system was designed as a complete four-wheel system, but the rear layout is where the strongest engineering trade-off appears. The front brakes remain conventional to provide reliable braking capacity and inspection confidence. The rear brake is moved inboard to act on the limited-slip differential, thereby reducing rear unsprung mass and simplifying the rear upright assembly. This division is appropriate for an acceleration-focused car because braking performance is required for rule compliance and safety, but braking is not a timed performance task within the acceleration run.
+
+\checkme{Add one compact figure showing the full vehicle suspension, steering and braking layout. The figure should label the conventional front system, the rear multi-link suspension, the differential, the chain line and the single inboard brake.}
+
+\section{Concept generation and selection}
+
+Concept selection was carried out using Pugh matrices so that the final design could be justified against alternatives rather than presented as a predetermined solution. This approach was also used across the team to make subsystem choices more transparent and to maintain consistency between design areas. The matrices in this section should be finalised using the same weighting convention and scoring language as the wider group report.
+
+For the rear suspension, the main alternatives were a double wishbone arrangement, a semi-trailing or trailing-arm arrangement, a rigid or beam-like rear structure, and a multi-link layout. A simpler architecture would have been attractive for mass and manufacturing. However, the rear suspension needed independent control over anti-squat, toe behaviour and differential/brake packaging. A multi-link layout was therefore selected because it offered the greatest kinematic tuning freedom, even though it increased hardpoint sensitivity and manufacturing complexity.
+
+\begin{table}[H]
+\caption{Placeholder Pugh matrix for rear suspension concept selection. Scores and weights should be replaced with the team's final matrix.}
+\label{tab:pugh_susp}
+\centering
+\begin{tabular}{p{0.25\linewidth}c c c c}
+\toprule
+Criterion & Double wishbone & Semi-trailing & Beam / rigid & Multi-link \\
+\midrule
+Longitudinal traction support & 0 & - & 0 & + \\
+Toe-control potential & 0 & - & -- & ++ \\
+Anti-squat tuning freedom & + & 0 & - & ++ \\
+Packaging with differential/brake & 0 & + & + & + \\
+Mass and manufacturability & 0 & + & ++ & - \\
+Adjustability and setup & + & 0 & - & ++ \\
+\midrule
+Indicative result & Medium & Medium & Low/medium & Highest \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For the rear brake and drivetrain layout, the main alternatives were two outboard rear brakes, dual inboard rear brakes and a single brake acting on the limited-slip differential. The outboard arrangement is conventional and easy to understand, but it retains brake discs, calipers, mounts and associated hardware at the wheel ends. Dual inboard brakes reduce unsprung mass but add complexity and total part count. The single differential brake gives the largest simplification, provided that the brake torque path, differential behaviour and rule compliance are verified.
+
+\begin{table}[H]
+\caption{Placeholder Pugh matrix for rear brake/drivetrain layout selection.}
+\label{tab:pugh_brake}
+\centering
+\begin{tabular}{p{0.28\linewidth}c c c}
+\toprule
+Criterion & Outboard rear brakes & Dual inboard brakes & Single differential brake \\
+\midrule
+Rule compliance potential & + & + & + \\
+Unsprung mass reduction & -- & + & ++ \\
+Total mass reduction & - & 0 & + \\
+Wheel-end packaging & - & + & ++ \\
+Brake inspection clarity & + & 0 & 0 \\
+Drivetrain/brake interaction risk & + & 0 & - \\
+\midrule
+Indicative result & Medium & Medium/high & Highest if validated \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The selected architecture therefore combines the multi-link suspension and the single differential brake. These choices are mutually reinforcing. The removal of outboard rear brake assemblies simplifies the rear upright and reduces unsprung mass, while the multi-link suspension provides the geometric freedom needed to control toe and anti-squat around the differential and chain-drive package.
+
+\section{Rear multi-link suspension architecture}
+
+The rear suspension uses a multi-link architecture rather than a simpler wishbone or trailing-arm layout. The purpose of this choice is not complexity for its own sake, but separation of functions. In a multi-link layout, the longitudinal and lateral constraints on the wheel carrier can be arranged so that anti-squat, toe curve, camber control and packaging constraints are tuned with greater independence. This is valuable for the acceleration event because the rear axle must transmit high longitudinal force while maintaining stable and low-scrub wheel alignment.
+
+The suspension geometry was developed around the rear contact patch, differential position, chain line, wheel carrier and chassis hardpoint envelope. The driven rear wheels require sufficient traction during launch, but the suspension must also prevent excessive pitch motion and prevent the rear tyres from operating with unnecessary toe-in at speed. The selected geometry therefore begins from the desired anti-squat line and toe curve, then packages the links around the differential and brake assembly.
+
+\figbox{1.7in}{Placeholder for rear multi-link hardpoint diagram showing link names, upright connections, chassis pickups, differential, chain path and inboard brake.}
+
+The design uses 100\% anti-squat, corresponding to a \SI{12.7}{\degree} anti-squat line. In simplified vehicle-dynamics terms, anti-squat describes the extent to which longitudinal tyre force is reacted through suspension geometry rather than only through spring compression and pitch motion \parencite{gillespie1992,milliken1995}. A 100\% value is aggressive but defensible because the vehicle is optimised for a straight-line acceleration event. A lower value would likely improve general ride and all-round handling, but would allow more squat and less opportunity to use longitudinal force paths to influence rear ride height and toe.
+
+The multi-link geometry also allows a small static toe-in to be selected without accepting that toe-in throughout the complete run. A static toe-in of approximately \SI{0.15}{\degree} is used to stabilise the car at launch and during the first part of the acceleration run. The toe curve is then arranged so that the rear wheels tend towards approximately zero toe as the rear suspension moves under the relevant high-speed load state. This is intended to reduce lateral scrub and rolling resistance when the car has already passed the most traction-limited launch phase.
+
+\section{Anti-squat and dynamic toe-control strategy}
+
+The most distinctive engineering feature of the design is the combined anti-squat and toe-control strategy. The rear toe angle is not treated as a fixed setup value. Instead, it is treated as a dynamic alignment target that changes with the load state of the car. The intended behaviour is simple: launch with a small toe-in value for stability, then approach zero rear toe when the vehicle reaches higher speed.
+
+At launch, the rear tyres must generate high longitudinal drive force. Longitudinal load transfer increases rear normal load, which is beneficial for a rear-wheel-drive acceleration car. However, excessive rear squat can change the suspension geometry, increase transient pitch motion and make the car sensitive to tyre and surface variation. The 100\% anti-squat geometry is used to resist this squat. In the current design, this corresponds to a \SI{12.7}{\degree} line through the relevant suspension instant-centre/load-transfer construction.
+
+As speed increases, aerodynamic drag becomes a non-negligible longitudinal resisting force. The team estimate indicates that drag reaches the order of hundreds of newtons near the end of the acceleration run. This drag force does not simply reduce acceleration; it also changes the longitudinal force balance acting through the rear contact patches and suspension links. Because the rear suspension contains anti-squat geometry, the longitudinal force path can create a vertical jacking tendency. The rear ride height and link geometry therefore change with speed-dependent load state.
+
+This effect is used intentionally. The rear wheels are set with approximately \SI{0.15}{\degree} toe-in at standstill. As the vehicle speed increases and the drag-related longitudinal load state develops, the anti-squat geometry causes the rear suspension to jack up sufficiently for the toe curve to reduce the toe-in towards approximately zero. The expected result is a rear axle that is stable during launch but lower in scrub during the later high-speed part of the \SI{75}{m} run.
+
+\checkme{The drag-force and toe-change paragraph above must be verified using the final aerodynamics estimate, suspension kinematic model and sign convention. The final report should include the predicted drag force range, the corresponding vertical displacement or jacking response, and the toe angle reached at the end of the run.}
+
+The conceptual toe schedule is shown in Table~\ref{tab:toe}. The exact speed boundaries are intentionally left as placeholders until the full vehicle simulation and suspension kinematic model are aligned.
+
+\begin{table}[H]
+\caption{Intended rear toe behaviour across the acceleration run.}
+\label{tab:toe}
+\centering
+\begin{tabular}{p{0.24\linewidth}p{0.30\linewidth}p{0.32\linewidth}}
+\toprule
+Run phase & Dominant load state & Intended rear toe response \\
+\midrule
+Standstill and launch & High drive force, low aerodynamic drag & Approximately \SI{0.15}{\degree} toe-in for launch stability. \\
+Mid-run & Drive force remains high and drag rises & Toe-in reduces as suspension displacement follows the anti-squat/jacking load path. \\
+High-speed end of run & Drag force reaches the order of hundreds of newtons & Rear toe approaches approximately zero to reduce scrub. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The design has clear risks. A 100\% anti-squat geometry may transmit harsh longitudinal loads into the chassis brackets, increase sensitivity to hardpoint error and create wheel-hop risk if the tyre, spring and damper system are not sufficiently controlled. The toe strategy is also sensitive to the sign and magnitude of vertical wheel movement. If the drag force, compliance or kinematic model is wrong, the rear wheels may retain too much toe-in or move towards unwanted toe-out. For this reason, the toe curve, anti-squat construction and compliance effects should be treated as validation-critical design evidence rather than as assumptions.
+
+\figbox{1.5in}{Placeholder for combined plot: rear toe angle against wheel vertical displacement or estimated vehicle speed. The target trend should show \SI{0.15}{\degree} toe-in at standstill tending towards approximately zero toe at speed.}
+
+\section{Single inboard brake and drivetrain integration}
+
+The rear braking concept uses one inboard brake acting on the limited-slip differential. This is permitted by Rule T6.1.3 in the Formula Student UK 2026 rules, which states that a single brake acting on a limited-slip differential is acceptable \parencite{imecheFS2026Rules}. The design therefore places the brake at the differential rather than at both rear wheel ends. The differential is chain driven, so the brake, differential, sprocket and chain guard must be treated as one integrated rear drivetrain/braking module.
+
+The main engineering benefit is mass reduction. Removing the outboard rear brake assemblies saves an estimated \SI{3.6}{kg} of unsprung mass and \SI{0.9}{kg} of total mass. The larger unsprung mass saving occurs because hardware is removed from the wheel-end assemblies, while the total mass saving is smaller because the inboard brake still requires a disc, caliper, mount and supporting structure. This trade-off is particularly attractive for an acceleration vehicle: every kilogram of total mass affects acceleration, and every kilogram of unsprung mass removed from the rear corners improves wheel control and simplifies the upright design.
+
+\checkme{Replace the mass-saving statement with the final bill-of-materials comparison. The final version should state which components were removed, which components were added inboard, and whether rotating inertia was also reduced.}
+
+The layout also affects the suspension design. Without outboard rear brakes, the rear upright can be lighter and less crowded. This gives more freedom to package the multi-link pickup points and improves the feasibility of achieving the desired toe curve. Conversely, the differential brake introduces new integration risks. Brake torque is applied through the differential, so the limited-slip behaviour and torque path must be understood. The brake must remain protected from the chain and other moving parts, and the brake system must remain safe if drivetrain components fail.
+
+Table~\ref{tab:brakerisk} summarises the main engineering risks and mitigations. The final report should use the team's risk ranking format if one has been adopted elsewhere in the design report.
+
+\begin{table}[H]
+\caption{Key risks for the inboard differential brake concept.}
+\label{tab:brakerisk}
+\centering
+\begin{tabular}{p{0.24\linewidth}p{0.30\linewidth}p{0.34\linewidth}}
+\toprule
+Risk & Possible consequence & Mitigation or evidence required \\
+\midrule
+Brake/drivetrain interaction & Chain or differential fault could affect braking confidence & Confirm rule interpretation, protect brake components and assess failure modes. \\
+Thermal capacity & Repeated testing may cause brake fade & Size disc and caliper for brake test and repeated low-speed recovery stops. \\
+Differential torque behaviour & Unequal wheel speeds or limited-slip action may alter braking response & Validate with differential model or bench testing. \\
+Inspection and service access & Difficult inspection could weaken scrutineering confidence & Provide clear CAD views, access envelope and maintenance procedure. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Although this braking solution is acceleration-specific, it is not presented as a universal improvement. In a full Formula Student car, repeated braking, trail braking and thermal robustness would be more important. For the present acceleration-only design, the timed event does not reward braking performance directly, while mass reduction and rear packaging are central to performance. The single inboard brake is therefore a rational event-specific compromise, provided that safety and rule compliance are verified.
+
+\section{System integration and teamwork}
+
+The rear suspension and brake design were developed through close communication with the rest of the team. This was essential because the rear axle combines several subsystems: suspension hardpoints, chassis mounting brackets, differential location, chain line, brake disc and caliper position, motor output, wheel package and mass distribution. A rear suspension geometry that performs well in isolation would be unacceptable if it conflicts with the chassis tubes, drivetrain clearances or vehicle-level mass model.
+
+The design process therefore used repeated interface checks. The chassis team constrained the suspension pickup envelope and bracket load paths. The drivetrain work defined the differential, sprocket and chain-line positions. Vehicle dynamics work provided acceleration targets, approximate load transfer and the drag estimate needed for the toe-at-speed argument. The braking design supplied caliper and disc packaging constraints, while the overall mass budget supplied the basis for comparing outboard and inboard brake options.
+
+\begin{table}[H]
+\caption{Subsystem interfaces used to keep the rear design consistent with the wider vehicle.}
+\label{tab:interfaces}
+\centering
+\begin{tabular}{p{0.24\linewidth}p{0.30\linewidth}p{0.34\linewidth}}
+\toprule
+Interface & Information exchanged & Design response \\
+\midrule
+Chassis & Hardpoint envelope and load path constraints & Link pickups positioned to remain compatible with chassis tubes and bracket stiffness. \\
+Drivetrain & Differential, sprocket and chain-line locations & Brake and suspension links packaged around the final drive layout. \\
+Vehicle dynamics & Load transfer, drag estimate and acceleration target & Anti-squat and toe strategy tuned to the acceleration run. \\
+Braking & Rule requirements, disc/caliper package and hydraulic layout & Single inboard rear brake integrated with front brake system. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+This integration evidence is important for the Engineering criteria because it shows that the individual design work considers the wider group design. The rear axle is not a standalone mechanism; it is a coordinated part of the acceleration vehicle. The design choices were therefore judged not only by local suspension performance, but also by their effect on mass, packaging, rule compliance and the vehicle-level acceleration objective.
+
+\section{Validation plan, limitations and future work}
+
+The design should be validated using both analytical checks and simulation. The minimum evidence package should include an anti-squat construction, a suspension kinematic model, a rear toe curve, a brake torque calculation, a packaging check and a rule-compliance checklist. The anti-squat calculation should show how the \SI{12.7}{\degree} value corresponds to 100\% anti-squat for the agreed centre-of-mass height and wheelbase. The kinematic model should show the rear toe response over the relevant vertical displacement range. The vehicle dynamics model should then confirm whether the predicted jacking displacement occurs during the acceleration run.
+
+The brake validation should include torque capacity, thermal margin for the brake test and repeated practice stops, hydraulic circuit integration and drivetrain-failure protection. General brake design practice requires the brake to be treated as a safety-critical system rather than simply as a mass-saving opportunity \parencite{limpert2011}. The final CAD package should therefore show guarding, clearance to moving parts, service access and load paths for the caliper mount.
+
+\begin{table}[H]
+\caption{Proposed validation evidence for the final design submission.}
+\label{tab:validation}
+\centering
+\begin{tabular}{p{0.28\linewidth}p{0.32\linewidth}p{0.28\linewidth}}
+\toprule
+Validation activity & Purpose & Output evidence \\
+\midrule
+Anti-squat calculation & Verify 100\% anti-squat and \SI{12.7}{\degree} line & Geometry diagram and calculation. \\
+Suspension kinematic simulation & Confirm toe curve and wheel travel behaviour & Toe/displacement plot. \\
+Drag-force sensitivity check & Test whether drag-induced jacking achieves zero toe & Toe at X--Y N drag force. \\
+Brake torque and thermal check & Confirm safe braking capacity & Brake margin calculation. \\
+Packaging and interference review & Confirm chain, brake and link clearances & CAD screenshots. \\
+Hardpoint tolerance study & Assess sensitivity of toe target & Toe error range. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The main limitation is that the design is deliberately specialised. A 100\% anti-squat rear suspension may be too aggressive for a car that must perform well in skidpad, autocross or endurance. It may increase wheel-hop risk, hardpoint loads and sensitivity to manufacturing tolerances. The dynamic toe-control strategy also depends on the drag estimate, suspension compliance and correct sign convention in the kinematic model. If these assumptions are incorrect, the rear toe may not reach zero at speed.
+
+The inboard brake has similar limitations. It reduces unsprung mass and simplifies the rear upright, but it introduces a dependency between braking behaviour, differential behaviour and drivetrain packaging. It must be demonstrated that the brake remains protected and that the system satisfies the required braking checks. Future work should therefore include a tolerance study of the rear hardpoints, a brake thermal analysis, a chain-failure mode review and a physical rig test of toe change if the vehicle were built.
+
+\section{Conclusion}
+
+A complete suspension, steering and braking architecture was designed for the Formula Student UK acceleration vehicle. The front suspension, steering and front braking systems were kept relatively conventional because their main role is to complete the vehicle package and maintain rule-compliant controllability. The main engineering optimisation was concentrated at the rear axle, where the acceleration event creates a strong need for traction, mass reduction, low tyre scrub and stable straight-line behaviour.
+
+The selected rear design uses a multi-link suspension with 100\% anti-squat, corresponding to a \SI{12.7}{\degree} line. This geometry supports launch performance by resisting rear squat, while also enabling a dynamic toe strategy. The rear wheels are set to approximately \SI{0.15}{\degree} toe-in at standstill for stability, with the intended toe curve reducing this towards zero toe as speed and drag-related load state increase. The design also uses a rule-permitted single inboard brake acting on the limited-slip differential, saving an estimated \SI{3.6}{kg} of unsprung mass and \SI{0.9}{kg} of total mass compared with the baseline rear braking layout.
+
+The design therefore provides an acceleration-event-specific rear axle concept rather than a generic Formula Student suspension. Its originality lies in combining suspension kinematics, brake packaging and drivetrain integration to support a single performance objective: minimising the \SI{75}{m} acceleration time while remaining rule compliant. The remaining work is to replace the marked factual placeholders with final team values and to validate the anti-squat, toe and inboard brake assumptions through calculation, simulation and final CAD checks.
