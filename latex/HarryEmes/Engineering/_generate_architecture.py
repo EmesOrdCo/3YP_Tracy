@@ -7,6 +7,7 @@ fig:architecture.
 
 from __future__ import annotations
 
+import textwrap
 from pathlib import Path
 
 import matplotlib
@@ -28,6 +29,25 @@ CLR = {
     "results": "#f0f0f0",
 }
 EDGE = "0.30"
+
+
+def fit_box_text(s: str, width_chars: int) -> str:
+    """Wrap long lines so labels stay inside narrow layer slots."""
+    out: list[str] = []
+    for block in s.split("\n"):
+        b = block.strip()
+        if not b:
+            out.append("")
+            continue
+        lines = textwrap.wrap(
+            b,
+            width=width_chars,
+            break_long_words=False,
+            break_on_hyphens=True,
+        )
+        out.append("\n".join(lines) if lines else "")
+    return "\n".join(out)
+
 
 fig, ax = plt.subplots(figsize=(10.0, 6.5))
 ax.set_xlim(0, 10)
@@ -54,10 +74,13 @@ def layer(y, h, label, sub_label, boxes, fill):
     x_start = 1.3
     x_end = 9.6
     slot = (x_end - x_start) / n
+    # Narrow slots → smaller type + tighter wrap width.
+    wrap_w = max(9, min(16, int(110 / max(n, 1))))
+    fs = max(6.4, min(8.2, 10.0 - 0.45 * n))
+    box_h = h * min(0.82, 0.68 + 0.02 * max(0, 6 - n))
     for i, txt in enumerate(boxes):
         cx = x_start + slot * (i + 0.5)
-        w = slot * 0.88
-        box_h = h * 0.72
+        w = slot * 0.92
         box_y = y + (h - box_h) / 2
         box_x = cx - w / 2
         ax.add_patch(FancyBboxPatch(
@@ -65,15 +88,17 @@ def layer(y, h, label, sub_label, boxes, fill):
             boxstyle="round,pad=0.02",
             linewidth=0.8, edgecolor="0.25", facecolor="white", zorder=2,
         ))
-        ax.text(cx, box_y + box_h / 2, txt,
-                fontsize=8.6, ha="center", va="center", zorder=3)
+        label_txt = fit_box_text(txt, wrap_w)
+        ax.text(cx, box_y + box_h / 2, label_txt,
+                fontsize=fs, ha="center", va="center", zorder=3,
+                linespacing=0.95)
 
 
 # --- Layers (top to bottom) -------------------------------------------
 layer(8.55, 1.15, "GUI", "Streamlit",
-      ["Single run", "Parameter sweep", "Optimiser",
+      ["Single run", "Param.\nsweep", "Optimiser",
        "Gearing", "Sensitivity", "Monte Carlo",
-       "Track conditions", "Energy storage"],
+       "Track", "Energy\nstorage"],
       CLR["gui"])
 
 layer(7.20, 1.15, "Config", "JSON / YAML",
@@ -82,19 +107,19 @@ layer(7.20, 1.15, "Config", "JSON / YAML",
       CLR["cfg"])
 
 layer(5.00, 2.00, "Vehicle Models", "vehicle/",
-      ["Mass\nProperties",
-       "Tyre Model\n(Pacejka\n+ thermal)",
-       "Powertrain\n+ 80 kW\ncap",
-       "Aerodynamics",
-       "Suspension\n+ anti-squat",
-       "Launch\n+ traction\ncontrol"],
+      ["Mass\nproperties",
+       "Tyre (Pacejka +\nthermal)",
+       "Powertrain +\n80 kW cap",
+       "Aero-\ndynamics",
+       "Suspension +\nanti-squat",
+       "Launch +\ntraction ctrl"],
       CLR["vehicle"])
 
 layer(3.20, 1.60, "Dynamics", "dynamics/",
-      ["State vector\n$(x, v, \\omega_{w,f/r})$",
+      ["State\n$(x,v,\\omega_{w})$",
        "Force\naggregator",
-       "RK4\nintegrator\n($\\Delta t =$ 1 ms)",
-       "Wheelie &\nslip governor"],
+       "RK4\n($\\Delta t{=}1$ ms)",
+       "Wheelie /\nslip limit"],
       CLR["dyn"])
 
 layer(1.70, 1.30, "Rules", "rules/",
@@ -105,47 +130,55 @@ layer(1.70, 1.30, "Rules", "rules/",
       CLR["rules"])
 
 layer(0.20, 1.30, "Results", "analysis/",
-      ["SimulationResult",
-       "State history",
-       "Plots\n(matplotlib)",
-       "Validation\n& V\\&V"],
+      ["Sim.\nresult",
+       "State\nhistory",
+       "Plots\n(pyplot)",
+       "V\\&V /\nvalidation"],
       CLR["results"])
 
 
-# --- Arrows between layers --------------------------------------------
-def arrow(x, y_top, y_bot, text=None):
+# --- Arrows between layers (no mid-arrow labels — keeps diagram readable)
+def arrow(x, y_top, y_bot):
     ax.add_patch(FancyArrowPatch(
         (x, y_top), (x, y_bot), arrowstyle="-|>",
         mutation_scale=15, color="0.25", lw=1.3, zorder=4,
     ))
-    if text:
-        ax.text(x + 0.12, (y_top + y_bot) / 2, text,
-                fontsize=7.8, color="0.3", va="center", zorder=4)
 
 
-arrow(2.2, 8.55, 8.35, "parameter proposals")
-arrow(2.2, 7.20, 7.00, "load")
-arrow(2.2, 5.00, 4.80, "invoke")
-arrow(2.2, 3.20, 3.00, "aggregate")
-arrow(2.2, 1.70, 1.50, "results +\ncompliance")
+arrow(2.2, 8.55, 8.35)
+arrow(2.2, 7.20, 7.00)
+arrow(2.2, 5.00, 4.80)
+arrow(2.2, 3.20, 3.00)
+arrow(2.2, 1.70, 1.50)
 
-arrow(7.8, 8.35, 8.55, "live PDF /\nplots")
-arrow(7.8, 7.00, 7.20, "")
-arrow(7.8, 4.80, 5.00, "")
-arrow(7.8, 3.00, 3.20, "")
-arrow(7.8, 1.50, 1.70, "")
+arrow(7.8, 8.35, 8.55)
+arrow(7.8, 7.00, 7.20)
+arrow(7.8, 4.80, 5.00)
+arrow(7.8, 3.00, 3.20)
+arrow(7.8, 1.50, 1.70)
 
 # --- Title ------------------------------------------------------------
 ax.text(5.0, 9.95, "Acceleration Simulation — Software Architecture",
         ha="center", fontsize=12, weight="bold")
 
 # --- Tests / sidebar annotation ---------------------------------------
-ax.text(9.7, 0.35,
-        "9 unit-test modules\n(tires, powertrain, dynamics,\nscoring, Monte Carlo,\n"
-        "sensitivity, thermal,\ncontroller, integration)",
-        ha="right", va="bottom", fontsize=7.5, color="0.2",
-        bbox=dict(boxstyle="round,pad=0.3", facecolor="white",
-                  edgecolor="0.5", linewidth=0.7))
+_ut = fit_box_text(
+    "9 unit-test modules (tires, powertrain, dynamics, scoring, Monte Carlo, "
+    "sensitivity, thermal, controller, integration)",
+    width_chars=22,
+)
+ax.text(
+    9.65,
+    0.32,
+    _ut,
+    ha="right",
+    va="bottom",
+    fontsize=6.6,
+    color="0.2",
+    linespacing=0.98,
+    bbox=dict(boxstyle="round,pad=0.28", facecolor="white",
+              edgecolor="0.5", linewidth=0.7),
+)
 
 fig.tight_layout(pad=0.1)
 out = FIG / "architecture.pdf"
