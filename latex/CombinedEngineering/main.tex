@@ -1,0 +1,60 @@
+\documentclass[11pt, a4paper]{report}
+\makeatletter
+\def\input@path{{../}}
+\makeatother
+\usepackage{styling}
+\usepackage{tocloft}
+\setlength{\cftbeforetoctitleskip}{0pt}
+\setlength{\cftaftertoctitleskip}{6pt}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multirow}
+
+\numberwithin{equation}{section}
+
+\addbibresource{../TobyMcConnell/Engineering/references.bib}
+\addbibresource{yuze_references.bib}
+\addbibresource{../PaulVogelberg/Engineering/references.bib}
+\addbibresource{../HarryEmes/Engineering/references.bib}
+
+\defbibnote{urlcheck}{All URLs were last accessed and verified on 01/04/2026.}
+
+\title{Tracy --- Combined Engineering Report \\ Formula Student Acceleration Event}
+\author{Toby McConnell, Yuze Jiang, Paul Vogelberg, Harry Emes}
+\date{\today}
+
+\begin{document}
+
+\pagenumbering{gobble}
+
+\maketitle
+\newpage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\tableofcontents
+\newpage
+
+\begin{refsection}
+\graphicspath{{../TobyMcConnell/Engineering/}}
+\input{../TobyMcConnell/Engineering/toby_body}
+\end{refsection}
+
+\begin{refsection}
+\graphicspath{{yuze_assets/}}
+\input{yuze_body.tex}
+\end{refsection}
+
+\begin{refsection}
+\graphicspath{{../PaulVogelberg/Engineering/}}
+\input{../PaulVogelberg/Engineering/paul_body}
+\end{refsection}
+
+\begin{refsection}
+% Body uses `figures/...` paths; prefix must be Engineering root (not .../figures/).
+\graphicspath{{../HarryEmes/Engineering/}{../../figures/}}
+\input{../HarryEmes/Engineering/harry_body}
+\end{refsection}
+
+\end{document}
