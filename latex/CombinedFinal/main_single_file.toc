@@ -113,150 +113,150 @@
 \contentsline {subsection}{\numberline {5.3.3}Numerical convergence with timestep}{68}{subsection.5.3.3}%
 \contentsline {subsection}{\numberline {5.3.4}Simple versus Pacejka tyre model}{68}{subsection.5.3.4}%
 \contentsline {section}{\numberline {5.4}Parameter Sensitivity and Design Optimisation}{69}{section.5.4}%
-\contentsline {subsection}{\numberline {5.4.1}One-at-a-time sensitivity ranking}{70}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.1}One-at-a-time sensitivity ranking}{69}{subsection.5.4.1}%
 \contentsline {subsection}{\numberline {5.4.2}Monte Carlo robustness}{71}{subsection.5.4.2}%
 \contentsline {subsection}{\numberline {5.4.3}Design optimisation}{72}{subsection.5.4.3}%
-\contentsline {subsection}{\numberline {5.4.4}Robustness to track surface conditions}{75}{subsection.5.4.4}%
-\contentsline {section}{\numberline {5.5}Predicted Performance of the Final Vehicle}{76}{section.5.5}%
-\contentsline {subsection}{\numberline {5.5.1}Requirements flow-down}{76}{subsection.5.5.1}%
-\contentsline {subsection}{\numberline {5.5.2}Final agreed parameter set}{77}{subsection.5.5.2}%
-\contentsline {subsection}{\numberline {5.5.3}Constraint activity and phase analysis}{77}{subsection.5.5.3}%
-\contentsline {subsection}{\numberline {5.5.4}Compliance and predicted score}{79}{subsection.5.5.4}%
-\contentsline {section}{\numberline {5.6}Discussion and Limitations}{79}{section.5.6}%
-\contentsline {section}{\numberline {5.7}Conclusions and Further Work}{80}{section.5.7}%
-\contentsline {chapter}{\numberline {6}Market Analysis and Competition Analysis (Toby McConnell)}{83}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Introduction and Executive Summary}{83}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Product Overview and Value Proposition}{83}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Market Segmentation Strategy Overview}{84}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Market Option 1: Government Brake Testing Market}{85}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}Market Overview and Size Estimation}{85}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {6.4.2}Market Segmentation}{86}{subsection.6.4.2}%
-\contentsline {subsection}{\numberline {6.4.3}Commercial Challenges}{86}{subsection.6.4.3}%
-\contentsline {section}{\numberline {6.5}Market Option 2: AI and Autonomous Vehicle Testing Market}{86}{section.6.5}%
-\contentsline {subsection}{\numberline {6.5.1}Market Overview and Size Estimation}{86}{subsection.6.5.1}%
-\contentsline {subsection}{\numberline {6.5.2}Market Segmentation}{87}{subsection.6.5.2}%
-\contentsline {section}{\numberline {6.6}Competitive Landscape Analysis}{88}{section.6.6}%
-\contentsline {subsection}{\numberline {6.6.1}Macro Analysis: Porter's 5 Forces}{88}{subsection.6.6.1}%
-\contentsline {subsection}{\numberline {6.6.2}Micro Analysis: Direct Competitors}{88}{subsection.6.6.2}%
-\contentsline {subsection}{\numberline {6.6.3}Micro Analysis: Indirect Competitors}{88}{subsection.6.6.3}%
-\contentsline {section}{\numberline {6.7}Strategic Positioning}{89}{section.6.7}%
-\contentsline {section}{\numberline {6.8}Target Market Selection}{90}{section.6.8}%
-\contentsline {subsection}{\numberline {6.8.1}Large Automotive OEMs}{90}{subsection.6.8.1}%
-\contentsline {subsection}{\numberline {6.8.2}Electric Vehicle Startups}{91}{subsection.6.8.2}%
-\contentsline {subsection}{\numberline {6.8.3}Independent AI Technology Firms}{91}{subsection.6.8.3}%
-\contentsline {subsection}{\numberline {6.8.4}Targeting Strategy}{91}{subsection.6.8.4}%
-\contentsline {subsection}{\numberline {6.8.5}Servicable Obtainable Market (SOM) Estimation}{92}{subsection.6.8.5}%
-\contentsline {section}{\numberline {6.9}Personas and User Journey}{92}{section.6.9}%
-\contentsline {section}{\numberline {6.10}Role of Users in Development}{93}{section.6.10}%
-\contentsline {section}{\numberline {6.11}Intellectual Property and Barriers to Entry}{94}{section.6.11}%
-\contentsline {section}{\numberline {6.12}Risk Analysis and Strategic Trade-offs}{95}{section.6.12}%
-\contentsline {subsection}{\numberline {6.12.1}Initial Product Development Risk}{95}{subsection.6.12.1}%
-\contentsline {subsection}{\numberline {6.12.2}Market Risk}{95}{subsection.6.12.2}%
-\contentsline {subsection}{\numberline {6.12.3}Technological Risk}{95}{subsection.6.12.3}%
-\contentsline {subsection}{\numberline {6.12.4}Strategy and Operational Risk}{95}{subsection.6.12.4}%
-\contentsline {subsection}{\numberline {6.12.5}Regulatory Risk}{96}{subsection.6.12.5}%
-\contentsline {subsection}{\numberline {6.12.6}Competitive Risk}{96}{subsection.6.12.6}%
-\contentsline {section}{\numberline {6.13}Conclusion}{96}{section.6.13}%
-\contentsline {chapter}{\numberline {7}Strategy \& Stakeholder Analysis (Paul Vogelberg)}{98}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Introduction to the Strategic Pivot}{98}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Macro-Environmental Dynamics and the UK Ecosystem}{99}{section.7.2}%
-\contentsline {subsection}{\numberline {7.2.1}The Zenzic UK CAM Roadmap}{99}{subsection.7.2.1}%
-\contentsline {subsection}{\numberline {7.2.2}Utilising CAM Testbed UK}{100}{subsection.7.2.2}%
-\contentsline {section}{\numberline {7.3}Manoeuvring to the Testing-as-a-Service (TaaS) Model}{101}{section.7.3}%
-\contentsline {subsection}{\numberline {7.3.1}Hardware Specialisation: The "Sprint" Advantage}{101}{subsection.7.3.1}%
-\contentsline {subsection}{\numberline {7.3.2}Full-Service Integration over Hardware Rental}{101}{subsection.7.3.2}%
-\contentsline {subsection}{\numberline {7.3.3}Supply Chain and Margin Defensibility}{102}{subsection.7.3.3}%
-\contentsline {section}{\numberline {7.4}Stakeholder Salience Identification}{102}{section.7.4}%
-\contentsline {subsection}{\numberline {7.4.1}Introduction to the model}{102}{subsection.7.4.1}%
-\contentsline {subsection}{\numberline {7.4.2}Applying the model}{104}{subsection.7.4.2}%
-\contentsline {subsection}{\numberline {7.4.3}Continuations to the model}{105}{subsection.7.4.3}%
-\contentsline {section}{\numberline {7.5}User Personas}{106}{section.7.5}%
-\contentsline {subsection}{\numberline {7.5.1}The CAM Testbed Operations Director (The Partner)}{106}{subsection.7.5.1}%
-\contentsline {subsection}{\numberline {7.5.2}The Independent Liability Assessor (The Gatekeeper)}{106}{subsection.7.5.2}%
-\contentsline {section}{\numberline {7.6}Integrated Strategy for Ethics, Liability, and Safety Assurance}{107}{section.7.6}%
-\contentsline {subsection}{\numberline {7.6.1}The Ethical Safety Buffer}{107}{subsection.7.6.1}%
-\contentsline {subsection}{\numberline {7.6.2}Liability Demarcation through Data Transparency}{107}{subsection.7.6.2}%
-\contentsline {subsection}{\numberline {7.6.3}Algorithmic Bias, Cybersecurity, and Continuous Learning}{108}{subsection.7.6.3}%
-\contentsline {section}{\numberline {7.7}Sustainability, Lifecycle, and the Circular Economy}{108}{section.7.7}%
-\contentsline {subsection}{\numberline {7.7.1}Product-Service Systems (PSS) Framework}{109}{subsection.7.7.1}%
-\contentsline {subsection}{\numberline {7.7.2}The 9R Framework Application}{109}{subsection.7.7.2}%
-\contentsline {section}{\numberline {7.8}Strategic Limitations \& Cross-Functional Dependencies}{110}{section.7.8}%
-\contentsline {subsection}{\numberline {7.8.1}Financial Exposure and Capital Intensity}{110}{subsection.7.8.1}%
-\contentsline {subsection}{\numberline {7.8.2}Asset Ownership and the Maintenance Bottleneck}{111}{subsection.7.8.2}%
-\contentsline {subsection}{\numberline {7.8.3}The Regulatory "Cold Start" Problem}{111}{subsection.7.8.3}%
-\contentsline {chapter}{\numberline {8}Commercially Driven Design Requirements and Prototype Planning (Ziyang Xing)}{113}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Purpose and commercial framing}{113}{section.8.1}%
-\contentsline {section}{\numberline {8.2}UK market need and customer problem}{114}{section.8.2}%
-\contentsline {subsection}{\numberline {8.2.1}Why a physical AEB test carrier is useful}{114}{subsection.8.2.1}%
-\contentsline {subsection}{\numberline {8.2.2}Customer segments}{115}{subsection.8.2.2}%
-\contentsline {subsection}{\numberline {8.2.3}UK policy and standards context}{115}{subsection.8.2.3}%
-\contentsline {section}{\numberline {8.3}Design requirements as commercial requirements}{116}{section.8.3}%
-\contentsline {subsection}{\numberline {8.3.1}Requirement logic}{116}{subsection.8.3.1}%
-\contentsline {subsection}{\numberline {8.3.2}Physical performance}{117}{subsection.8.3.2}%
-\contentsline {subsection}{\numberline {8.3.3}Experimental setup and repeatability}{118}{subsection.8.3.3}%
-\contentsline {subsection}{\numberline {8.3.4}Standards, data, and evidence quality}{118}{subsection.8.3.4}%
-\contentsline {section}{\numberline {8.4}Prototype roadmap: Explore, Validate, Demonstrate, Convince}{119}{section.8.4}%
-\contentsline {subsection}{\numberline {8.4.1}Why staged prototyping is necessary}{119}{subsection.8.4.1}%
-\contentsline {subsection}{\numberline {8.4.2}Stage definitions}{119}{subsection.8.4.2}%
-\contentsline {section}{\numberline {8.5}Value proposition and business model}{120}{section.8.5}%
-\contentsline {subsection}{\numberline {8.5.1}Value proposition}{120}{subsection.8.5.1}%
-\contentsline {subsection}{\numberline {8.5.2}Commercial model options}{121}{subsection.8.5.2}%
-\contentsline {section}{\numberline {8.6}Assumptions, risks, and limitations}{122}{section.8.6}%
-\contentsline {subsection}{\numberline {8.6.1}Key assumptions}{122}{subsection.8.6.1}%
-\contentsline {subsection}{\numberline {8.6.2}Risk management}{122}{subsection.8.6.2}%
-\contentsline {subsection}{\numberline {8.6.3}Limitations}{123}{subsection.8.6.3}%
-\contentsline {section}{\numberline {8.7}Sustainability, ethics, IP, and conclusion}{123}{section.8.7}%
-\contentsline {chapter}{\numberline {9}Supply Chain Design (Yuze Jiang)}{125}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Introduction}{125}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Supply Chain Strategy}{125}{section.9.2}%
-\contentsline {subsection}{\numberline {9.2.1}Strategic Objective}{125}{subsection.9.2.1}%
-\contentsline {subsection}{\numberline {9.2.2}System Framing}{126}{subsection.9.2.2}%
-\contentsline {subsection}{\numberline {9.2.3}Strategy Type}{126}{subsection.9.2.3}%
-\contentsline {paragraph}{Supply Chain Structure (Centralised vs Distributed)}{126}{subsection.9.2.3}%
-\contentsline {paragraph}{Sourcing Strategy (Outsourcing vs In-house)}{127}{subsection.9.2.3}%
-\contentsline {paragraph}{Operating Strategy (Lean vs Agile)}{127}{subsection.9.2.3}%
-\contentsline {paragraph}{Flow Strategy (Push vs Pull)}{127}{subsection.9.2.3}%
-\contentsline {paragraph}{Conclusion}{128}{subsection.9.2.3}%
-\contentsline {section}{\numberline {9.3}Supply Chain Planning}{128}{section.9.3}%
-\contentsline {subsection}{\numberline {9.3.1}Planning Framework}{128}{subsection.9.3.1}%
-\contentsline {subsection}{\numberline {9.3.2}Failure Mode and Effect Analysis (FEMA)}{128}{subsection.9.3.2}%
-\contentsline {subsection}{\numberline {9.3.3}Risk Classification}{129}{subsection.9.3.3}%
-\contentsline {subsection}{\numberline {9.3.4}Spare Planning}{131}{subsection.9.3.4}%
-\contentsline {subsection}{\numberline {9.3.5}Risk Mitigation}{132}{subsection.9.3.5}%
-\contentsline {subsection}{\numberline {9.3.6}Conclusion}{132}{subsection.9.3.6}%
-\contentsline {section}{\numberline {9.4}Supply Chain Operation}{132}{section.9.4}%
-\contentsline {subsection}{\numberline {9.4.1}Operational Flow}{132}{subsection.9.4.1}%
-\contentsline {subsection}{\numberline {9.4.2}Process Behaviour}{133}{subsection.9.4.2}%
-\contentsline {subsection}{\numberline {9.4.3}Downtime and Performance Constraints}{133}{subsection.9.4.3}%
-\contentsline {subsection}{\numberline {9.4.4}Process Improvements}{134}{subsection.9.4.4}%
-\contentsline {subsection}{\numberline {9.4.5}Key Activities}{135}{subsection.9.4.5}%
-\contentsline {section}{\numberline {9.5}Conclusion}{136}{section.9.5}%
-\contentsline {chapter}{\numberline {10}Financial Analysis (Harry Emes)}{138}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Scope and methodology}{139}{section.10.1}%
-\contentsline {subsection}{\numberline {10.1.1}Why the TaaS structure requires dedicated financial evaluation}{139}{subsection.10.1.1}%
-\contentsline {section}{\numberline {10.2}Cost structure, revenue model and five-year forecast}{140}{section.10.2}%
-\contentsline {subsection}{\numberline {10.2.1}CAPEX model: the cost of ownership the operator absorbs}{140}{subsection.10.2.1}%
-\contentsline {subsection}{\numberline {10.2.2}OPEX model: a fixed-cost-heavy delivery operation}{141}{subsection.10.2.2}%
-\contentsline {subsection}{\numberline {10.2.3}Revenue model: every pound tethered to fleet utilisation}{143}{subsection.10.2.3}%
-\contentsline {paragraph}{Reconciliation with McConnell's SOM.}{143}{table.caption.99}%
-\contentsline {subsection}{\numberline {10.2.4}CAPEX inversion timeline}{143}{subsection.10.2.4}%
-\contentsline {subsection}{\numberline {10.2.5}Five-year profit \& loss forecast}{144}{subsection.10.2.5}%
-\contentsline {subsection}{\numberline {10.2.6}Five-year cash-flow forecast}{145}{subsection.10.2.6}%
-\contentsline {section}{\numberline {10.3}Capital-budgeting assessment}{147}{section.10.3}%
-\contentsline {subsection}{\numberline {10.3.1}Break-even analysis}{147}{subsection.10.3.1}%
-\contentsline {subsection}{\numberline {10.3.2}NPV and IRR -- the capital-budgeting view}{148}{subsection.10.3.2}%
-\contentsline {paragraph}{Method.}{148}{subsection.10.3.2}%
-\contentsline {paragraph}{Result.}{148}{equation.10.3.2}%
-\contentsline {paragraph}{Interpretation.}{149}{figure.caption.107}%
-\contentsline {subsection}{\numberline {10.3.3}Sensitivity analysis}{149}{subsection.10.3.3}%
-\contentsline {subsection}{\numberline {10.3.4}Scenario analysis}{151}{subsection.10.3.4}%
-\contentsline {section}{\numberline {10.4}Financial risk: the downtime case}{152}{section.10.4}%
-\contentsline {subsection}{\numberline {10.4.1}Downtime sensitivity -- quantifying the maintenance dependency}{152}{subsection.10.4.1}%
-\contentsline {paragraph}{Interpretation.}{153}{figure.caption.113}%
-\contentsline {paragraph}{Implication for the maintenance budget.}{153}{figure.caption.113}%
-\contentsline {subsection}{\numberline {10.4.2}Financial risk: cash-headroom assessment}{153}{subsection.10.4.2}%
-\contentsline {section}{\numberline {10.5}Funding strategy, valuation and financial KPIs}{154}{section.10.5}%
-\contentsline {subsection}{\numberline {10.5.1}Funding strategy and use of funds}{154}{subsection.10.5.1}%
-\contentsline {subsection}{\numberline {10.5.2}Valuation (comparable multiples)}{155}{subsection.10.5.2}%
-\contentsline {paragraph}{Monthly financial KPIs.}{155}{table.caption.114}%
-\contentsline {section}{\numberline {10.6}Conclusions and Recommendations}{155}{section.10.6}%
+\contentsline {subsection}{\numberline {5.4.4}Robustness to track surface conditions}{74}{subsection.5.4.4}%
+\contentsline {section}{\numberline {5.5}Predicted Performance of the Final Vehicle}{74}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Requirements flow-down}{75}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Final agreed parameter set}{76}{subsection.5.5.2}%
+\contentsline {subsection}{\numberline {5.5.3}Constraint activity and phase analysis}{76}{subsection.5.5.3}%
+\contentsline {subsection}{\numberline {5.5.4}Compliance and predicted score}{78}{subsection.5.5.4}%
+\contentsline {section}{\numberline {5.6}Discussion and Limitations}{78}{section.5.6}%
+\contentsline {section}{\numberline {5.7}Conclusions and Further Work}{79}{section.5.7}%
+\contentsline {chapter}{\numberline {6}Market Analysis and Competition Analysis (Toby McConnell)}{81}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Introduction and Executive Summary}{81}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Product Overview and Value Proposition}{81}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Market Segmentation Strategy Overview}{82}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Market Option 1: Government Brake Testing Market}{83}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Market Overview and Size Estimation}{83}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Market Segmentation}{84}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Commercial Challenges}{84}{subsection.6.4.3}%
+\contentsline {section}{\numberline {6.5}Market Option 2: AI and Autonomous Vehicle Testing Market}{84}{section.6.5}%
+\contentsline {subsection}{\numberline {6.5.1}Market Overview and Size Estimation}{84}{subsection.6.5.1}%
+\contentsline {subsection}{\numberline {6.5.2}Market Segmentation}{85}{subsection.6.5.2}%
+\contentsline {section}{\numberline {6.6}Competitive Landscape Analysis}{86}{section.6.6}%
+\contentsline {subsection}{\numberline {6.6.1}Macro Analysis: Porter's 5 Forces}{86}{subsection.6.6.1}%
+\contentsline {subsection}{\numberline {6.6.2}Micro Analysis: Direct Competitors}{86}{subsection.6.6.2}%
+\contentsline {subsection}{\numberline {6.6.3}Micro Analysis: Indirect Competitors}{86}{subsection.6.6.3}%
+\contentsline {section}{\numberline {6.7}Strategic Positioning}{87}{section.6.7}%
+\contentsline {section}{\numberline {6.8}Target Market Selection}{88}{section.6.8}%
+\contentsline {subsection}{\numberline {6.8.1}Large Automotive OEMs}{88}{subsection.6.8.1}%
+\contentsline {subsection}{\numberline {6.8.2}Electric Vehicle Startups}{89}{subsection.6.8.2}%
+\contentsline {subsection}{\numberline {6.8.3}Independent AI Technology Firms}{89}{subsection.6.8.3}%
+\contentsline {subsection}{\numberline {6.8.4}Targeting Strategy}{89}{subsection.6.8.4}%
+\contentsline {subsection}{\numberline {6.8.5}Servicable Obtainable Market (SOM) Estimation}{90}{subsection.6.8.5}%
+\contentsline {section}{\numberline {6.9}Personas and User Journey}{90}{section.6.9}%
+\contentsline {section}{\numberline {6.10}Role of Users in Development}{91}{section.6.10}%
+\contentsline {section}{\numberline {6.11}Intellectual Property and Barriers to Entry}{92}{section.6.11}%
+\contentsline {section}{\numberline {6.12}Risk Analysis and Strategic Trade-offs}{93}{section.6.12}%
+\contentsline {subsection}{\numberline {6.12.1}Initial Product Development Risk}{93}{subsection.6.12.1}%
+\contentsline {subsection}{\numberline {6.12.2}Market Risk}{93}{subsection.6.12.2}%
+\contentsline {subsection}{\numberline {6.12.3}Technological Risk}{93}{subsection.6.12.3}%
+\contentsline {subsection}{\numberline {6.12.4}Strategy and Operational Risk}{93}{subsection.6.12.4}%
+\contentsline {subsection}{\numberline {6.12.5}Regulatory Risk}{94}{subsection.6.12.5}%
+\contentsline {subsection}{\numberline {6.12.6}Competitive Risk}{94}{subsection.6.12.6}%
+\contentsline {section}{\numberline {6.13}Conclusion}{94}{section.6.13}%
+\contentsline {chapter}{\numberline {7}Strategy \& Stakeholder Analysis (Paul Vogelberg)}{96}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Introduction to the Strategic Pivot}{96}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Macro-Environmental Dynamics and the UK Ecosystem}{97}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}The Zenzic UK CAM Roadmap}{97}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.2.2}Utilising CAM Testbed UK}{98}{subsection.7.2.2}%
+\contentsline {section}{\numberline {7.3}Manoeuvring to the Testing-as-a-Service (TaaS) Model}{98}{section.7.3}%
+\contentsline {subsection}{\numberline {7.3.1}Hardware Specialisation: The "Sprint" Advantage}{99}{subsection.7.3.1}%
+\contentsline {subsection}{\numberline {7.3.2}Full-Service Integration over Hardware Rental}{99}{subsection.7.3.2}%
+\contentsline {subsection}{\numberline {7.3.3}Supply Chain and Margin Defensibility}{100}{subsection.7.3.3}%
+\contentsline {section}{\numberline {7.4}Stakeholder Salience Identification}{100}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}Introduction to the model}{100}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}Applying the model}{102}{subsection.7.4.2}%
+\contentsline {subsection}{\numberline {7.4.3}Continuations to the model}{103}{subsection.7.4.3}%
+\contentsline {section}{\numberline {7.5}User Personas}{103}{section.7.5}%
+\contentsline {subsection}{\numberline {7.5.1}The CAM Testbed Operations Director (The Partner)}{103}{subsection.7.5.1}%
+\contentsline {subsection}{\numberline {7.5.2}The Independent Liability Assessor (The Gatekeeper)}{104}{subsection.7.5.2}%
+\contentsline {section}{\numberline {7.6}Integrated Strategy for Ethics, Liability, and Safety Assurance}{104}{section.7.6}%
+\contentsline {subsection}{\numberline {7.6.1}The Ethical Safety Buffer}{105}{subsection.7.6.1}%
+\contentsline {subsection}{\numberline {7.6.2}Liability Demarcation through Data Transparency}{105}{subsection.7.6.2}%
+\contentsline {subsection}{\numberline {7.6.3}Algorithmic Bias, Cybersecurity, and Continuous Learning}{105}{subsection.7.6.3}%
+\contentsline {section}{\numberline {7.7}Sustainability, Lifecycle, and the Circular Economy}{106}{section.7.7}%
+\contentsline {subsection}{\numberline {7.7.1}Product-Service Systems (PSS) Framework}{106}{subsection.7.7.1}%
+\contentsline {subsection}{\numberline {7.7.2}The 9R Framework Application}{107}{subsection.7.7.2}%
+\contentsline {section}{\numberline {7.8}Strategic Limitations \& Cross-Functional Dependencies}{108}{section.7.8}%
+\contentsline {subsection}{\numberline {7.8.1}Financial Exposure and Capital Intensity}{108}{subsection.7.8.1}%
+\contentsline {subsection}{\numberline {7.8.2}Asset Ownership and the Maintenance Bottleneck}{108}{subsection.7.8.2}%
+\contentsline {subsection}{\numberline {7.8.3}The Regulatory "Cold Start" Problem}{109}{subsection.7.8.3}%
+\contentsline {chapter}{\numberline {8}Commercially Driven Design Requirements and Prototype Planning (Ziyang Xing)}{110}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Purpose and commercial framing}{110}{section.8.1}%
+\contentsline {section}{\numberline {8.2}UK market need and customer problem}{111}{section.8.2}%
+\contentsline {subsection}{\numberline {8.2.1}Why a physical AEB test carrier is useful}{111}{subsection.8.2.1}%
+\contentsline {subsection}{\numberline {8.2.2}Customer segments}{112}{subsection.8.2.2}%
+\contentsline {subsection}{\numberline {8.2.3}UK policy and standards context}{112}{subsection.8.2.3}%
+\contentsline {section}{\numberline {8.3}Design requirements as commercial requirements}{113}{section.8.3}%
+\contentsline {subsection}{\numberline {8.3.1}Requirement logic}{113}{subsection.8.3.1}%
+\contentsline {subsection}{\numberline {8.3.2}Physical performance}{114}{subsection.8.3.2}%
+\contentsline {subsection}{\numberline {8.3.3}Experimental setup and repeatability}{115}{subsection.8.3.3}%
+\contentsline {subsection}{\numberline {8.3.4}Standards, data, and evidence quality}{115}{subsection.8.3.4}%
+\contentsline {section}{\numberline {8.4}Prototype roadmap: Explore, Validate, Demonstrate, Convince}{116}{section.8.4}%
+\contentsline {subsection}{\numberline {8.4.1}Why staged prototyping is necessary}{116}{subsection.8.4.1}%
+\contentsline {subsection}{\numberline {8.4.2}Stage definitions}{116}{subsection.8.4.2}%
+\contentsline {section}{\numberline {8.5}Value proposition and business model}{117}{section.8.5}%
+\contentsline {subsection}{\numberline {8.5.1}Value proposition}{117}{subsection.8.5.1}%
+\contentsline {subsection}{\numberline {8.5.2}Commercial model options}{118}{subsection.8.5.2}%
+\contentsline {section}{\numberline {8.6}Assumptions, risks, and limitations}{119}{section.8.6}%
+\contentsline {subsection}{\numberline {8.6.1}Key assumptions}{119}{subsection.8.6.1}%
+\contentsline {subsection}{\numberline {8.6.2}Risk management}{119}{subsection.8.6.2}%
+\contentsline {subsection}{\numberline {8.6.3}Limitations}{120}{subsection.8.6.3}%
+\contentsline {section}{\numberline {8.7}Sustainability, ethics, IP, and conclusion}{120}{section.8.7}%
+\contentsline {chapter}{\numberline {9}Supply Chain Design (Yuze Jiang)}{122}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Introduction}{122}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Supply Chain Strategy}{122}{section.9.2}%
+\contentsline {subsection}{\numberline {9.2.1}Strategic Objective}{122}{subsection.9.2.1}%
+\contentsline {subsection}{\numberline {9.2.2}System Framing}{123}{subsection.9.2.2}%
+\contentsline {subsection}{\numberline {9.2.3}Strategy Type}{123}{subsection.9.2.3}%
+\contentsline {paragraph}{Supply Chain Structure (Centralised vs Distributed)}{123}{subsection.9.2.3}%
+\contentsline {paragraph}{Sourcing Strategy (Outsourcing vs In-house)}{124}{subsection.9.2.3}%
+\contentsline {paragraph}{Operating Strategy (Lean vs Agile)}{124}{subsection.9.2.3}%
+\contentsline {paragraph}{Flow Strategy (Push vs Pull)}{124}{subsection.9.2.3}%
+\contentsline {paragraph}{Conclusion}{125}{subsection.9.2.3}%
+\contentsline {section}{\numberline {9.3}Supply Chain Planning}{125}{section.9.3}%
+\contentsline {subsection}{\numberline {9.3.1}Planning Framework}{125}{subsection.9.3.1}%
+\contentsline {subsection}{\numberline {9.3.2}Failure Mode and Effect Analysis (FEMA)}{125}{subsection.9.3.2}%
+\contentsline {subsection}{\numberline {9.3.3}Risk Classification}{126}{subsection.9.3.3}%
+\contentsline {subsection}{\numberline {9.3.4}Spare Planning}{128}{subsection.9.3.4}%
+\contentsline {subsection}{\numberline {9.3.5}Risk Mitigation}{129}{subsection.9.3.5}%
+\contentsline {subsection}{\numberline {9.3.6}Conclusion}{129}{subsection.9.3.6}%
+\contentsline {section}{\numberline {9.4}Supply Chain Operation}{129}{section.9.4}%
+\contentsline {subsection}{\numberline {9.4.1}Operational Flow}{129}{subsection.9.4.1}%
+\contentsline {subsection}{\numberline {9.4.2}Process Behaviour}{130}{subsection.9.4.2}%
+\contentsline {subsection}{\numberline {9.4.3}Downtime and Performance Constraints}{130}{subsection.9.4.3}%
+\contentsline {subsection}{\numberline {9.4.4}Process Improvements}{131}{subsection.9.4.4}%
+\contentsline {subsection}{\numberline {9.4.5}Key Activities}{132}{subsection.9.4.5}%
+\contentsline {section}{\numberline {9.5}Conclusion}{133}{section.9.5}%
+\contentsline {chapter}{\numberline {10}Financial Analysis (Harry Emes)}{135}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Scope and methodology}{136}{section.10.1}%
+\contentsline {subsection}{\numberline {10.1.1}Why the TaaS structure requires dedicated financial evaluation}{136}{subsection.10.1.1}%
+\contentsline {section}{\numberline {10.2}Cost structure, revenue model and five-year forecast}{137}{section.10.2}%
+\contentsline {subsection}{\numberline {10.2.1}CAPEX model: the cost of ownership the operator absorbs}{137}{subsection.10.2.1}%
+\contentsline {subsection}{\numberline {10.2.2}OPEX model: a fixed-cost-heavy delivery operation}{138}{subsection.10.2.2}%
+\contentsline {subsection}{\numberline {10.2.3}Revenue model: every pound tethered to fleet utilisation}{140}{subsection.10.2.3}%
+\contentsline {paragraph}{Reconciliation with McConnell's SOM.}{140}{table.caption.99}%
+\contentsline {subsection}{\numberline {10.2.4}CAPEX inversion timeline}{140}{subsection.10.2.4}%
+\contentsline {subsection}{\numberline {10.2.5}Five-year profit \& loss forecast}{141}{subsection.10.2.5}%
+\contentsline {subsection}{\numberline {10.2.6}Five-year cash-flow forecast}{142}{subsection.10.2.6}%
+\contentsline {section}{\numberline {10.3}Capital-budgeting assessment}{144}{section.10.3}%
+\contentsline {subsection}{\numberline {10.3.1}Break-even analysis}{144}{subsection.10.3.1}%
+\contentsline {subsection}{\numberline {10.3.2}NPV and IRR -- the capital-budgeting view}{145}{subsection.10.3.2}%
+\contentsline {paragraph}{Method.}{145}{subsection.10.3.2}%
+\contentsline {paragraph}{Result.}{145}{equation.10.3.2}%
+\contentsline {paragraph}{Interpretation.}{146}{figure.caption.107}%
+\contentsline {subsection}{\numberline {10.3.3}Sensitivity analysis}{146}{subsection.10.3.3}%
+\contentsline {subsection}{\numberline {10.3.4}Scenario analysis}{148}{subsection.10.3.4}%
+\contentsline {section}{\numberline {10.4}Financial risk: the downtime case}{149}{section.10.4}%
+\contentsline {subsection}{\numberline {10.4.1}Downtime sensitivity -- quantifying the maintenance dependency}{149}{subsection.10.4.1}%
+\contentsline {paragraph}{Interpretation.}{150}{figure.caption.113}%
+\contentsline {paragraph}{Implication for the maintenance budget.}{150}{figure.caption.113}%
+\contentsline {subsection}{\numberline {10.4.2}Financial risk: cash-headroom assessment}{150}{subsection.10.4.2}%
+\contentsline {section}{\numberline {10.5}Funding strategy, valuation and financial KPIs}{151}{section.10.5}%
+\contentsline {subsection}{\numberline {10.5.1}Funding strategy and use of funds}{151}{subsection.10.5.1}%
+\contentsline {subsection}{\numberline {10.5.2}Valuation (comparable multiples)}{152}{subsection.10.5.2}%
+\contentsline {paragraph}{Monthly financial KPIs.}{152}{table.caption.114}%
+\contentsline {section}{\numberline {10.6}Conclusions and Recommendations}{152}{section.10.6}%
