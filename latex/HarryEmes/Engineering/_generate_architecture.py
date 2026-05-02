@@ -161,25 +161,6 @@ arrow(7.8, 1.50, 1.70)
 ax.text(5.0, 9.95, "Acceleration Simulation — Software Architecture",
         ha="center", fontsize=12, weight="bold")
 
-# --- Tests / sidebar annotation ---------------------------------------
-_ut = fit_box_text(
-    "9 unit-test modules (tires, powertrain, dynamics, scoring, Monte Carlo, "
-    "sensitivity, thermal, controller, integration)",
-    width_chars=22,
-)
-ax.text(
-    9.65,
-    0.32,
-    _ut,
-    ha="right",
-    va="bottom",
-    fontsize=6.6,
-    color="0.2",
-    linespacing=0.98,
-    bbox=dict(boxstyle="round,pad=0.28", facecolor="white",
-              edgecolor="0.5", linewidth=0.7),
-)
-
 fig.tight_layout(pad=0.1)
 out = FIG / "architecture.pdf"
 fig.savefig(out, bbox_inches="tight")
