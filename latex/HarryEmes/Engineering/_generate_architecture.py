@@ -65,9 +65,11 @@ def layer(y, h, label, sub_label, boxes, fill):
     ))
     # Layer name on the left.
     ax.text(0.55, y + h / 2, label, fontsize=11.5, weight="bold",
-            color="0.15", rotation=90, va="center", ha="center", zorder=3)
+            color="0.15", rotation=90, va="center", ha="center", zorder=3,
+            parse_math=False)
     ax.text(0.90, y + h / 2, sub_label, fontsize=8, color="0.35",
-            rotation=90, va="center", ha="center", zorder=3)
+            rotation=90, va="center", ha="center", zorder=3,
+            parse_math=False)
 
     # Child boxes inside the layer.
     n = len(boxes)
@@ -91,7 +93,7 @@ def layer(y, h, label, sub_label, boxes, fill):
         label_txt = fit_box_text(txt, wrap_w)
         ax.text(cx, box_y + box_h / 2, label_txt,
                 fontsize=fs, ha="center", va="center", zorder=3,
-                linespacing=0.95)
+                linespacing=0.95, parse_math=False)
 
 
 # --- Layers (top to bottom) -------------------------------------------
@@ -116,9 +118,9 @@ layer(5.00, 2.00, "Vehicle Models", "vehicle/",
       CLR["vehicle"])
 
 layer(3.20, 1.60, "Dynamics", "dynamics/",
-      ["State\n$(x,v,\\omega_{w})$",
+      ["State\n(x, v, \u03c9_w)",
        "Force\naggregator",
-       "RK4\n($\\Delta t{=}1$ ms)",
+       "RK4\n(\u0394t = 1 ms)",
        "Wheelie /\nslip limit"],
       CLR["dyn"])
 
@@ -133,7 +135,7 @@ layer(0.20, 1.30, "Results", "analysis/",
       ["Sim.\nresult",
        "State\nhistory",
        "Plots\n(pyplot)",
-       "V\\&V /\nvalidation"],
+       "V&V /\nvalidation"],
       CLR["results"])
 
 
@@ -159,7 +161,7 @@ arrow(7.8, 1.50, 1.70)
 
 # --- Title ------------------------------------------------------------
 ax.text(5.0, 9.95, "Acceleration Simulation — Software Architecture",
-        ha="center", fontsize=12, weight="bold")
+        ha="center", fontsize=12, weight="bold", parse_math=False)
 
 fig.tight_layout(pad=0.1)
 out = FIG / "architecture.pdf"
