@@ -57,32 +57,75 @@ def load() -> dict:
 # =================================================================
 
 def fig_cost_structure(d: dict) -> None:
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9.5, 4))
-
+    """Write separate CAPEX and OPEX donut PDFs so LaTeX can place CAPEX
+    immediately after the five-year schedule (earlier page / same spread)."""
     cx = d["capex_per_vehicle"]
     cx_labels = list(cx.keys()) + ["Y1 workshop / data platform"]
     cx_values = list(cx.values()) + [d["office_setup_y1"]]
     cx_labels = [l.replace("\\&", "&").replace("\\pounds", "£") for l in cx_labels]
     colors1 = plt.cm.Blues(np.linspace(0.4, 0.9, len(cx_values)))
-    ax1.pie(cx_values, labels=cx_labels, autopct="%.0f%%",
-            colors=colors1, wedgeprops=dict(width=0.45),
-            textprops=dict(fontsize=7))
-    ax1.set_title(f"Y1 CAPEX build-up  (£{sum(cx_values)/1000:.0f}k)",
-                  fontweight="bold")
+
+    fig1, ax1 = plt.subplots(figsize=(6.5, 4.35), layout="constrained")
+    _w1, _t1, autotexts1 = ax1.pie(
+        cx_values,
+        labels=cx_labels,
+        autopct="%1.0f%%",
+        colors=colors1,
+        wedgeprops=dict(width=0.45),
+        textprops=dict(fontsize=10),
+        pctdistance=0.78,
+        labeldistance=1.08,
+    )
+    for t in autotexts1:
+        t.set_fontsize(11)
+        t.set_fontweight("bold")
+    ax1.set_title(
+        f"Y1 CAPEX build-up  (£{sum(cx_values) / 1000:.0f}k)",
+        fontweight="bold",
+        fontsize=12,
+    )
+    plt.savefig(FIG / "cost_structure_capex.pdf")
+    plt.close()
 
     ox = d["fixed_opex_y1"]
-    ox_labels = [l.replace("\\&", "&").replace("\\pounds", "£")
-                 .replace("\\%", "%") for l in ox.keys()]
+    ox_labels = [
+        l.replace("\\&", "&")
+        .replace("\\pounds", "£")
+        .replace("\\%", "%")
+        for l in ox.keys()
+    ]
     ox_values = list(ox.values())
     colors2 = plt.cm.Oranges(np.linspace(0.3, 0.9, len(ox_values)))
-    ax2.pie(ox_values, labels=ox_labels, autopct="%.0f%%",
-            colors=colors2, wedgeprops=dict(width=0.45),
-            textprops=dict(fontsize=6))
-    ax2.set_title(f"Y1 fixed OPEX build-up  (£{sum(ox_values)/1000:.0f}k)",
-                  fontweight="bold")
 
-    plt.tight_layout()
-    plt.savefig(FIG / "cost_structure.pdf")
+    fig2, ax2 = plt.subplots(figsize=(6.5, 5.35), layout="constrained")
+    wedges2, _t2, autotexts2 = ax2.pie(
+        ox_values,
+        labels=None,
+        autopct="%1.0f%%",
+        colors=colors2,
+        wedgeprops=dict(width=0.45),
+        pctdistance=0.78,
+    )
+    for t in autotexts2:
+        t.set_fontsize(11)
+        t.set_fontweight("bold")
+    ax2.set_title(
+        f"Y1 fixed OPEX build-up  (£{sum(ox_values) / 1000:.0f}k)",
+        fontweight="bold",
+        fontsize=12,
+    )
+    ax2.legend(
+        wedges2,
+        ox_labels,
+        loc="upper center",
+        bbox_to_anchor=(0.5, -0.02),
+        ncol=2,
+        fontsize=9,
+        frameon=False,
+        columnspacing=1.0,
+        handletextpad=0.6,
+    )
+    plt.savefig(FIG / "cost_structure_opex.pdf")
     plt.close()
 
 

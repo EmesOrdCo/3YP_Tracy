@@ -657,7 +657,7 @@ def write_table_capex(df: pd.DataFrame) -> None:
 \\centering
 \\small
 \\caption{{Five-year capex schedule (\\pounds k). Per-vehicle build costs 
-\\pounds{CAPEX_PER_VEHICLE_TOTAL/1000:.0f}k (see Table~\\ref{{tab:capex_breakdown}}); 
+\\pounds{CAPEX_PER_VEHICLE_TOTAL/1000:.0f}k (component split in Figure~\\ref{{fig:capex_donut}}); 
 one-off Y1 company setup \\pounds{OFFICE_SETUP_Y1_TOTAL/1000:.0f}k.}}
 \\label{{tab:capex_schedule}}
 \\begin{{tabular}}{{cccccc}}
@@ -945,7 +945,7 @@ def write_table_npv(npv: Dict) -> None:
 \\caption{{Project NPV and IRR, discounting the five-year free-cash-flow 
 series plus a Y5 terminal value of \\pounds{tv_k/1000:,.1f}M (peer-group 
 EV/Revenue median of $2.5\\times$ Y5 revenue). Free cash flows are taken 
-from Table~\\ref{{tab:cashflow}} (pre-equity, post-capex). The IRR is the 
+from Figure~\\ref{{fig:cash}} (pre-equity, post-capex). The IRR is the 
 discount rate at which the project's NPV equals zero.}}
 \\label{{tab:npv}}
 \\begin{{tabular}}{{cr}}

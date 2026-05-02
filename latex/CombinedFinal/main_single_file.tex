@@ -4294,19 +4294,17 @@ Detailed data sources should be provided in the references for each correspondin
 \chapterauthor{Financial Analysis}{Harry Emes}
 % =====================================================================
 
-\noindent The AEB~Rabbit is a supercapacitor-powered Automated Emergency
-Braking (AEB) target vehicle engineered for explosive, six-second
-``panic'' manoeuvres on behalf of autonomous-vehicle (AV)
-developers. It is commercialised as a Testing-as-a-Service (TaaS)
-/ Product--Service System~\cite{tukker2004}: the operator retains
-ownership of the fleet and sells test-days to AV developers, who
-absorb none of the capital or maintenance burden. The market
-analysis~\cite{mcconnell_business} estimates a
-\textdollar 1.5--2\,bn global AV-validation market; this chapter
-evaluates whether the specific financial structure of the TaaS
-build-out -- front-loaded CAPEX, utilisation-tethered revenue,
-maintenance-dependent uptime, and terminal-value-dominated returns
--- clears standard capital-budgeting thresholds.%
+\noindent This chapter quantifies the five-year TaaS plan using one
+driver-based Python model consistent with the engineering
+chapter's sensitivity methodology~\cite{emes_engineering}: linked
+capex, opex, and revenue; P\&L and free cash flow; CAPEX inversion
+(Section~\ref{sec:inversion}); break-even and one-at-a-time
+sensitivities (Sections~\ref{sec:breakeven}--\ref{sec:sensitivity});
+NPV/IRR (Section~\ref{sec:npv}); and downtime stress
+(Section~\ref{sec:downtime}). Market sizing and day-rate inputs
+follow McConnell's market chapter~\cite{mcconnell_business}; PAS,
+fleet-recovery, and gatekeeper uptake assumptions align with the
+preceding business chapters~\cite{pas1882,pas1883,pas1885,alarp,cam_testbed_uk,ccav,thatcham}.%
 \footnote{This chapter, the Python financial model, all figures
 and prose, is the sole work of Harry Emes. Market material cited
 here is the work of Toby McConnell~\cite{mcconnell_business};
@@ -4345,75 +4343,29 @@ chapters of the group report.}
 
 \noindent \textbf{Conclusion}: the TaaS financial structure clears
 standard venture-capital thresholds in the base case and is
-robust to Bull/Bear excursions. The business is most exposed to
-compounded shortfalls in day-rate and utilisation (external)
-or fleet downtime (internal), and financial viability in both
-directions is dominated by a single assumption -- the peer-group
-terminal-value multiple. Recommendations in
-Section~\ref{ch:concl}.
+robust to adverse swings in the key commercial drivers
+(Section~\ref{sec:sensitivity}).
 
 % =====================================================================
 \section{Scope and methodology}
 \label{ch:intro}
+\label{sec:why_taas}
 % =====================================================================
 
-% ---------------------------------------------------------------------
-\subsection{Why the TaaS structure requires dedicated financial evaluation}
-\label{sec:why_taas}
-% ---------------------------------------------------------------------
+\noindent Section scope: the model structure above is implemented
+end-to-end below; narrative in the Market and Strategy chapters is
+not repeated. Technical and operational priors (PAS, recovery,
+maintenance) are embedded in the driver set and cited where they
+enter the accounts~\cite{pas1882,pas1883,pas1885,alarp,cam_testbed_uk,ccav,thatcham}.
 
-Conventional automotive-testing equipment is sold as a capital good:
-the OEM or testbed buyer pays once, depreciates the asset, and owns
-both the utilisation upside and the maintenance downside. The
-AEB~Rabbit is instead delivered as a Testing-as-a-Service / Product
-Service System~\cite{tukker2004,sakao2019}: the operator retains
-the asset, sells the usage, and absorbs the full capital and
-maintenance risk. This inverts the financial structure of the
-business in three ways that conventional hardware-sale financial
-analysis does not capture:
-
-\begin{tightenumerate}
-  \item \textbf{CAPEX inversion.} The full fleet must be built and
-        made operational \emph{before} a billable hour is executed.
-        The operator therefore finances the asset across its useful
-        life from revenue that only flows if utilisation hits
-        plan.
-  \item \textbf{Utilisation-tethered revenue.} Every day the fleet
-        is not earning revenue is a day the fleet is still
-        depreciating, consuming fixed cost, and eroding unit
-        economics. Revenue is a function not just of customer
-        demand but of operational availability.
-  \item \textbf{Terminal-value dominance.} The five-year operational
-        free cash flow is loss-making until Y4; the NPV is
-        almost entirely the present value of the Y5 exit (terminal
-        value). Conventional accounting-profit analysis is
-        insufficient to assess investability.
-\end{tightenumerate}
-
-This chapter therefore extends the standard financial-plan toolkit
-(cost model, P\&L, cash flow) with three TaaS-specific analyses:
-a CAPEX-inversion timeline (Section~\ref{sec:inversion}), a
-utilisation-tethered break-even + sensitivity (Sections
-\ref{sec:breakeven}--\ref{sec:sensitivity}), and a full NPV / IRR
-capital-budgeting assessment (Section~\ref{sec:npv}) with a
-dedicated downtime-sensitivity treatment
-(Section~\ref{sec:downtime}) to quantify the cost of
-maintenance-protocol failure.
-
-The analysis takes market sizing, competitor day-rate benchmarks
-and phased customer targeting from McConnell's market
-chapter~\cite{mcconnell_business}; PAS-standards compliance and
-ALARP-safety validation from Ziyang Xing's prototype
-chapter~\cite{pas1882,pas1883,pas1885,alarp}; the fleet
-quick-recovery and 9R-framework refurbishment assumptions from Yuze
-Jiang's supply-chain chapter; and the fleet-maintenance protocols
-that underpin the downtime sensitivity from David's reliability
-chapter. All financial numbers flow from a single driver-based
-Python model that mirrors the simulation toolchain of the
-engineering chapter~\cite{emes_engineering}. Y3+ revenue depends on
-acceptance by the UK market-access gatekeepers McConnell identifies
--- CAM Testbed UK, CCAV, and
-Thatcham~\cite{cam_testbed_uk,ccav,thatcham}.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth,height=0.40\textheight,keepaspectratio]{cost_structure_capex.pdf}
+\caption{Y1 CAPEX build-up: per-vehicle line items plus the one-off
+  workshop and data-platform setup (same totals as
+  Table~\ref{tab:capex_schedule}, Y1 column).}
+\label{fig:capex_donut}
+\end{figure}
 
 % =====================================================================
 \section{Cost structure, revenue model and five-year forecast}
@@ -4429,46 +4381,24 @@ The operator owns the fleet; the customer rents days. Every pound
 of AEB~Rabbit capital therefore sits on our balance sheet, is
 financed from equity until the business turns cash-positive, and is
 recovered through the day-rate. Per-vehicle build is
-\capexPerVehicle, itemised in Table~\ref{tab:capex_breakdown}; the
+\capexPerVehicle; the
 Y1 setup adds \pounds50\,k in workshop fit-out and data-platform
 infrastructure. Fleet growth (2nd vehicle in Y3, 3rd in Y5) drives
-a further \pounds620\,k of capex over Y3--Y5, summarised in
-Table~\ref{tab:capex_schedule}. Total capex over the five-year
+a further \pounds620\,k of capex over Y3--Y5. Total capex over the five-year
 plan: \totalCapex.
 
-% --- BEGIN INLINE: HarryEmes/Business/tables/capex_breakdown.tex ---
-\begin{table}[H]
-\centering
-\small
-\caption{Per-vehicle capex build-up and Y1 one-off setup. Figures are 
-internal team estimates benchmarked against published Formula Student cost 
-reports and published industrial-test-rig build quotes.}
-\label{tab:capex_breakdown}
-\begin{tabular}{lr}
-\toprule
-\textbf{Line item} & \textbf{Cost (\pounds k)} \\
-\midrule
-Vehicle build (chassis, powertrain, aero) & 180 \\
-Data acquisition \& instrumentation & 60 \\
-Safety \& emergency redundancy systems & 25 \\
-Trailer \& transport rig & 30 \\
-Spares, tooling \& initial tyre stock & 15 \\
-\midrule
-\textbf{Total per vehicle} & \textbf{310} \\
-\midrule
-Workshop fit-out \& office setup (Y1 only) & 35 \\
-Data platform \& analytics stack (Y1 only) & 15 \\
-\bottomrule
-\end{tabular}
-\end{table}
-% --- END INLINE: HarryEmes/Business/tables/capex_breakdown.tex ---
+Capital is depreciated on a five-year straight-line basis. No
+residual value is modelled at Y5: in a PSS business, the physical
+asset is either refurbished in place under Yuze Jiang's 9R-framework
+loop (and therefore stays in service beyond the modelled window) or
+retired in line with safety-critical-testing industry norms.
 
 % --- BEGIN INLINE: HarryEmes/Business/tables/capex_schedule.tex ---
 \begin{table}[H]
 \centering
 \small
 \caption{Five-year capex schedule (\pounds k). Per-vehicle build costs 
-\pounds310k (see Table~\ref{tab:capex_breakdown}); 
+\pounds310k (component split in Figure~\ref{fig:capex_donut}); 
 one-off Y1 company setup \pounds50k.}
 \label{tab:capex_schedule}
 \begin{tabular}{cccccc}
@@ -4485,68 +4415,27 @@ one-off Y1 company setup \pounds50k.}
 \end{table}
 % --- END INLINE: HarryEmes/Business/tables/capex_schedule.tex ---
 
-Capital is depreciated on a five-year straight-line basis. No
-residual value is modelled at Y5: in a PSS business, the physical
-asset is either refurbished in place under Yuze Jiang's 9R-framework
-loop (and therefore stays in service beyond the modelled window) or
-retired in line with safety-critical-testing industry norms.
-
 % ---------------------------------------------------------------------
 \subsection{OPEX model: a fixed-cost-heavy delivery operation}
 \label{sec:opex}
 % ---------------------------------------------------------------------
 
-Fixed opex is dominated by headcount (60\% of the Y1 opex base of
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth,height=0.44\textheight,keepaspectratio]{cost_structure_opex.pdf}
+\caption{Y1 fixed-OPEX build-up. Legend in two columns for legibility.
+  The salary-heavy stack is the reason utilisation (revenue per
+  engineer per year) is the highest-leverage financial driver in
+  the sensitivity analysis (Section~\ref{sec:sensitivity}).}
+\label{fig:opex_donut}
+\end{figure}
+
+\noindent Fixed opex is dominated by headcount (60\% of the Y1 opex base of
 \fixedOpexYOne), with the remainder split across workshop rent,
 insurance, certification fees, data-platform hosting, marketing,
 vehicle maintenance, and professional services.
-Table~\ref{tab:opex_breakdown} shows the Y1 build-up; the model
-inflates fixed opex at 3\% per year (UK CPIH 2023--25 trend) and
+The model inflates fixed opex at 3\% per year (UK CPIH 2023--25 trend) and
 adds step-changes for each fleet-growth hire.
-
-% --- BEGIN INLINE: HarryEmes/Business/tables/opex_breakdown.tex ---
-\begin{table}[H]
-\centering
-\small
-\caption{Year-1 fixed opex build-up (\pounds k). Salaries benchmarked 
-against 2026 Gradcracker/Reed automotive-engineering bands for UK regional 
-centres; workshop rent from 2024 average Oxford-Didcot light-industrial 
-rates.}
-\label{tab:opex_breakdown}
-\begin{tabular}{lr}
-\toprule
-\textbf{Line item} & \textbf{Cost (\pounds k)} \\
-\midrule
-CEO / Commercial Director (1 FTE) & 75 \\
-Operations Manager / Lead Engineer (1 FTE) & 60 \\
-Test Engineer (2 FTE @ \pounds50k) & 100 \\
-Data \& Software Engineer (1 FTE) & 60 \\
-Admin \& finance (0.3 FTE) & 15 \\
-Employer NI \& benefits (20\% of salary) & 62 \\
-Workshop \& office rent (UK regional) & 36 \\
-Insurance (public, product, vehicle) & 40 \\
-Certification \& standards fees & 10 \\
-Marketing \& business development & 30 \\
-Software, IT \& data platform hosting & 15 \\
-Vehicle maintenance contract & 20 \\
-Professional services (legal, audit, R\&D) & 15 \\
-\midrule
-\textbf{Total fixed opex, Y1} & \textbf{538} \\
-\bottomrule
-\end{tabular}
-\end{table}
-% --- END INLINE: HarryEmes/Business/tables/opex_breakdown.tex ---
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{cost_structure.pdf}
-\caption{Y1 CAPEX build-up (left) and Y1 fixed-OPEX build-up
-  (right). The opex donut shows that 60\% of Y1 fixed costs are
-  salaries plus employer NI -- the reason utilisation (revenue per
-  engineer per year) is the highest-leverage financial driver in
-  the sensitivity analysis (Section~\ref{sec:sensitivity}).}
-\label{fig:cost_structure}
-\end{figure}
 
 Variable cost per test day is \pounds2,300 (Y1), comprising tyres
 and consumables (\pounds800), transport (\pounds600), crew
@@ -4601,9 +4490,8 @@ Gross margin (\%) & 69.3 & 70.6 & 71.8 & 72.8 & 73.7 \\
 revenue of \yFiveRevenue ($\approx$\textdollar 2.7\,M) sits at
 \mbox{10--14\%} of McConnell's serviceable-obtainable-market
 estimate of \textdollar 26\,M~\cite{mcconnell_business} -- a
-penetration consistent with a credible early-stage entrant and
-providing headroom for the bull-scenario analysis in
-Section~\ref{sec:scenarios}.
+penetration consistent with a credible early-stage entrant, with
+upside if utilisation and mix outperform the base plan.
 
 % ---------------------------------------------------------------------
 \subsection{CAPEX inversion timeline}
@@ -4704,33 +4592,8 @@ Net profit & -402 & -292 & -156 & 12 & 293 \\
 % ---------------------------------------------------------------------
 
 A capex-heavy TaaS business lives or dies on cash, not on
-accounting profit. Table~\ref{tab:cashflow} tracks free cash flow,
+accounting profit. Figure~\ref{fig:cash} summarises free cash flow,
 equity raises, and cumulative cash balance.
-
-% --- BEGIN INLINE: HarryEmes/Business/tables/cashflow.tex ---
-\begin{table}[H]
-\centering
-\small
-\caption{Five-year cash-flow forecast (\pounds k). Seed round 
-\pounds1.0M at Y1; Series~A 
-\pounds1.5M at Y3.}
-\label{tab:cashflow}
-\begin{tabular}{lrrrrr}
-\toprule
-\textbf{Line} & \textbf{Y1} & \textbf{Y2} & \textbf{Y3} & \textbf{Y4} & \textbf{Y5} \\
-\midrule
-Net profit & -402 & -292 & -156 & 12 & 293 \\
-+ Depreciation & 72 & 72 & 134 & 134 & 196 \\
-Operating cash flow & -330 & -220 & -22 & 146 & 489 \\
-- Capex & -360 & -0 & -310 & -0 & -310 \\
-Free cash flow & -690 & -220 & -332 & 146 & 179 \\
-+ Equity raised & 1,000 & 0 & 1,500 & 0 & 0 \\
-Net cash flow & 310 & -220 & 1,168 & 146 & 179 \\
-Cumulative cash & 310 & 90 & 1,258 & 1,404 & 1,582 \\
-\bottomrule
-\end{tabular}
-\end{table}
-% --- END INLINE: HarryEmes/Business/tables/cashflow.tex ---
 
 \begin{figure}[H]
 \centering
@@ -4804,7 +4667,7 @@ can the project, including its terminal value, return more than the
 investor's hurdle rate?
 
 \paragraph{Method.} Free cash flows (pre-equity, post-CAPEX) are
-taken from Table~\ref{tab:cashflow}. A terminal value is added to
+the annual series underlying Figure~\ref{fig:cash}. A terminal value is added to
 Y5 at the peer-group median EV/Revenue multiple of $2.5\times$
 Y5 revenue~\cite{abdynamics_ar2024,damodaran2012}, yielding
 \terminalValue. The project NPV at a discount rate $r$ is then
@@ -4815,41 +4678,20 @@ Y5 revenue~\cite{abdynamics_ar2024,damodaran2012}, yielding
 
 \noindent The project IRR is the discount rate at which NPV$=0$.
 
-\paragraph{Result.} NPV at benchmark discount rates is tabulated in
-Table~\ref{tab:npv} and visualised in Figure~\ref{fig:npv}. At the
-20\% VC-central rate the project NPV is \npvBase; at the 25\%
+\paragraph{Result.} Figure~\ref{fig:npv} plots $\mathrm{NPV}(r)$
+at representative hurdle rates (same annual FCF series as
+Figure~\ref{fig:cash}, pre-equity post-CAPEX, plus the Y5
+terminal value stated in the Method paragraph). At the 20\%
+VC-central rate the project NPV is \npvBase; at the 25\%
 high-hurdle rate it is \npvHurdle; IRR is \irr.
-
-% --- BEGIN INLINE: HarryEmes/Business/tables/npv.tex ---
-\begin{table}[H]
-\centering
-\small
-\caption{Project NPV and IRR, discounting the five-year free-cash-flow 
-series plus a Y5 terminal value of \pounds5.2M (peer-group 
-EV/Revenue median of $2.5\times$ Y5 revenue). Free cash flows are taken 
-from Table~\ref{tab:cashflow} (pre-equity, post-capex). The IRR is the 
-discount rate at which the project's NPV equals zero.}
-\label{tab:npv}
-\begin{tabular}{cr}
-\toprule
-\textbf{Discount rate} & \textbf{Project NPV (\pounds k)} \\
-\midrule
-10\% & 2,396 \\
-15\% & 1,785 \\
-20\% & 1,322 \\
-25\% & 968 \\
-30\% & 694 \\
-\midrule
-\textbf{Project IRR} & \multicolumn{1}{r}{\textbf{55.2\%}} \\
-\bottomrule
-\end{tabular}
-\end{table}
-% --- END INLINE: HarryEmes/Business/tables/npv.tex ---
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{npv_curve.pdf}
-\caption{Project NPV as a function of discount rate. The 10\% /
+\caption{Project NPV as a function of discount rate $r$. Cash flows
+  are the five-year free-cash-flow series underlying
+  Figure~\ref{fig:cash} plus terminal value \terminalValue{} at
+  $2.5\times$ Y5 revenue (peer-group EV/Revenue median). The 10\% /
   20\% / 30\% hurdle points are annotated; the IRR (\irr) is
   marked with the red vertical dashed line. NPV remains positive
   at discount rates well above typical VC hurdles, driven by the
@@ -4876,31 +4718,7 @@ it does not imply year-by-year operating returns at that level.
 Following the one-at-a-time methodology of the engineering
 chapter's sensitivity ranking~\cite{emes_engineering}, each driver
 is perturbed by $\pm 20\%$ ($\pm 50\%$ for inflation) and the
-resulting Y3 EBIT recorded.
-
-% --- BEGIN INLINE: HarryEmes/Business/tables/sensitivity.tex ---
-\begin{table}[H]
-\centering
-\small
-\caption{One-at-a-time sensitivity: impact on Year-3 EBIT 
-(\pounds k) of perturbing each driver. Drivers ranked by absolute 
-swing; negative EBIT values shown in red. Mirrors the engineering 
-sensitivity ranking in Harry Emes' engineering chapter.}
-\label{tab:sensitivity}
-\begin{tabular}{lcrrrr}
-\toprule
-\textbf{Driver} & \textbf{Perturbation} & \textbf{Low} & \textbf{Base} & \textbf{High} & \textbf{Swing} \\
-\midrule
-Blended day rate (Y3) & $\pm$20\% & \textcolor{red}{-343} & -156 & 31 & \textbf{374} \\
-Utilisation days (Y3) & $\pm$20\% & \textcolor{red}{-290} & -156 & -22 & \textbf{268} \\
-Fixed opex (all years) & $\pm$20\% & \textcolor{red}{-42} & -156 & -270 & \textbf{-228} \\
-Variable cost per day (Y3) & $\pm$20\% & \textcolor{red}{-103} & -156 & -209 & \textbf{-106} \\
-Capex per vehicle & $\pm$20\% & \textcolor{red}{-131} & -156 & -181 & \textbf{-50} \\
-Inflation rate & $\pm$50\% & \textcolor{red}{-136} & -156 & -176 & \textbf{-40} \\
-\bottomrule
-\end{tabular}
-\end{table}
-% --- END INLINE: HarryEmes/Business/tables/sensitivity.tex ---
+resulting Y3 EBIT swings ranked in Figure~\ref{fig:tornado}.
 
 \begin{figure}[H]
 \centering
@@ -4919,56 +4737,6 @@ more than cost discipline}: a 20\% day-rate swing is worth
 utilisation) are the two most directly in the operating team's
 control -- management attention earns the highest marginal return
 there, rather than on cost-out or CAPEX engineering.
-
-% ---------------------------------------------------------------------
-\subsection{Scenario analysis}
-\label{sec:scenarios}
-% ---------------------------------------------------------------------
-
-One-at-a-time sensitivity isolates drivers; scenarios combine
-plausible joint perturbations. Three are modelled:
-
-\begin{tightitemize}
-  \item \textbf{Base}: the central plan.
-  \item \textbf{Bull}: utilisation $+25\%$, day-rate $+10\%$,
-        variable cost $-5\%$. Represents strong product-market fit,
-        two retainer conversions by Y3, and competitive pricing
-        power.
-  \item \textbf{Bear}: utilisation $-30\%$, day-rate $-10\%$,
-        variable cost $+10\%$. Represents a slow AV investment
-        cycle, discounted Bronze-heavy mix, and logistics / tyre
-        cost inflation.
-\end{tightitemize}
-
-% --- BEGIN INLINE: HarryEmes/Business/tables/scenarios.tex ---
-\begin{table}[H]
-\centering
-\small
-\caption{Scenario analysis -- net profit after tax (\pounds k) in each 
-of the three scenarios.}
-\label{tab:scenarios}
-\begin{tabular}{lrrrrr}
-\toprule
-\textbf{Scenario} & \textbf{Y1} & \textbf{Y2} & \textbf{Y3} & \textbf{Y4} & \textbf{Y5} \\
-\midrule
-Base & -402 & -292 & -156 & 12 & 293 \\
-Bull (+25\% days, +10\% rate, -5\% var cost) & -307 & -117 & 115 & 363 & 844 \\
-Bear (-30\% days, -10\% rate, +10\% var cost) & -492 & -462 & -441 & -400 & -285 \\
-\bottomrule
-\end{tabular}
-\end{table}
-% --- END INLINE: HarryEmes/Business/tables/scenarios.tex ---
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{scenarios.pdf}
-\caption{Scenario net-profit trajectories. The grey band is the
-  bear-to-bull envelope. The Bull case reaches positive net
-  profit in Y3 and $\sim$\pounds700\,k in Y5; the Bear case
-  remains loss-making through Y5 and would necessitate a
-  cost-base reset or a bridge round.}
-\label{fig:scenarios}
-\end{figure}
 
 % =====================================================================
 \section{Financial risk: the downtime case}
