@@ -370,39 +370,32 @@ def fig_downtime(d: dict) -> None:
     y3_ebit = dt["Y3 EBIT (\\pounds k)"]
     y5_ebit = dt["Y5 EBIT (\\pounds k)"]
     npv20   = dt["NPV@20\\% (\\pounds k)"]
-    y5_rev  = dt["Y5 revenue (\\pounds k)"]
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4.2))
 
-    # EBIT trajectory
-    ax1.plot(pct, y3_ebit, marker="o", color=C_RED, linewidth=2,
-             label="Y3 EBIT")
-    ax1.plot(pct, y5_ebit, marker="s", color=C_GREEN, linewidth=2,
-             label="Y5 EBIT")
+    # Left: headline investor metric
+    ax1.plot(pct, npv20, marker="o", color=C_BRAND, linewidth=2,
+             label="NPV @ 20%")
     ax1.axhline(0, color="black", linewidth=0.7)
-    ax1.fill_between(pct, y3_ebit, y5_ebit, color=C_GREY, alpha=0.15)
     ax1.set_xlabel("Unplanned downtime (% of planned test days)")
-    ax1.set_ylabel("EBIT (£k)")
-    ax1.set_title("EBIT vs. downtime (Y3 \u0026 Y5)",
+    ax1.set_ylabel("NPV @ 20% (£k)", color=C_BRAND)
+    ax1.tick_params(axis="y", labelcolor=C_BRAND)
+    ax1.set_title("Project NPV vs. downtime (20% discount rate)",
                   fontweight="bold")
     ax1.legend(loc="upper right")
 
-    # NPV and Y5 revenue trajectory
-    ax2.plot(pct, npv20, marker="o", color=C_BRAND, linewidth=2,
-             label="NPV @ 20%")
+    # Right: operating earnings (same downtime shock)
+    ax2.plot(pct, y3_ebit, marker="o", color=C_RED, linewidth=2,
+             label="Y3 EBIT")
+    ax2.plot(pct, y5_ebit, marker="s", color=C_GREEN, linewidth=2,
+             label="Y5 EBIT")
     ax2.axhline(0, color="black", linewidth=0.7)
-    ax2b = ax2.twinx()
-    ax2b.plot(pct, y5_rev, marker="s", color=C_ACCENT, linewidth=1.8,
-              linestyle="--", label="Y5 revenue")
-    ax2b.set_ylabel("Y5 revenue (£k)", color=C_ACCENT)
-    ax2b.tick_params(axis="y", labelcolor=C_ACCENT)
+    ax2.fill_between(pct, y3_ebit, y5_ebit, color=C_GREY, alpha=0.15)
     ax2.set_xlabel("Unplanned downtime (% of planned test days)")
-    ax2.set_ylabel("NPV @ 20% (£k)", color=C_BRAND)
-    ax2.tick_params(axis="y", labelcolor=C_BRAND)
-    ax2.set_title("NPV and Y5 revenue vs. downtime",
+    ax2.set_ylabel("EBIT (£k)")
+    ax2.set_title("EBIT vs. downtime (Y3 \u0026 Y5)",
                   fontweight="bold")
-    ax2.legend(loc="upper left")
-    ax2b.legend(loc="upper right")
+    ax2.legend(loc="upper right")
 
     plt.tight_layout()
     plt.savefig(FIG / "downtime.pdf")

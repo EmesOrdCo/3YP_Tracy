@@ -1145,5 +1145,41 @@
       5235.0
     ],
     "crossover_year": 2
+  },
+  "year_10_projection": {
+    "assumptions_summary": "Y6\u2013Y10: fleet fixed at 3 vehicles; sold test-days grow compounding 12%/yr after Y5; blended rate +\u00a3200/yr (capped \u00a312k); variable cost/day +\u00a350/yr; no new capex or equity; headcount adds only through Y5.",
+    "y6_10_utilisation_cagr": 0.12,
+    "year_10_revenue_k": 4074.0,
+    "year_10_ebit_k": 1867.933010517069,
+    "year_10_net_profit_k": 1513.025738518826,
+    "year_10_total_test_days_sold": 388,
+    "year_10_blended_day_rate": 10500,
+    "year_10_days_per_vehicle": 129.3,
+    "terminal_ev_revenue_multiple": 2.5,
+    "year_10_terminal_enterprise_value_k": 10185.0,
+    "extended_utilisation_days_y1_y10": [
+      40,
+      70,
+      110,
+      150,
+      220,
+      246,
+      276,
+      309,
+      346,
+      388
+    ],
+    "extended_blended_day_rate_y1_y10": [
+      7500,
+      8000,
+      8500,
+      9000,
+      9500,
+      9700,
+      9900,
+      10100,
+      10300,
+      10500
+    ]
   }
 }

@@ -12,6 +12,7 @@ from __future__ import annotations
 import copy
 import json
 import math
+import os
 import sys
 from pathlib import Path
 from typing import Dict, List, Tuple
@@ -32,6 +33,9 @@ from dynamics.solver import DynamicsSolver
 HERE = Path(__file__).resolve().parent
 FIG = HERE / "figures"
 FIG.mkdir(exist_ok=True)
+# Beamer loads `Presentation/figures/` first; keep MC histogram in sync with slide bg.
+PRESENTATION_FIGS = HERE.parent / "Presentation" / "figures"
+SLIDE_BG = "#E8E8E8"
 
 BASE_CFG = REPO / "config" / "vehicle_configs" / "base_vehicle.json"
 
@@ -126,7 +130,7 @@ print(f"  Energy budget: E_elec={E_elec/1e3:.1f} kJ, KE_final={KE_final/1e3:.1f}
 # ----------------------------------------------------------------------
 print("\n--- 2. Monte Carlo (500 samples) ---")
 rng = np.random.default_rng(42)
-N_MC = 500
+N_MC = int(os.environ.get("REPORT_N_MC", "500"))
 # Parameter distributions (symmetric around baseline unless stated).
 #   mass:            N(250, 8 kg)       — build tolerance
 #   mu_max:          N(1.70, 0.08)      — tyre variability
@@ -168,22 +172,25 @@ print(f"  Power compliant: {sum(mc_power_ok)}/{len(mc_power_ok)}")
 print(f"  Time compliant:  {sum(mc_time_ok)}/{len(mc_time_ok)}")
 print(f"  No wheelie:      {sum(1 for w in mc_wheelie if not w)}/{len(mc_wheelie)}")
 
-# MC histogram.
+# MC histogram (bars only: no baseline / 5–95% / legend on slides or report).
 fig, ax = plt.subplots(figsize=(7.0, 4.0))
 ax.hist(mc_times, bins=30, color="#4a6fa5", edgecolor="white", alpha=0.9)
-ax.axvline(mc_mean, color="k", lw=1.5, label=f"Mean {mc_mean:.3f} s")
-ax.axvline(mc_p05, color="0.4", lw=1.0, ls="--",
-            label=f"5–95\\% band [{mc_p05:.3f}, {mc_p95:.3f}]")
-ax.axvline(mc_p95, color="0.4", lw=1.0, ls="--")
-ax.axvline(t_sim, color="#d62728", lw=1.2, ls=":",
-            label=f"Baseline {t_sim:.3f} s")
+ax.axvline(mc_mean, color="k", lw=1.5)
 ax.set(xlabel="Predicted 75 m time (s)", ylabel="Count",
-       title=f"Monte Carlo distribution over {N_MC} samples "
-             f"({sum(mc_time_ok)}/{N_MC} compliant)")
-ax.legend(loc="upper right")
+       title=f"Monte Carlo distribution over {N_MC} samples")
 ax.grid(axis="y", alpha=0.3)
 fig.tight_layout()
-fig.savefig(FIG / "mc_histogram.pdf", bbox_inches="tight")
+_mc_kw = dict(bbox_inches="tight", dpi=150)
+fig.savefig(FIG / "mc_histogram.pdf", **_mc_kw, facecolor="white", edgecolor="white")
+PRESENTATION_FIGS.mkdir(exist_ok=True, parents=True)
+fig.patch.set_facecolor(SLIDE_BG)
+ax.set_facecolor(SLIDE_BG)
+fig.savefig(
+    PRESENTATION_FIGS / "mc_histogram.pdf",
+    **_mc_kw,
+    facecolor=SLIDE_BG,
+    edgecolor=SLIDE_BG,
+)
 plt.close(fig)
 
 

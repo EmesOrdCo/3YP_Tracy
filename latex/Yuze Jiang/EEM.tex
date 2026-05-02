@@ -1,24 +1,42 @@
-\documentclass[a4paper,11pt]{article}
-
-\usepackage{geometry}
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{siunitx}
-\usepackage{float}
-\usepackage{booktabs}
-\usepackage{multirow}
-\usepackage{setspace}
+\documentclass[11pt, a4paper]{report}
+\makeatletter
+\def\input@path{{../../}}
+\makeatother
+\usepackage{styling}
+\usepackage{tocloft}
 \usepackage{tabularx}
 
-\geometry{margin=1in}
+% Reduce vertical space between the Contents title and first entry.
+\setlength{\cftbeforetoctitleskip}{0pt}
+\setlength{\cftaftertoctitleskip}{6pt}
 
-\doublespacing
+\numberwithin{equation}{section}
+
+\addbibresource{references.bib}
+\defbibnote{urlcheck}{All URLs were last accessed and verified on 01/04/2026.}
+
+\title{Supply Chain Design}
+\author{Yuze Jiang}
+\date{\today}
 
 \begin{document}
 
-\section{Supply Chain Design}
+\pagenumbering{gobble}
 
-\subsection{Introduction}
+\maketitle
+
+\newpage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\tableofcontents
+\newpage
+
+
+\chapter{Supply Chain Design}
+
+\section{Introduction}
 
 This part of the report examines the supply chain design of a Formula Student “rabbit” vehicle used for autonomous emergency braking (AEB) testing.
 
@@ -28,17 +46,20 @@ While such characteristics differ from those required in conventional racing app
 
 This shift in application fundamentally changes the nature of the system. Rather than focusing on one-off performance or large-scale production, the vehicle operates as part of a repeated testing cycle. Consequently, the primary challenge becomes maintaining continuous operation, where downtime directly limits testing capability.
 
+
 Therefore, the supply chain must prioritise availability and rapid recovery, rather than minimising cost or inventory.
 
-\subsection{Supply Chain Strategy}
+To structure the analysis, the report is divided into three levels: supply chain strategy, planning, and operation. These represent decisions over different time horizons, where strategy focuses on long-term structure over several years, planning considers medium-term decisions over months, and operation addresses short-term execution on a daily or weekly basis \cite{Supply_chain_lecture}.
 
-\subsubsection{Strategic Objective}
+\section{Supply Chain Strategy}
+
+\subsection{Strategic Objective}
 
 Strategy defines the long-term structure of the supply chain, within which planning and operational decisions are made. In this case, the strategy must be aligned with the uncertainty inherent in system operation.
 
 Given the operational nature of the system, the supply chain is primarily evaluated based on its ability to maintain continuity rather than efficiency. This implies that the key objective is not to minimise cost or inventory, but to ensure that failures can be absorbed without interrupting the testing cycle. As a result, supply chain decisions are driven by recovery capability, including the availability of spare parts and response time. In this context, availability becomes the dominant design constraint, and trade-offs are made in favour of reducing downtime rather than optimising resource utilisation.
 
-\subsubsection{System Framing}
+\subsection{System Framing}
 
 Given that the primary objective is to maintain continuous operation, it becomes necessary to reconsider how the system is defined from a supply chain perspective.
 
@@ -46,7 +67,7 @@ The system can no longer be understood as a conventional production process. Ins
 
 As a result, the supply chain is better understood as a process-oriented or service-oriented system, where value is generated through repeated operation rather than product delivery. This shifts the focus from output volume to system availability and continuity.
 
-\subsubsection{Strategy Type}
+\subsection{Strategy Type}
 
 Based on the operational characteristics of the system, the supply chain is best described as a combination of multiple approaches rather than a single conventional model.
 
@@ -78,17 +99,17 @@ In contrast, other components can be managed in a more reactive manner, where ac
 
 Overall, the supply chain can be characterised as a centralised, agile, and failure-driven system, where decisions are adapted to the level of risk and uncertainty associated with different components. And the strategy reflects a strong alignment between system requirements and supply chain design, ensuring that operational continuity is maintained under uncertain conditions.
 
-\subsection{Supply Chain Planning}
+\section{Supply Chain Planning}
 
-\subsubsection{Planning Framework}
+\subsection{Planning Framework}
 
 Given the operational nature of the system, supply chain planning is driven by managing risk rather than forecasting demand or production volume.
 
 The key consideration is how different failures affect the continuity of testing, particularly in terms of how likely they are to occur and how much downtime they introduce. As a result, planning decisions focus on prioritising resources towards components that have the greatest impact on system availability.  To structure this, the analysis considers three main factors: failure likelihood, impact on system operation, and recovery time. These together determine the level of preparation required for each component. This ensures that limited resources are allocated where they have the greatest effect on maintaining system continuity.
 
-\subsubsection{Failure Mode and Effect Analysis (FEMA)}
+\subsection{Failure Mode and Effect Analysis (FEMA)}
 
-To support the planning framework, a structured failure analysis is carried out using a simplified Failure Mode and Effects Analysis (FMEA). Rather than focusing solely on downtime, this approach allows different failure modes to be linked to their likelihood, underlying causes, and operational impact.
+To support the planning framework, a structured failure analysis is carried out using a simplified Failure Mode and Effects Analysis (FMEA)\cite{FMEA_lecture_notes}. Rather than focusing solely on downtime, this approach allows different failure modes to be linked to their likelihood, underlying causes, and operational impact.
 
 For non-collision conditions, failure likelihood can be informed by component specifications and available engineering data, such as expected lifetime and operating limits. In contrast, collision-related failures are less predictable and cannot be directly obtained from standard data sources. Instead, they are assessed based on the physical characteristics of each component, including their exposure to impact, level of protection within the system, and their ability to withstand mechanical loads.
 
@@ -96,7 +117,7 @@ The FMEA is therefore used to compare components based on how frequently failure
 
 A summary of the FMEA results for the powertrain components is presented in Table~\ref{tab:fmea}, illustrating how failure likelihood and recovery time combine to determine overall risk.
 
-A detailed FMEA covering other subsystems is provided in the appendix.
+A detailed FMEA covering other subsystems is provided in the logbook.
 
 \begin{table}[H]
 \centering
@@ -122,11 +143,13 @@ Power Wiring & Loose Connector failure & 0.02 & Impact disconnection & 0.05 \\
 \end{tabularx}
 \end{table}
 
-\subsubsection{Risk Classification}
+\subsection{Risk Classification}
 
 Building on the FMEA results, which provide a detailed view of individual component failures, a more aggregated perspective is required to support decision-making at the system level. While the FMEA highlights how each component behaves, it does not directly indicate how resources should be prioritised across the system.
 
 To support decisions on whether and how spare parts should be prepared, a baseline scenario is first considered in which no spare parts are available, so that system recovery depends entirely on component replacement. Under this assumption, lead time is used as a proxy for recovery time, representing the full duration of disruption following a failure.
+
+This approach effectively combines principles from failure analysis and supply chain planning. In particular, it reflects the general concept of risk as a function of likelihood and consequence, where failure probability represents the likelihood of disruption and lead time captures its impact in terms of system downtime.
 
 \begin{figure}
     \centering
@@ -145,6 +168,7 @@ The classification is applied to the system under both non-collision and collisi
     \caption{Component classification under non-collision conditions}
     \label{fig:non-collision}
 \end{figure}
+%need update from Michael
 
 From this representation, components can be grouped into four categories: high-risk components with both high failure likelihood and long lead time; frequent components that fail often but are relatively quick to recover; long lead-time components that fail less frequently but result in extended downtime; and low-risk components with both low failure likelihood and limited operational impact.
 
@@ -156,8 +180,9 @@ This classification provides a structured basis for prioritising components and 
     \caption{Component classification under collision conditions}
     \label{fig:collision}
 \end{figure}
+%need update from Michael
 
-\subsubsection{Spare Strategy}
+\subsection{Spare Planning}
 
 Based on the risk classification, spare part decisions are differentiated across components rather than applied uniformly. Since the objective is to maintain continuous operation, all components require some level of backup; however, the amount of inventory held depends on their impact on system continuity.
 
@@ -171,7 +196,7 @@ For low-risk components, which have both low failure likelihood and limited impa
 
 Overall, the spare strategy is based on allocating inventory according to component risk, ensuring that stock is concentrated where it has the greatest effect on maintaining system continuity.
 
-\subsubsection{Risk Mitigation}
+\subsection{Risk Mitigation}
 
 While the spare strategy ensures availability through inventory, additional risk mitigation measures are applied to reduce system vulnerability without increasing stock levels. These measures focus on reducing either the likelihood of failure or the impact of disruption through design and sourcing decisions.
 
@@ -183,18 +208,18 @@ In contrast, for low-risk components, additional mitigation is limited, as the c
 
 Overall, these mitigation measures complement the spare strategy by reducing the system’s reliance on inventory alone, enabling a more balanced and efficient allocation of resources.
 
-\subsubsection{Conclusion}
+\subsection{Conclusion}
 
 The planning analysis shows that component prioritisation can be based on failure likelihood and disruption duration. By combining FMEA with risk classification, components are grouped according to their impact on system continuity. This provides a clear basis for allocating spare parts and defining preparation levels.
 
-\subsection{Supply Chain Operation}
+\section{Supply Chain Operation}
 
-\subsubsection{Operational Flow}
+\subsection{Operational Flow}
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{operation.png}
-    \caption{Operational cycle and support structure}
+    \includegraphics[width=0.5\linewidth]{operation1.png}
+    \caption{Operational cycle and supply chain support structure}
     \label{fig:operation}
 \end{figure}
 
@@ -204,7 +229,7 @@ Each cycle consists of a preparation stage, including recharge and pre-test setu
 
 This operational loop is supported by a supply chain layer, which ensures that spare parts are available when needed, enabling the system to recover and continue testing.
 
-\subsubsection{Process Behaviour}
+\subsection{Process Behaviour}
 
 The operational cycle described in Figure~\ref{fig:operation} exhibits different characteristics across its stages and therefore cannot be represented by a single process model.
 
@@ -214,7 +239,7 @@ In contrast, the recovery stage following a failure is inherently less predictab
 
 As a result, the system combines both lean and agile behaviours within the same operational cycle, with the dominant mode depending on the stage of operation.
 
-\subsubsection{Downtime and Performance Constraints}
+\subsection{Downtime and Performance Constraints}
 
 The performance of the system is primarily constrained by non-execution time, as any delay outside the test execution phase directly reduces testing throughput. A summary of the operational time distribution is presented in Table~\ref{tab:operation_time}.
 
@@ -238,13 +263,17 @@ Recovery & Repair/replacement & 10 min--2 days & Non-value-added \\
 \end{tabularx}
 \end{table}
 
-From a customer value perspective, the test execution phase represents the primary value-added activity, while recharge, pre-test setup, and recovery constitute non-value-added time, despite being necessary for operation.
+From a customer value perspective, a value-added activity is defined as an activity that directly transforms the product or service in a way that the customer is willing to pay for. Activities that do not meet this criterion are classified as non-value-added, even if they are necessary for system operation.\cite{value_added}
+
+Based on this definition, the test execution phase represents the primary value-added activity, as it directly contributes to the generation of meaningful testing data. In contrast, recharge, pre-test setup, and recovery constitute non-value-added time, as they do not directly create value from the perspective of the testing objective, despite being necessary for operation.
+
+This classification follows the standard lean manufacturing distinction between value-added and non-value-added activities, where processes are analysed based on their contribution to customer value.
 
 As shown in Table~\ref{tab:operation_time}, the pre-test setup stage accounts for a significantly larger portion of the cycle compared to the execution phase. This indicates that system throughput is not limited by the test itself, but by the activities required before and after each run. In addition, the recovery stage introduces substantial variability, ranging from short repairs to extended structural recovery, further increasing uncertainty in overall cycle time.
 
 As a result, system performance is mainly influenced by the combined effect of preparation time and recovery variability, rather than by execution speed. Improving performance, therefore, depends on reducing non-value-added activities and managing disruption caused by failures.
 
-\subsubsection{Process Improvements}
+\subsection{Process Improvements}
 
 The analysis in the previous section shows that system downtime is primarily driven by the preparation and recovery stages. These two sources of delay require different approaches to improvement.
 
@@ -253,12 +282,13 @@ For the preparation stage, the process is highly structured and repeatable, maki
 In contrast, the recovery stage can be viewed as a form of changeover process, where the system transitions from a failed state back to operation. This stage is less predictable and often requires component replacement or repair, making it a major contributor to downtime. In this context, principles similar to SMED (Single-Minute Exchange of Die) can be applied, where activities are divided into those that must be performed while the system is stopped (internal) and those that can be completed in advance (external). By shifting as many tasks as possible from internal to external, the effective downtime can be significantly reduced.
 
 The use of a spare vehicle represents an extension of this approach. Instead of performing repair during downtime, a fully prepared backup system can be deployed immediately, allowing recovery to occur outside the operational cycle. This effectively converts part of the recovery process from an internal activity into an external one.
+%talk about modular supply chain maybe(Paul)
 
 It is important to note that this does not imply maintaining multiple complete backup systems. As established in the planning analysis, all components require at least a minimal level of spare availability. Rather than increasing the total amount of inventory, a single spare vehicle can be used to cover components that require immediate replacement, while additional spare parts are maintained selectively where needed.
 
 Following replacement, the repaired vehicle can then be restored and reused as the spare system, allowing the spare resource to be rotated within the system. This approach enables rapid recovery while avoiding unnecessary duplication of resources.
 
-\subsubsection{Key Activities}
+\subsection{Key Activities}
 
 While the previous section describes how the system operates, this section outlines the key activities required to support and manage the system in practice.
 
@@ -272,7 +302,7 @@ In addition, system monitoring plays an important role in supporting ongoing ope
 
 Finally, while most components are sourced externally, sourcing-related activities focus on maintaining flexibility and reducing supply risk. This includes ensuring compatibility across different suppliers, monitoring supplier availability, and favouring standardised components where possible. These actions reduce dependency on specific sources and improve the system’s ability to respond to supply disruptions. Overall, these activities enable the system to operate reliably in practice, ensuring that the supply chain effectively supports continuous testing.
 
-\subsection{Conclusion}
+\section{Conclusion}
 
 The supply chain for the rabbit vehicle is driven by the need to maintain continuous operation under conditions of uncertainty, rather than to optimise production efficiency. By combining failure analysis with risk classification, components can be prioritised based on their impact on system continuity, providing a structured basis for decision-making.
 
@@ -293,8 +323,8 @@ The data for different subsystems were provided by team members responsible for 
     \item Chassis: Toby McConnell
 \end{itemize}
 
-\section*{Note}
+Detailed data sources should be provided in the references for each corresponding section.
 
-Space is reserved for references and any unexpected changes.
+\printbibliography
 
 \end{document}

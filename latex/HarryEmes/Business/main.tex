@@ -186,60 +186,20 @@ dedicated downtime-sensitivity treatment
 (Section~\ref{sec:downtime}) to quantify the cost of
 maintenance-protocol failure.
 
-% ---------------------------------------------------------------------
-\section{Model scope and handoffs}
-\label{sec:scope}
-% ---------------------------------------------------------------------
-
-The financial model is the single source of truth for every number
-in this chapter: a driver-based Python script emits tables, figures
-and in-line macros from one shared driver set, so a change to Y1
-utilisation regenerates the whole plan consistently. The
-methodology mirrors the engineering chapter's simulation
-toolchain~\cite{emes_engineering}, where a single simulator drives
-the sensitivity ranking, compliance arbiter, and final-vehicle
-prediction.
-
-The chapter is deliberately scoped to financial evaluation and
-depends on four external inputs from co-authors, cited inline
-throughout rather than re-derived:
-
-\begin{tightitemize}
-  \item \textbf{Market sizing, competitor day-rate benchmarks,
-        segmentation and phased customer
-        targeting}~\cite{mcconnell_business}.
-  \item \textbf{Prototype functional requirements, PAS-standards
-        compliance timeline, and ALARP-safety validation
-        cycles}~\cite{pas1882,pas1883,pas1885,alarp}
-        (Ziyang Xing, engineering chapter).
-  \item \textbf{Fleet supply-chain design, $<$30-minute quick-recovery
-        protocol, and 9R-framework refurbishment loops} (Yuze
-        Jiang, supply-chain chapter).
-  \item \textbf{Fleet maintenance protocols and downtime assumptions}
-        (David, reliability chapter).
-\end{tightitemize}
-
-The financial analysis is then validated against the market-access
-gatekeepers identified by McConnell: CAM Testbed UK, the Centre for
-Connected and Autonomous Vehicles (CCAV), and Thatcham
-Research~\cite{cam_testbed_uk,ccav,thatcham} -- their acceptance is
-a hard gate on OEM-scale revenue and drives the Y3-onwards
-revenue trajectory.
-
-% ---------------------------------------------------------------------
-\section{Document roadmap}
-\label{sec:roadmap}
-% ---------------------------------------------------------------------
-
-Chapter~\ref{ch:cost_revenue} specifies the CAPEX-inverted cost
-model, the utilisation-driven revenue model, and the resulting
-five-year P\&L and cash-flow forecast. Chapter~\ref{ch:be_npv}
-applies capital-budgeting analysis: break-even, NPV, IRR, and
-scenario analysis. Chapter~\ref{ch:risk_fin} treats the financial
-risk lens, including the downtime-sensitivity analysis Paul's brief
-calls out explicitly. Chapter~\ref{ch:funding} closes with the
-funding strategy, valuation discussion, and the financial KPIs the
-investor should track.
+The analysis takes market sizing, competitor day-rate benchmarks
+and phased customer targeting from McConnell's market
+chapter~\cite{mcconnell_business}; PAS-standards compliance and
+ALARP-safety validation from Ziyang Xing's prototype
+chapter~\cite{pas1882,pas1883,pas1885,alarp}; the fleet
+quick-recovery and 9R-framework refurbishment assumptions from Yuze
+Jiang's supply-chain chapter; and the fleet-maintenance protocols
+that underpin the downtime sensitivity from David's reliability
+chapter. All financial numbers flow from a single driver-based
+Python model that mirrors the simulation toolchain of the
+engineering chapter~\cite{emes_engineering}. Y3+ revenue depends on
+acceptance by the UK market-access gatekeepers McConnell identifies
+-- CAM Testbed UK, CCAV, and
+Thatcham~\cite{cam_testbed_uk,ccav,thatcham}.
 
 % =====================================================================
 \chapter{Cost structure, revenue model and five-year forecast}
@@ -621,13 +581,13 @@ one-for-one into lost gross profit.
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{downtime.pdf}
-\caption{Downtime sensitivity. Left: Y3 (red) and Y5 (green)
-  EBIT as a function of unplanned downtime. Y5 EBIT turns
-  negative at $\sim$20\% downtime. Right: project NPV at 20\%
-  discount rate (blue, left axis) and Y5 revenue (orange, right
-  axis) vs. downtime. NPV stays positive through \downtimeBreak
-  downtime, driven almost entirely by the preserved terminal-value
-  contribution even at reduced Y5 revenue.}
+\caption{Downtime sensitivity. Left: project NPV at 20\%
+  discount rate as a function of unplanned downtime; NPV stays
+  positive through \downtimeBreak downtime, with the residual
+  value dominated by the terminal contribution at high downtime.
+  Right: Y3 (red) and Y5 (green) EBIT for the same shock; Y5 EBIT
+  turns negative at $\sim$20\% downtime, illustrating that
+  operating earnings deteriorate before NPV exhausts its margin.}
 \label{fig:downtime}
 \end{figure}
 
@@ -765,40 +725,16 @@ terminal-value assumption used in the NPV analysis
 band but sensitive to a compression below the peer-group floor
 (AVL at 1.8$\times$).
 
-% ---------------------------------------------------------------------
-\section{Financial KPIs}
-\label{sec:kpi}
-% ---------------------------------------------------------------------
-
-Eight financial KPIs are tracked monthly (Table~\ref{tab:kpi}).
-The first six are operational and map directly to drivers in the
-financial model; the last two -- \emph{incident-free test days}
-and \emph{unplanned fleet downtime} -- are the
-execution-level signals that protect the financial plan's
-downside case described in Chapter~\ref{ch:risk_fin}.
-
-\begin{table}[H]
-\centering
-\small
-\caption{Financial KPI dashboard. Red-amber-green thresholds are
-  set against the base-case financial plan; a red reading on any
-  one triggers a board-level review.}
-\label{tab:kpi}
-\begin{tabularx}{\textwidth}{lXl}
-\toprule
-\textbf{KPI} & \textbf{Definition} & \textbf{Source} \\
-\midrule
-Revenue (monthly) & Invoiced revenue, accrual basis & Accounting system \\
-Blended day-rate & Revenue / test days sold & Accounting \\
-Test-days sold & Billable fleet days in month & CRM / ops \\
-Gross margin & (Revenue $-$ variable cost) / revenue & Accounting \\
-Fixed-opex burn & Monthly fixed-opex spend & Accounting \\
-Cash runway & Cash balance / monthly burn & Finance \\
-Incident-free test days & Consecutive test days without reportable incident & Safety log \\
-Unplanned downtime & Lost test days / planned test days & Maintenance log \\
-\bottomrule
-\end{tabularx}
-\end{table}
+\paragraph{Monthly financial KPIs.}
+The plan is tracked on eight KPIs: \emph{revenue},
+\emph{blended day-rate}, \emph{test-days sold},
+\emph{gross margin}, \emph{fixed-opex burn}, and
+\emph{cash runway} (the six operational drivers of the financial
+model), plus \emph{incident-free test days} and
+\emph{unplanned fleet downtime} -- the two execution-level signals
+that protect the financial downside case from
+Chapter~\ref{ch:risk_fin}. A red reading on any one triggers a
+board-level review.
 
 % =====================================================================
 \chapter{Conclusions and Recommendations}
