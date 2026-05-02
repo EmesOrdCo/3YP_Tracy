@@ -109,6 +109,7 @@
 \begin{refsection}
 \graphicspath{{../TobyMcConnell/Engineering/}}
 % --- BEGIN INLINE: TobyMcConnell/Engineering/toby_body.tex ---
+\vspace{-10pt}
 \chapterauthor{Chassis Design}{Toby McConnell}
 \vspace{-25pt}
 \section{Introduction and Design Philosophy}
@@ -130,7 +131,8 @@ The chassis design must satisfy a range of performance targets, structural requi
 
 \begin{table}[H]
 \centering
-%\caption{Vehicle performance targets}
+\caption{Vehicle performance targets}
+\vspace{-8pt}
 \label{tab:performance_targets}
 \footnotesize
 \singlespacing
@@ -265,7 +267,7 @@ See the different tube diameters used in Table \ref{tab:tube_diameter_strategy}
     \caption{Tube diameter strategy}
     \label{tab:tube_diameter_strategy}
     \footnotesize
-    \begin{tabular}{|l|c|p{4.2cm}|p{6.2cm}|}
+    \begin{tabular}{|p{2.75cm}|c|p{4.2cm}|p{6.2cm}|}
         \hline
         \textbf{Structure} & \makecell{\textbf{Tube Size} \\ \textbf{(mm)}} & \textbf{Rule / Requirement} & \textbf{Application Rationale} \\
         \hline
@@ -277,7 +279,8 @@ See the different tube diameters used in Table \ref{tab:tube_diameter_strategy}
         \hline
     \end{tabular}
 \end{table}
- \vspace{-16pt}
+\vspace{-16pt}
+
 \section{Chassis Architecture}
 \label{sec:chassis_architecture}
 After selecting a steel spaceframe architecture, the design process focused on optimising packaging to create a compact, lightweight chassis built around the driver and components.
@@ -428,6 +431,7 @@ M_{\text{weld}} &= Z_w \tau_{\text{allow}}
 \begin{table}[H]
     \centering
     \caption{Comparative safety margin between tube and weld capacities.}
+    \vspace{-12pt}
     \label{tab:weld_vs_tube}
         \footnotesize
         \singlespacing
@@ -505,7 +509,6 @@ The first simulation considered the static resting condition of the vehicle. Thi
 These loads were included in all of the following simulations to ensure they were all accurate.
 
 \noindent\textbf{Acceleration Load Case.}\label{sec:acceleration_load_case}
-
 The primary operational load case for a sprint-optimised vehicle is the longitudinal force generated during maximum acceleration. When the vehicle accelerates, inertia produces a rearward force on the chassis that must be resisted by the structural members connecting the drivetrain and suspension mounts.
 This force was calculated using Newton’s second law: $F = m \cdot a$ Where m is each components mass. Using the simulated peak acceleration: a = 1.33 \( g\), the resulting force was applied through the drivetrain mounting points and transmitted through the frame toward the suspension nodes.
 This load case showed little impact on the chassis which ensured it is more then capable for the acceleration event. 
