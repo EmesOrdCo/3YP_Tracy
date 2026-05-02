@@ -1,6 +1,47 @@
 # Python
 __pycache__/
 *.py[cod]
+.pytest_cache/
+
+# Virtual environments
+.env
+.venv
+venv/
+env/
+
+# Editor/OS
+.vscode/
+.idea/
+.DS_Store
+
+# Backups
+backups/
+
+# Build/dist
+build/
+dist/
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.out
+*.pdf
+*.run.xml
+*.synctex.gz
+*.toc
+*.log
+*.lof
+*.lot
+
+# LaTeX temp files (emacs, etc.)
+*~
+# Python
+__pycache__/
+*.py[cod]
 *$py.class
 *.so
 .Python
