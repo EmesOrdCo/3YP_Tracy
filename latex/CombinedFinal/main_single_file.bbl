@@ -1,0 +1,2587 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{1}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{fsae_rules_2025}{online}{}{}
+      \list{organization}{1}{%
+        {Formula Student Germany}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Formula Student Rules 2025 v1.1}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.formulastudent.de/fileadmin/user_upload/all/2025/rules/FS-Rules_2025_v1.1.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.formulastudent.de/fileadmin/user_upload/all/2025/rules/FS-Rules_2025_v1.1.pdf
+      \endverb
+    \endentry
+    \entry{racecar_engineering_oxford_brookes}{online}{}{}
+      \list{organization}{1}{%
+        {Racecar Engineering}%
+      }
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labeltitlesource}{title}
+      \field{title}{Oxford Brookes Racing 2021 Chassis Design}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2021}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.racecar-engineering.com/articles/oxford-brookes-racing-2021-chassis-design/
+      \endverb
+      \verb{url}
+      \verb https://www.racecar-engineering.com/articles/oxford-brookes-racing-2021-chassis-design/
+      \endverb
+    \endentry
+    \entry{tutf_composite_build}{online}{}{}
+      \list{organization}{1}{%
+        {TUT-F Racing Team}%
+      }
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labeltitlesource}{title}
+      \field{title}{Making a Carbon Fibre Monocoque}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2023}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://tut-f.com/making.html
+      \endverb
+      \verb{url}
+      \verb https://tut-f.com/making.html
+      \endverb
+    \endentry
+    \entry{rapidmetals_mild_steel_tube}{online}{}{}
+      \list{organization}{1}{%
+        {Rapid Metals}%
+      }
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labeltitlesource}{title}
+      \field{title}{Mild Steel CDS Tube 25mm x 2mm Wall}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.rapidmetals.co.uk/product/mild-steel-cfs-tube-25mm-x-2mm-wall/
+      \endverb
+      \verb{url}
+      \verb https://www.rapidmetals.co.uk/product/mild-steel-cfs-tube-25mm-x-2mm-wall/
+      \endverb
+    \endentry
+    \entry{matweb_aisi1020}{online}{}{}
+      \list{organization}{1}{%
+        {MatWeb}%
+      }
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labeltitlesource}{title}
+      \field{title}{AISI 1020 Steel, Cold Drawn Material Data Sheet}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.matweb.com/search/DataSheet.aspx?MatGUID=10b74ebc27344380ab16b1b69f1cffbb&ckck=1
+      \endverb
+      \verb{url}
+      \verb https://www.matweb.com/search/DataSheet.aspx?MatGUID=10b74ebc27344380ab16b1b69f1cffbb&ckck=1
+      \endverb
+    \endentry
+    \entry{weldracing_25crmo4}{online}{}{}
+      \list{organization}{1}{%
+        {Weld Racing Parts}%
+      }
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labeltitlesource}{title}
+      \field{title}{25CrMo4 Chromoly Tube (30x2)}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://weldracingparts.com/es/tubos-chasis-de-25crmo4/437-tubo-de-25crmo4-30x2-8402576863461.html
+      \endverb
+      \verb{url}
+      \verb https://weldracingparts.com/es/tubos-chasis-de-25crmo4/437-tubo-de-25crmo4-30x2-8402576863461.html
+      \endverb
+    \endentry
+    \entry{aedmetals_docol_r8}{online}{}{}
+      \list{organization}{1}{%
+        {AED Metals}%
+      }
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labeltitlesource}{title}
+      \field{title}{Docol R8 High Strength Steel Tube}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.aedmetals.com/store/materials/docol-tube-r8
+      \endverb
+      \verb{url}
+      \verb https://www.aedmetals.com/store/materials/docol-tube-r8
+      \endverb
+    \endentry
+    \entry{millerwelds2024}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=2a3ec2909fd29b7b3b20b5f8390bda87}{%
+           family={Welds},
+           familyi={W\bibinitperiod},
+           given={Miller},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{2a3ec2909fd29b7b3b20b5f8390bda87}
+      \strng{fullhash}{2a3ec2909fd29b7b3b20b5f8390bda87}
+      \strng{fullhashraw}{2a3ec2909fd29b7b3b20b5f8390bda87}
+      \strng{bibnamehash}{2a3ec2909fd29b7b3b20b5f8390bda87}
+      \strng{authorbibnamehash}{2a3ec2909fd29b7b3b20b5f8390bda87}
+      \strng{authornamehash}{2a3ec2909fd29b7b3b20b5f8390bda87}
+      \strng{authorfullhash}{2a3ec2909fd29b7b3b20b5f8390bda87}
+      \strng{authorfullhashraw}{2a3ec2909fd29b7b3b20b5f8390bda87}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{(visited on 05/01/2026)}
+      \field{title}{Motorsports Welding and Racing Repair Guide}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.millerwelds.com/resources/article-library/motorsports-welding-and-racing-repair-guide
+      \endverb
+      \verb{url}
+      \verb https://www.millerwelds.com/resources/article-library/motorsports-welding-and-racing-repair-guide
+      \endverb
+    \endentry
+    \entry{dewesoft2025ia}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=da19409567d928f91632bed42627859b}{%
+           family={Dewesoft},
+           familyi={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{da19409567d928f91632bed42627859b}
+      \strng{fullhash}{da19409567d928f91632bed42627859b}
+      \strng{fullhashraw}{da19409567d928f91632bed42627859b}
+      \strng{bibnamehash}{da19409567d928f91632bed42627859b}
+      \strng{authorbibnamehash}{da19409567d928f91632bed42627859b}
+      \strng{authornamehash}{da19409567d928f91632bed42627859b}
+      \strng{authorfullhash}{da19409567d928f91632bed42627859b}
+      \strng{authorfullhashraw}{da19409567d928f91632bed42627859b}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{(visited on 05/01/2026)}
+      \field{title}{Impact Attenuator Assembly Testing and Model Validation on Formula SAE Race Car}
+      \field{year}{2025}
+      \verb{urlraw}
+      \verb https://dewesoft.com/blog/formula-sae-impact-attenuator-testing-and-validation
+      \endverb
+      \verb{url}
+      \verb https://dewesoft.com/blog/formula-sae-impact-attenuator-testing-and-validation
+      \endverb
+    \endentry
+    \entry{fsae_impact_attenuator}{online}{}{}
+      \list{organization}{1}{%
+        {Formula SAE Online}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Impact Attenuator Requirements and Documentation}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.fsaeonline.com/page.aspx?pageid=193613e4-fff1-4ea9-97ec-eb1c07fbe3c0
+      \endverb
+      \verb{url}
+      \verb https://www.fsaeonline.com/page.aspx?pageid=193613e4-fff1-4ea9-97ec-eb1c07fbe3c0
+      \endverb
+    \endentry
+    \entry{irjet2019fea}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=40faa1bc69980517511d12eb5ab3c8bb}{%
+           family={Kumar},
+           familyi={K\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=535b46081523fc5c5dcfaba2a621d930}{%
+           family={Singh},
+           familyi={S\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{aea85cadcaef1ca01b18574cee66b919}
+      \strng{fullhash}{aea85cadcaef1ca01b18574cee66b919}
+      \strng{fullhashraw}{aea85cadcaef1ca01b18574cee66b919}
+      \strng{bibnamehash}{aea85cadcaef1ca01b18574cee66b919}
+      \strng{authorbibnamehash}{aea85cadcaef1ca01b18574cee66b919}
+      \strng{authornamehash}{aea85cadcaef1ca01b18574cee66b919}
+      \strng{authorfullhash}{aea85cadcaef1ca01b18574cee66b919}
+      \strng{authorfullhashraw}{aea85cadcaef1ca01b18574cee66b919}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Research Journal of Engineering and Technology (IRJET)}
+      \field{note}{(visited on 05/01/2026)}
+      \field{number}{9}
+      \field{title}{Design and Finite Element Analysis(FEA) of Formula Student Chassis}
+      \field{volume}{6}
+      \field{year}{2019}
+      \verb{urlraw}
+      \verb https://www.irjet.net/archives/V6/i9/IRJET-V6I9126.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.irjet.net/archives/V6/i9/IRJET-V6I9126.pdf
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+
+\refsection{10}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{tukker2004}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=768115bff3942ca94dc4c5ecc3e27e1f}{%
+           family={Tukker},
+           familyi={T\bibinitperiod},
+           given={Arnold},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{768115bff3942ca94dc4c5ecc3e27e1f}
+      \strng{fullhash}{768115bff3942ca94dc4c5ecc3e27e1f}
+      \strng{fullhashraw}{768115bff3942ca94dc4c5ecc3e27e1f}
+      \strng{bibnamehash}{768115bff3942ca94dc4c5ecc3e27e1f}
+      \strng{authorbibnamehash}{768115bff3942ca94dc4c5ecc3e27e1f}
+      \strng{authornamehash}{768115bff3942ca94dc4c5ecc3e27e1f}
+      \strng{authorfullhash}{768115bff3942ca94dc4c5ecc3e27e1f}
+      \strng{authorfullhashraw}{768115bff3942ca94dc4c5ecc3e27e1f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Business Strategy and the Environment}
+      \field{number}{4}
+      \field{title}{Eight types of product--service system: Eight ways to sustainability? Experiences from SusProNet}
+      \field{volume}{13}
+      \field{year}{2004}
+      \field{pages}{246\bibrangedash 260}
+      \range{pages}{15}
+      \verb{doi}
+      \verb 10.1002/bse.414
+      \endverb
+    \endentry
+    \entry{mcconnell_business}{unpublished}{}{}
+      \name{author}{1}{}{%
+        {{hash=183a2e4d8f578e0b763df2ab90abc70d}{%
+           family={McConnell},
+           familyi={M\bibinitperiod},
+           given={Toby},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{183a2e4d8f578e0b763df2ab90abc70d}
+      \strng{fullhash}{183a2e4d8f578e0b763df2ab90abc70d}
+      \strng{fullhashraw}{183a2e4d8f578e0b763df2ab90abc70d}
+      \strng{bibnamehash}{183a2e4d8f578e0b763df2ab90abc70d}
+      \strng{authorbibnamehash}{183a2e4d8f578e0b763df2ab90abc70d}
+      \strng{authornamehash}{183a2e4d8f578e0b763df2ab90abc70d}
+      \strng{authorfullhash}{183a2e4d8f578e0b763df2ab90abc70d}
+      \strng{authorfullhashraw}{183a2e4d8f578e0b763df2ab90abc70d}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Oxford 3YP group report, Business chapter}
+      \field{title}{Tracey -- EEM Report: Market Analysis}
+      \field{year}{2026}
+    \endentry
+    \entry{sakao2019}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=5d3318ef899595651e9fff2302a1a466}{%
+           family={Sakao},
+           familyi={S\bibinitperiod},
+           given={Tomohiko},
+           giveni={T\bibinitperiod}}}%
+        {{hash=fc1118cc2d828c37c81be6ce3a10bdd1}{%
+           family={Mizuyama},
+           familyi={M\bibinitperiod},
+           given={Hajime},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{12254c05142f6eb2aedc1e4128c5f1bc}
+      \strng{fullhash}{12254c05142f6eb2aedc1e4128c5f1bc}
+      \strng{fullhashraw}{12254c05142f6eb2aedc1e4128c5f1bc}
+      \strng{bibnamehash}{12254c05142f6eb2aedc1e4128c5f1bc}
+      \strng{authorbibnamehash}{12254c05142f6eb2aedc1e4128c5f1bc}
+      \strng{authornamehash}{12254c05142f6eb2aedc1e4128c5f1bc}
+      \strng{authorfullhash}{12254c05142f6eb2aedc1e4128c5f1bc}
+      \strng{authorfullhashraw}{12254c05142f6eb2aedc1e4128c5f1bc}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Remanufacturing}
+      \field{title}{Understanding of a product/service system design: a holistic approach to support design for remanufacturing}
+      \field{year}{2019}
+      \verb{doi}
+      \verb 10.1007/s13243-019-0063-8
+      \endverb
+    \endentry
+    \entry{pas1882}{manual}{}{}
+      \list{organization}{1}{%
+        {BSI}%
+      }
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labeltitlesource}{title}
+      \field{title}{Immutable Telemetry \& Data Logging. BSI PAS 1882}
+      \field{year}{2021}
+    \endentry
+    \entry{pas1883}{manual}{}{}
+      \list{organization}{1}{%
+        {BSI}%
+      }
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labeltitlesource}{title}
+      \field{title}{Operational Design Domains. BSI PAS 1883}
+      \field{year}{2025}
+    \endentry
+    \entry{pas1885}{manual}{}{}
+      \list{organization}{1}{%
+        {BSI}%
+      }
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labeltitlesource}{title}
+      \field{title}{The fundamental principles of automotive cyber security. BSI PAS 1885}
+      \field{year}{2018}
+    \endentry
+    \entry{alarp}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=3256355703adaa49eb6d0d1d4465c842}{%
+           family={{Health and Safety Executive}},
+           familyi={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{3256355703adaa49eb6d0d1d4465c842}
+      \strng{fullhash}{3256355703adaa49eb6d0d1d4465c842}
+      \strng{fullhashraw}{3256355703adaa49eb6d0d1d4465c842}
+      \strng{bibnamehash}{3256355703adaa49eb6d0d1d4465c842}
+      \strng{authorbibnamehash}{3256355703adaa49eb6d0d1d4465c842}
+      \strng{authornamehash}{3256355703adaa49eb6d0d1d4465c842}
+      \strng{authorfullhash}{3256355703adaa49eb6d0d1d4465c842}
+      \strng{authorfullhashraw}{3256355703adaa49eb6d0d1d4465c842}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.hse.gov.uk/managing/theory/alarpglance.htm}}
+      \field{title}{ALARP ``At a Glance'' -- Guidance on the Principle of Reducing Risks As Low As Reasonably Practicable}
+      \field{urlday}{22}
+      \field{urlmonth}{4}
+      \field{urlyear}{2026}
+      \field{year}{2022}
+      \field{urldateera}{ce}
+    \endentry
+    \entry{emes_engineering}{unpublished}{}{}
+      \name{author}{1}{}{%
+        {{hash=81880f28ee4c657bbd15bb81d6a011bc}{%
+           family={Emes},
+           familyi={E\bibinitperiod},
+           given={Harry},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{81880f28ee4c657bbd15bb81d6a011bc}
+      \strng{fullhash}{81880f28ee4c657bbd15bb81d6a011bc}
+      \strng{fullhashraw}{81880f28ee4c657bbd15bb81d6a011bc}
+      \strng{bibnamehash}{81880f28ee4c657bbd15bb81d6a011bc}
+      \strng{authorbibnamehash}{81880f28ee4c657bbd15bb81d6a011bc}
+      \strng{authornamehash}{81880f28ee4c657bbd15bb81d6a011bc}
+      \strng{authorfullhash}{81880f28ee4c657bbd15bb81d6a011bc}
+      \strng{authorfullhashraw}{81880f28ee4c657bbd15bb81d6a011bc}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Oxford 3YP group report, Engineering chapter}
+      \field{title}{Vehicle Dynamics Simulation and Compliance Analysis for the Formula Student Acceleration Event}
+      \field{year}{2026}
+    \endentry
+    \entry{cam_testbed_uk}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=facdd1ad9740e6236b4cf3d6b7ca2efc}{%
+           family={{Zenzic}},
+           familyi={Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{facdd1ad9740e6236b4cf3d6b7ca2efc}
+      \strng{fullhash}{facdd1ad9740e6236b4cf3d6b7ca2efc}
+      \strng{fullhashraw}{facdd1ad9740e6236b4cf3d6b7ca2efc}
+      \strng{bibnamehash}{facdd1ad9740e6236b4cf3d6b7ca2efc}
+      \strng{authorbibnamehash}{facdd1ad9740e6236b4cf3d6b7ca2efc}
+      \strng{authornamehash}{facdd1ad9740e6236b4cf3d6b7ca2efc}
+      \strng{authorfullhash}{facdd1ad9740e6236b4cf3d6b7ca2efc}
+      \strng{authorfullhashraw}{facdd1ad9740e6236b4cf3d6b7ca2efc}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://zenzic.io/cam-testbed-uk/}}
+      \field{title}{CAM Testbed UK -- Connected and Automated Mobility Testing Network}
+      \field{urlday}{22}
+      \field{urlmonth}{4}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+    \endentry
+    \entry{ccav}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=c9315bdb49e92fb49199e98a0c1cb36e}{%
+           family={{Centre for Connected and Autonomous Vehicles}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{c9315bdb49e92fb49199e98a0c1cb36e}
+      \strng{fullhash}{c9315bdb49e92fb49199e98a0c1cb36e}
+      \strng{fullhashraw}{c9315bdb49e92fb49199e98a0c1cb36e}
+      \strng{bibnamehash}{c9315bdb49e92fb49199e98a0c1cb36e}
+      \strng{authorbibnamehash}{c9315bdb49e92fb49199e98a0c1cb36e}
+      \strng{authornamehash}{c9315bdb49e92fb49199e98a0c1cb36e}
+      \strng{authorfullhash}{c9315bdb49e92fb49199e98a0c1cb36e}
+      \strng{authorfullhashraw}{c9315bdb49e92fb49199e98a0c1cb36e}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.gov.uk/government/organisations/centre-for-connected-and-autonomous-vehicles}}
+      \field{title}{Centre for Connected and Autonomous Vehicles (CCAV) -- UK Government}
+      \field{urlday}{22}
+      \field{urlmonth}{4}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+    \endentry
+    \entry{thatcham}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=22c0894e3ed345f17bf0f84b101334b5}{%
+           family={{Thatcham Research}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{22c0894e3ed345f17bf0f84b101334b5}
+      \strng{fullhash}{22c0894e3ed345f17bf0f84b101334b5}
+      \strng{fullhashraw}{22c0894e3ed345f17bf0f84b101334b5}
+      \strng{bibnamehash}{22c0894e3ed345f17bf0f84b101334b5}
+      \strng{authorbibnamehash}{22c0894e3ed345f17bf0f84b101334b5}
+      \strng{authornamehash}{22c0894e3ed345f17bf0f84b101334b5}
+      \strng{authorfullhash}{22c0894e3ed345f17bf0f84b101334b5}
+      \strng{authorfullhashraw}{22c0894e3ed345f17bf0f84b101334b5}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.thatcham.org/}}
+      \field{title}{Thatcham Research -- Vehicle Safety Testing and Certification}
+      \field{urlday}{22}
+      \field{urlmonth}{4}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+    \endentry
+    \entry{abdynamics_ar2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=c8d16d4d7abf273eac0c5ebd59c119b0}{%
+           family={{AB Dynamics plc}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{c8d16d4d7abf273eac0c5ebd59c119b0}
+      \strng{fullhash}{c8d16d4d7abf273eac0c5ebd59c119b0}
+      \strng{fullhashraw}{c8d16d4d7abf273eac0c5ebd59c119b0}
+      \strng{bibnamehash}{c8d16d4d7abf273eac0c5ebd59c119b0}
+      \strng{authorbibnamehash}{c8d16d4d7abf273eac0c5ebd59c119b0}
+      \strng{authornamehash}{c8d16d4d7abf273eac0c5ebd59c119b0}
+      \strng{authorfullhash}{c8d16d4d7abf273eac0c5ebd59c119b0}
+      \strng{authorfullhashraw}{c8d16d4d7abf273eac0c5ebd59c119b0}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.abdynamics.com/investors/reports/}}
+      \field{title}{Annual Report and Accounts 2024}
+      \field{urlday}{22}
+      \field{urlmonth}{4}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+    \endentry
+    \entry{utac_facilities}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=c39724829789798fd5a4d29324c9c1d9}{%
+           family={{UTAC}},
+           familyi={U\bibinitperiod}}}%
+      }
+      \strng{namehash}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{fullhash}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{fullhashraw}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{bibnamehash}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{authorbibnamehash}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{authornamehash}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{authorfullhash}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{authorfullhashraw}{c39724829789798fd5a4d29324c9c1d9}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.utac.com/locations/}}
+      \field{title}{Proving Ground Facilities -- Millbrook and Leyland}
+      \field{urlday}{22}
+      \field{urlmonth}{4}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+    \endentry
+    \entry{horiba_brake}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=16a90f0abddcaa6db2df31a9f4a36e8f}{%
+           family={{HORIBA MIRA}},
+           familyi={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{16a90f0abddcaa6db2df31a9f4a36e8f}
+      \strng{fullhash}{16a90f0abddcaa6db2df31a9f4a36e8f}
+      \strng{fullhashraw}{16a90f0abddcaa6db2df31a9f4a36e8f}
+      \strng{bibnamehash}{16a90f0abddcaa6db2df31a9f4a36e8f}
+      \strng{authorbibnamehash}{16a90f0abddcaa6db2df31a9f4a36e8f}
+      \strng{authornamehash}{16a90f0abddcaa6db2df31a9f4a36e8f}
+      \strng{authorfullhash}{16a90f0abddcaa6db2df31a9f4a36e8f}
+      \strng{authorfullhashraw}{16a90f0abddcaa6db2df31a9f4a36e8f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.horiba-mira.com/}}
+      \field{title}{Brake Dynamometer and Vehicle Test Solutions}
+      \field{urlday}{22}
+      \field{urlmonth}{4}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+    \endentry
+    \entry{avl_profile}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=ed4d77e43cde4662c8b6e635f6dfc461}{%
+           family={{AVL List GmbH}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{ed4d77e43cde4662c8b6e635f6dfc461}
+      \strng{fullhash}{ed4d77e43cde4662c8b6e635f6dfc461}
+      \strng{fullhashraw}{ed4d77e43cde4662c8b6e635f6dfc461}
+      \strng{bibnamehash}{ed4d77e43cde4662c8b6e635f6dfc461}
+      \strng{authorbibnamehash}{ed4d77e43cde4662c8b6e635f6dfc461}
+      \strng{authornamehash}{ed4d77e43cde4662c8b6e635f6dfc461}
+      \strng{authorfullhash}{ed4d77e43cde4662c8b6e635f6dfc461}
+      \strng{authorfullhashraw}{ed4d77e43cde4662c8b6e635f6dfc461}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.avl.com/}}
+      \field{title}{Company Profile and Vehicle Testing Solutions}
+      \field{urlday}{22}
+      \field{urlmonth}{4}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+    \endentry
+    \entry{brealey2020}{book}{}{}
+      \name{author}{3}{}{%
+        {{hash=c8895c1c32114a394f534f81b838434d}{%
+           family={Brealey},
+           familyi={B\bibinitperiod},
+           given={Richard\bibnamedelima A.},
+           giveni={R\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=c9074b1d43acf1c207553f26fc755441}{%
+           family={Myers},
+           familyi={M\bibinitperiod},
+           given={Stewart\bibnamedelima C.},
+           giveni={S\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=86bd75c0f65033e37f051cfdb3c434c7}{%
+           family={Allen},
+           familyi={A\bibinitperiod},
+           given={Franklin},
+           giveni={F\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {McGraw-Hill Education}%
+      }
+      \strng{namehash}{88fe2c746d6c9d38a4a4e029446b987e}
+      \strng{fullhash}{88fe2c746d6c9d38a4a4e029446b987e}
+      \strng{fullhashraw}{88fe2c746d6c9d38a4a4e029446b987e}
+      \strng{bibnamehash}{88fe2c746d6c9d38a4a4e029446b987e}
+      \strng{authorbibnamehash}{88fe2c746d6c9d38a4a4e029446b987e}
+      \strng{authornamehash}{88fe2c746d6c9d38a4a4e029446b987e}
+      \strng{authorfullhash}{88fe2c746d6c9d38a4a4e029446b987e}
+      \strng{authorfullhashraw}{88fe2c746d6c9d38a4a4e029446b987e}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{13th}
+      \field{isbn}{978-1260013900}
+      \field{title}{Principles of Corporate Finance}
+      \field{year}{2020}
+    \endentry
+    \entry{damodaran2012}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=063f60692f2f4aa0aa54afd9bd84e4a0}{%
+           family={Damodaran},
+           familyi={D\bibinitperiod},
+           given={Aswath},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Wiley}%
+      }
+      \strng{namehash}{063f60692f2f4aa0aa54afd9bd84e4a0}
+      \strng{fullhash}{063f60692f2f4aa0aa54afd9bd84e4a0}
+      \strng{fullhashraw}{063f60692f2f4aa0aa54afd9bd84e4a0}
+      \strng{bibnamehash}{063f60692f2f4aa0aa54afd9bd84e4a0}
+      \strng{authorbibnamehash}{063f60692f2f4aa0aa54afd9bd84e4a0}
+      \strng{authornamehash}{063f60692f2f4aa0aa54afd9bd84e4a0}
+      \strng{authorfullhash}{063f60692f2f4aa0aa54afd9bd84e4a0}
+      \strng{authorfullhashraw}{063f60692f2f4aa0aa54afd9bd84e4a0}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3rd}
+      \field{isbn}{978-1118011522}
+      \field{title}{Investment Valuation: Tools and Techniques for Determining the Value of Any Asset}
+      \field{year}{2012}
+    \endentry
+    \entry{gompers2020}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=0d249aca19fceef705d1cce36b583fcf}{%
+           family={Gompers},
+           familyi={G\bibinitperiod},
+           given={Paul\bibnamedelima A.},
+           giveni={P\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=078bf6df74da740045b056463b7b785b}{%
+           family={Lerner},
+           familyi={L\bibinitperiod},
+           given={Josh},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {MIT Press}%
+      }
+      \strng{namehash}{42b764bbed4a41732fc127b83392d2ea}
+      \strng{fullhash}{42b764bbed4a41732fc127b83392d2ea}
+      \strng{fullhashraw}{42b764bbed4a41732fc127b83392d2ea}
+      \strng{bibnamehash}{42b764bbed4a41732fc127b83392d2ea}
+      \strng{authorbibnamehash}{42b764bbed4a41732fc127b83392d2ea}
+      \strng{authornamehash}{42b764bbed4a41732fc127b83392d2ea}
+      \strng{authorfullhash}{42b764bbed4a41732fc127b83392d2ea}
+      \strng{authorfullhashraw}{42b764bbed4a41732fc127b83392d2ea}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2nd}
+      \field{isbn}{978-0262539761}
+      \field{title}{The Venture Capital Cycle}
+      \field{year}{2020}
+    \endentry
+  \enddatalist
+\endrefsection
+
+\refsection{2}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{imecheFS2026Rules}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=c0ad07fe11fa2a0ed39a780a4f63be5d}{%
+           family={{Institution of Mechanical Engineers}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{c0ad07fe11fa2a0ed39a780a4f63be5d}
+      \strng{fullhash}{c0ad07fe11fa2a0ed39a780a4f63be5d}
+      \strng{fullhashraw}{c0ad07fe11fa2a0ed39a780a4f63be5d}
+      \strng{bibnamehash}{c0ad07fe11fa2a0ed39a780a4f63be5d}
+      \strng{authorbibnamehash}{c0ad07fe11fa2a0ed39a780a4f63be5d}
+      \strng{authornamehash}{c0ad07fe11fa2a0ed39a780a4f63be5d}
+      \strng{authorfullhash}{c0ad07fe11fa2a0ed39a780a4f63be5d}
+      \strng{authorfullhashraw}{c0ad07fe11fa2a0ed39a780a4f63be5d}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Official Formula Student UK rules page; rules v1 last updated 23 October 2025, with v1.1 supplementary material listed by IMechE.}
+      \field{title}{Formula Student 2026 Rules, Version 1}
+      \field{urlday}{2}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.imeche.org/events/formula-student/team-information/rules
+      \endverb
+      \verb{url}
+      \verb https://www.imeche.org/events/formula-student/team-information/rules
+      \endverb
+    \endentry
+    \entry{gillespie1992}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=cde0c46d3d7572dbb5aecf77e1799334}{%
+           family={Gillespie},
+           familyi={G\bibinitperiod},
+           given={Thomas\bibnamedelima D.},
+           giveni={T\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Society of Automotive Engineers}%
+      }
+      \strng{namehash}{cde0c46d3d7572dbb5aecf77e1799334}
+      \strng{fullhash}{cde0c46d3d7572dbb5aecf77e1799334}
+      \strng{fullhashraw}{cde0c46d3d7572dbb5aecf77e1799334}
+      \strng{bibnamehash}{cde0c46d3d7572dbb5aecf77e1799334}
+      \strng{authorbibnamehash}{cde0c46d3d7572dbb5aecf77e1799334}
+      \strng{authornamehash}{cde0c46d3d7572dbb5aecf77e1799334}
+      \strng{authorfullhash}{cde0c46d3d7572dbb5aecf77e1799334}
+      \strng{authorfullhashraw}{cde0c46d3d7572dbb5aecf77e1799334}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Fundamentals of Vehicle Dynamics}
+      \field{year}{1992}
+    \endentry
+    \entry{milliken1995}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=34816c0e6523ad37e0c8f41e7a895241}{%
+           family={Milliken},
+           familyi={M\bibinitperiod},
+           given={William\bibnamedelima F.},
+           giveni={W\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+        {{hash=47b8767120ee00a8532963c06b1ce897}{%
+           family={Milliken},
+           familyi={M\bibinitperiod},
+           given={Douglas\bibnamedelima L.},
+           giveni={D\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Society of Automotive Engineers}%
+      }
+      \strng{namehash}{a9311211c8b19c54559d149faeead1ae}
+      \strng{fullhash}{a9311211c8b19c54559d149faeead1ae}
+      \strng{fullhashraw}{a9311211c8b19c54559d149faeead1ae}
+      \strng{bibnamehash}{a9311211c8b19c54559d149faeead1ae}
+      \strng{authorbibnamehash}{a9311211c8b19c54559d149faeead1ae}
+      \strng{authornamehash}{a9311211c8b19c54559d149faeead1ae}
+      \strng{authorfullhash}{a9311211c8b19c54559d149faeead1ae}
+      \strng{authorfullhashraw}{a9311211c8b19c54559d149faeead1ae}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Race Car Vehicle Dynamics}
+      \field{year}{1995}
+    \endentry
+    \entry{limpert2011}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=47bd455cfc193c2e11011de36cf2c4a4}{%
+           family={Limpert},
+           familyi={L\bibinitperiod},
+           given={Rudolf},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {SAE International}%
+      }
+      \strng{namehash}{47bd455cfc193c2e11011de36cf2c4a4}
+      \strng{fullhash}{47bd455cfc193c2e11011de36cf2c4a4}
+      \strng{fullhashraw}{47bd455cfc193c2e11011de36cf2c4a4}
+      \strng{bibnamehash}{47bd455cfc193c2e11011de36cf2c4a4}
+      \strng{authorbibnamehash}{47bd455cfc193c2e11011de36cf2c4a4}
+      \strng{authornamehash}{47bd455cfc193c2e11011de36cf2c4a4}
+      \strng{authorfullhash}{47bd455cfc193c2e11011de36cf2c4a4}
+      \strng{authorfullhashraw}{47bd455cfc193c2e11011de36cf2c4a4}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3}
+      \field{title}{Brake Design and Safety}
+      \field{year}{2011}
+    \endentry
+  \enddatalist
+\endrefsection
+
+\refsection{3}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{fs-ev-rules2026}{manual}{}{}
+      \list{organization}{1}{%
+        {Formula Student}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Formula Student Electric Vehicle (FS-EV) Rules}
+      \field{version}{1.0}
+      \field{year}{2026}
+    \endentry
+    \entry{YASA_P400R_data_sheet}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=a589c632423158e45319afd47211de1f}{%
+           family={{YASA Limited}},
+           familyi={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{a589c632423158e45319afd47211de1f}
+      \strng{fullhash}{a589c632423158e45319afd47211de1f}
+      \strng{fullhashraw}{a589c632423158e45319afd47211de1f}
+      \strng{bibnamehash}{a589c632423158e45319afd47211de1f}
+      \strng{authorbibnamehash}{a589c632423158e45319afd47211de1f}
+      \strng{authornamehash}{a589c632423158e45319afd47211de1f}
+      \strng{authorfullhash}{a589c632423158e45319afd47211de1f}
+      \strng{authorfullhashraw}{a589c632423158e45319afd47211de1f}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://yasa.com/media/2021/05/yasa-p400rdatasheet-rev-14.pdf}}
+      \field{title}{YASA P400 R Electric Motor Datasheet}
+      \field{year}{2021}
+    \endentry
+    \entry{EMRAX_208_data_sheet}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=bbf04993cfd2e60e73dd6a95b2bb7fe8}{%
+           family={{EMRAX}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{bbf04993cfd2e60e73dd6a95b2bb7fe8}
+      \strng{fullhash}{bbf04993cfd2e60e73dd6a95b2bb7fe8}
+      \strng{fullhashraw}{bbf04993cfd2e60e73dd6a95b2bb7fe8}
+      \strng{bibnamehash}{bbf04993cfd2e60e73dd6a95b2bb7fe8}
+      \strng{authorbibnamehash}{bbf04993cfd2e60e73dd6a95b2bb7fe8}
+      \strng{authornamehash}{bbf04993cfd2e60e73dd6a95b2bb7fe8}
+      \strng{authorfullhash}{bbf04993cfd2e60e73dd6a95b2bb7fe8}
+      \strng{authorfullhashraw}{bbf04993cfd2e60e73dd6a95b2bb7fe8}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://emrax.com/wp-content/uploads/2024/02/EMRAX_208_datasheet_v1.5.pdf}}
+      \field{title}{EMRAX 208 Datasheet}
+      \field{year}{2024}
+    \endentry
+    \entry{DMC544_datasheet}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=5026df8671711f71b746496b4ea021b4}{%
+           family={{BRUSA Technology AG}},
+           familyi={B\bibinitperiod}}}%
+      }
+      \strng{namehash}{5026df8671711f71b746496b4ea021b4}
+      \strng{fullhash}{5026df8671711f71b746496b4ea021b4}
+      \strng{fullhashraw}{5026df8671711f71b746496b4ea021b4}
+      \strng{bibnamehash}{5026df8671711f71b746496b4ea021b4}
+      \strng{authorbibnamehash}{5026df8671711f71b746496b4ea021b4}
+      \strng{authornamehash}{5026df8671711f71b746496b4ea021b4}
+      \strng{authorfullhash}{5026df8671711f71b746496b4ea021b4}
+      \strng{authorfullhashraw}{5026df8671711f71b746496b4ea021b4}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.brusatechnology.com/wp-content/uploads/2024/02/Datasheet_DMC544_V3.pdf}}
+      \field{title}{DMC544 Inverter Datasheet}
+      \field{year}{2024}
+    \endentry
+    \entry{BAMOCAR_data_sheet}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=e7cfef35d2e480da6015aae9fe86e8bd}{%
+           family={{UNITEK Industrie Elektronik GmbH}},
+           familyi={U\bibinitperiod}}}%
+      }
+      \strng{namehash}{e7cfef35d2e480da6015aae9fe86e8bd}
+      \strng{fullhash}{e7cfef35d2e480da6015aae9fe86e8bd}
+      \strng{fullhashraw}{e7cfef35d2e480da6015aae9fe86e8bd}
+      \strng{bibnamehash}{e7cfef35d2e480da6015aae9fe86e8bd}
+      \strng{authorbibnamehash}{e7cfef35d2e480da6015aae9fe86e8bd}
+      \strng{authornamehash}{e7cfef35d2e480da6015aae9fe86e8bd}
+      \strng{authorfullhash}{e7cfef35d2e480da6015aae9fe86e8bd}
+      \strng{authorfullhashraw}{e7cfef35d2e480da6015aae9fe86e8bd}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.unitek-industrie-elektronik.de/wp-content/uploads/BAMOCAR-PG-D3-700-400_EN.pdf}}
+      \field{title}{BAMOCAR PG-D3 Digital Motor Controller Datasheet}
+      \field{year}{2021}
+    \endentry
+    \entry{CM200_data_sheet}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=a6f9c80fbbaa7b0433ffcafee3adb01b}{%
+           family={{Cascadia Motion LLC}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{a6f9c80fbbaa7b0433ffcafee3adb01b}
+      \strng{fullhash}{a6f9c80fbbaa7b0433ffcafee3adb01b}
+      \strng{fullhashraw}{a6f9c80fbbaa7b0433ffcafee3adb01b}
+      \strng{bibnamehash}{a6f9c80fbbaa7b0433ffcafee3adb01b}
+      \strng{authorbibnamehash}{a6f9c80fbbaa7b0433ffcafee3adb01b}
+      \strng{authornamehash}{a6f9c80fbbaa7b0433ffcafee3adb01b}
+      \strng{authorfullhash}{a6f9c80fbbaa7b0433ffcafee3adb01b}
+      \strng{authorfullhashraw}{a6f9c80fbbaa7b0433ffcafee3adb01b}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.cascadiamotion.com}}
+      \field{title}{CM200 Inverter Datasheet}
+      \field{year}{2024}
+    \endentry
+    \entry{stm32-nucleo-f4}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=c38884ab3cf908c2798725960369391b}{%
+           family={{STMicroelectronics}},
+           familyi={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{c38884ab3cf908c2798725960369391b}
+      \strng{fullhash}{c38884ab3cf908c2798725960369391b}
+      \strng{fullhashraw}{c38884ab3cf908c2798725960369391b}
+      \strng{bibnamehash}{c38884ab3cf908c2798725960369391b}
+      \strng{authorbibnamehash}{c38884ab3cf908c2798725960369391b}
+      \strng{authornamehash}{c38884ab3cf908c2798725960369391b}
+      \strng{authorfullhash}{c38884ab3cf908c2798725960369391b}
+      \strng{authorfullhashraw}{c38884ab3cf908c2798725960369391b}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://www.st.com}{Reference Manual}}
+      \field{title}{STM32 Nucleo-F4 Development Board Reference Manual}
+    \endentry
+    \entry{Arduino_uno_data_sheet}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=04a6b95cdec0cdb9708075b42a4a12e6}{%
+           family={{Arduino SA}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{04a6b95cdec0cdb9708075b42a4a12e6}
+      \strng{fullhash}{04a6b95cdec0cdb9708075b42a4a12e6}
+      \strng{fullhashraw}{04a6b95cdec0cdb9708075b42a4a12e6}
+      \strng{bibnamehash}{04a6b95cdec0cdb9708075b42a4a12e6}
+      \strng{authorbibnamehash}{04a6b95cdec0cdb9708075b42a4a12e6}
+      \strng{authornamehash}{04a6b95cdec0cdb9708075b42a4a12e6}
+      \strng{authorfullhash}{04a6b95cdec0cdb9708075b42a4a12e6}
+      \strng{authorfullhashraw}{04a6b95cdec0cdb9708075b42a4a12e6}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://docs.arduino.cc/resources/datasheets/A000066-datasheet.pdf}}
+      \field{title}{Arduino UNO R3 Datasheet}
+      \field{year}{2024}
+    \endentry
+    \entry{TI_C200_data_sheet}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=67e54b1ee931f3f4bddfefa5fbde5fd8}{%
+           family={{Texas Instruments}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{fullhash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{fullhashraw}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{bibnamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorbibnamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authornamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorfullhash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorfullhashraw}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.ti.com/lit/ds/symlink/tms320f280049c.pdf}}
+      \field{title}{TMS320F280049C Real-Time Microcontroller Datasheet}
+      \field{year}{2026}
+    \endentry
+    \entry{NPX_S32K_data_sheet}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=70a107d58d4aa1203cc8cde04480d72c}{%
+           family={{NXP Semiconductors}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{fullhash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{fullhashraw}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{bibnamehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{authorbibnamehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{authornamehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{authorfullhash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{authorfullhashraw}{70a107d58d4aa1203cc8cde04480d72c}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.nxp.com/docs/en/data-sheet/S32K1xx.pdf}}
+      \field{title}{S32K1xx Microcontroller Data Sheet}
+      \field{year}{2020}
+    \endentry
+    \entry{Speedgoat_data_sheet}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=52b956448c05ead6abd83feb73ee4be4}{%
+           family={{Speedgoat GmbH}},
+           familyi={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{52b956448c05ead6abd83feb73ee4be4}
+      \strng{fullhash}{52b956448c05ead6abd83feb73ee4be4}
+      \strng{fullhashraw}{52b956448c05ead6abd83feb73ee4be4}
+      \strng{bibnamehash}{52b956448c05ead6abd83feb73ee4be4}
+      \strng{authorbibnamehash}{52b956448c05ead6abd83feb73ee4be4}
+      \strng{authornamehash}{52b956448c05ead6abd83feb73ee4be4}
+      \strng{authorfullhash}{52b956448c05ead6abd83feb73ee4be4}
+      \strng{authorfullhashraw}{52b956448c05ead6abd83feb73ee4be4}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.speedgoat.com}}
+      \field{title}{Speedgoat Real-Time Test Systems}
+      \field{year}{2024}
+    \endentry
+    \entry{Drexler_FSAE_LSD_data_sheet}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=15781b873192aec228f02b496b678eb2}{%
+           family={{Drexler Automotive GmbH}},
+           familyi={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{15781b873192aec228f02b496b678eb2}
+      \strng{fullhash}{15781b873192aec228f02b496b678eb2}
+      \strng{fullhashraw}{15781b873192aec228f02b496b678eb2}
+      \strng{bibnamehash}{15781b873192aec228f02b496b678eb2}
+      \strng{authorbibnamehash}{15781b873192aec228f02b496b678eb2}
+      \strng{authornamehash}{15781b873192aec228f02b496b678eb2}
+      \strng{authorfullhash}{15781b873192aec228f02b496b678eb2}
+      \strng{authorfullhashraw}{15781b873192aec228f02b496b678eb2}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.drexler-automotive.com/products/datasheet?id=731}}
+      \field{title}{M-Diff Formula Student V3 Adjustable Datasheet}
+      \field{year}{2024}
+    \endentry
+  \enddatalist
+\endrefsection
+
+\refsection{4}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{kalaiarasi2024tale}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{10}{}{%
+        {{hash=53f5eb96aa6a4aad2571308d5c943480}{%
+           family={Kalai\bibnamedelima Arasi},
+           familyi={K\bibinitperiod\bibinitdelim A\bibinitperiod},
+           given={Azega\bibnamedelimb Rajendra\bibnamedelima Babu},
+           giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=190f70c9db190a0606d2f7ccd7b5b738}{%
+           family={Smith},
+           familyi={S\bibinitperiod},
+           given={Anderson\bibnamedelima David},
+           giveni={A\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=afd28b9e40ad681e015255afaa7c89ee}{%
+           family={Chowdhury},
+           familyi={C\bibinitperiod},
+           given={Niladri\bibnamedelima Roy},
+           giveni={N\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=3fe6d8760630f7aa096852f32924b59c}{%
+           family={Vyas},
+           familyi={V\bibinitperiod},
+           given={Agin},
+           giveni={A\bibinitperiod}}}%
+        {{hash=b247ada9c21c288f4dcabdae71378271}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Qi},
+           giveni={Q\bibinitperiod}}}%
+        {{hash=fbe97a41b8057397a56d6650a832ddb8}{%
+           family={Haque},
+           familyi={H\bibinitperiod},
+           given={Mohammad\bibnamedelima Mazharul},
+           giveni={M\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=6500ddc3486cd856dc4d38376d34bbaf}{%
+           family={Xun},
+           familyi={X\bibinitperiod},
+           given={Qian},
+           giveni={Q\bibinitperiod}}}%
+        {{hash=5b996621da6e0ca32bcc27f9c7ceaed4}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Xiaoyan},
+           giveni={X\bibinitperiod}}}%
+        {{hash=600a87a869e32a970037ec2d67b89c7b}{%
+           family={Thurakkal},
+           familyi={T\bibinitperiod},
+           given={Shameel},
+           giveni={S\bibinitperiod}}}%
+        {{hash=587d2575e8417dd9df02206b49f3b78c}{%
+           family={Thiringer},
+           familyi={T\bibinitperiod},
+           given={Torbjörn},
+           giveni={T\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{862bbc6bbc9375792312c81a7f9c301e}
+      \strng{fullhash}{04ec476181f85e28e345b5649e534c49}
+      \strng{fullhashraw}{04ec476181f85e28e345b5649e534c49}
+      \strng{bibnamehash}{862bbc6bbc9375792312c81a7f9c301e}
+      \strng{authorbibnamehash}{862bbc6bbc9375792312c81a7f9c301e}
+      \strng{authornamehash}{862bbc6bbc9375792312c81a7f9c301e}
+      \strng{authorfullhash}{04ec476181f85e28e345b5649e534c49}
+      \strng{authorfullhashraw}{04ec476181f85e28e345b5649e534c49}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Sustainable Materials and Technologies}
+      \field{title}{Supercapacitors and rechargeable batteries, a tale of two technologies: Past, present and beyond}
+      \field{volume}{41}
+      \field{year}{2024}
+      \field{pages}{16}
+      \range{pages}{1}
+    \endentry
+    \entry{sech-c46w-3r0-0600}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=9f7f0cea6773ecffb7ec808a4c15481a}{%
+           family={{Sech Co., Ltd.}},
+           familyi={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{9f7f0cea6773ecffb7ec808a4c15481a}
+      \strng{fullhash}{9f7f0cea6773ecffb7ec808a4c15481a}
+      \strng{fullhashraw}{9f7f0cea6773ecffb7ec808a4c15481a}
+      \strng{bibnamehash}{9f7f0cea6773ecffb7ec808a4c15481a}
+      \strng{authorbibnamehash}{9f7f0cea6773ecffb7ec808a4c15481a}
+      \strng{authornamehash}{9f7f0cea6773ecffb7ec808a4c15481a}
+      \strng{authorfullhash}{9f7f0cea6773ecffb7ec808a4c15481a}
+      \strng{authorfullhashraw}{9f7f0cea6773ecffb7ec808a4c15481a}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://www.sechsa.com/wp-content/uploads/220106-Sech-datasheet-46mm-cells-1.pdf}{Datasheet PDF}}
+      \field{title}{SECH C46W-3R0-0600 Supercapacitor Cell Datasheet}
+    \endentry
+    \entry{gmcc-c35s-3r0-0600}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=0a24e58bba44a2ac39e91064528e7744}{%
+           family={{GMCC Supercapacitor Development Co., Ltd.}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{0a24e58bba44a2ac39e91064528e7744}
+      \strng{fullhash}{0a24e58bba44a2ac39e91064528e7744}
+      \strng{fullhashraw}{0a24e58bba44a2ac39e91064528e7744}
+      \strng{bibnamehash}{0a24e58bba44a2ac39e91064528e7744}
+      \strng{authorbibnamehash}{0a24e58bba44a2ac39e91064528e7744}
+      \strng{authornamehash}{0a24e58bba44a2ac39e91064528e7744}
+      \strng{authorfullhash}{0a24e58bba44a2ac39e91064528e7744}
+      \strng{authorfullhashraw}{0a24e58bba44a2ac39e91064528e7744}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://www.gmccsieyuan.com/uploads/C35S-3R0-0600-English.pdf}{Datasheet PDF}}
+      \field{title}{GMCC C35S-3R0-0600 Supercapacitor Cell Datasheet}
+    \endentry
+    \entry{cda-chq-3r0607r-tw}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=cd29df16d6c37ca27a959557ef2b236c}{%
+           family={{Cellcap / Dongyang Automotive}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{cd29df16d6c37ca27a959557ef2b236c}
+      \strng{fullhash}{cd29df16d6c37ca27a959557ef2b236c}
+      \strng{fullhashraw}{cd29df16d6c37ca27a959557ef2b236c}
+      \strng{bibnamehash}{cd29df16d6c37ca27a959557ef2b236c}
+      \strng{authorbibnamehash}{cd29df16d6c37ca27a959557ef2b236c}
+      \strng{authornamehash}{cd29df16d6c37ca27a959557ef2b236c}
+      \strng{authorfullhash}{cd29df16d6c37ca27a959557ef2b236c}
+      \strng{authorfullhashraw}{cd29df16d6c37ca27a959557ef2b236c}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://en.cda-cap.com/wp-content/uploads/2023/08/bus_elx_ds_4015_CHQ_series.pdf}{Datasheet PDF}}
+      \field{title}{CDA CHQ-3R0607R-TW Supercapacitor Cell Datasheet}
+    \endentry
+    \entry{batpac2022manual}{report}{}{}
+      \name{author}{4}{}{%
+        {{hash=eda4a0f7eb2c2c6ded8d988d5210e04e}{%
+           family={Knehr},
+           familyi={K\bibinitperiod},
+           given={Kevin\bibnamedelima W.},
+           giveni={K\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=692b1c122896997f102e5993ff8a0e32}{%
+           family={Kubal},
+           familyi={K\bibinitperiod},
+           given={Joseph\bibnamedelima J.},
+           giveni={J\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=a67c10e33c378f50537da50bdc896165}{%
+           family={Nelson},
+           familyi={N\bibinitperiod},
+           given={Paul\bibnamedelima A.},
+           giveni={P\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=f3e9f4082e3ae4e155660e803be71262}{%
+           family={Ahmed},
+           familyi={A\bibinitperiod},
+           given={Shabbir},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Argonne National Laboratory}%
+      }
+      \strng{namehash}{994c7e80868f8f23d6ea7447621888cf}
+      \strng{fullhash}{36f43efcde009d202315562b882ec7a3}
+      \strng{fullhashraw}{36f43efcde009d202315562b882ec7a3}
+      \strng{bibnamehash}{994c7e80868f8f23d6ea7447621888cf}
+      \strng{authorbibnamehash}{994c7e80868f8f23d6ea7447621888cf}
+      \strng{authornamehash}{994c7e80868f8f23d6ea7447621888cf}
+      \strng{authorfullhash}{36f43efcde009d202315562b882ec7a3}
+      \strng{authorfullhashraw}{36f43efcde009d202315562b882ec7a3}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://www.anl.gov/cse/batpac-model-software}{BatPaC model software}}
+      \field{month}{7}
+      \field{number}{ANL/CSE-22/1}
+      \field{title}{Battery Performance and Cost Modeling for Electric-Drive Vehicles: A Manual for BatPaC v5.0}
+      \field{type}{techreport}
+      \field{year}{2022}
+      \verb{doi}
+      \verb 10.2172/1877590
+      \endverb
+    \endentry
+    \entry{nxp-mc33771-ds}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=70a107d58d4aa1203cc8cde04480d72c}{%
+           family={{NXP Semiconductors}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{fullhash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{fullhashraw}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{bibnamehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{authorbibnamehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{authornamehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{authorfullhash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{authorfullhashraw}{70a107d58d4aa1203cc8cde04480d72c}
+      \field{extraname}{1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://www.nxp.com}{Datasheet}}
+      \field{title}{MC33771 Automotive Battery Cell Monitor IC Datasheet}
+    \endentry
+    \entry{stm32-nucleo-f4}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=c38884ab3cf908c2798725960369391b}{%
+           family={{STMicroelectronics}},
+           familyi={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{c38884ab3cf908c2798725960369391b}
+      \strng{fullhash}{c38884ab3cf908c2798725960369391b}
+      \strng{fullhashraw}{c38884ab3cf908c2798725960369391b}
+      \strng{bibnamehash}{c38884ab3cf908c2798725960369391b}
+      \strng{authorbibnamehash}{c38884ab3cf908c2798725960369391b}
+      \strng{authornamehash}{c38884ab3cf908c2798725960369391b}
+      \strng{authorfullhash}{c38884ab3cf908c2798725960369391b}
+      \strng{authorfullhashraw}{c38884ab3cf908c2798725960369391b}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://www.st.com}{Reference Manual}}
+      \field{title}{STM32 Nucleo-F4 Development Board Reference Manual}
+    \endentry
+    \entry{ti-sn65hvd230-ds}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=67e54b1ee931f3f4bddfefa5fbde5fd8}{%
+           family={{Texas Instruments}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{fullhash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{fullhashraw}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{bibnamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorbibnamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authornamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorfullhash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorfullhashraw}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://www.ti.com}{Datasheet}}
+      \field{title}{SN65HVD230 3.3-V CAN Transceiver Datasheet}
+    \endentry
+    \entry{eaton-bussmann-170m1759-ds}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=cb00541ad4a66bb27ad7b328542b139e}{%
+           family={{Eaton}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{cb00541ad4a66bb27ad7b328542b139e}
+      \strng{fullhash}{cb00541ad4a66bb27ad7b328542b139e}
+      \strng{fullhashraw}{cb00541ad4a66bb27ad7b328542b139e}
+      \strng{bibnamehash}{cb00541ad4a66bb27ad7b328542b139e}
+      \strng{authorbibnamehash}{cb00541ad4a66bb27ad7b328542b139e}
+      \strng{authornamehash}{cb00541ad4a66bb27ad7b328542b139e}
+      \strng{authorfullhash}{cb00541ad4a66bb27ad7b328542b139e}
+      \strng{authorfullhashraw}{cb00541ad4a66bb27ad7b328542b139e}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://www.eaton.com}{Datasheet}}
+      \field{title}{Bussmann Series 170M1759 High-Speed Square Body Fuse Datasheet}
+    \endentry
+    \entry{earthx-etx12a-ds}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=80bbb52a7fc8bae0572b796a63614068}{%
+           family={{EarthX}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{80bbb52a7fc8bae0572b796a63614068}
+      \strng{fullhash}{80bbb52a7fc8bae0572b796a63614068}
+      \strng{fullhashraw}{80bbb52a7fc8bae0572b796a63614068}
+      \strng{bibnamehash}{80bbb52a7fc8bae0572b796a63614068}
+      \strng{authorbibnamehash}{80bbb52a7fc8bae0572b796a63614068}
+      \strng{authornamehash}{80bbb52a7fc8bae0572b796a63614068}
+      \strng{authorfullhash}{80bbb52a7fc8bae0572b796a63614068}
+      \strng{authorfullhashraw}{80bbb52a7fc8bae0572b796a63614068}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://earthxbatteries.com}{Product Data}}
+      \field{title}{EarthX ETX12A Lithium Battery Product Data}
+    \endentry
+    \entry{nxp-mc33664-ds}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=70a107d58d4aa1203cc8cde04480d72c}{%
+           family={{NXP Semiconductors}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{fullhash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{fullhashraw}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{bibnamehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{authorbibnamehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{authornamehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{authorfullhash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{authorfullhashraw}{70a107d58d4aa1203cc8cde04480d72c}
+      \field{extraname}{2}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://www.nxp.com}{Datasheet}}
+      \field{title}{MC33664 TPL Transceiver Interface Datasheet}
+    \endentry
+    \entry{epp_multiphysical_battery}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=1f6253a637f2bac51a5696789bd7b922}{%
+           family={Epp},
+           familyi={E\bibinitperiod},
+           given={Alexander},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{1f6253a637f2bac51a5696789bd7b922}
+      \strng{fullhash}{1f6253a637f2bac51a5696789bd7b922}
+      \strng{fullhashraw}{1f6253a637f2bac51a5696789bd7b922}
+      \strng{bibnamehash}{1f6253a637f2bac51a5696789bd7b922}
+      \strng{authorbibnamehash}{1f6253a637f2bac51a5696789bd7b922}
+      \strng{authornamehash}{1f6253a637f2bac51a5696789bd7b922}
+      \strng{authorfullhash}{1f6253a637f2bac51a5696789bd7b922}
+      \strng{authorfullhashraw}{1f6253a637f2bac51a5696789bd7b922}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://publications.rwth-aachen.de/record/976905/files/976905.pdf}{Publication PDF}}
+      \field{note}{Referenced page: 194}
+      \field{title}{Multiphysical Models and Optimization for Conceptual Design of High-Voltage Battery Systems}
+    \endentry
+  \enddatalist
+\endrefsection
+
+\refsection{5}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{pacejka2012}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=1b4dbc895c23e3f1394ca7053badfea0}{%
+           family={Pacejka},
+           familyi={P\bibinitperiod},
+           given={Hans\bibnamedelima B.},
+           giveni={H\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Oxford}%
+      }
+      \list{publisher}{1}{%
+        {Butterworth-Heinemann}%
+      }
+      \strng{namehash}{1b4dbc895c23e3f1394ca7053badfea0}
+      \strng{fullhash}{1b4dbc895c23e3f1394ca7053badfea0}
+      \strng{fullhashraw}{1b4dbc895c23e3f1394ca7053badfea0}
+      \strng{bibnamehash}{1b4dbc895c23e3f1394ca7053badfea0}
+      \strng{authorbibnamehash}{1b4dbc895c23e3f1394ca7053badfea0}
+      \strng{authornamehash}{1b4dbc895c23e3f1394ca7053badfea0}
+      \strng{authorfullhash}{1b4dbc895c23e3f1394ca7053badfea0}
+      \strng{authorfullhashraw}{1b4dbc895c23e3f1394ca7053badfea0}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3rd}
+      \field{isbn}{978-0080970165}
+      \field{title}{Tyre and Vehicle Dynamics}
+      \field{year}{2012}
+    \endentry
+    \entry{milliken1995}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=34816c0e6523ad37e0c8f41e7a895241}{%
+           family={Milliken},
+           familyi={M\bibinitperiod},
+           given={William\bibnamedelima F.},
+           giveni={W\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+        {{hash=47b8767120ee00a8532963c06b1ce897}{%
+           family={Milliken},
+           familyi={M\bibinitperiod},
+           given={Douglas\bibnamedelima L.},
+           giveni={D\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Society of Automotive Engineers}%
+      }
+      \strng{namehash}{a9311211c8b19c54559d149faeead1ae}
+      \strng{fullhash}{a9311211c8b19c54559d149faeead1ae}
+      \strng{fullhashraw}{a9311211c8b19c54559d149faeead1ae}
+      \strng{bibnamehash}{a9311211c8b19c54559d149faeead1ae}
+      \strng{authorbibnamehash}{a9311211c8b19c54559d149faeead1ae}
+      \strng{authornamehash}{a9311211c8b19c54559d149faeead1ae}
+      \strng{authorfullhash}{a9311211c8b19c54559d149faeead1ae}
+      \strng{authorfullhashraw}{a9311211c8b19c54559d149faeead1ae}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Race Car Vehicle Dynamics}
+      \field{year}{1995}
+    \endentry
+    \entry{bamocar_pg}{manual}{}{}
+      \list{organization}{1}{%
+        {Unitek Industrie-Elektronik GmbH}%
+      }
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labeltitlesource}{title}
+      \field{note}{Supplied with the project repository}
+      \field{title}{BAMOCAR PG-D3 700/400 Motor Controller -- Technical Datasheet}
+      \field{year}{[PH year accessed]}
+      \verb{urlraw}
+      \verb [PH: manufacturer URL]
+      \endverb
+      \verb{url}
+      \verb %5BPH:%20manufacturer%20URL%5D
+      \endverb
+    \endentry
+    \entry{yasa_p400r}{manual}{}{}
+      \list{organization}{1}{%
+        {YASA Ltd.}%
+      }
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labeltitlesource}{title}
+      \field{note}{Revision 14, supplied with the project repository}
+      \field{title}{YASA P400 R Series Axial Flux Motor -- Product Datasheet}
+      \field{year}{[PH year accessed]}
+      \verb{urlraw}
+      \verb [PH: manufacturer URL]
+      \endverb
+      \verb{url}
+      \verb %5BPH:%20manufacturer%20URL%5D
+      \endverb
+    \endentry
+    \entry{press2007}{book}{}{}
+      \name{author}{4}{}{%
+        {{hash=0eab1ccd4d6c57a2ff6794a4724ccafb}{%
+           family={Press},
+           familyi={P\bibinitperiod},
+           given={William\bibnamedelima H.},
+           giveni={W\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=ff8354846900d7ef6c94cb025f7e938c}{%
+           family={Teukolsky},
+           familyi={T\bibinitperiod},
+           given={Saul\bibnamedelima A.},
+           giveni={S\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=0bb298496cc38e45b21c576a005078a0}{%
+           family={Vetterling},
+           familyi={V\bibinitperiod},
+           given={William\bibnamedelima T.},
+           giveni={W\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+        {{hash=f40726c661611c8a024d53294b6e0ad0}{%
+           family={Flannery},
+           familyi={F\bibinitperiod},
+           given={Brian\bibnamedelima P.},
+           giveni={B\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Cambridge}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{618fa62f030076edf2937faa1b1684fb}
+      \strng{fullhash}{f75c24a04994b574cb620c685a1f8229}
+      \strng{fullhashraw}{f75c24a04994b574cb620c685a1f8229}
+      \strng{bibnamehash}{618fa62f030076edf2937faa1b1684fb}
+      \strng{authorbibnamehash}{618fa62f030076edf2937faa1b1684fb}
+      \strng{authornamehash}{618fa62f030076edf2937faa1b1684fb}
+      \strng{authorfullhash}{f75c24a04994b574cb620c685a1f8229}
+      \strng{authorfullhashraw}{f75c24a04994b574cb620c685a1f8229}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3rd}
+      \field{isbn}{978-0521880688}
+      \field{title}{Numerical Recipes: The Art of Scientific Computing}
+      \field{year}{2007}
+    \endentry
+  \enddatalist
+\endrefsection
+
+\refsection{6}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{promarketreports_brake_tester}{online}{}{}
+      \list{organization}{1}{%
+        {Pro Market Reports}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Brake Tester Market Size, Share and Forecast}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.promarketreports.com/reports/brake-tester-232522
+      \endverb
+      \verb{url}
+      \verb https://www.promarketreports.com/reports/brake-tester-232522
+      \endverb
+    \endentry
+    \entry{grandview_autonomous_market}{online}{}{}
+      \list{organization}{1}{%
+        {Grand View Research}%
+      }
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{title}{Autonomous Vehicles Market Size Report}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.grandviewresearch.com/industry-analysis/autonomous-vehicles-market
+      \endverb
+      \verb{url}
+      \verb https://www.grandviewresearch.com/industry-analysis/autonomous-vehicles-market
+      \endverb
+    \endentry
+    \entry{mckinsey_testing_validation}{report}{}{}
+      \list{institution}{1}{%
+        {McKinsey \& Company}%
+      }
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labeltitlesource}{title}
+      \field{title}{Testing and Validation: From Hardware Focus to Full Virtualization}
+      \field{type}{techreport}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2019}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.mckinsey.com/~/media/McKinsey/Business%20Functions/Operations/Our%20Insights/Testing%20and%20validation%20From%20hardware%20focus%20to%20full%20virtualization/c0b944bf6469c86cd9ba6d87f078424f.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.mckinsey.com/~/media/McKinsey/Business%20Functions/Operations/Our%20Insights/Testing%20and%20validation%20From%20hardware%20focus%20to%20full%20virtualization/c0b944bf6469c86cd9ba6d87f078424f.pdf
+      \endverb
+    \endentry
+    \entry{abdynamics_testing}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=7eafd1ddea9e056c3b2a96a2526bfdd1}{%
+           family={{AB Dynamics}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{7eafd1ddea9e056c3b2a96a2526bfdd1}
+      \strng{fullhash}{7eafd1ddea9e056c3b2a96a2526bfdd1}
+      \strng{fullhashraw}{7eafd1ddea9e056c3b2a96a2526bfdd1}
+      \strng{bibnamehash}{7eafd1ddea9e056c3b2a96a2526bfdd1}
+      \strng{authorbibnamehash}{7eafd1ddea9e056c3b2a96a2526bfdd1}
+      \strng{authornamehash}{7eafd1ddea9e056c3b2a96a2526bfdd1}
+      \strng{authorfullhash}{7eafd1ddea9e056c3b2a96a2526bfdd1}
+      \strng{authorfullhashraw}{7eafd1ddea9e056c3b2a96a2526bfdd1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Autonomous Vehicle Testing Solutions}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.abdynamics.com/solutions/autonomous-vehicle-testing/
+      \endverb
+      \verb{url}
+      \verb https://www.abdynamics.com/solutions/autonomous-vehicle-testing/
+      \endverb
+    \endentry
+    \entry{activesystems_testing}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=f081c8268344b72cbaaa44a56c9e8a8f}{%
+           family={{4activeSystems}},
+           familyi={4\bibinitperiod}}}%
+      }
+      \strng{namehash}{f081c8268344b72cbaaa44a56c9e8a8f}
+      \strng{fullhash}{f081c8268344b72cbaaa44a56c9e8a8f}
+      \strng{fullhashraw}{f081c8268344b72cbaaa44a56c9e8a8f}
+      \strng{bibnamehash}{f081c8268344b72cbaaa44a56c9e8a8f}
+      \strng{authorbibnamehash}{f081c8268344b72cbaaa44a56c9e8a8f}
+      \strng{authornamehash}{f081c8268344b72cbaaa44a56c9e8a8f}
+      \strng{authorfullhash}{f081c8268344b72cbaaa44a56c9e8a8f}
+      \strng{authorfullhashraw}{f081c8268344b72cbaaa44a56c9e8a8f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Automotive Testing Solutions}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.4activesystems.at
+      \endverb
+      \verb{url}
+      \verb https://www.4activesystems.at
+      \endverb
+    \endentry
+    \entry{utac_millbrook}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=c39724829789798fd5a4d29324c9c1d9}{%
+           family={{UTAC}},
+           familyi={U\bibinitperiod}}}%
+      }
+      \strng{namehash}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{fullhash}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{fullhashraw}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{bibnamehash}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{authorbibnamehash}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{authornamehash}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{authorfullhash}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{authorfullhashraw}{c39724829789798fd5a4d29324c9c1d9}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Millbrook Proving Ground (Europe)}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.utac.com/our-sites/europe/millbrook
+      \endverb
+      \verb{url}
+      \verb https://www.utac.com/our-sites/europe/millbrook
+      \endverb
+    \endentry
+    \entry{horiba_mobility}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=f27301f131134557aa3cd0d51a868432}{%
+           family={{Horiba}},
+           familyi={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{f27301f131134557aa3cd0d51a868432}
+      \strng{fullhash}{f27301f131134557aa3cd0d51a868432}
+      \strng{fullhashraw}{f27301f131134557aa3cd0d51a868432}
+      \strng{bibnamehash}{f27301f131134557aa3cd0d51a868432}
+      \strng{authorbibnamehash}{f27301f131134557aa3cd0d51a868432}
+      \strng{authornamehash}{f27301f131134557aa3cd0d51a868432}
+      \strng{authorfullhash}{f27301f131134557aa3cd0d51a868432}
+      \strng{authorfullhashraw}{f27301f131134557aa3cd0d51a868432}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Mobility Solutions}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.horiba.com/int/mobility/
+      \endverb
+      \verb{url}
+      \verb https://www.horiba.com/int/mobility/
+      \endverb
+    \endentry
+    \entry{nvidia_drive_sim}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=a2fe9051fe051f819bd739ef3e340377}{%
+           family={{NVIDIA}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{a2fe9051fe051f819bd739ef3e340377}
+      \strng{fullhash}{a2fe9051fe051f819bd739ef3e340377}
+      \strng{fullhashraw}{a2fe9051fe051f819bd739ef3e340377}
+      \strng{bibnamehash}{a2fe9051fe051f819bd739ef3e340377}
+      \strng{authorbibnamehash}{a2fe9051fe051f819bd739ef3e340377}
+      \strng{authornamehash}{a2fe9051fe051f819bd739ef3e340377}
+      \strng{authorfullhash}{a2fe9051fe051f819bd739ef3e340377}
+      \strng{authorfullhashraw}{a2fe9051fe051f819bd739ef3e340377}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{NVIDIA DRIVE Sim: Replicating the Real World in a Virtual Environment}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.nvidia.com/en-us/self-driving-cars/simulation/
+      \endverb
+      \verb{url}
+      \verb https://www.nvidia.com/en-us/self-driving-cars/simulation/
+      \endverb
+    \endentry
+    \entry{ansys_autonomy}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=c4c3f8d0d4ac26494ebfbf053206e390}{%
+           family={{Ansys}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{c4c3f8d0d4ac26494ebfbf053206e390}
+      \strng{fullhash}{c4c3f8d0d4ac26494ebfbf053206e390}
+      \strng{fullhashraw}{c4c3f8d0d4ac26494ebfbf053206e390}
+      \strng{bibnamehash}{c4c3f8d0d4ac26494ebfbf053206e390}
+      \strng{authorbibnamehash}{c4c3f8d0d4ac26494ebfbf053206e390}
+      \strng{authornamehash}{c4c3f8d0d4ac26494ebfbf053206e390}
+      \strng{authorfullhash}{c4c3f8d0d4ac26494ebfbf053206e390}
+      \strng{authorfullhashraw}{c4c3f8d0d4ac26494ebfbf053206e390}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Ansys Autonomy: Safe Autonomous Vehicle Simulation}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.ansys.com/products/av-simulation
+      \endverb
+      \verb{url}
+      \verb https://www.ansys.com/products/av-simulation
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+
+\refsection{7}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{zenzic_about}{online}{}{}
+      \list{organization}{1}{%
+        {Zenzic}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{About Zenzic}
+      \field{year}{2026}
+      \verb{urlraw}
+      \verb https://zenzic.io/about/
+      \endverb
+      \verb{url}
+      \verb https://zenzic.io/about/
+      \endverb
+    \endentry
+    \entry{cracknell_2023}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=bc17671480a9f5e0345c6e29907d81f1}{%
+           family={Cracknell},
+           familyi={C\bibinitperiod},
+           given={Mark},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Zenzic}%
+      }
+      \strng{namehash}{bc17671480a9f5e0345c6e29907d81f1}
+      \strng{fullhash}{bc17671480a9f5e0345c6e29907d81f1}
+      \strng{fullhashraw}{bc17671480a9f5e0345c6e29907d81f1}
+      \strng{bibnamehash}{bc17671480a9f5e0345c6e29907d81f1}
+      \strng{authorbibnamehash}{bc17671480a9f5e0345c6e29907d81f1}
+      \strng{authornamehash}{bc17671480a9f5e0345c6e29907d81f1}
+      \strng{authorfullhash}{bc17671480a9f5e0345c6e29907d81f1}
+      \strng{authorfullhashraw}{bc17671480a9f5e0345c6e29907d81f1}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The UK CAM Roadmap to 2035 - Executive Summary}
+      \field{year}{2023}
+    \endentry
+    \entry{wef_2021}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=9f6d16e0eaf271813481bd46be0c7a35}{%
+           family={{World Economic Forum}},
+           familyi={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{9f6d16e0eaf271813481bd46be0c7a35}
+      \strng{fullhash}{9f6d16e0eaf271813481bd46be0c7a35}
+      \strng{fullhashraw}{9f6d16e0eaf271813481bd46be0c7a35}
+      \strng{bibnamehash}{9f6d16e0eaf271813481bd46be0c7a35}
+      \strng{authorbibnamehash}{9f6d16e0eaf271813481bd46be0c7a35}
+      \strng{authornamehash}{9f6d16e0eaf271813481bd46be0c7a35}
+      \strng{authorfullhash}{9f6d16e0eaf271813481bd46be0c7a35}
+      \strng{authorfullhashraw}{9f6d16e0eaf271813481bd46be0c7a35}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Autonomous Trucks: An Opportunity to Make Road Freight Safer, Cleaner and More Efficient}
+      \field{year}{2021}
+    \endentry
+    \entry{lawcom_avs_2024}{online}{}{}
+      \list{organization}{1}{%
+        {Law Commission}%
+      }
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labeltitlesource}{title}
+      \field{title}{Automated vehicles}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://lawcom.gov.uk/project/automated-vehicles/
+      \endverb
+      \verb{url}
+      \verb https://lawcom.gov.uk/project/automated-vehicles/
+      \endverb
+    \endentry
+    \entry{pockney_2026}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=362978fab7c01666696efa1412b9b403}{%
+           family={Pockney},
+           familyi={P\bibinitperiod},
+           given={Tim},
+           giveni={T\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Zenzic}%
+      }
+      \strng{namehash}{362978fab7c01666696efa1412b9b403}
+      \strng{fullhash}{362978fab7c01666696efa1412b9b403}
+      \strng{fullhashraw}{362978fab7c01666696efa1412b9b403}
+      \strng{bibnamehash}{362978fab7c01666696efa1412b9b403}
+      \strng{authorbibnamehash}{362978fab7c01666696efa1412b9b403}
+      \strng{authornamehash}{362978fab7c01666696efa1412b9b403}
+      \strng{authorfullhash}{362978fab7c01666696efa1412b9b403}
+      \strng{authorfullhashraw}{362978fab7c01666696efa1412b9b403}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Funding to accelerate UK autonomous vehicle market readiness}
+      \field{year}{2026}
+      \verb{urlraw}
+      \verb https://zenzic.io/news/funding-to-accelerate-uk-autonomous-vehicle-market-readiness/
+      \endverb
+      \verb{url}
+      \verb https://zenzic.io/news/funding-to-accelerate-uk-autonomous-vehicle-market-readiness/
+      \endverb
+    \endentry
+    \entry{chen_2024}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=685d97480ebafb5a158e7c3dfdcb69a8}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Li},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{685d97480ebafb5a158e7c3dfdcb69a8}
+      \strng{fullhash}{685d97480ebafb5a158e7c3dfdcb69a8}
+      \strng{fullhashraw}{685d97480ebafb5a158e7c3dfdcb69a8}
+      \strng{bibnamehash}{685d97480ebafb5a158e7c3dfdcb69a8}
+      \strng{authorbibnamehash}{685d97480ebafb5a158e7c3dfdcb69a8}
+      \strng{authornamehash}{685d97480ebafb5a158e7c3dfdcb69a8}
+      \strng{authorfullhash}{685d97480ebafb5a158e7c3dfdcb69a8}
+      \strng{authorfullhashraw}{685d97480ebafb5a158e7c3dfdcb69a8}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{End-to-end Autonomous Driving: Challenges and Frontiers}
+      \field{year}{2024}
+    \endentry
+    \entry{pas1881}{manual}{}{}
+      \list{organization}{1}{%
+        {BSI}%
+      }
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labeltitlesource}{title}
+      \field{title}{Safety Management Systems. BSI PAS 1881}
+      \field{year}{2026}
+    \endentry
+    \entry{culham_2024}{report}{}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{CONNECTED \& AUTONOMOUS VEHICLES - CAV (CULHAM)}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.oxfordshirelep.com/wp-content/uploads/2024/03/connected-and-autonomous-vehicles-testing-facilities-evaluation-report.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.oxfordshirelep.com/wp-content/uploads/2024/03/connected-and-autonomous-vehicles-testing-facilities-evaluation-report.pdf
+      \endverb
+    \endentry
+    \entry{pas1884}{manual}{}{}
+      \list{organization}{1}{%
+        {BSI}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Requirements for Trained Safety Operators. BSI PAS 1884}
+      \field{year}{2021}
+    \endentry
+    \entry{pas1882}{manual}{}{}
+      \list{organization}{1}{%
+        {BSI}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Immutable Telemetry \& Data Logging. BSI PAS 1882}
+      \field{year}{2021}
+    \endentry
+    \entry{mitchell_1997}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=1c736da6b2a634a847614ad8d98a4d02}{%
+           family={Mitchell},
+           familyi={M\bibinitperiod},
+           given={Ronald\bibnamedelima K.},
+           giveni={R\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=9aada874c4037a657f4889dd2c00d5ca}{%
+           family={Agle},
+           familyi={A\bibinitperiod},
+           given={Bradley\bibnamedelima R.},
+           giveni={B\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=887d561642cf511d705f300fc816d1cf}{%
+           family={Wood},
+           familyi={W\bibinitperiod},
+           given={Donna\bibnamedelima J.},
+           giveni={D\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \strng{namehash}{8990e057f82da84fbd75fbd29551f8a1}
+      \strng{fullhash}{8990e057f82da84fbd75fbd29551f8a1}
+      \strng{fullhashraw}{8990e057f82da84fbd75fbd29551f8a1}
+      \strng{bibnamehash}{8990e057f82da84fbd75fbd29551f8a1}
+      \strng{authorbibnamehash}{8990e057f82da84fbd75fbd29551f8a1}
+      \strng{authornamehash}{8990e057f82da84fbd75fbd29551f8a1}
+      \strng{authorfullhash}{8990e057f82da84fbd75fbd29551f8a1}
+      \strng{authorfullhashraw}{8990e057f82da84fbd75fbd29551f8a1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Academy of Management Review}
+      \field{title}{Toward a Theory of Stakeholder Identification and Salience: Defining the Principle of Who and What Really Counts}
+      \field{year}{1997}
+    \endentry
+    \entry{pas1883}{manual}{}{}
+      \list{organization}{1}{%
+        {BSI}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Operational Design Domains. BSI PAS 1883}
+      \field{year}{2025}
+    \endentry
+    \entry{pas1885}{manual}{}{}
+      \list{organization}{1}{%
+        {BSI}%
+      }
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{title}{The fundamental principles of automotive cyber security. BSI PAS 1885}
+      \field{year}{2018}
+    \endentry
+    \entry{fassin_2009}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=2b4fe31551531becd9856b07a829d2fd}{%
+           family={Fassin},
+           familyi={F\bibinitperiod},
+           given={Yves},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{2b4fe31551531becd9856b07a829d2fd}
+      \strng{fullhash}{2b4fe31551531becd9856b07a829d2fd}
+      \strng{fullhashraw}{2b4fe31551531becd9856b07a829d2fd}
+      \strng{bibnamehash}{2b4fe31551531becd9856b07a829d2fd}
+      \strng{authorbibnamehash}{2b4fe31551531becd9856b07a829d2fd}
+      \strng{authornamehash}{2b4fe31551531becd9856b07a829d2fd}
+      \strng{authorfullhash}{2b4fe31551531becd9856b07a829d2fd}
+      \strng{authorfullhashraw}{2b4fe31551531becd9856b07a829d2fd}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Business Ethics}
+      \field{title}{The Stakeholder Model Redefined}
+      \field{volume}{84}
+      \field{year}{2009}
+    \endentry
+    \entry{thatcham_2026}{online}{}{}
+      \list{organization}{1}{%
+        {Thatcham Research}%
+      }
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labeltitlesource}{title}
+      \field{title}{Thatcham Research welcomes assent of Automated Vehicles Bill}
+      \verb{urlraw}
+      \verb https://www.thatcham.org/thatcham-research-welcomes-assent-of-automated-vehicles-bill/#_ftnref4
+      \endverb
+      \verb{url}
+      \verb https://www.thatcham.org/thatcham-research-welcomes-assent-of-automated-vehicles-bill/#_ftnref4
+      \endverb
+    \endentry
+    \entry{lawcom_2022}{report}{}{}
+      \list{organization}{1}{%
+        {Law Commission}%
+      }
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labeltitlesource}{title}
+      \field{title}{Automated Vehicles: Joint report}
+      \field{year}{2022}
+    \endentry
+    \entry{hawkins_2013}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=d058d3656940925b8b755876a21ac792}{%
+           family={Hawkins},
+           familyi={H\bibinitperiod},
+           given={Troy\bibnamedelima R.},
+           giveni={T\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \strng{namehash}{629d81dd7e681f6020f708a5a888c9fa}
+      \strng{fullhash}{629d81dd7e681f6020f708a5a888c9fa}
+      \strng{fullhashraw}{629d81dd7e681f6020f708a5a888c9fa}
+      \strng{bibnamehash}{629d81dd7e681f6020f708a5a888c9fa}
+      \strng{authorbibnamehash}{629d81dd7e681f6020f708a5a888c9fa}
+      \strng{authornamehash}{629d81dd7e681f6020f708a5a888c9fa}
+      \strng{authorfullhash}{629d81dd7e681f6020f708a5a888c9fa}
+      \strng{authorfullhashraw}{629d81dd7e681f6020f708a5a888c9fa}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Industrial Ecology}
+      \field{title}{Comparative Environmental Life Cycle Assessment of Conventional and Electric Vehicles}
+      \field{volume}{17}
+      \field{year}{2013}
+      \field{pages}{53\bibrangedash 64}
+      \range{pages}{12}
+    \endentry
+    \entry{tukker}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=d5334eef47c31dab5bef9e0b70ab54de}{%
+           family={Tukker},
+           familyi={T\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{d5334eef47c31dab5bef9e0b70ab54de}
+      \strng{fullhash}{d5334eef47c31dab5bef9e0b70ab54de}
+      \strng{fullhashraw}{d5334eef47c31dab5bef9e0b70ab54de}
+      \strng{bibnamehash}{d5334eef47c31dab5bef9e0b70ab54de}
+      \strng{authorbibnamehash}{d5334eef47c31dab5bef9e0b70ab54de}
+      \strng{authornamehash}{d5334eef47c31dab5bef9e0b70ab54de}
+      \strng{authorfullhash}{d5334eef47c31dab5bef9e0b70ab54de}
+      \strng{authorfullhashraw}{d5334eef47c31dab5bef9e0b70ab54de}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Business Strategy and the Environment}
+      \field{title}{Eight types of product-service system: eight ways to sustainability? Experiences from SusProNet}
+      \field{volume}{13}
+      \field{pages}{246\bibrangedash 260}
+      \range{pages}{15}
+    \endentry
+    \entry{potting_2017}{report}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=8c8611d7c38a71200989cb324aa28617}{%
+           family={Potting},
+           familyi={P\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {PBL Netherlands Environmental Assessment Agency}%
+      }
+      \list{location}{1}{%
+        {The Hague}%
+      }
+      \strng{namehash}{82325ef68ec1f6f6073d369dc2bff245}
+      \strng{fullhash}{82325ef68ec1f6f6073d369dc2bff245}
+      \strng{fullhashraw}{82325ef68ec1f6f6073d369dc2bff245}
+      \strng{bibnamehash}{82325ef68ec1f6f6073d369dc2bff245}
+      \strng{authorbibnamehash}{82325ef68ec1f6f6073d369dc2bff245}
+      \strng{authornamehash}{82325ef68ec1f6f6073d369dc2bff245}
+      \strng{authorfullhash}{82325ef68ec1f6f6073d369dc2bff245}
+      \strng{authorfullhashraw}{82325ef68ec1f6f6073d369dc2bff245}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Circular economy: measuring innovation in the product chain}
+      \field{year}{2017}
+    \endentry
+    \entry{morici_2022}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=69ab05ca9e0271ee0a9babe9e2cd5994}{%
+           family={Morici},
+           familyi={M\bibinitperiod},
+           given={E.},
+           giveni={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{69ab05ca9e0271ee0a9babe9e2cd5994}
+      \strng{fullhash}{69ab05ca9e0271ee0a9babe9e2cd5994}
+      \strng{fullhashraw}{69ab05ca9e0271ee0a9babe9e2cd5994}
+      \strng{bibnamehash}{69ab05ca9e0271ee0a9babe9e2cd5994}
+      \strng{authorbibnamehash}{69ab05ca9e0271ee0a9babe9e2cd5994}
+      \strng{authornamehash}{69ab05ca9e0271ee0a9babe9e2cd5994}
+      \strng{authorfullhash}{69ab05ca9e0271ee0a9babe9e2cd5994}
+      \strng{authorfullhashraw}{69ab05ca9e0271ee0a9babe9e2cd5994}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Recycling of Thermoset Materials and Thermoset-Based Composites: Challenge and Opportunity}
+      \field{year}{2022}
+    \endentry
+    \entry{ramaswamy_2017}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=25bfe1f1f7c40c0a4ceb9316fa51df19}{%
+           family={Ramaswamy},
+           familyi={R\bibinitperiod},
+           given={K.},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{25bfe1f1f7c40c0a4ceb9316fa51df19}
+      \strng{fullhash}{25bfe1f1f7c40c0a4ceb9316fa51df19}
+      \strng{fullhashraw}{25bfe1f1f7c40c0a4ceb9316fa51df19}
+      \strng{bibnamehash}{25bfe1f1f7c40c0a4ceb9316fa51df19}
+      \strng{authorbibnamehash}{25bfe1f1f7c40c0a4ceb9316fa51df19}
+      \strng{authornamehash}{25bfe1f1f7c40c0a4ceb9316fa51df19}
+      \strng{authorfullhash}{25bfe1f1f7c40c0a4ceb9316fa51df19}
+      \strng{authorfullhashraw}{25bfe1f1f7c40c0a4ceb9316fa51df19}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Validation of Expanded Polypropylene (EPP) Foam Material Models for Low Speed Bumper and Pedestrian Protection Applications}
+      \field{year}{2017}
+    \endentry
+    \entry{handtke_2024}{thesis}{}{}
+      \name{author}{1}{}{%
+        {{hash=a975c7a7ee0e71fa4cbe996d4d261720}{%
+           family={Handtke},
+           familyi={H\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{a975c7a7ee0e71fa4cbe996d4d261720}
+      \strng{fullhash}{a975c7a7ee0e71fa4cbe996d4d261720}
+      \strng{fullhashraw}{a975c7a7ee0e71fa4cbe996d4d261720}
+      \strng{bibnamehash}{a975c7a7ee0e71fa4cbe996d4d261720}
+      \strng{authorbibnamehash}{a975c7a7ee0e71fa4cbe996d4d261720}
+      \strng{authornamehash}{a975c7a7ee0e71fa4cbe996d4d261720}
+      \strng{authorfullhash}{a975c7a7ee0e71fa4cbe996d4d261720}
+      \strng{authorfullhashraw}{a975c7a7ee0e71fa4cbe996d4d261720}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Influence of Two Closed Recycling-Loops on the Mechanical and Material Properties of Expanded Polypropylene Beads}
+      \field{year}{2024}
+    \endentry
+  \enddatalist
+\endrefsection
+
+\refsection{8}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{automatedVehiclesAct2024}{legislation}{}{}
+      \list{organization}{1}{%
+        {UK Parliament}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Automated Vehicles Act 2024}
+      \field{urlday}{2}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.legislation.gov.uk/ukpga/2024/10/contents
+      \endverb
+      \verb{url}
+      \verb https://www.legislation.gov.uk/ukpga/2024/10/contents
+      \endverb
+    \endentry
+    \entry{govukAVJobs2025}{online}{}{}
+      \list{organization}{1}{%
+        {Department for Transport}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Driving innovation: 38,000 jobs on the horizon as pilots of self-driving vehicles fast-tracked}
+      \field{urlday}{2}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.gov.uk/government/news/driving-innovation-38000-jobs-on-the-horizon-as-pilots-of-self-driving-vehicles-fast-tracked
+      \endverb
+      \verb{url}
+      \verb https://www.gov.uk/government/news/driving-innovation-38000-jobs-on-the-horizon-as-pilots-of-self-driving-vehicles-fast-tracked
+      \endverb
+    \endentry
+    \entry{camTestbedUK}{online}{}{}
+      \list{organization}{1}{%
+        {Zenzic}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{CAM Testbed UK}
+      \field{urlday}{2}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://camtestbed.uk/
+      \endverb
+      \verb{url}
+      \verb https://camtestbed.uk/
+      \endverb
+    \endentry
+    \entry{bsiPAS1881}{online}{}{}
+      \list{organization}{1}{%
+        {British Standards Institution}%
+      }
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{title}{PAS 1881:2026 Assuring the Operational Safety of Automated Vehicles}
+      \field{urlday}{2}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.bsigroup.com/en-GB/insights-and-media/insights/brochures/pas-1881-assuring-the-operational-safety-of-automated-vehicles/
+      \endverb
+      \verb{url}
+      \verb https://www.bsigroup.com/en-GB/insights-and-media/insights/brochures/pas-1881-assuring-the-operational-safety-of-automated-vehicles/
+      \endverb
+    \endentry
+    \entry{bsiPAS1882}{online}{}{}
+      \list{organization}{1}{%
+        {British Standards Institution}%
+      }
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{title}{PAS 1882:2021 Data Collection and Management for Automated Vehicle Trials for the Purpose of Incident Investigation}
+      \field{urlday}{2}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2021}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.bsigroup.com/en-GB/insights-and-media/insights/brochures/pas-1882-data-for-automated-vehicle-trials-incident-investigation/
+      \endverb
+      \verb{url}
+      \verb https://www.bsigroup.com/en-GB/insights-and-media/insights/brochures/pas-1882-data-for-automated-vehicle-trials-incident-investigation/
+      \endverb
+    \endentry
+    \entry{bsiPAS1883}{online}{}{}
+      \list{organization}{1}{%
+        {British Standards Institution}%
+      }
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{title}{PAS 1883:2025 Operational Design Domain (ODD) -- Implementing BS ISO 34503}
+      \field{urlday}{2}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.bsigroup.com/en-GB/insights-and-media/insights/brochures/operational-design-domain-implementation-of-bs-iso-34503/
+      \endverb
+      \verb{url}
+      \verb https://www.bsigroup.com/en-GB/insights-and-media/insights/brochures/operational-design-domain-implementation-of-bs-iso-34503/
+      \endverb
+    \endentry
+    \entry{iso34503}{online}{}{}
+      \list{organization}{1}{%
+        {International Organization for Standardization}%
+      }
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{title}{ISO 34503:2023 Road vehicles -- Test scenarios for automated driving systems -- Specification for operational design domain}
+      \field{urlday}{2}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2023}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.iso.org/standard/78952.html
+      \endverb
+      \verb{url}
+      \verb https://www.iso.org/standard/78952.html
+      \endverb
+    \endentry
+    \entry{dftTriallingCode}{online}{}{}
+      \list{organization}{1}{%
+        {Department for Transport}%
+      }
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{title}{Code of Practice: Automated Vehicle Trialling}
+      \field{urlday}{2}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2019}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.gov.uk/government/publications/trialling-automated-vehicle-technologies-in-public/code-of-practice-automated-vehicle-trialling
+      \endverb
+      \verb{url}
+      \verb https://www.gov.uk/government/publications/trialling-automated-vehicle-technologies-in-public/code-of-practice-automated-vehicle-trialling
+      \endverb
+    \endentry
+    \entry{iso22133}{online}{}{}
+      \list{organization}{1}{%
+        {International Organization for Standardization}%
+      }
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{title}{ISO 22133:2026 Road vehicles -- Test object monitoring and control for active safety and automated/autonomous vehicle testing}
+      \field{urlday}{2}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.iso.org/obp/ui
+      \endverb
+      \verb{url}
+      \verb https://www.iso.org/obp/ui
+      \endverb
+    \endentry
+    \entry{iso19206series}{online}{}{}
+      \list{organization}{1}{%
+        {British Standards Institution}%
+      }
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{title}{BS ISO 19206 Road vehicles -- Test devices for target vehicles, vulnerable road users and other objects, for assessment of active safety functions}
+      \field{urlday}{2}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2026}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://landingpage.bsigroup.com/LandingPage/Series?UPI=BS+ISO+19206
+      \endverb
+      \verb{url}
+      \verb https://landingpage.bsigroup.com/LandingPage/Series?UPI=BS+ISO+19206
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+
+\refsection{9}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{Supply_chain_lecture}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=563f8587e48fc018e2cb0edb4c96b994}{%
+           family={{Corsini, Lucia}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{563f8587e48fc018e2cb0edb4c96b994}
+      \strng{fullhash}{563f8587e48fc018e2cb0edb4c96b994}
+      \strng{fullhashraw}{563f8587e48fc018e2cb0edb4c96b994}
+      \strng{bibnamehash}{563f8587e48fc018e2cb0edb4c96b994}
+      \strng{authorbibnamehash}{563f8587e48fc018e2cb0edb4c96b994}
+      \strng{authornamehash}{563f8587e48fc018e2cb0edb4c96b994}
+      \strng{authorfullhash}{563f8587e48fc018e2cb0edb4c96b994}
+      \strng{authorfullhashraw}{563f8587e48fc018e2cb0edb4c96b994}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{University of Oxford}
+      \field{title}{Supply Chains Lecture Slides}
+      \field{year}{2025}
+    \endentry
+    \entry{FMEA_lecture_notes}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=d336b27a95e2815eb8a5b05bb9fbb179}{%
+           family={{Bañares-Alcántara, R.}},
+           familyi={B\bibinitperiod}}}%
+      }
+      \strng{namehash}{d336b27a95e2815eb8a5b05bb9fbb179}
+      \strng{fullhash}{d336b27a95e2815eb8a5b05bb9fbb179}
+      \strng{fullhashraw}{d336b27a95e2815eb8a5b05bb9fbb179}
+      \strng{bibnamehash}{d336b27a95e2815eb8a5b05bb9fbb179}
+      \strng{authorbibnamehash}{d336b27a95e2815eb8a5b05bb9fbb179}
+      \strng{authornamehash}{d336b27a95e2815eb8a5b05bb9fbb179}
+      \strng{authorfullhash}{d336b27a95e2815eb8a5b05bb9fbb179}
+      \strng{authorfullhashraw}{d336b27a95e2815eb8a5b05bb9fbb179}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{University of Oxford}
+      \field{title}{B2 Safety and Risk Lecture Notes}
+      \field{year}{2025}
+    \endentry
+    \entry{value_added}{book}{}{}
+      \name{author}{3}{}{%
+        {{hash=425004feb01bf744265670c51b58c611}{%
+           family={Protzman},
+           familyi={P\bibinitperiod},
+           given={Charles\bibnamedelima W.},
+           giveni={C\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=b420a134863cad2dcc562994ccc9c506}{%
+           family={Protzman},
+           familyi={P\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod}}}%
+        {{hash=c7139d173d2191da5f8f0c84b59b4c26}{%
+           family={Keen},
+           familyi={K\bibinitperiod},
+           given={William},
+           giveni={W\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Productivity Press}%
+      }
+      \strng{namehash}{9ca6e83e3684173c1f60e7a617b1364e}
+      \strng{fullhash}{9ca6e83e3684173c1f60e7a617b1364e}
+      \strng{fullhashraw}{9ca6e83e3684173c1f60e7a617b1364e}
+      \strng{bibnamehash}{9ca6e83e3684173c1f60e7a617b1364e}
+      \strng{authorbibnamehash}{9ca6e83e3684173c1f60e7a617b1364e}
+      \strng{authornamehash}{9ca6e83e3684173c1f60e7a617b1364e}
+      \strng{authorfullhash}{9ca6e83e3684173c1f60e7a617b1364e}
+      \strng{authorfullhashraw}{9ca6e83e3684173c1f60e7a617b1364e}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The BASICS Lean Implementation Model: Lean Tools to Drive Daily Innovation and Increased Profitability}
+      \field{year}{2018}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

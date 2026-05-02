@@ -1,0 +1,147 @@
+[0] Config.pm:328> INFO - This is Biber 2.21
+[0] Config.pm:331> INFO - Logfile is 'main.blg'
+[40] biber-darwin:342> INFO - === Sat May  2, 2026, 16:27:24
+[50] Biber.pm:421> INFO - Reading 'main.bcf'
+[108] Biber.pm:1002> INFO - Found 0 citekeys in bib section 0
+[109] Biber.pm:1002> INFO - Found 11 citekeys in bib section 1
+[109] Biber.pm:1002> INFO - Found 0 citekeys in bib section 0
+[109] Biber.pm:1002> INFO - Found 4 citekeys in bib section 2
+[109] Biber.pm:1002> INFO - Found 0 citekeys in bib section 0
+[109] Biber.pm:1002> INFO - Found 12 citekeys in bib section 3
+[109] Biber.pm:1002> INFO - Found 0 citekeys in bib section 0
+[109] Biber.pm:1002> INFO - Found 12 citekeys in bib section 4
+[109] Biber.pm:1002> INFO - Found 0 citekeys in bib section 0
+[109] Biber.pm:1002> INFO - Found 5 citekeys in bib section 5
+[109] Biber.pm:1002> INFO - Found 0 citekeys in bib section 0
+[110] Biber.pm:1002> INFO - Found 9 citekeys in bib section 6
+[110] Biber.pm:1002> INFO - Found 0 citekeys in bib section 0
+[110] Biber.pm:1002> INFO - Found 22 citekeys in bib section 7
+[110] Biber.pm:1002> INFO - Found 0 citekeys in bib section 0
+[110] Biber.pm:1002> INFO - Found 10 citekeys in bib section 8
+[110] Biber.pm:1002> INFO - Found 0 citekeys in bib section 0
+[110] Biber.pm:1002> INFO - Found 3 citekeys in bib section 9
+[110] Biber.pm:1002> INFO - Found 0 citekeys in bib section 0
+[111] Biber.pm:1002> INFO - Found 18 citekeys in bib section 10
+[111] Biber.pm:1002> INFO - Found 0 citekeys in bib section 0
+[145] Biber.pm:4487> INFO - Processing section 1
+[151] Biber.pm:4678> INFO - Looking for bibtex file '../TobyMcConnell/Engineering/references.bib' for section 1
+[151] bibtex.pm:1713> INFO - LaTeX decoding ...
+[156] bibtex.pm:1519> INFO - Found BibTeX data source '../TobyMcConnell/Engineering/references.bib'
+[183] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[183] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[183] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'en-US'
+[183] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
+[190] Biber.pm:4487> INFO - Processing section 2
+[190] Biber.pm:4678> INFO - Looking for bibtex file '../TobyMcConnell/Engineering/references.bib' for section 2
+[190] Biber.pm:4678> INFO - Looking for bibtex file '../MichaelZiyangXing/references_engineering.bib' for section 2
+[191] bibtex.pm:1713> INFO - LaTeX decoding ...
+[192] bibtex.pm:1519> INFO - Found BibTeX data source '../MichaelZiyangXing/references_engineering.bib'
+[203] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[203] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[203] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'en-US'
+[203] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
+[205] Biber.pm:4487> INFO - Processing section 3
+[205] Biber.pm:4678> INFO - Looking for bibtex file '../TobyMcConnell/Engineering/references.bib' for section 3
+[205] Biber.pm:4678> INFO - Looking for bibtex file '../MichaelZiyangXing/references_engineering.bib' for section 3
+[206] Biber.pm:4678> INFO - Looking for bibtex file 'yuze_references.bib' for section 3
+[206] bibtex.pm:1713> INFO - LaTeX decoding ...
+[211] bibtex.pm:1519> INFO - Found BibTeX data source 'yuze_references.bib'
+[232] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[232] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[232] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'en-US'
+[232] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
+[235] Biber.pm:4487> INFO - Processing section 4
+[236] Biber.pm:4678> INFO - Looking for bibtex file '../TobyMcConnell/Engineering/references.bib' for section 4
+[236] Biber.pm:4678> INFO - Looking for bibtex file '../MichaelZiyangXing/references_engineering.bib' for section 4
+[236] Biber.pm:4678> INFO - Looking for bibtex file 'yuze_references.bib' for section 4
+[238] Biber.pm:4678> INFO - Looking for bibtex file '../PaulVogelberg/Engineering/references.bib' for section 4
+[238] bibtex.pm:1713> INFO - LaTeX decoding ...
+[244] bibtex.pm:1519> INFO - Found BibTeX data source '../PaulVogelberg/Engineering/references.bib'
+[273] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[273] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[273] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'en-US'
+[273] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
+[276] Biber.pm:4487> INFO - Processing section 5
+[276] Biber.pm:4678> INFO - Looking for bibtex file '../TobyMcConnell/Engineering/references.bib' for section 5
+[277] Biber.pm:4678> INFO - Looking for bibtex file '../MichaelZiyangXing/references_engineering.bib' for section 5
+[279] Biber.pm:4678> INFO - Looking for bibtex file 'yuze_references.bib' for section 5
+[280] Biber.pm:4678> INFO - Looking for bibtex file '../PaulVogelberg/Engineering/references.bib' for section 5
+[280] Biber.pm:4678> INFO - Looking for bibtex file '../HarryEmes/Engineering/references.bib' for section 5
+[280] bibtex.pm:1713> INFO - LaTeX decoding ...
+[284] bibtex.pm:1519> INFO - Found BibTeX data source '../HarryEmes/Engineering/references.bib'
+[306] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[306] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[306] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'en-US'
+[307] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
+[308] Biber.pm:4487> INFO - Processing section 6
+[308] Biber.pm:4678> INFO - Looking for bibtex file '../TobyMcConnell/Engineering/references.bib' for section 6
+[309] Biber.pm:4678> INFO - Looking for bibtex file '../MichaelZiyangXing/references_engineering.bib' for section 6
+[309] Biber.pm:4678> INFO - Looking for bibtex file 'yuze_references.bib' for section 6
+[309] Biber.pm:4678> INFO - Looking for bibtex file '../PaulVogelberg/Engineering/references.bib' for section 6
+[310] Biber.pm:4678> INFO - Looking for bibtex file '../HarryEmes/Engineering/references.bib' for section 6
+[310] Biber.pm:4678> INFO - Looking for bibtex file '../TobyMcConnell/Business/references.bib' for section 6
+[310] bibtex.pm:1713> INFO - LaTeX decoding ...
+[315] bibtex.pm:1519> INFO - Found BibTeX data source '../TobyMcConnell/Business/references.bib'
+[331] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[331] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[331] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'en-US'
+[331] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
+[334] Biber.pm:4487> INFO - Processing section 7
+[334] Biber.pm:4678> INFO - Looking for bibtex file '../TobyMcConnell/Engineering/references.bib' for section 7
+[334] Biber.pm:4678> INFO - Looking for bibtex file '../MichaelZiyangXing/references_engineering.bib' for section 7
+[335] Biber.pm:4678> INFO - Looking for bibtex file 'yuze_references.bib' for section 7
+[335] Biber.pm:4678> INFO - Looking for bibtex file '../PaulVogelberg/Engineering/references.bib' for section 7
+[335] Biber.pm:4678> INFO - Looking for bibtex file '../HarryEmes/Engineering/references.bib' for section 7
+[335] Biber.pm:4678> INFO - Looking for bibtex file '../TobyMcConnell/Business/references.bib' for section 7
+[336] Biber.pm:4678> INFO - Looking for bibtex file '../PaulVogelberg/Business/references.bib' for section 7
+[336] bibtex.pm:1713> INFO - LaTeX decoding ...
+[343] bibtex.pm:1519> INFO - Found BibTeX data source '../PaulVogelberg/Business/references.bib'
+[373] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[373] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[373] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'en-US'
+[373] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
+[379] Biber.pm:4487> INFO - Processing section 8
+[379] Biber.pm:4678> INFO - Looking for bibtex file '../TobyMcConnell/Engineering/references.bib' for section 8
+[380] Biber.pm:4678> INFO - Looking for bibtex file '../MichaelZiyangXing/references_engineering.bib' for section 8
+[380] Biber.pm:4678> INFO - Looking for bibtex file 'yuze_references.bib' for section 8
+[380] Biber.pm:4678> INFO - Looking for bibtex file '../PaulVogelberg/Engineering/references.bib' for section 8
+[380] Biber.pm:4678> INFO - Looking for bibtex file '../HarryEmes/Engineering/references.bib' for section 8
+[381] Biber.pm:4678> INFO - Looking for bibtex file '../TobyMcConnell/Business/references.bib' for section 8
+[381] Biber.pm:4678> INFO - Looking for bibtex file '../PaulVogelberg/Business/references.bib' for section 8
+[381] Biber.pm:4678> INFO - Looking for bibtex file '../MichaelZiyangXing/references_eem_design.bib' for section 8
+[382] bibtex.pm:1713> INFO - LaTeX decoding ...
+[386] bibtex.pm:1519> INFO - Found BibTeX data source '../MichaelZiyangXing/references_eem_design.bib'
+[394] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[394] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[394] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'en-US'
+[394] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
+[397] Biber.pm:4487> INFO - Processing section 9
+[397] Biber.pm:4678> INFO - Looking for bibtex file '../TobyMcConnell/Engineering/references.bib' for section 9
+[397] Biber.pm:4678> INFO - Looking for bibtex file '../MichaelZiyangXing/references_engineering.bib' for section 9
+[398] Biber.pm:4678> INFO - Looking for bibtex file 'yuze_references.bib' for section 9
+[407] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[407] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[407] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'en-US'
+[407] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
+[408] Biber.pm:4487> INFO - Processing section 10
+[408] Biber.pm:4678> INFO - Looking for bibtex file '../TobyMcConnell/Engineering/references.bib' for section 10
+[409] Biber.pm:4678> INFO - Looking for bibtex file '../MichaelZiyangXing/references_engineering.bib' for section 10
+[409] Biber.pm:4678> INFO - Looking for bibtex file 'yuze_references.bib' for section 10
+[409] Biber.pm:4678> INFO - Looking for bibtex file '../PaulVogelberg/Engineering/references.bib' for section 10
+[410] Biber.pm:4678> INFO - Looking for bibtex file '../HarryEmes/Engineering/references.bib' for section 10
+[410] Biber.pm:4678> INFO - Looking for bibtex file '../TobyMcConnell/Business/references.bib' for section 10
+[410] Biber.pm:4678> INFO - Looking for bibtex file '../PaulVogelberg/Business/references.bib' for section 10
+[411] Biber.pm:4678> INFO - Looking for bibtex file '../MichaelZiyangXing/references_eem_design.bib' for section 10
+[411] Biber.pm:4678> INFO - Looking for bibtex file '../HarryEmes/Business/references.bib' for section 10
+[412] bibtex.pm:1713> INFO - LaTeX decoding ...
+[427] bibtex.pm:1519> INFO - Found BibTeX data source '../HarryEmes/Business/references.bib'
+[460] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[460] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[460] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'en-US'
+[460] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
+[465] bbl.pm:676> INFO - Writing 'main.bbl' with encoding 'UTF-8'
+[482] bbl.pm:779> INFO - Output to main.bbl
+[482] Biber.pm:132> WARN - legacy year field '[PH year accessed]' in entry 'bamocar_pg' is not an integer - this will probably not sort properly.
+[482] Biber.pm:132> WARN - legacy year field '[PH year accessed]' in entry 'yasa_p400r' is not an integer - this will probably not sort properly.
+[482] Biber.pm:132> WARN - ISBN '978-0262539761' in entry 'gompers2020' is invalid - run biber with '--validate_datamodel' for details.
+[482] Biber.pm:134> INFO - WARNINGS: 3
