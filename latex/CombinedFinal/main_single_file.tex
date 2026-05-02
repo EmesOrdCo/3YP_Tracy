@@ -1808,39 +1808,23 @@ The accumulator system design successfully combines proven supercapacitor techno
 \label{sec:intro}
 % ---------------------------------------------------------------------
 
-The Formula Student Acceleration Event (FS-D~5) scores a straight-line
-sprint over \SI{75}{\metre} from a standing start. For an electric
-powertrain the run is bounded by two hard rules: the electrical power
-drawn from the accumulator must not exceed \SI{80}{\kilo\watt}
-(FS-EV~2.2), and a run exceeding \SI{25}{\second} is disqualified
-(FS-D~5.3.1). The event score in manual mode is set by FS-D~5.3.2 as a
-linear function of the team's time relative to the fastest team's.
+The Formula Student Acceleration Event (FS-D~5) is a \SI{75}{\metre}
+standing start; for EVs, FS-EV~2.2 caps electrical power drawn from the
+accumulator at \SI{80}{\kilo\watt}, and FS-D~5.3.1 disqualifies runs
+over \SI{25}{\second}. A competitive configuration must be
+traction-limited at launch and power-limited later while respecting
+the power cap and avoiding front-axle lift; mass, centre of gravity,
+tyres, gearing, drivetrain efficiency, and electrical architecture are
+owned elsewhere in this report. A quantitative, rules-aware longitudinal
+simulation is used to rank design levers, reject configurations that
+breach FS-EV~2.2 or FS-D~5.3.1 before hardware commitment, predict the
+final agreed vehicle, and apportion margin across chapters.
 
-Achieving a competitive time requires a vehicle configuration that is
-simultaneously traction-limited at launch and power-limited in the
-second half of the run, while remaining compliant with the power cap
-and without lifting the front axle. The design levers — total mass,
-centre-of-gravity geometry, tyre grip, gear ratio, drivetrain
-efficiency, and electrical architecture — are owned by different
-chapters of this group report. A quantitative, rules-aware vehicle
-dynamics simulation is therefore required to (i) rank which design
-levers most strongly affect the event time, (ii) reject any
-configuration that breaches FS-EV~2.2 or FS-D~5.3.1 before hardware
-commitment, (iii) predict the performance of the final agreed vehicle,
-and (iv) apportion design margin consistently across the other
-chapters.
-
-This chapter delivers four things: a modular longitudinal-dynamics
-simulator with a load-sensitive Pacejka tyre model, closed-loop
-traction control, and electrical-side power limiting
-(Section~\ref{sec:methodology}); a verification and validation
-envelope combining an analytical lower bound, hand calculations,
-timestep convergence, and comparison between simple and Pacejka tyre
-laws (Section~\ref{sec:vv}); a parameter sensitivity study and a formal
-numerical optimisation of the design vector
-(Section~\ref{sec:sensitivity}); and a compliance-arbiter prediction
-for the final agreed vehicle
-(Section~\ref{sec:final_run}).
+This chapter presents simulation methodology
+(Section~\ref{sec:methodology}); verification
+(Section~\ref{sec:vv}); sensitivity and optimisation
+(Section~\ref{sec:sensitivity}); and predicted performance for the
+final configuration (Section~\ref{sec:final_run}).
 
 % ---------------------------------------------------------------------
 \section{Simulation Methodology}
@@ -1851,32 +1835,13 @@ The simulation solves a four-state longitudinal model
 ($\mathbf{x} = [x, v, \omega_{w,f}, \omega_{w,r}]^\top$) on a
 \SI{1}{\milli\second} timestep, computing tyre, aerodynamic, rolling
 and drive forces at each sub-step of a fourth-order Runge--Kutta
-integrator. Figure~\ref{fig:system_overview} summarises the full
-force balance and the producing subsystem model for each force.
-Weight acts at the centre of gravity; aerodynamic drag and downforce
-are computed from vehicle velocity by the aerodynamics model; the
-mass-properties model resolves per-axle normal forces via static
-weight distribution, acceleration-induced load transfer, and any
-aerodynamic downforce; the Pacejka tyre model converts per-axle
-normal force and slip ratio into a tractive force; and the powertrain
-model produces a wheel torque subject to the FS-EV~2.2 electrical
-power limit. The resulting net longitudinal force drives the
-equation of motion, which the RK4 integrator advances to the next
-state. Each of the following subsections specifies one component of
-this force balance and states the engineering choices embedded in it.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.98\textwidth]{figures/system_overview.pdf}
-\caption{Side-view schematic of the vehicle showing every force
-computed in the simulation, tagged with the subsystem model that
-produces it. Weight $m_v g$, aerodynamic drag $F_\mathrm{drag}$,
-downforce $F_{L,f/r}$, per-axle normal forces $F_{z,f/r}$, rolling
-resistance $F_\mathrm{rr}$, and the rear-axle tractive force $F_x$
-combine into the longitudinal equation of motion at the bottom of
-the figure, which is advanced by RK4 to produce the new state.}
-\label{fig:system_overview}
-\end{figure}
+integrator. Weight acts at the centre of gravity; aerodynamic drag and
+downforce follow from velocity; quasi-static load transfer yields
+per-axle normals; the Pacejka tyre model maps normal load and slip to
+tractive force; and the powertrain supplies rear wheel torque subject to
+the FS-EV~2.2 electrical power limit. Net longitudinal force advances the
+state via RK4. Each following subsection specifies one component of this
+balance.
 
 % ---------------------------------------------------------------------
 \subsection{Longitudinal equation of motion and effective mass}
@@ -2257,46 +2222,6 @@ isolation.}
 \label{fig:architecture}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\begin{subfigure}[t]{0.48\textwidth}
-\centering
-\includegraphics[width=\textwidth,height=45mm,keepaspectratio]{figures/gui_compare.png}
-\caption{Configuration comparison.}
-\label{fig:gui_compare}
-\end{subfigure}
-\hfill
-\begin{subfigure}[t]{0.48\textwidth}
-\centering
-\includegraphics[width=\textwidth,height=45mm,keepaspectratio]{figures/gui_sweep.png}
-\caption{Parameter sweep.}
-\label{fig:gui_sweep}
-\end{subfigure}
-
-\vspace{4pt}
-
-\begin{subfigure}[t]{0.48\textwidth}
-\centering
-\includegraphics[width=\textwidth,height=45mm,keepaspectratio]{figures/gui_optimizer.png}
-\caption{Design optimiser (Nelder--Mead).}
-\label{fig:gui_optimizer}
-\end{subfigure}
-\hfill
-\begin{subfigure}[t]{0.48\textwidth}
-\centering
-\includegraphics[width=\textwidth,height=45mm,keepaspectratio]{figures/gui_sensitivity.png}
-\caption{Sensitivity analysis.}
-\label{fig:gui_sensitivity}
-\end{subfigure}
-\caption{Representative pages of the Streamlit interface that sits
-above the simulation core. The same physics runs in every page; the
-GUI provides a low-barrier way for the other subsystem chapters to
-propose parameter changes, compare configurations, sweep ranges, or
-request a formal optimisation without having to modify or run the
-Python scripts directly.}
-\label{fig:gui_screens}
-\end{figure}
-
 % ---------------------------------------------------------------------
 \section{Verification and Validation}
 \label{sec:vv}
@@ -2330,70 +2255,13 @@ t_\text{cp} = \left(\frac{d}{\tfrac{2}{3}\sqrt{2P/m}}\right)^{2/3}.
 
 For the baseline vehicle ($m = \SI{250}{\kilo\gram}$,
 $P = \SI{80}{\kilo\watt}$), Eq.~\ref{eq:analytical_bound} gives
-$t_\text{cp} = \SI{2.70}{\second}$. The simulator predicts
-\SI{3.78}{\second}. Table~\ref{tab:time_decomp} decomposes the
-resulting \SI{1.08}{\second} gap by attributing each energy-loss
-channel a time penalty
-$\Delta t_i = E_{\text{loss},i} / P_\text{max}$, and
-Table~\ref{tab:energy_budget} reports the corresponding energy
-budget over the run.
-
-\begin{table}[H]
-\centering
-\caption{Decomposition of the \SI{1.08}{\second} gap between the
-simulated \SI{75}{\metre} time and the analytical lower bound of
-Eq.~\ref{eq:analytical_bound}. Each row converts an energy-loss
-channel, integrated over the run, into an equivalent time penalty
-against the \SI{80}{\kilo\watt} reference. The traction-limited
-deficit integrates the shortfall
-$P_\text{max} - P_\text{elec}(t)$ over the launch phase; the
-residual absorbs the overlap between channels and the
-\SI{80}{\milli\second} launch-torque ramp.}
-\label{tab:time_decomp}
-\footnotesize
-\begin{tabular}{|l|c|l|}
-\hline
-\textbf{Loss channel} & \textbf{$\Delta t$ (ms)} & \textbf{Physical origin} \\
-\hline
-Traction-limited launch          & $+934$ & Tyre grip cap before $v^\star$. \\
-Aerodynamic drag                  & $+312$ & $\tfrac{1}{2}\rho C_d A v^2$, integrated. \\
-Drivetrain inefficiency           & $+105$ & $(1-\eta_\text{drv})$ at the driveline. \\
-Rolling resistance                & $< 1$  & Negligible over \SI{75}{\metre}. \\
-Residual (ramp + overlap)         & $-273$ & Non-orthogonality of channels. \\
-\hline
-\textbf{Total gap}                & $\mathbf{+1078}$ & $t_\text{sim} - t_\text{cp}$. \\
-\hline
-\end{tabular}
-\end{table}
-
-\begin{table}[H]
-\centering
-\caption{Energy budget integrated over the \SI{75}{\metre} run. The
-electrical input energy splits between kinetic energy at the finish,
-drivetrain losses, and aerodynamic dissipation. Rolling resistance
-is negligibly small over the event length.}
-\label{tab:energy_budget}
-\footnotesize
-\begin{tabular}{|l|c|}
-\hline
-\textbf{Quantity} & \textbf{Energy (kJ)} \\
-\hline
-Electrical input energy $E_\text{elec}$           & 226.7 \\
-Kinetic energy at finish $\tfrac{1}{2} m_v v_f^2$ & 138.8 \\
-Drivetrain losses $E_\text{drv}$                   & 59.2  \\
-Aerodynamic dissipation $E_\text{drag}$            & 25.0  \\
-Rolling dissipation $E_\text{rr}$                  & $< 1$ \\
-\hline
-\end{tabular}
-\end{table}
-
-The decomposition confirms the qualitative claim: the
-traction-limited launch dominates the \SI{1.08}{\second} gap,
-accounting for \SI{87}{\percent} of the time penalty. Aerodynamic
-drag is the next largest contributor at \SI{29}{\percent}, and
-drivetrain inefficiency \SI{10}{\percent}; rolling resistance is
-immaterial over \SI{75}{\metre}, as anticipated by the sensitivity
-analysis in Section~\ref{sec:tornado}.
+$t_\text{cp} = \SI{2.70}{\second}$ while the simulator predicts
+\SI{3.78}{\second}. Most of the \SI{1.08}{\second} gap is attributed to
+the traction-limited launch (shortfall against the \SI{80}{\kilo\watt}
+electrical ceiling during grip-limited acceleration), with aerodynamic
+drag and drivetrain inefficiency adding secondary penalties; rolling
+resistance is negligible over \SI{75}{\metre}, consistent with
+Section~\ref{sec:tornado}.
 
 % ---------------------------------------------------------------------
 \subsection{Analytical hand-calculation agreement}
@@ -2519,9 +2387,10 @@ against track surface conditions closes the section
 Each candidate design parameter is perturbed by $\pm 10\,\%$ about the
 baseline configuration, holding all others fixed, and the change in
 predicted \SI{75}{\metre} time is recorded.
-Figure~\ref{fig:tornado} shows the resulting tornado plot;
-Table~\ref{tab:sensitivity_ranking} translates the ranking into the
-target ranges communicated to the neighbouring chapters.
+Figure~\ref{fig:tornado} shows the resulting tornado plot; dominant
+parameters are longitudinal CG and peak tyre grip, with wheel radius,
+drivetrain efficiency, mass, and gear ratio forming a second tier (see
+caption).
 
 \begin{figure}[H]
 \centering
@@ -2534,33 +2403,6 @@ aerodynamic drag and rolling resistance are negligible over
 \SI{75}{\metre}.}
 \label{fig:tornado}
 \end{figure}
-
-\begin{table}[H]
-\centering
-\caption{Sensitivity ranking and design-target ranges provided to
-neighbouring chapters. The ``worst-case $\pm$10\% delta'' column is
-the larger absolute time change from either perturbation direction.
-Ranges are chosen to keep the predicted \SI{75}{\metre} time within
-\SI{1}{\percent} of the baseline.}
-\label{tab:sensitivity_ranking}
-\footnotesize
-\begin{tabular}{|l|c|c|l|}
-\hline
-\textbf{Parameter} & \textbf{Worst $\pm$10\% $\Delta t$ (ms)} & \textbf{Band} & \textbf{Source chapter} \\
-\hline
-CG longitudinal $L_{CG}$     & $+151$ & Very High & Chassis \\
-Peak grip $p_{Dx1}$           & $+149$ & Very High & Tyres / Suspension \\
-Wheel radius $r_w$            & $+64$  & High      & Tyres \\
-Drivetrain $\eta_\text{drv}$  & $+61$  & High      & Drivetrain \\
-Total mass $m_v$              & $+57$  & High      & All chapters \\
-Gear ratio $N_g$              & $+48$  & High      & Drivetrain \\
-CG height $h_{CG}$             & $+24$  & Medium    & Chassis \\
-Drag area $C_d A$             & $\pm 8$ & Low      & Chassis \\
-Anti-squat $\text{AS}$         & $\pm 2$ & Low      & Suspension \\
-Rolling resistance $C_\text{rr}$ & $\pm 2$ & Low   & Tyres \\
-\hline
-\end{tabular}
-\end{table}
 
 The ranking has two practical consequences. First, the two dominant
 levers (longitudinal CG and tyre peak grip) sit in different chapters
@@ -2720,7 +2562,7 @@ wheel and tighter gear ratio increase tractive force at the cost of
 top speed, but the extra top-speed margin is not needed over
 \SI{75}{\metre}. These results feed back to the neighbouring
 chapters as the vehicle-level targets summarised in
-Section~\ref{sec:flowdown}.
+Section~\ref{sec:final_params}.
 
 % ---------------------------------------------------------------------
 \subsection{Robustness to track surface conditions}
@@ -2759,58 +2601,11 @@ FS-D~5.3.1.}
 \label{sec:final_run}
 % ---------------------------------------------------------------------
 
-The final agreed vehicle configuration is the product of the group's
-combined design decisions, taken across the Chassis, Suspension,
-Drivetrain, and Supercapacitors chapters, with the vehicle-level
-targets issued by this chapter providing the quantitative anchor.
-The simulation's role here is that of compliance arbiter: it takes
-the finalised configuration as input and produces a predicted
-performance, compliance status, and score.
-
-% ---------------------------------------------------------------------
-\subsection{Requirements flow-down}
-\label{sec:flowdown}
-% ---------------------------------------------------------------------
-
-Table~\ref{tab:flowdown} maps the event-level target (completing
-\SI{75}{\metre} in under \SI{4}{\second} while remaining compliant
-with FS-EV~2.2 and FS-D~5.3.1) through vehicle-level sub-targets
-derived from the sensitivity and optimisation results, down to the
-component-level requirements that each neighbouring chapter must
-meet.
-
-\begin{table}[H]
-\centering
-\caption{Requirements flow-down: event-level target to
-component-level requirements. Simulation-driven vehicle-level
-targets feed into the detailed design work of the other chapters and
-are verified by the Section~\ref{sec:compliance} compliance check.}
-\label{tab:flowdown}
-\footnotesize
-\begin{tabular}{|l|l|l|}
-\hline
-\textbf{Level} & \textbf{Requirement} & \textbf{Source / owner} \\
-\hline
-Event   & $t_{75} \le \SI{4.0}{\second}$ with all rules met & FS-D~5 / group objective \\
-Event   & $P_\text{elec,peak} \le \SI{80}{\kilo\watt}$ & FS-EV~2.2 \\
-Event   & Finish time $< \SI{25}{\second}$ & FS-D~5.3.1 \\
-Event   & $F_{z,f} > 0$ throughout run & Pitch stability \\
-\hline
-Vehicle & $m_v \le \SI{250}{\kilo\gram}$ including driver & All chapters \\
-Vehicle & $L_{CG}/L \approx 0.63\text{--}0.71$ & This chapter / Chassis \\
-Vehicle & $h_{CG} \le \SI{0.30}{\metre}$ & Chassis \\
-Vehicle & Peak tyre grip $p_{Dx1} \ge 1.45$ & Suspension / Tyres \\
-Vehicle & Gear ratio $N_g \approx 4.9\text{--}5.5$ & Drivetrain \\
-Vehicle & Driveline $\eta_\text{drv} \ge 0.95$ & Drivetrain \\
-\hline
-Component & Motor peak torque $\ge \SI{230}{\newton\metre}$ & Drivetrain (YASA P400R) \\
-Component & Inverter peak RMS current $\ge \SI{285}{\ampere}$ & Drivetrain (BAMOCAR PG-D3) \\
-Component & Accumulator nominal voltage $\ge \SI{350}{\volt}$ & Supercapacitors (minimum for $v^\star$) \\
-Component & Accumulator peak power output $\ge \SI{80}{\kilo\watt}$ & Supercapacitors (FS-EV~2.2) \\
-Component & Slick tyre, dry peak friction $\mu \ge 1.45$ & Suspension / Tyres \\
-\hline
-\end{tabular}
-\end{table}
+The final agreed vehicle configuration combines decisions across the
+Chassis, Suspension, Drivetrain, and Supercapacitors chapters. The
+simulation takes the finalised configuration as input and produces
+predicted performance traces together with checks against FS-EV~2.2,
+FS-D~5.3.1, and pitch stability.
 
 % ---------------------------------------------------------------------
 \subsection{Final agreed parameter set}
@@ -2897,117 +2692,18 @@ threshold and validates the choice of anti-squat and CG
 geometry for the baseline configuration.
 
 % ---------------------------------------------------------------------
-\subsection{Compliance and predicted score}
-\label{sec:compliance}
-% ---------------------------------------------------------------------
-
-Rule compliance is evaluated automatically by the Rules layer:
-
-\begin{itemize}
-    \item \textbf{FS-EV~2.2} — peak electrical power
-        $P_\text{peak} = \SI{79.80}{\kilo\watt} \le \SI{80}{\kilo\watt}$:
-        \textbf{compliant.}
-    \item \textbf{FS-D~5.3.1} — predicted time
-        $t_{75} = \SI{3.78}{\second} < \SI{25}{\second}$:
-        \textbf{compliant.}
-    \item \textbf{Wheelie check} — minimum front normal force
-        $\min F_{z,f} = \SI{158}{\newton} > 0$: \textbf{compliant.}
-\end{itemize}
-
-The acceleration-event score is computed from FS-D~5.3.2 as
-
-\begin{equation}
-M = 0.95\, P_\text{max}\, \frac{T_\text{max}/T_\text{team} - 1}{0.5} + 0.05\, P_\text{max},
-\qquad
-T_\text{max} = 1.5\, T_\text{fastest},
-\label{eq:score}
-\end{equation}
-
-with $P_\text{max} = 75$ points. Taking
-$T_\text{fastest} = \SI{3.5}{\second}$ as a representative
-competition-winning time and $T_\text{team} = \SI{3.78}{\second}$
-gives a predicted score of \num{59.2} points, rising to \num{65.1}
-points at the optimised \SI{3.67}{\second}.
-
-\begin{table}[H]
-\centering
-\caption{Requirements-to-evidence matrix for the baseline
-configuration. Each Formula Student requirement is evaluated in the
-cited subsection of this chapter, with the numerical evidence and
-compliance outcome.}
-\label{tab:requirements_evidence}
-\footnotesize
-\begin{tabular}{|l|l|c|c|c|}
-\hline
-\textbf{Requirement} & \textbf{Rule} & \textbf{Evidence (§)} & \textbf{Value} & \textbf{Status} \\
-\hline
-Electrical power $\le \SI{80}{\kilo\watt}$ & FS-EV~2.2 & \ref{sec:compliance} & 79.80\,\si{\kilo\watt} & Pass \\
-Finish time $< \SI{25}{\second}$           & FS-D~5.3.1 & \ref{sec:compliance} & 3.78\,\si{\second}      & Pass \\
-No front-axle lift                          & --         & \ref{sec:constraint_activity} & 158\,\si{\newton}  & Pass \\
-Predicted acceleration score (FS-D~5.3.2)  & FS-D~5.3.2 & \ref{sec:compliance} & 59.2 / 75 points       & -- \\
-\hline
-\end{tabular}
-\end{table}
-
-% ---------------------------------------------------------------------
 \section{Discussion and Limitations}
 \label{sec:discussion}
 % ---------------------------------------------------------------------
 
-The model captures longitudinal dynamics, load transfer with
-anti-squat, load-sensitive Pacejka tyre grip with an optional thermal
-overlay, closed-loop traction-controlled launch, electrical-side
-power limiting, aerodynamic drag and downforce, and rule compliance
-with scoring. Each is validated in Section~\ref{sec:vv}. Four
-effects are currently neglected; each is discussed below with an
-estimate of its direction and magnitude on the predicted
-\SI{75}{\metre} time.
-
-\textbf{Driveline torsional compliance.} A real driveline has a
-finite torsional stiffness that introduces a low-frequency oscillation
-in wheel torque following a step change (for example at the release
-of the torque ramp). For the single-ratio \SI{5.5}{} reduction and a
-representative half-shaft stiffness of
-$\sim \SI{5}{\kilo\newton\metre\per\radian}$, the natural
-frequency is \SI{25}{\hertz}, well above the launch-controller
-bandwidth but with the potential to add \SI{20}{\milli\second} of
-launch-transient losses. Including a two-mass torsional
-driveline model in the state vector would make this quantitative;
-the expected direction is a small increase in $t_{75}$.
-
-\textbf{Transient motor electromagnetic dynamics.} The model assumes
-instantaneous torque response to a current request. The YASA P400R
-has an electrical time constant of
-$\sim \SI{2}{\milli\second}$, commensurate with the simulation
-timestep; field-weakening transitions above \SI{70}{\percent} peak
-speed introduce additional torque dip of order \SI{5}{\percent} for
-$\sim \SI{50}{\milli\second}$ \cite{yasa_p400r}. The expected
-direction on $t_{75}$ is a small increase.
-
-\textbf{Accumulator voltage sag.} The model uses a fixed
-$V_\text{bus} = \SI{600}{\volt}$, whereas the
-supercapacitor pack voltage falls as energy is drawn. With the pack
-capacitance of \SI{3}{\farad} (Paul's chapter), a full-power draw for
-\SI{3.8}{\second} corresponds to a terminal-voltage drop from
-\SI{600}{\volt} to approximately \SI{510}{\volt}. As the power limit
-is enforced on $V_\text{bus} I_m$, the simulator and the real system
-produce the same electrical power; the difference is a higher current
-demand in reality, which marginally increases ohmic losses inside the
-pack. Coupling with Paul's voltage-sag model is the most important
-extension and is the first item of further work.
-
-\textbf{Driver reaction time.} The sim starts at
-$t = 0$ with the vehicle at rest and the throttle open. Published
-FS-E acceleration times include a \SIrange{0.2}{0.4}{\second}
-reaction penalty from the start signal; adding this to the predicted
-\SI{3.78}{\second} brings the total expected run time to
-\SIrange{4.0}{4.2}{\second}, consistent with competitive but not
-record-setting times.
-
-Combining the Monte Carlo parametric envelope
-(Section~\ref{sec:monte_carlo}, to be finalised) with the estimated
-unmodelled effects above gives an overall confidence interval of
-approximately $\pm \SI{0.20}{\second}$ on the headline prediction.
+The model scope is validated in Section~\ref{sec:vv}. Main gaps:
+\textbf{driveline torsional compliance} (minor launch oscillation),
+\textbf{motor electrical dynamics} (finite torque rise time and brief dips),
+\textbf{fixed $V_\text{bus}$} versus supercap voltage sag (priority extension
+with Paul's pack model), and \textbf{driver reaction time}
+(\SIrange{0.2}{0.4}{\second} omitted). Combined with
+Section~\ref{sec:monte_carlo}, the headline \SI{75}{\metre} time is
+estimated within roughly $\pm \SI{0.20}{\second}$.
 
 % ---------------------------------------------------------------------
 \section{Conclusions and Further Work}
@@ -3018,74 +2714,38 @@ The following conclusions are drawn from the evidence presented in
 Sections~\ref{sec:vv}--\ref{sec:discussion}:
 
 \begin{itemize}
-    \item A modular longitudinal-dynamics simulation has been
-          developed for the Formula Student acceleration event.
-          The model includes quasi-static load transfer,
-          load-sensitive Pacejka tyre grip with an optional thermal
-          overlay, closed-loop traction-controlled launch, and
-          electrical-side \SI{80}{\kilo\watt} power limiting, and is
-          integrated by fourth-order Runge--Kutta at
-          \SI{1}{\milli\second}.
-    \item The model is validated within \SI{1}{\percent} of
-          steady-state hand calculations, within \SI{0.08}{\percent}
-          of the limiting continuous-time integration result, and
-          \SI{40}{\percent} above the analytical constant-power
-          lower bound. (Section~\ref{sec:vv}.)
-    \item Performance is dominated by longitudinal CG position and
-          tyre peak grip; drivetrain efficiency, gear ratio, mass
-          and wheel radius form a second-order band; aerodynamic
-          drag and rolling resistance are negligible over
-          \SI{75}{\metre}. (Section~\ref{sec:tornado}.)
-    \item Numerical optimisation over seven independent decision
-          variables, subject to the FS-EV~2.2, FS-D~5.3.1, and
-          pitch-stability constraints, converges in \num{271}
-          Nelder--Mead evaluations to a design predicted at
-          \SI{3.67}{\second} for the \SI{75}{\metre} event — a
-          \SI{2.9}{\percent} improvement on the baseline.
-          (Section~\ref{sec:optimisation}.)
-    \item The design remains compliant under a \SI{40}{\percent}
-          surface-grip reduction, with a \SI{28}{\percent} time
-          penalty and no violation of power or time limits.
-          (Section~\ref{sec:drywet}.)
-    \item The baseline configuration is predicted to score
-          \num{59.2} of 75 points under FS-D~5.3.2, rising to
-          \num{65.1} at the optimised parameter set
-          (Section~\ref{sec:compliance}).
+    \item Longitudinal simulation with load transfer, Pacejka grip,
+          traction-controlled launch, FS-EV~2.2 electrical limiting,
+          and RK4 integration at \SI{1}{\milli\second}.
+    \item Validated against hand calculations, timestep convergence,
+          and an analytical constant-power bound (Section~\ref{sec:vv}).
+    \item Dominant sensitivities: longitudinal CG and peak grip;
+          secondary band: wheel radius, driveline efficiency, mass,
+          gearing (Section~\ref{sec:tornado}).
+    \item Optimisation (\num{271} Nelder--Mead evaluations) yields
+          \SI{3.67}{\second} versus \SI{3.78}{\second} baseline
+          (Section~\ref{sec:optimisation}).
+    \item Wet-track scaling remains inside rule limits
+          (Section~\ref{sec:drywet}).
+    \item Under FS-D~5.3.2 with a notional $T_\text{fastest}=\SI{3.5}{\second}$,
+          the baseline predicts \num{59.2}/75 points and the optimised
+          set \num{65.1}/75.
 \end{itemize}
 
 \subsection*{Further work}
 
 \begin{itemize}
-    \item \textbf{Pacejka calibration with measured tyre data.} The
-          current Pacejka coefficients are derived from lateral Avon
-          FSAE data and representative FSAE longitudinal literature.
-          Procurement of rig-test data would reduce the single
-          largest source of parametric uncertainty identified in
-          Section~\ref{sec:tornado}.
-    \item \textbf{Coupled accumulator voltage sag.} The simulation
-          currently assumes a fixed $V_\text{bus}$. Coupling with
-          the voltage-sag model of the Supercapacitors chapter
-          (Paul Vogelberg) would capture the interaction between
-          pack ESR, terminal voltage and the active power limit
-          near peak current.
-    \item \textbf{Driveline torsional compliance.} Adding a
-          two-mass torsional driveline to the state vector would
-          quantify the launch-transient losses currently absorbed
-          into the \SI{80}{\milli\second} torque ramp.
-    \item \textbf{Transient motor thermal and electromagnetic
-          dynamics.} Including motor thermal derating and
-          field-weakening transitions would narrow the residual gap
-          between the simulated acceleration time and the measured
-          performance of real Formula Student Electric vehicles.
-    \item \textbf{Extension to further events.} The same modular
-          framework could be re-scoped to Skidpad and Autocross to
-          verify that the acceleration-event optimum does not
-          penalise overall Formula Student championship score.
+    \item Calibrate Pacejka coefficients from measured longitudinal tyre data.
+    \item Couple accumulator voltage sag (Supercapacitors chapter); optionally
+          add driveline torsion and motor transient effects.
+    \item Re-scope the framework to Skidpad/Autocross if championship score
+          trades appear.
 \end{itemize}
 
 % ---------------------------------------------------------------------
 \compactbib
 % ---------------------------------------------------------------------
+
 % --- END INLINE: HarryEmes/Engineering/harry_body.tex ---
 \end{refsection}
 
