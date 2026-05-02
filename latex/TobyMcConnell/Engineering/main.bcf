@@ -2373,6 +2373,21 @@
     <bcf:datasource type="file" datatype="bibtex" glob="false">references.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
+    <bcf:citekey order="1" intorder="1">fsae_rules_2025</bcf:citekey>
+    <bcf:citekey order="2" intorder="1">fsae_rules_2025</bcf:citekey>
+    <bcf:citekey order="3" intorder="1">fsae_rules_2025</bcf:citekey>
+    <bcf:citekey order="4" intorder="1">racecar_engineering_oxford_brookes</bcf:citekey>
+    <bcf:citekey order="5" intorder="1">tutf_composite_build</bcf:citekey>
+    <bcf:citekey order="6" intorder="1">rapidmetals_mild_steel_tube</bcf:citekey>
+    <bcf:citekey order="7" intorder="1">matweb_aisi1020</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">weldracing_25crmo4</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">aedmetals_docol_r8</bcf:citekey>
+    <bcf:citekey order="10" intorder="1">millerwelds2024</bcf:citekey>
+    <bcf:citekey order="11" intorder="1">fsae_rules_2025</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">dewesoft2025ia</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">matweb_aisi1020</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">fsae_impact_attenuator</bcf:citekey>
+    <bcf:citekey order="15" intorder="1">irjet2019fea</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">
@@ -2384,4 +2399,14 @@
     </bcf:sort>
   </bcf:sortingtemplate>
   <!-- DATALISTS -->
+  <bcf:datalist section="0"
+                name="none/global//global/global/global"
+                type="entry"
+                sortingtemplatename="none"
+                sortingnamekeytemplatename="global"
+                labelprefix=""
+                uniquenametemplatename="global"
+                labelalphanametemplatename="global"
+                namehashtemplatename="global">
+  </bcf:datalist>
 </bcf:controlfile>

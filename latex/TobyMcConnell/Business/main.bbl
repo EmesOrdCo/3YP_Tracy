@@ -1,0 +1,272 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{promarketreports_brake_tester}{online}{}{}
+      \list{organization}{1}{%
+        {Pro Market Reports}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Brake Tester Market Size, Share and Forecast}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.promarketreports.com/reports/brake-tester-232522
+      \endverb
+      \verb{url}
+      \verb https://www.promarketreports.com/reports/brake-tester-232522
+      \endverb
+    \endentry
+    \entry{grandview_autonomous_market}{online}{}{}
+      \list{organization}{1}{%
+        {Grand View Research}%
+      }
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{title}{Autonomous Vehicles Market Size Report}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.grandviewresearch.com/industry-analysis/autonomous-vehicles-market
+      \endverb
+      \verb{url}
+      \verb https://www.grandviewresearch.com/industry-analysis/autonomous-vehicles-market
+      \endverb
+    \endentry
+    \entry{mckinsey_testing_validation}{report}{}{}
+      \list{institution}{1}{%
+        {McKinsey \& Company}%
+      }
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labeltitlesource}{title}
+      \field{title}{Testing and Validation: From Hardware Focus to Full Virtualization}
+      \field{type}{techreport}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2019}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.mckinsey.com/~/media/McKinsey/Business%20Functions/Operations/Our%20Insights/Testing%20and%20validation%20From%20hardware%20focus%20to%20full%20virtualization/c0b944bf6469c86cd9ba6d87f078424f.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.mckinsey.com/~/media/McKinsey/Business%20Functions/Operations/Our%20Insights/Testing%20and%20validation%20From%20hardware%20focus%20to%20full%20virtualization/c0b944bf6469c86cd9ba6d87f078424f.pdf
+      \endverb
+    \endentry
+    \entry{abdynamics_testing}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=7eafd1ddea9e056c3b2a96a2526bfdd1}{%
+           family={{AB Dynamics}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{7eafd1ddea9e056c3b2a96a2526bfdd1}
+      \strng{fullhash}{7eafd1ddea9e056c3b2a96a2526bfdd1}
+      \strng{fullhashraw}{7eafd1ddea9e056c3b2a96a2526bfdd1}
+      \strng{bibnamehash}{7eafd1ddea9e056c3b2a96a2526bfdd1}
+      \strng{authorbibnamehash}{7eafd1ddea9e056c3b2a96a2526bfdd1}
+      \strng{authornamehash}{7eafd1ddea9e056c3b2a96a2526bfdd1}
+      \strng{authorfullhash}{7eafd1ddea9e056c3b2a96a2526bfdd1}
+      \strng{authorfullhashraw}{7eafd1ddea9e056c3b2a96a2526bfdd1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Autonomous Vehicle Testing Solutions}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.abdynamics.com/solutions/autonomous-vehicle-testing/
+      \endverb
+      \verb{url}
+      \verb https://www.abdynamics.com/solutions/autonomous-vehicle-testing/
+      \endverb
+    \endentry
+    \entry{activesystems_testing}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=f081c8268344b72cbaaa44a56c9e8a8f}{%
+           family={{4activeSystems}},
+           familyi={4\bibinitperiod}}}%
+      }
+      \strng{namehash}{f081c8268344b72cbaaa44a56c9e8a8f}
+      \strng{fullhash}{f081c8268344b72cbaaa44a56c9e8a8f}
+      \strng{fullhashraw}{f081c8268344b72cbaaa44a56c9e8a8f}
+      \strng{bibnamehash}{f081c8268344b72cbaaa44a56c9e8a8f}
+      \strng{authorbibnamehash}{f081c8268344b72cbaaa44a56c9e8a8f}
+      \strng{authornamehash}{f081c8268344b72cbaaa44a56c9e8a8f}
+      \strng{authorfullhash}{f081c8268344b72cbaaa44a56c9e8a8f}
+      \strng{authorfullhashraw}{f081c8268344b72cbaaa44a56c9e8a8f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Automotive Testing Solutions}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.4activesystems.at
+      \endverb
+      \verb{url}
+      \verb https://www.4activesystems.at
+      \endverb
+    \endentry
+    \entry{utac_millbrook}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=c39724829789798fd5a4d29324c9c1d9}{%
+           family={{UTAC}},
+           familyi={U\bibinitperiod}}}%
+      }
+      \strng{namehash}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{fullhash}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{fullhashraw}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{bibnamehash}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{authorbibnamehash}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{authornamehash}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{authorfullhash}{c39724829789798fd5a4d29324c9c1d9}
+      \strng{authorfullhashraw}{c39724829789798fd5a4d29324c9c1d9}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Millbrook Proving Ground (Europe)}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.utac.com/our-sites/europe/millbrook
+      \endverb
+      \verb{url}
+      \verb https://www.utac.com/our-sites/europe/millbrook
+      \endverb
+    \endentry
+    \entry{horiba_mobility}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=f27301f131134557aa3cd0d51a868432}{%
+           family={{Horiba}},
+           familyi={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{f27301f131134557aa3cd0d51a868432}
+      \strng{fullhash}{f27301f131134557aa3cd0d51a868432}
+      \strng{fullhashraw}{f27301f131134557aa3cd0d51a868432}
+      \strng{bibnamehash}{f27301f131134557aa3cd0d51a868432}
+      \strng{authorbibnamehash}{f27301f131134557aa3cd0d51a868432}
+      \strng{authornamehash}{f27301f131134557aa3cd0d51a868432}
+      \strng{authorfullhash}{f27301f131134557aa3cd0d51a868432}
+      \strng{authorfullhashraw}{f27301f131134557aa3cd0d51a868432}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Mobility Solutions}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.horiba.com/int/mobility/
+      \endverb
+      \verb{url}
+      \verb https://www.horiba.com/int/mobility/
+      \endverb
+    \endentry
+    \entry{nvidia_drive_sim}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=a2fe9051fe051f819bd739ef3e340377}{%
+           family={{NVIDIA}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{a2fe9051fe051f819bd739ef3e340377}
+      \strng{fullhash}{a2fe9051fe051f819bd739ef3e340377}
+      \strng{fullhashraw}{a2fe9051fe051f819bd739ef3e340377}
+      \strng{bibnamehash}{a2fe9051fe051f819bd739ef3e340377}
+      \strng{authorbibnamehash}{a2fe9051fe051f819bd739ef3e340377}
+      \strng{authornamehash}{a2fe9051fe051f819bd739ef3e340377}
+      \strng{authorfullhash}{a2fe9051fe051f819bd739ef3e340377}
+      \strng{authorfullhashraw}{a2fe9051fe051f819bd739ef3e340377}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{NVIDIA DRIVE Sim: Replicating the Real World in a Virtual Environment}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.nvidia.com/en-us/self-driving-cars/simulation/
+      \endverb
+      \verb{url}
+      \verb https://www.nvidia.com/en-us/self-driving-cars/simulation/
+      \endverb
+    \endentry
+    \entry{ansys_autonomy}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=c4c3f8d0d4ac26494ebfbf053206e390}{%
+           family={{Ansys}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{c4c3f8d0d4ac26494ebfbf053206e390}
+      \strng{fullhash}{c4c3f8d0d4ac26494ebfbf053206e390}
+      \strng{fullhashraw}{c4c3f8d0d4ac26494ebfbf053206e390}
+      \strng{bibnamehash}{c4c3f8d0d4ac26494ebfbf053206e390}
+      \strng{authorbibnamehash}{c4c3f8d0d4ac26494ebfbf053206e390}
+      \strng{authornamehash}{c4c3f8d0d4ac26494ebfbf053206e390}
+      \strng{authorfullhash}{c4c3f8d0d4ac26494ebfbf053206e390}
+      \strng{authorfullhashraw}{c4c3f8d0d4ac26494ebfbf053206e390}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Ansys Autonomy: Safe Autonomous Vehicle Simulation}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.ansys.com/products/av-simulation
+      \endverb
+      \verb{url}
+      \verb https://www.ansys.com/products/av-simulation
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

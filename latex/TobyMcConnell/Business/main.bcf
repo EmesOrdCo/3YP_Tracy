@@ -2373,6 +2373,17 @@
     <bcf:datasource type="file" datatype="bibtex" glob="false">references.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
+    <bcf:citekey order="1" intorder="1">promarketreports_brake_tester</bcf:citekey>
+    <bcf:citekey order="2" intorder="1">grandview_autonomous_market</bcf:citekey>
+    <bcf:citekey order="3" intorder="1">mckinsey_testing_validation</bcf:citekey>
+    <bcf:citekey order="4" intorder="1">grandview_autonomous_market</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">abdynamics_testing</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">activesystems_testing</bcf:citekey>
+    <bcf:citekey order="15" intorder="1">utac_millbrook</bcf:citekey>
+    <bcf:citekey order="16" intorder="1">horiba_mobility</bcf:citekey>
+    <bcf:citekey order="23" intorder="1">nvidia_drive_sim</bcf:citekey>
+    <bcf:citekey order="24" intorder="1">ansys_autonomy</bcf:citekey>
+    <bcf:citekey order="25" intorder="1">utac_millbrook</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">
@@ -2384,4 +2395,14 @@
     </bcf:sort>
   </bcf:sortingtemplate>
   <!-- DATALISTS -->
+  <bcf:datalist section="0"
+                name="none/global//global/global/global"
+                type="entry"
+                sortingtemplatename="none"
+                sortingnamekeytemplatename="global"
+                labelprefix=""
+                uniquenametemplatename="global"
+                labelalphanametemplatename="global"
+                namehashtemplatename="global">
+  </bcf:datalist>
 </bcf:controlfile>

@@ -1,0 +1,281 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{fsae_rules_2025}{online}{}{}
+      \list{organization}{1}{%
+        {Formula Student Germany}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Formula Student Rules 2025 v1.1}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.formulastudent.de/fileadmin/user_upload/all/2025/rules/FS-Rules_2025_v1.1.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.formulastudent.de/fileadmin/user_upload/all/2025/rules/FS-Rules_2025_v1.1.pdf
+      \endverb
+    \endentry
+    \entry{racecar_engineering_oxford_brookes}{online}{}{}
+      \list{organization}{1}{%
+        {Racecar Engineering}%
+      }
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labeltitlesource}{title}
+      \field{title}{Oxford Brookes Racing 2021 Chassis Design}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2021}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.racecar-engineering.com/articles/oxford-brookes-racing-2021-chassis-design/
+      \endverb
+      \verb{url}
+      \verb https://www.racecar-engineering.com/articles/oxford-brookes-racing-2021-chassis-design/
+      \endverb
+    \endentry
+    \entry{tutf_composite_build}{online}{}{}
+      \list{organization}{1}{%
+        {TUT-F Racing Team}%
+      }
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labeltitlesource}{title}
+      \field{title}{Making a Carbon Fibre Monocoque}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2023}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://tut-f.com/making.html
+      \endverb
+      \verb{url}
+      \verb https://tut-f.com/making.html
+      \endverb
+    \endentry
+    \entry{rapidmetals_mild_steel_tube}{online}{}{}
+      \list{organization}{1}{%
+        {Rapid Metals}%
+      }
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labeltitlesource}{title}
+      \field{title}{Mild Steel CDS Tube 25mm x 2mm Wall}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.rapidmetals.co.uk/product/mild-steel-cfs-tube-25mm-x-2mm-wall/
+      \endverb
+      \verb{url}
+      \verb https://www.rapidmetals.co.uk/product/mild-steel-cfs-tube-25mm-x-2mm-wall/
+      \endverb
+    \endentry
+    \entry{matweb_aisi1020}{online}{}{}
+      \list{organization}{1}{%
+        {MatWeb}%
+      }
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labeltitlesource}{title}
+      \field{title}{AISI 1020 Steel, Cold Drawn Material Data Sheet}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.matweb.com/search/DataSheet.aspx?MatGUID=10b74ebc27344380ab16b1b69f1cffbb&ckck=1
+      \endverb
+      \verb{url}
+      \verb https://www.matweb.com/search/DataSheet.aspx?MatGUID=10b74ebc27344380ab16b1b69f1cffbb&ckck=1
+      \endverb
+    \endentry
+    \entry{weldracing_25crmo4}{online}{}{}
+      \list{organization}{1}{%
+        {Weld Racing Parts}%
+      }
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labeltitlesource}{title}
+      \field{title}{25CrMo4 Chromoly Tube (30x2)}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://weldracingparts.com/es/tubos-chasis-de-25crmo4/437-tubo-de-25crmo4-30x2-8402576863461.html
+      \endverb
+      \verb{url}
+      \verb https://weldracingparts.com/es/tubos-chasis-de-25crmo4/437-tubo-de-25crmo4-30x2-8402576863461.html
+      \endverb
+    \endentry
+    \entry{aedmetals_docol_r8}{online}{}{}
+      \list{organization}{1}{%
+        {AED Metals}%
+      }
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labeltitlesource}{title}
+      \field{title}{Docol R8 High Strength Steel Tube}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.aedmetals.com/store/materials/docol-tube-r8
+      \endverb
+      \verb{url}
+      \verb https://www.aedmetals.com/store/materials/docol-tube-r8
+      \endverb
+    \endentry
+    \entry{millerwelds2024}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=2a3ec2909fd29b7b3b20b5f8390bda87}{%
+           family={Welds},
+           familyi={W\bibinitperiod},
+           given={Miller},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{2a3ec2909fd29b7b3b20b5f8390bda87}
+      \strng{fullhash}{2a3ec2909fd29b7b3b20b5f8390bda87}
+      \strng{fullhashraw}{2a3ec2909fd29b7b3b20b5f8390bda87}
+      \strng{bibnamehash}{2a3ec2909fd29b7b3b20b5f8390bda87}
+      \strng{authorbibnamehash}{2a3ec2909fd29b7b3b20b5f8390bda87}
+      \strng{authornamehash}{2a3ec2909fd29b7b3b20b5f8390bda87}
+      \strng{authorfullhash}{2a3ec2909fd29b7b3b20b5f8390bda87}
+      \strng{authorfullhashraw}{2a3ec2909fd29b7b3b20b5f8390bda87}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{(visited on 05/01/2026)}
+      \field{title}{Motorsports Welding and Racing Repair Guide}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.millerwelds.com/resources/article-library/motorsports-welding-and-racing-repair-guide
+      \endverb
+      \verb{url}
+      \verb https://www.millerwelds.com/resources/article-library/motorsports-welding-and-racing-repair-guide
+      \endverb
+    \endentry
+    \entry{dewesoft2025ia}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=da19409567d928f91632bed42627859b}{%
+           family={Dewesoft},
+           familyi={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{da19409567d928f91632bed42627859b}
+      \strng{fullhash}{da19409567d928f91632bed42627859b}
+      \strng{fullhashraw}{da19409567d928f91632bed42627859b}
+      \strng{bibnamehash}{da19409567d928f91632bed42627859b}
+      \strng{authorbibnamehash}{da19409567d928f91632bed42627859b}
+      \strng{authornamehash}{da19409567d928f91632bed42627859b}
+      \strng{authorfullhash}{da19409567d928f91632bed42627859b}
+      \strng{authorfullhashraw}{da19409567d928f91632bed42627859b}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{(visited on 05/01/2026)}
+      \field{title}{Impact Attenuator Assembly Testing and Model Validation on Formula SAE Race Car}
+      \field{year}{2025}
+      \verb{urlraw}
+      \verb https://dewesoft.com/blog/formula-sae-impact-attenuator-testing-and-validation
+      \endverb
+      \verb{url}
+      \verb https://dewesoft.com/blog/formula-sae-impact-attenuator-testing-and-validation
+      \endverb
+    \endentry
+    \entry{fsae_impact_attenuator}{online}{}{}
+      \list{organization}{1}{%
+        {Formula SAE Online}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Impact Attenuator Requirements and Documentation}
+      \field{urlday}{1}
+      \field{urlmonth}{5}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.fsaeonline.com/page.aspx?pageid=193613e4-fff1-4ea9-97ec-eb1c07fbe3c0
+      \endverb
+      \verb{url}
+      \verb https://www.fsaeonline.com/page.aspx?pageid=193613e4-fff1-4ea9-97ec-eb1c07fbe3c0
+      \endverb
+    \endentry
+    \entry{irjet2019fea}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=40faa1bc69980517511d12eb5ab3c8bb}{%
+           family={Kumar},
+           familyi={K\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=535b46081523fc5c5dcfaba2a621d930}{%
+           family={Singh},
+           familyi={S\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{aea85cadcaef1ca01b18574cee66b919}
+      \strng{fullhash}{aea85cadcaef1ca01b18574cee66b919}
+      \strng{fullhashraw}{aea85cadcaef1ca01b18574cee66b919}
+      \strng{bibnamehash}{aea85cadcaef1ca01b18574cee66b919}
+      \strng{authorbibnamehash}{aea85cadcaef1ca01b18574cee66b919}
+      \strng{authornamehash}{aea85cadcaef1ca01b18574cee66b919}
+      \strng{authorfullhash}{aea85cadcaef1ca01b18574cee66b919}
+      \strng{authorfullhashraw}{aea85cadcaef1ca01b18574cee66b919}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Research Journal of Engineering and Technology (IRJET)}
+      \field{note}{(visited on 05/01/2026)}
+      \field{number}{9}
+      \field{title}{Design and Finite Element Analysis(FEA) of Formula Student Chassis}
+      \field{volume}{6}
+      \field{year}{2019}
+      \verb{urlraw}
+      \verb https://www.irjet.net/archives/V6/i9/IRJET-V6I9126.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.irjet.net/archives/V6/i9/IRJET-V6I9126.pdf
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
