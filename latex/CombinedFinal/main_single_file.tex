@@ -1022,6 +1022,7 @@ Although the EMRAX 208 variants exhibit higher power density, their lower torque
 Based on the evaluation, the YASA P400R is selected as the motor for the powertrain system, providing the most suitable solution for the defined performance requirements.
 
 \subsection{Motor Operation}
+\label{subsec:powertrain_motor_operation}
 
 Following the motor selection, the operating strategy is defined to ensure compliance with the \SI{80}{\kilo\watt} power limit.
 
@@ -1354,9 +1355,9 @@ This section is intentionally left blank to accommodate references and any poten
 \chapterauthor{Accumulator Design}{Paul Vogelberg}
 
 \section{Introduction}
-This report presents the accumulator design for a Formula Student electric vehicle under an acceleration-event-only scenario.
+This chapter presents the accumulator design for the FS vehicle. Objectives are to deliver short-term energy and high power for the acceleration event while minimising mass and packaging volume, complying with scrutineering and electrical safety requirements, and integrating with the vehicle.
 
-%TODO: rewrite when fitted within the rest of the group report
+The chapter is structured as follows: Section~\ref{sec:technology_selection} covers technology selection; Section~\ref{sec:electrical_system_design} covers electrical design; Section~\ref{sec:mechanical_design_packaging} covers mechanical packaging; Section~\ref{sec:results_discussion} presents results; and Section~\ref{sec:future_improvements_conclusion} outlines future work and concludes.
 
 \subsection{Project Scope}
 The design encompasses the following scope:
@@ -1372,14 +1373,15 @@ The design encompasses the following scope:
 The following items are treated as out of scope for detailed derivation in this document and are stated as future or external work: all safety and charging systems outside the accumulator casing, full AMS firmware implementation, full manufacturing process planning, exhaustive scrutineering documentation, and complete physical test campaign data.
 
 \section{Technology Selection}
+\label{sec:technology_selection}
 
 \subsection{Design Requirements and Selection Criteria}
 Due to the nature of the acceleration-only event, the primary design driver is peak power delivery rather than total energy capacity. This shifts the focus towards technologies with high power density.
 
 To compare energy storage technologies, the following criteria were defined: (1) power output, (2) total energy capacity, and (3) a combined optimisation objective covering mass, volume, cost, and procurement risk.
-FS Rules limit accumulator output power to 80 kW (FS-EV 7.2.4). Power can be treated as constant during the event as a conservative estimate assuming traction-limited periods are brief relative to total run time. Event duration is set to 4 s based on top Formula Student performances lasting 3.5 s.
+FS rules limit TS power at the TSAC outlet to 80 kW (FS-EV~2.2.1). Power is treated as constant as a conservative estimate, assuming traction-limited periods are brief relative to total run time. Event duration is set to \SI{4}{\second}, based on top Formula Student performances of \SI{3.5}{\second}.
 
-The required energy capacity is simply calculated using:
+The required energy capacity is calculated as:
 \vspace{6pt}
 \begin{equation*}
 E = P \cdot t = 80~\text{kW} \times 4~\text{s} = 320~\text{kJ} = 89~\text{Wh}
@@ -1426,8 +1428,6 @@ Table~\ref{tab:storage_comparison} summarises representative power and energy de
 Other accumulator technologies in the table were considered, but not shown since these had even lower power densities than lithium batteries and therefore were not competitive.
 Using this metric, asymmetric / hybrid supercapacitors are best; however, they are excluded further from consideration due to being in the research phase \cite{kalaiarasi2024tale}, leading to limited commercial availability and specification data to ground the design around. The focus is therefore on comparing symmetric supercapacitors and high-power lithium-polymer batteries, with the former expected to have a significant mass advantage due to superior power density.
 
-%TODO: Consider expanding the claim of limited commercial availability 
-
 \subsection{Supercapacitor Analysis}
 
 Supercapacitors are treated as the primary candidate, with lithium-polymer cells used as a benchmark. Electric Double Layer Capacitor (EDLC) devices are selected within the symmetric supercapacitor class due to relatively high energy capacity. Energy for capacitors is given by:
@@ -1437,10 +1437,10 @@ E=\frac{1}{2}CV^2 = \frac{1}{2} C (V_{max}^2-V_{min}^2)
 \label{eq:capacitor_energy}
 \end{equation}
 
-Where E is energy in joules, C is capacitance in farads, and V is voltage in volts.
+where $E$ is energy (J), $C$ is capacitance (F), and $V$ is voltage (V).
 
-From Equation \eqref{eq:capacitor_energy}, voltage sag significantly affects usable energy capacity, necessitating careful consideration of voltage ranges. The upper limit is set by FS-EV maximum voltage regulation (600\,V per FS-EV~4.1.1), while the lower limit is determined by inverter and motor minimum operating requirements. Based on the selected powertrain configuration, taking a conservative estimate for minimum voltage of 400 V:
-%TODO: Justify the 400 V minimum voltage assumption with reference to the powertrain design and inverter/motor specifications from other sections of the report.
+From Equation \eqref{eq:capacitor_energy}, voltage sag significantly affects usable energy capacity, necessitating careful consideration of voltage ranges. The upper limit is set by FS-EV maximum voltage regulation (600\,V per FS-EV~4.1.1), while the lower limit is determined by inverter and motor minimum operating requirements. The powertrain operating strategy in Section~\ref{subsec:powertrain_motor_operation} indicates the motor can be controlled under the power cap with an effective operating voltage on the order of \SI{350}{\volt}, so \SI{400}{\volt} is adopted here as a conservative design minimum.
+
 \vspace{6pt}
 \begin{equation}
 C=\frac{2 E}{V_{max}^2-V_{min}^2}=\frac{2 \cdot 320\text{ kJ}}{600\text{ V}^2-400\text{ V}^2}=3.2\text{ F}
@@ -1458,7 +1458,7 @@ Where \(C_i\) is the individual cell capacitance, and n is the number of cells i
 
 For the design specification, assuming a cell voltage of 3 V, 200 cells are required in series to reach 600 V. To achieve the required capacitance of 3.2 F, cells must provide 640 F capacitance.
 
-Another key parameter is the Equivalent Series Resistance (ESR), which becomes an important consideration for series-connected supercapacitor cells. The voltage evolution during constant-power discharge is modeled via the following first-order differential equation:
+Another key parameter is the Equivalent Series Resistance (ESR), which becomes an important consideration for series-connected supercapacitor cells. The voltage evolution during constant-power discharge is modelled via the following first-order differential equation:
 \vspace{6pt}
 \begin{equation}
 \frac{dV}{dt} = -\frac{P}{C \cdot V} - \frac{P^2 \cdot R_{total}}{C \cdot V^3}
@@ -1499,7 +1499,7 @@ Figure \ref{fig:supercap_discharge} shows the voltage and current evolution duri
 
 The supercapacitor datasheet gives a capacitance tolerance of +0--20\% (typically +5--10\%). This tolerance dominates electrical spread and therefore defines the binning benefit analysis.
 
-Cells are supplied in packs of 90, requiring purchase of three packs and selection of the best 200 cells. For this event, selection is simplified to maximizing capacitance rather than minimizing variance because balancing heat is not expected to be the limiting factor.
+Cells are supplied in packs of 90, requiring purchase of three packs and selection of the best 200 cells. For this event, selection is simplified to maximising capacitance rather than minimising variance because balancing heat is not expected to be the limiting factor.
 
 The cell capacitances are modelled using a beta distribution:
 \vspace{6pt}
@@ -1531,7 +1531,8 @@ Performing this Monte Carlo binning simulation to find average mean total capaci
 
 \subsection{Technology Selection Decision}
 
-The two remaining candidates (EDLC and LiPo) are compared on mass, volume, cost, electrical performance, availability and complexity. High-power LiPo remains the benchmark because it is widely used in Formula Student. Comparison proceeds via quantifiable metrics of mass and volume. Cost cannot be quantified accurately due to the ambiguity in pricing for LiPo cells. Electrical performance should be similar if our criteria is met, whilst availability and complexity will be considered later as qualitative factors.
+The two remaining candidates (EDLC and LiPo) are compared on mass, volume, cost, electrical performance, availability and complexity. High-power LiPo remains the benchmark because it is widely used in Formula Student. Comparison proceeds via quantifiable metrics of mass and volume. Cost cannot be quantified accurately due to the ambiguity in pricing for LiPo cells. Electrical performance should be similar if our criteria are met, whilst availability and complexity will be considered later as qualitative factors.
+
 
 \begin{table}[htbp]
     \centering
@@ -1575,6 +1576,7 @@ A 70-30 weighting is typically applied for mass and volume, as mass has a higher
 Whilst LiPo is advantageous in our weighted scoring analysis, it does not consider qualitative factors. The increased complexity of chemical cells introduces additional safety and thermal management challenges. In addition, availability and pricing uncertainty introduce risk to the project timeline and budget. Hence, SCs were selected, as the minor quantitative advantages of LiPo do not justify these qualitative disadvantages.
 
 \section{Electrical System Design}
+\label{sec:electrical_system_design}
 
 \subsection{System Architecture Overview}
 
@@ -1583,11 +1585,9 @@ Figure~\ref{fig:electronics_architecture} shows the top-level accumulator archit
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{figures/schematics/Electronics_architecture.png}
-    \caption{Top-level electrical system architecture showing energy flow from supercapacitor cells through busbars and segments to the inverter, alongside control and communication pathways within the AMS. Green dots represent 12V battery connection}
+    \caption{Top-level electrical system architecture showing energy flow from supercapacitor cells through busbars and segments to the inverter, alongside control and communication pathways within the AMS. Green dots represent the 12 V battery connection.}
     \label{fig:electronics_architecture}
 \end{figure}
-
-%TODO: Add the source used to define/justify this architecture diagram and interface partitioning.
 
 \subsection{Busbar Design}
 
@@ -1660,8 +1660,6 @@ This thermal load requires resistor packages with sufficient margin, so the form
     \label{fig:signal_conditioning}
 \end{figure}
 
-%TODO: Rerender graphics so that label text is much larger
-
 \textbf{Temperature monitoring and protection:} Temperature channels are conditioned with an RC input filter ($R=10\,\text{k}\Omega$, $C=47\,\text{nF}$), implemented as R37 \& C20 in Figure~\ref{fig:signal_conditioning}b. This suppresses transient noise that could otherwise cause false over-temperature flags. NTC thermistors are connected directly to \texttt{GPIO} measurement channels, and cell temperature is reconstructed from this voltage. Sensors are placed on 30\% of the cells to satisfy temperature monitoring requirements (FS-EV~5.8.4). The protection strategy applies a hard fault response using the AIR when any monitored cell temperature exceeds $T > 60^\circ\text{C}$ (FS-EV~5.8.5), with AMS-triggered shutdown behavior as required by FS-EV~5.8.7.
 
 \subsection{System Integration}
@@ -1671,11 +1669,11 @@ System integration defines how the accumulator monitoring subsystem interfaces w
 The AMS master and ECU must operate in the LV domain and should be supplied from the vehicle 12 V system, while all segment electronics should remain referenced to their local HV potentials. Galvanic isolation must be maintained at external interfaces (FS-EV~4.3.2), and TS/LV physical segregation preserved in routing and packaging (FS-EV~4.3.3). Within this report scope, the integration boundary ends at the AMS master to ECU status interface; hence, vehicle shutdown-chain actuation logic, charger-side functions, and full firmware message implementation are not included.
 
 \section{Mechanical Design and Packaging}
+\label{sec:mechanical_design_packaging}
 The electrical requirement of 200 series-connected cells necessitates segmentation into 5 modules of 40 cells each to maintain voltage domains within FS-EV regulations. All segments are housed within a single Accumulator Container (AC), separated by internal insulating walls.
 
 \subsection{Segment Design}
 
-%TODO: Rerender so it is naturally landscape and fits better on the page.
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/renders/segment.png}
@@ -1687,7 +1685,7 @@ Segment design prioritises modularity and replicability, with each segment conta
 
 Although honeycomb packing is generally denser, it provides only about 1\% volume reduction once constrained to cuboid envelope, so the rectangular layout is retained for simplicity.
 
-The PCB layout (detailed in Section~\ref{subsec:electrical_design}) is positioned to fit within the segment depth and centered to facilitate harness routing and cell connection while enabling mechanical accessibility via bracket-based mounting to the FR4 matrix board. PCB peripheral spacing accommodates cable routing.
+The PCB layout (detailed in Section~\ref{subsec:electrical_design}) is positioned to fit within the segment depth and centred to facilitate harness routing and cell connection while enabling mechanical accessibility via bracket-based mounting to the FR4 matrix board. PCB peripheral spacing accommodates cable routing.
 
 Fuses are mounted to the casing and their exact position varies by segment because of inter-segment packaging constraints. Busbar topology is consistent, but routing varies to support fuse placement.
 
@@ -1700,26 +1698,20 @@ Fuses are mounted to the casing and their exact position varies by segment becau
     \label{fig:main_accumulator}
 \end{figure}
 
-% TODO: Change Rendering so that the actual floor is at the bottom of the image, then adjust paragraph accordingly
-% Consider placing next to the other segment rendering to save space
-
-The accumulator is placed between driver and motor, below the inverter, to reduce HV cable mass and move mass near the rear axle. This packaging envelope drives the 3--2 segment arrangement.
-
-%TODO: Add reference to Toby's section showing the accumulator placement within the vehicle.
+The accumulator is placed between driver and motor, below the inverter, to reduce HV cable mass and move mass near the rear axle. This packaging envelope drives the 3--2 segment arrangement. Vehicle-level packaging and the placement of the major powertrain components within the chassis are discussed in Section~\ref{sec:chassis_architecture} and illustrated in Figure~\ref{fig:components}.
 
 The external casing is fabricated from stainless steel featuring 0.9 mm walls and a 1.2 mm floor to meet FS-EV~4.4.2 regulations. The three-piece assembly (removable bolted lid, welded lower shell, and base floor) enables service access while maintaining structural integrity.
 
 Detailed manufacturing process planning, quality control workflow, and full BOM costing are not expanded in this report and are deferred to implementation documentation.
 
 \section{Results and Discussion}
-
-
+\label{sec:results_discussion}
 
 \subsection{Comparison with LiPo Baseline}
 
 \begin{table}[htbp]
     \centering
-    \caption{Comparison of EDLC supercapacitor, using results from design analysis, and high-power Li-Po battery technologies, using motorsport adapted simulation results \cite{batpac2022manual}. Weighted scoring system applied. Tie between the two technologies.}
+    \caption{Comparison of EDLC supercapacitor, using results from design analysis, and high-power Li-Po battery technologies, using motorsport-adapted simulation results \cite{batpac2022manual}. Weighted scoring system applied. Tie between the two technologies.}
     \label{tab:results_comparison}
     \footnotesize
     \begin{tabular}{|c|l|l|l|}
@@ -1744,9 +1736,7 @@ Detailed manufacturing process planning, quality control workflow, and full BOM 
     \end{tabular}
 \end{table}
 
-The results table~\ref{tab:results_comparison} now evaluates the final design against the LiPo baseline, moving to a more accurate model than the initial technology comparison~\ref{tab:tech_comparison}. Mass and volume results for the SC solution are taken directly from the CAD model design. LiPo baseline results have been adjusted to reflect a complete pack design, again with the appropriate motorsport mass adjustments. The volume cannot be as easily adjusted, so the given cell volume is scaled by the CtP ratio of pouch cells in FS designs (0.413) \cite{epp_multiphysical_battery}. The LiPo and SC solutions now tie on the weighted score, so cost becomes the deciding factor once the final BOM costings are added and compared with typical LiPo pricing from FS teams.
-%TODO add sources for this and then a rough cost multiplicative factor.
-The same qualitative factors discussed previously still apply. Given lower supply risk, pricing ambiguity, and system complexity, it can be strongly argued that the SC solution is superior to the LiPo baseline for this project context.
+Table~\ref{tab:results_comparison} evaluates the final design against the LiPo baseline using a more detailed model than Table~\ref{tab:tech_comparison}. SC mass and volume are taken from the CAD model, while LiPo results are adjusted to represent a complete pack. Cell volume is scaled by a CtP ratio of 0.413 for pouch-cell FS designs \cite{epp_multiphysical_battery}. With a tie in weighted score, cost becomes the key differentiator once BOM costings are finalised; public pricing data for FS LiPo systems are limited, but they are generally reported to be significantly more expensive than the SC solution. Considering procurement risk and system complexity, the SC solution is preferred for this project context.
 
 \subsection{Design Criteria Achievement}
 \label{sec:design_criteria_achievement}
@@ -1770,26 +1760,22 @@ The finalised design is verified against the requirement IDs in Table~\ref{tab:d
     \end{tabular}
 \end{table}
 
-%TODO: somehow justify the cost point
-%TODO: reference operating window from results of Harry Sims. 
-%TODO: add a short assumptions/limitations paragraph (event profile, voltage window, thermal simplifications).
-
 \section{Future Improvements and Conclusion}
+\label{sec:future_improvements_conclusion}
 
 \subsection{Refinements for Implementation}
 The design establishes a coherent architecture suitable for prototyping and integration. Key refinement priorities for implementation include: (1) detailed thermal analysis; (2) AMS firmware development; (3) manufacturing partner engagement for cost and lead-time validation; and (4) comprehensive electrical \& mechanical testing.
 
 \subsection{Future Improvements}
 
-Our current implementation, during the race, the car is only ever traction or power limited. For the accumulator design, the major optimisation opportunity to improve performance is to reduce mass. The following approaches could be considered to achieve this:
-%TODO: insert conclusion from Harry's sims.
+In the current simulation, the car is only ever traction- or power-limited, as shown by the vehicle dynamics simulation results in Section~\ref{sec:constraint_activity} and the final run trace in Figure~\ref{fig:final_run}. For the accumulator design, the major optimisation opportunity to improve performance is to reduce mass. The following approaches could be considered:
 \begin{itemize}
     \item A lighter SC cell (SC2), albeit with increased voltage sag, due to lower capacity or higher ESR. This would require more accurate thermal management due to increased power losses.
-    \item A hybrid/asymmetric SC cell, which would strike a balance between SC's and LiPo's energy and power densities. However, to reduce the risk from the limited commercial availability, a more active procurement strategy would be required, including early engagement with suppliers to secure cells and detailed testing to validate performance claims.
+    \item A hybrid/asymmetric SC cell, which would strike a balance between SCs and LiPo energy and power densities. However, limited commercial availability increases procurement risk and would require early supplier engagement and testing to validate performance claims.
 \end{itemize}
 
 \subsection{Conclusion}
-The accumulator system design successfully combines proven supercapacitor technology with modular electrical and mechanical architecture to meet Formula Student requirements, optimised for the acceleration application. The analysis demonstrates that SCs provide equally effective quantitative performance as LiPo batteries, whilst providing a more affordable and reliable solution. The design provides a well-thought-out system that could be manufactured and integrated into the vehicle. Subsequent development phases should focus on prototype validation, thermal characterisation in realistic vehicle operating conditions, and iterative refinement based on test data.
+The accumulator system design combines proven supercapacitor technology with modular electrical and mechanical architecture to meet Formula Student requirements for the acceleration application. The analysis demonstrates comparable quantitative performance to the LiPo baseline while reducing cost and procurement risk. Subsequent development should focus on prototype validation, thermal characterisation under representative operating conditions, and iterative refinement based on test data.
 
 \vspace{6pt}
 \compactbib
@@ -2990,6 +2976,7 @@ The proposed product is positioned within this high-realism, high-flexibility sp
 Crucially, the platform must be positioned not only as a testing solution for manufacturers, but as an integrated validation tool aligned with the requirements of regulatory bodies and testbed operators. Acceptance by these stakeholders is essential for market access, as they effectively act as gatekeepers to industry adoption.
 
 \section{Target Market Selection}
+\label{sec:target_market_selection}
 
 Following the strategic positioning analysis, a clear target market must be defined. The segmentation map indicates strongest alignment within the AI and autonomous vehicle validation space, where organisations prioritise flexible, high-realism testing environments.
 
@@ -3145,9 +3132,9 @@ The proposed platform fills a critical market gap by combining high realism with
 
 \section{Introduction to the Strategic Pivot}
 
-The UK Connected and Automated Mobility (CAM) sector faces a critical simulation-to-reality gap; regulators and insurers demand exhaustive physical edge-case validation before approving autonomous deployments, yet Original Equipment Manufacturers (OEMs) lack the agile hardware to safely execute these collisions. To address this bottleneck, our enterprise executes a foundational strategic manoeuvre: pivoting from the development and sale of a physical engineering asset (the AEB Rabbit) to providing a comprehensive Testing-as-a-Service (TaaS) platform. This allows autonomous vehicle (AV) developers to access high-fidelity, physical validation data without bearing the cost of maintaining their own target fleets.
+The UK Connected and Automated Mobility (CAM) sector faces a critical simulation-to-reality gap; regulators and insurers demand exhaustive physical edge-case validation before approving autonomous deployments, yet Original Equipment Manufacturers (OEMs) often lack agile hardware to execute these high-risk tests safely. To address this bottleneck, our enterprise executes a foundational strategic manoeuvre: pivoting from the development and sale of a physical engineering asset (the AEB Rabbit) to providing a comprehensive Testing-as-a-Service (TaaS) platform. This allows autonomous vehicle (AV) developers to access high-fidelity physical validation data without bearing the cost of maintaining their own target fleets.
 
-This service model is enabled by our vehicle's specialised engineering architecture. Designed for rapid acceleration rather than cruising, the AEB Rabbit utilises a supercapacitor energy storage system to execute repeatable,  les than 10-second "panic" manoeuvres that mimic erratic human behaviour. To guarantee the high track utilisation required for TaaS profitability, the platform employs a modular supply chain strategy. By standardising replaceable impact shells and maintaining a buffer of drivetrain components, the enterprise ensures swift track-side mechanical recovery following a severe collision, protecting operational throughput.
+This service model is enabled by our vehicle's specialised engineering architecture. Designed for rapid acceleration rather than cruising, the AEB Rabbit utilises a supercapacitor energy storage system to execute repeatable, less-than-10-second "panic" manoeuvres that mimic erratic human behaviour. To guarantee the high track utilisation required for TaaS profitability, the platform employs a modular supply chain strategy. By standardising replaceable impact shells and maintaining a buffer of drivetrain components, the enterprise ensures swift trackside mechanical recovery following a severe collision, protecting operational throughput.
 
 Strategically, our Go-To-Market plan bypasses individual OEM bureaucratic delays by natively integrating the AEB Rabbit directly into established CAM Testbed UK facilities. Here, the enterprise serves as an ethical and legal buffer for AV developers. By operating strictly within defined Operational Design Domains (PAS 1883), governed by Safety Management Systems (PAS 1881), and providing immutable "black box" telemetry (PAS 1882), we absorb the physical risks of extreme edge-case testing. This provides the undeniable empirical evidence required by insurers and regulators to safely determine liability in a post-human-driver landscape.
 
@@ -3161,13 +3148,12 @@ Our strategy leverages the government's investment focus, as outlined in the Zen
 
 The most critical macro-environmental tool available for this analysis is the UK Connected and Automated Mobility (CAM) Roadmap to 2035, coordinated by Zenzic, a joint venture between UK industry and government \cite{zenzic_about}. The Roadmap acts as a comprehensive vision of the path required to create scalable solutions and bring CAM technologies to reality.
 
-According to the executive summary \cite[p.~5,11,14]{cracknell_2023}, despite aggressive timelines to deploy self-driving vehicles by 2025, the UK AV sector is currently bottlenecked by a lack of physical, real-world validation. Regulators are hesitant to approve deployments without overwhelming proof of safety, and OEMs are concerned that a single public incident will derail their progress. The industry cannot scale until it can rigorously and safely physically test edge-cases.
+According to the executive summary \cite[p.~5,11,14]{cracknell_2023}, despite aggressive timelines to deploy self-driving vehicles by 2025, the UK AV sector is currently bottlenecked by a lack of physical, real-world validation. Regulators are hesitant to approve deployments without overwhelming proof of safety, and OEMs are concerned that a single public incident will derail their progress. The industry cannot scale until it can rigorously and safely test edge cases physically.
 
-Our testing vehicles provide the critical, physical validation layer required to bridge the gap between simulation and public deployment. We allow our clients to safely generate the hard data needed to satisfy regulators, achieve pre-certification, and protect their brand reputation from public accidents.
+Our testing vehicles provide the critical physical validation layer required to bridge the gap between simulation and public deployment. We allow clients to safely generate the data needed to satisfy regulators, achieve pre-certification, and protect brand reputation from public incidents.
 
-The total addressable market is expanding rapidly due to acute global labour shortages in freight, logistics, and public transport \cite[p.~6]{wef_2021}. Because operators are forced to adopt No-User-in-Charge (NUiC) vehicles to survive, OEMs are scaling their platforms faster than ever to meet this structural deficit \cite[p.~9,11,17]{cracknell_2023}. Every new platform and iteration requires exhaustive physical testing, creating a recurring, high-volume demand for our validation equipment.  
-This venture is strategically aligned with the Centre for Connected and Autonomous Vehicles' (CCAV) ongoing Automated Vehicles Act implementation programme \cite{lawcom_avs_2024}, which fundamentally transitions the UK from regulatory theory into active commercial deployment % [Paul Vogelberg: Source also for this?]
-. Concurrently, the Zenzic roadmap identifies the rapid acceleration of the domestic CAM supply chain as a primary macro-environmental driver for the sector \cite[p.~9,10,19]{cracknell_2023}. As the government actively seeks to build a world-class, sovereign CAM ecosystem with a strict legislative emphasis on physical safety assurance, our enterprise is ideally positioned to capture targeted grant funding. By aligning our business with the criteria of active government initiatives, specifically the £150 million CAM Pathfinder Programme to accelerate commercial market readiness \cite{pockney_2026}, we can leverage state-sponsored funding to integrate our physical validation tools directly into the UK's deployment infrastructure.
+The total addressable market is expanding rapidly due to acute global labour shortages in freight, logistics, and public transport \cite[p.~6]{wef_2021}. As operators are increasingly incentivised to adopt No-User-in-Charge (NUiC) vehicles, OEMs are scaling their platforms faster than ever to meet this structural deficit \cite[p.~9,11,17]{cracknell_2023}. Every new platform and iteration requires exhaustive physical testing, creating recurring demand for validation equipment.
+This venture is strategically aligned with the Centre for Connected and Autonomous Vehicles' (CCAV) ongoing Automated Vehicles Act implementation programme \cite{lawcom_avs_2024}, which transitions the UK from regulatory theory into active commercial deployment. Concurrently, the Zenzic roadmap identifies the rapid acceleration of the domestic CAM supply chain as a primary macro-environmental driver for the sector \cite[p.~9,10,19]{cracknell_2023}. As the government actively seeks to build a world-class, sovereign CAM ecosystem with a strict legislative emphasis on physical safety assurance, our enterprise is ideally positioned to capture targeted grant funding. By aligning our business with the criteria of active government initiatives, specifically the £150 million CAM Pathfinder Programme to accelerate commercial market readiness \cite{pockney_2026}, we can leverage state-sponsored funding to integrate our physical validation tools directly into the UK's deployment infrastructure.
 
 \subsection{Utilising CAM Testbed UK}
 
@@ -3175,33 +3161,29 @@ The UK offers a highly concentrated target market through 'CAM Testbed UK', a un
 
 Our system acts as the essential physical ground-truth required to validate the UK's investments in virtual simulation. Our product enables state-of-the-art facilities to correlate their virtual 'digital-twin' testing with real-world sensor data. Instead of focusing on targeting individual OEMs, with a heavy customer acquisition cost and prolonged procurement cycle, our strategy natively integrates the platform into the service offerings of centralised CAM Testbed facilities. This positioning establishes the enterprise as an indispensable, embedded supplier to the global testing hubs where the entire autonomous mobility industry already meets.
 
-There is an established, proven precedent of demand within the CAM Testbed UK network for our precise technology. For instance, during the recent £5.8M project at the Culham Science Centre (a CAM Testbed UK facility), the delivery partners explicitly utilised government grant funding to purchase a motorised pedestrian dummy to increase their safety testing options \cite[p.~2]{culham_2024}. While these testbeds are currently investing in low-speed pedestrian targets, our TaaS model builds upon this precedent by filling the unaddressed, high-value gap for highly dynamic, high-mass vehicular targets. Our business is perfectly timed to capture this active, ongoing capital expenditure from UK testing facilities looking to maintain their global competitiveness % [Paul Vogelberg: Could explain how our service builds on this precedent. Maybe not precisely our service, need to clarify what our dummy represents in testing scenarios.]
-.
+There is an established, proven precedent of demand within the CAM Testbed UK network for our precise technology. For instance, during the recent £5.8M project at the Culham Science Centre (a CAM Testbed UK facility), the delivery partners explicitly utilised government grant funding to purchase a motorised pedestrian dummy to increase their safety testing options \cite[p.~2]{culham_2024}. While these testbeds are currently investing in low-speed pedestrian targets, our TaaS model builds upon this precedent by filling the unaddressed, high-value gap for highly dynamic, high-mass vehicular targets. Our business is perfectly timed to capture this active, ongoing capital expenditure from UK testing facilities looking to maintain their global competitiveness.
 
 \section{Manoeuvring to the Testing-as-a-Service (TaaS) Model}
 
-As autonomous vehicle (AV) architectures evolve from modular pipelines to end-to-end (E2E) AI systems, an emerging market demand has surfaced for advanced dynamic testing. E2E systems frequently suffer from "causal confusion"—a critical failure mode where the model relies on spurious, false correlations that ultimately lead to catastrophic failures during real-world deployment \cite[p.~11-2]{chen_2024}. While developers primarily evaluate these models through offline, open-loop frameworks, the literature explicitly warns that such methods fail to measure a system's ability to recover from physical drift and do not provide conclusive evidence of safe driving behaviour \cite[p.~7]{chen_2024}. Consequently, rigorous, closed-loop dynamic benchmarking is not just beneficial, but fundamentally required.
+As autonomous vehicle (AV) architectures evolve from modular pipelines to end-to-end (E2E) AI systems, an emerging market demand has surfaced for advanced dynamic testing. E2E systems frequently suffer from "causal confusion"---a critical failure mode where the model relies on spurious correlations that can lead to catastrophic failures during real-world deployment \cite[p.~11--12]{chen_2024}. While developers primarily evaluate these models through offline, open-loop frameworks, the literature explicitly warns that such methods fail to measure a system's ability to recover from physical drift and do not provide conclusive evidence of safe driving behaviour \cite[p.~7]{chen_2024}. Consequently, rigorous, closed-loop dynamic benchmarking is not just beneficial, but fundamentally required.
 
-Rather than relying on the traditional automotive diagnostic model that forces end-users into capital-intensive (CAPEX) hardware purchases, our enterprise addresses this critical evaluation gap through a TaaS delivery model. By strategically pivoting our physical engineering asset to a service-based approach, we equip client organisations, such as EV start-ups and OEM innovation divisions, % [Paul Vogelberg: insert reference to Toby's work]
-with the dynamic, closed-loop physical environments required to expose and resolve causal confusion cost-effectively. Crucially, this model absorbs the operational burdens of hardware maintenance, infrastructure, and rapid technological obsolescence.
+Rather than relying on the traditional automotive diagnostic model that forces end-users into capital-intensive (CAPEX) hardware purchases, our enterprise addresses this critical evaluation gap through a TaaS delivery model. By strategically pivoting our physical engineering asset to a service-based approach, we equip client organisations, such as EV start-ups and OEM innovation divisions (targeting rationale in Section~\ref{sec:target_market_selection}), with the dynamic, closed-loop physical environments required to expose and resolve causal confusion cost-effectively. Crucially, this model absorbs the operational burdens of hardware maintenance, infrastructure, and rapid technological obsolescence.
 
 \subsection{Hardware Specialisation: The "Sprint" Advantage}
 
-This TaaS strategy is explicitly necessitated by the unique mechanical profile of our adapted Formula Student (FS) architecture. The AEB Rabbit is not designed for a long duty cycle, but for short highly explosive acceleration, possessing a maximum power output lifetime of approximately 6 seconds per duty cycle % [Paul Vogelberg: source to engineering report figures here]
-.
+This TaaS strategy is explicitly necessitated by the unique mechanical profile of our adapted Formula Student (FS) architecture. The AEB Rabbit is not designed for a long duty cycle, but for short, high-power manoeuvres on the order of a few seconds (see the acceleration-event performance in Section~\ref{sec:final_run}).
 
-While this short operational runtime could render the vehicle unviable as a traditional commercial product for direct purchase, it is the performance envelope required to simulate extreme, dynamic edge cases (such as an erratic pedestrian darting into traffic, or a fast vehicle cutting across lanes). In our model, the client purchases the accurate data generated from a "panic" manoeuvre. Behind the scenes, our enterprise manages the operational duty cycle, using our accumulator system capability of rapid charging, reliable thermal management and consistent runs due to its supercapacitor architecture % [Paul Vogelberg: source to engineering report figures here]
-, providing seamless and reliable value to the client.
+While this short operational runtime could render the vehicle unviable as a traditional commercial product for direct purchase, it is the performance envelope required to simulate extreme, dynamic edge cases (such as an erratic pedestrian darting into traffic, or a fast vehicle cutting across lanes). In our model, the client purchases the accurate data generated from a "panic" manoeuvre. Behind the scenes, our enterprise manages the operational duty cycle, using the accumulator's repeatable short-duty-cycle power delivery (Figure~\ref{fig:supercap_discharge}), providing reliable value to the client.
 
 \subsection{Full-Service Integration over Hardware Rental}
 
-Our TaaS model fundamentally lowers this barrier to entry. By providing the self-propelled target, the trained safety operators, compliant with PAS 1884 \cite{pas1884}, and the continuous data-logging architecture, compliant with PAS 1882 \cite{pas1882}, we eliminate the need for our clients to train their own staff on complex, hazardous testing procedures. The client can simply dictate the conditions in which their automated vehicle should safely operate, the Operational Design Domain (ODD) parameters, and our enterprise can execute the required scenario to deliver the empirical data required for their safety cases.
+Our TaaS model fundamentally lowers this barrier to entry. By providing the self-propelled target, trained safety operators operating in accordance with PAS 1884 \cite{pas1884}, and continuous data-logging architecture compliant with PAS 1882 \cite{pas1882}, we eliminate the need for our clients to train their own staff on complex, hazardous testing procedures. The client can simply specify the conditions in which their automated vehicle should safely operate (the Operational Design Domain (ODD) parameters), and our enterprise can execute the required scenario to deliver the empirical data required for their safety cases.
 
 \subsection{Supply Chain and Margin Defensibility}
 
 The commercial viability of this TaaS model relies heavily on high utilisation rates and minimal track downtime. Because the AEB Rabbit will inevitably be subjected to physical impacts during edge-case validation, traditional testing rigs could suffer catastrophic, costly downtime.
 
-Our platform utilises a modular architectural design, which ensures sustained profitability. By using standardised components and classifying them based on wear and collision-probability, our supply chain strategy can enable rapid, track-side mechanical recovery for the most likely repairs. This modularity prevents the total loss of the asset during a collision and isolates damage to affordable, replaceable outer components while protecting the high-value drivetrain. This strategic resilience secures consistent test throughput, directly underpinning the enterprise's robust operational expenditure (OPEX) forecasts and ensuring a predictable return on investment (ROI).
+Our platform utilises a modular architectural design, which supports sustained profitability. By using standardised components and classifying them based on wear and collision probability, our supply chain strategy can enable rapid trackside mechanical recovery for the most likely repairs. This modularity prevents total loss of the asset during a collision and isolates damage to affordable, replaceable outer components while protecting the high-value drivetrain. This strategic resilience secures consistent test throughput, directly underpinning the enterprise's robust operational expenditure (OPEX) forecasts and ensuring a predictable return on investment (ROI).
 
 \section{Stakeholder Salience Identification}
 
@@ -3211,81 +3193,108 @@ Our platform utilises a modular architectural design, which ensures sustained pr
 \centering
 \includegraphics[width=0.5\textwidth]{figures/StakeholderVennDiagram.png}
 \caption{Redrawn Stakeholder Typology from Mitchell Stakeholder Salience Model \cite{mitchell_1997}}
+\label{fig:stakeholder_salience_typology}
 \end{figure}
 
-While traditional matrices (such as RACI) map static operational responsibilities, the high-risk, heavily regulated nature of the CAM sector demands a dynamic framework for strategic resource allocation. The Mitchell et al. Stakeholder Salience Model \cite{mitchell_1997} is explicitly appropriate for this enterprise because it accounts for rapid, event-driven shifts in stakeholder priority and allows the management team to focus its limited engagement capital toward actors possessing two or more salience attributes. The model uses the triad: Power, Legitimacy, Urgency, for which a stakeholder can be assigned to a certain category using Figure 1.
+While traditional matrices (such as RACI) map static operational responsibilities, the high-risk, heavily regulated nature of the CAM sector demands a dynamic framework for strategic resource allocation. The Mitchell et al. Stakeholder Salience Model \cite{mitchell_1997} is appropriate for this enterprise because it accounts for rapid, event-driven shifts in stakeholder priority and allows the management team to focus limited engagement capital on actors possessing two or more salience attributes. The model uses the triad of power, legitimacy, and urgency (Figure~\ref{fig:stakeholder_salience_typology}).
 
-In accordance with Proposition 1a, which asserts that 'stakeholder salience will be low where only one of the stakeholder attributes (power, legitimacy, and urgency) is perceived by managers to be present' \cite[p.~874]{mitchell_1997}, this report focuses its active engagement strategy on stakeholders possessing two or more of these attributes.
+In accordance with Proposition 1a, which asserts that ``stakeholder salience will be low where only one of the stakeholder attributes (power, legitimacy, and urgency) is perceived by managers to be present'' \cite[p.~874]{mitchell_1997}, this report focuses its active engagement strategy on stakeholders possessing two or more of these attributes.
 
 For every such class, the applicable stakeholders are given and the reasoning is explained:
 
 \begin{itemize}
-  \item Definitive Stakeholders - Insurers \& Testbed Operators: these actors possess all three attributes. Insurers hold financial power and legal legitimacy over operations, while their need for immediate post-incident data drives high urgency. Similarly, testbed operators have the power and legitimacy to halt trials instantly to protect their track's safety. Whilst the possibility of utilising OEMs' testing facilities exists, our market analyse shows that we should focus on EV start-ups and OEM innovation divisions.
-  \item Dominant Stakeholders - Regulators \& Highway Authorities: entities such as CCAV hold ultimate regulatory power and legitimacy but generally exhibit lower urgency during day-to-day closed-track testing % [Paul Vogelberg: find source]
-, as under Mitchell's theory, their urgency is typically event-driven and only spikes post-incident, provided compliance is maintained.
-  \item Dependent Stakeholders - General Public: this group hold high moral legitimacy and urgency regarding their physical safety, but lack the direct power to enforce testing protocols, relying instead on our internal ethics governance.
-  \item Dangerous Stakeholders - Cyber-Threat Actors: whilst this actor does not possess any legitimacy, it has both power and urgency to maliciously obtain valuable data or disrupt the service the enterprise is offering to their competitors.
+    \item Definitive Stakeholders - Insurers \& testbed operators: These actors possess all three attributes. Insurers hold financial power and legal legitimacy over operations, while their need for immediate post-incident data drives high urgency. Similarly, testbed operators have the power and legitimacy to halt trials instantly to protect track infrastructure and personnel.
+    \item Dominant Stakeholders - Regulators \& highway authorities: Entities such as CCAV hold ultimate regulatory power and legitimacy; under Mitchell's theory, their urgency is typically event-driven and only spikes post-incident, provided compliance is maintained \cite[p.~874]{mitchell_1997}.
+    \item Dependent Stakeholders - General public: This group holds high moral legitimacy and urgency regarding physical safety, but lacks direct power to enforce testing protocols, relying instead on internal ethics governance.
+    \item Dangerous Stakeholders - Cyber-threat actors: While these actors possess no legitimacy, they have both power and urgency to maliciously obtain valuable data or disrupt the service the enterprise offers to competitors.
 \end{itemize}
 
 \subsection{Applying the model}
 
-For each stakeholder mentioned above, the salience class, alongside the value exchange provided and their respective compliance mechanism, split between the R\&D phase and the Commercial phase (if different, otherwise combined), are given in Table 1.
+For each stakeholder mentioned above, the salience class, value exchange, and compliance mechanism (split between the R\&D and commercial phases where relevant) are given in Table~\ref{tab:strategic_engagement_matrix}.
 
-\begingroup
+\begin{table}[htbp]
+\centering
 \small
-\setstretch{1.5}
 \setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.08}
-\begin{longtable}{|>{\raggedright\arraybackslash}p{0.14\linewidth}|>{\raggedright\arraybackslash}p{0.16\linewidth}|>{\raggedright\arraybackslash}p{0.24\linewidth}|>{\raggedright\arraybackslash}p{0.24\linewidth}|>{\raggedright\arraybackslash}p{0.12\linewidth}|}
-\caption{Strategic Engagement and Value Exchange Matrix} \\
+\renewcommand{\arraystretch}{1.3} % Slightly increased to replace \setstretch and keep rows comfortable
+\caption{Strategic Engagement and Value Exchange Matrix}\label{tab:strategic_engagement_matrix}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{0.14\linewidth}|>{\raggedright\arraybackslash}p{0.16\linewidth}|>{\raggedright\arraybackslash}p{0.24\linewidth}|>{\raggedright\arraybackslash}p{0.24\linewidth}|>{\raggedright\arraybackslash}p{0.12\linewidth}|}
 \hline
 \textbf{Stakeholder Group} & \textbf{Salience Class} & \multicolumn{2}{c|}{\textbf{The Value Exchange}} & \textbf{Compliance Mechanism} \\
 \cline{3-4}
  & & \textbf{Need} & \textbf{Solution} & \\
 \hline
-\endfirsthead
-\multicolumn{5}{c}
-{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
-\hline
-\textbf{Stakeholder Group} & \textbf{Salience Class} & \multicolumn{2}{c|}{\textbf{The Value Exchange}} & \textbf{Compliance Mechanism} \\
-\cline{3-4}
- & & \textbf{Need} & \textbf{Solution} & \\
-\hline
-\endhead
-\hline \multicolumn{5}{|r|}{{Continued on next page}} \\ \hline
-\endfoot
-\hline
-\endlastfoot
-Testbed Operators & Definitive in R\&D & Guarantee that the experimental prototype will not destroy track infrastructure. & Extreme transparency and rigorous safety mitigation plans. & PAS 1881 \cite{pas1881} SMS \\
+Testbed Operators & Definitive in R\&D & Guarantee that the experimental prototype will not destroy track infrastructure. & Extreme transparency and rigorous safety mitigation plans. & PAS~1881 \cite{pas1881} (Safety governance) \\
 \cline{2-5}
- & Definitive in Commercial & Attract top AV developers to rent their tracks. & We provide a highly integrated, value-add service that brings clients directly to their facility. & Modular Supply Chain \\
+ & Definitive in Commercial & Attract top AV developers to rent their tracks. & We provide a highly integrated, value-add service that brings clients directly to their facility. & Operational resilience (spares/SLA) \\
 \hline
-AV Start-ups \& OEMs & Discretionary (Latent) in R\&D & Assurance that the conceptual target will meet their AI requirements. & Market-fit validation and technical alignment. & PAS 1883 \cite{pas1883} (ODD Taxonomy) \\
+AV Start-ups \& OEMs & Discretionary (Latent) in R\&D & Assurance that the conceptual target will meet their AI requirements. & Market-fit validation and technical alignment. & PAS~1883 \cite{pas1883} (ODD Taxonomy) \\
 \cline{2-5}
- & Definitive in Commercial & Capital-efficient, rapid edge-case validation. & We absorb CAPEX and hardware maintenance, delivering on-demand testing data. & \\
+ & Definitive in Commercial & Capital-efficient, rapid edge-case validation. & We absorb CAPEX and hardware maintenance, delivering on-demand testing data. & Contracted evidence deliverables \\
 \hline
 Component Suppliers & Definitive in R\&D & Proof of engineering viability for custom parts. & Custom tuning feedback and baseline component testing. & Engineering Service Legal Agreements \\
 \cline{2-5}
- & Dominant (Urgency drops) in Commercial & Predictable, high-volume recurring revenue. & Long-term purchase orders to maintain our modular inventory buffer. & PAS 1881 \cite{pas1881} (Maintenance) \\
+ & Dominant (Urgency drops) in Commercial & Predictable, high-volume recurring revenue. & Long-term purchase orders to maintain our modular inventory buffer. & PAS~1881 \cite{pas1881} (Maintenance governance) \\
 \hline
-Insurers \& Investigators & Definitive & Irrefutable proof of liability during and after collisions. & We absorb the ambiguity of crashes by acting as an incorruptible data proxy. & PAS 1882 \cite{pas1882} (Immutable ECU Logging) \\
+Insurers \& Investigators & Definitive & Irrefutable proof of liability during and after collisions. & We absorb the ambiguity of crashes by acting as an incorruptible data proxy. & PAS~1882 \cite{pas1882} (Evidence trail) \\
 \hline
-Regulators (e.g., CCAV) & Dominant & Proof that autonomous systems are reaching ALARP safety standards. & We provide the physical scenario-testing required to generate their safety metrics. & PAS 1881 \cite{pas1881} (Formal Operational Safety Case % [Paul Vogelberg: What exactly is this?]
-) \\
+Regulators (e.g., CCAV) & Dominant & Proof that autonomous systems are reaching ALARP safety standards. & We provide the physical scenario-testing required to generate their safety metrics. & PAS~1881 \cite{pas1881} (Safety case) \\
 \hline
-The Public \& VRUs & Dependent & Protection from immature, dangerous AV technology. & We act as their proxy, absorbing the physical impacts of edge-case testing. & Ethics Impact Assessments \\
+The Public \& VRUs & Dependent & Protection from immature, dangerous AV technology. & We act as their proxy, absorbing the physical impacts of edge-case testing. & Ethics and legitimacy \\
 \hline
-Cyber-Threat Actors & Dangerous & Goal: Exploit systemic vulnerabilities for disruption or hijacking. & Mitigation: Defensive shielding and encrypted telemetry to ensure testing integrity. & PAS 1885 \cite{pas1885} (Cybersecurity Principles) \\
+Cyber-Threat Actors & Dangerous & Goal: Exploit systemic vulnerabilities for disruption or hijacking. & Mitigation: Defensive shielding and encrypted telemetry to ensure testing integrity. & PAS~1885 \cite{pas1885} (Cyber controls) \\
 \hline
-\end{longtable}
-\endgroup
-
+\end{tabular}
+\end{table}
 
 \subsection{Continuations to the model}
 
-While Table 1 maps the salience of these groups, it is important to distinguish the structural nature of their power. Within our Dominant and Definitive categories, actors such as CCAV, Thatcham Research, and BSI operate explicitly as 'Stakekeepers' \cite[p.~121]{fassin_2009}. Unlike traditional stakeholders who hold direct financial investments in the enterprise, stakekeepers are independent regulatory and certification bodies. They possess absolute institutional legitimacy and the power to dictate market access, meaning our strategy must prioritise their compliance requirements as foundational, non-negotiable operational constraints.
+While Table~\ref{tab:strategic_engagement_matrix} maps the salience of these groups, it is important to distinguish the structural nature of their power. Within our dominant and definitive categories, actors such as CCAV, Thatcham Research, and BSI operate explicitly as ``stakekeepers'' \cite[p.~121]{fassin_2009}. Unlike traditional stakeholders who hold direct financial investments in the enterprise, stakekeepers are independent regulatory and certification bodies. They possess institutional legitimacy and the power to dictate market access, meaning our strategy must prioritise their compliance requirements as foundational, non-negotiable operational constraints.
 
 The enterprise treats these attributes not as binary states, but as a continuum. Latent groups are subjected to continuous passive monitoring to ensure we anticipate any escalation in their urgency or power before they cross the threshold into definitive threats.
+
+\section{Execution plan for stakeholder acceptance}
+
+This is the first-year execution plan to convert the stakeholder salience analysis into practical acceptance. In this market, ``stakekeepers'' (testbed operators, regulators, and insurers/investigators) are the gate to market access (summarised in Table~\ref{tab:strategic_engagement_matrix}), so success depends on evidence quality, safety governance, and operational uptime. The plan below sequences engagement to de-risk initial approvals while keeping the service economics credible.
+
+\begin{table}[H]
+\centering
+\small
+\singlespacing
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.08}
+\caption{Stakeholder engagement roadmap (Year 1): engagement deliverables and acceptance gates.}
+\label{tab:stakeholder_engagement_roadmap}
+\begin{tabularx}{\textwidth}{p{0.18\textwidth} p{0.12\textwidth} X p{0.20\textwidth}}
+\toprule
+\textbf{Stakeholder} & \textbf{Salience class} & \textbf{Engagement activity and deliverable} & \textbf{Acceptance gate} \\
+\midrule
+Testbed operator & Definitive & Safety induction and operating-envelope sign-off; E-stop drills; recovery procedure and spares plan. & Pilot slot granted; operator sign-off \\
+\midrule
+Insurer / investigator & Definitive & Telemetry access protocol (``black box'' logging) and investigator-ready incident package template (data, timeline, deviations). & Agreement logs support attribution \\
+\midrule
+Regulator / authority & Dominant & Safety case pack (hazard log, SOPs, change control) and controlled-trial briefing pack. & No-blocker feedback for controlled trials \\
+\midrule
+OEM / AV developer & Discretionary (latent) & Scenario catalogue; repeatability report format; clear ODD boundaries for each test day. & Paid pilot or LOI \\
+\midrule
+Suppliers & Definitive & Modular BOM; spares strategy; lead-time risk register; refurbishment loop definition. & Availability and turnaround agreed \\
+\midrule
+Public / VRUs (proxy) & Dependent & Plain-language rationale for off-public-road edge-case testing; evidence-first posture. & No reputational blocker \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Operational success metrics}
+
+The following metrics are reported monthly to provide early warning of safety, evidence-quality, and uptime failures that would otherwise undermine testbed acceptance and utilisation.
+
+\begin{itemize}
+    \item \textbf{Safety:} incident-free test days; near-miss rate; time-to-stop performance in E-stop drills.
+    \item \textbf{Evidence quality:} percentage of runs with complete logs and scenario metadata; time to produce an investigator-ready run package.
+    \item \textbf{Uptime:} mean time to recover after contact; unplanned downtime versus utilisation breakpoints in the financial model.
+    \item \textbf{Commercial traction:} conversion from pilot discussions to paid pilots/contracts; repeat booking rate; blended day-rate trend.
+\end{itemize}
 
 \section{User Personas}
 \label{sec:paul_personas}
@@ -3326,7 +3335,7 @@ Our testing platform serves as an ethical and safety buffer. By allowing develop
 
 \subsection{Liability Demarcation through Data Transparency}
 
-Under the UK Law Commission's framework, our clients (operating as ASDEs) assume full legal responsibility for their vehicle's dynamic driving behaviour when their automated driving system (ADS) is engaged \cite{lawcom_avs_2024}. However, during physical edge-case validation, collisions are an expected outcome. To protect our enterprise from unwarranted fault attribution and circumnavigate the ambiguity of high-speed collisions, insurers and legal investigators require unhindered access to telemetry \cite{thatcham_2026}. Therefore, our strategy utilises the dummy vehicle's Electronic Control Unit (ECU) to provide continuous, high-fidelity data logging in compliance with PAS 1882 \cite{pas1882}. Acting as an incorruptible "black box," this system creates an immutable record of our hardware's telemetry. This transparency creates a clear demarcation of liability, ensuring that if an incident occurs while our equipment operates within its defined parameters, legal and financial responsibility falls definitively on the ASDE's algorithmic failure, thereby shielding our enterprise from unwarranted exposure.
+Under the UK Law Commission's framework, our clients (operating as ASDEs) assume full legal responsibility for their vehicle's dynamic driving behaviour when their automated driving system (ADS) is engaged \cite{lawcom_avs_2024}. However, during physical edge-case validation, collisions are an expected outcome. To protect our enterprise from unwarranted fault attribution and navigate the ambiguity of high-speed collisions, insurers and legal investigators require unhindered access to telemetry \cite{thatcham_2026}. Therefore, our strategy utilises the dummy vehicle's Electronic Control Unit (ECU) to provide continuous, high-fidelity data logging in compliance with PAS 1882 \cite{pas1882}. Acting as an incorruptible ``black box'', this system creates an immutable record of our hardware's telemetry. This transparency creates a clear demarcation of liability, ensuring that if an incident occurs while our equipment operates within its defined parameters, legal and financial responsibility falls definitively on the ASDE's algorithmic failure, thereby shielding our enterprise from unwarranted exposure.
 
 \subsection{Algorithmic Bias, Cybersecurity, and Continuous Learning}
 
@@ -3353,7 +3362,7 @@ To achieve absolute alignment between environmental sustainability and commercia
 However, at the micro-level, we face a critical engineering constraint: the reliance on the foundational Formula Student (FS) vehicle architecture. Because the base chassis and drivetrain materials are predetermined by this inherited design, the enterprise cannot optimise the platform's initial embodied carbon. To counter this, we deploy a modular hardware strategy designed to keep inherited materials at their highest utility despite the intense mechanical stress and frequent collisions of track testing. Consequently, our hardware management is categorised across three core subsystems, mapping directly to the framework's subsequent mandates to Extend lifespan (R3-R7) and ensure the Useful application of materials (R8-R9):
 
 \begin{itemize}
-    \item Energy Storage (Extend Lifespan: R3 Reuse \& R7 Repurpose): The inherited design provides a massive environmental advantage by utilising a supercapacitor architecture rather than traditional Lithium-ion battery packs, which rely on heavily mined rare-earth metals and suffer high chemical degradation under extreme discharge rates. Supercapacitors possess an exceptional cycle life (often exceeding one million cycles), entirely bypassing the toxic end-of-life disposal challenges associated with Li-ion cells and ensuring the energy storage system outlasts the commercial lifecycle of the vehicle itself. % [Paul Vogelberg: Add Eng report reference]
+    \item Energy Storage (Extend Lifespan: R3 Reuse \& R7 Repurpose): The inherited design provides a massive environmental advantage by utilising a supercapacitor architecture rather than traditional Lithium-ion battery packs, which rely on heavily mined rare-earth metals and suffer high chemical degradation under extreme discharge rates. Supercapacitors possess an exceptional cycle life and low degradation under high power cycling compared to other feasible solutions (detailed in Section~\ref{sec:technology_selection} and Figure~\ref{fig:supercap_discharge}).
     \item The Drivetrain \& Chassis (Extend Lifespan: R4 Repair, R5 Refurbishment \& R6 Remanufacture): The platform will be subjected to intense mechanical stress through high-dynamic testing. By adopting a modular supply chain, high-value inherited components (such as electric motors and suspension linkages) can be managed through rigorous refurbishment and remanufacturing loops (R5/R6). Furthermore, the steel spaceframe allows for track-side welding and repair (R4), extending the life of the asset indefinitely and preventing the need to commission an entirely new chassis after minor track incidents. Consequently, in both the drivetrain and the chassis, sustainability is actively achieved through operational lifecycle extension.
     \item The Sacrificial Shell (Useful Application of Materials: R8 Recycle): The most significant hardware update to our initial design is the external target shell, our highest-wear component. The strategic plan explicitly rejects rigid composites, like carbon fibre, which utilise thermoset plastics. This material not only makes the component difficult to sustainably recycle, with the vast majority sent to landfills \cite[p.~2]{morici_2022}, but also introduces hazardous track debris through shattering. Instead, the enterprise specifies the use of Recycled Expanded Polypropylene (rEPP), which is a highly impact-absorbent, low-cost, and lightweight thermoplastic foam, already used in automotive pedestrian protection applications \cite[p.~1]{ramaswamy_2017}. Following a track collision, the shattered EPP shells can be cleanly collected, melted down, and re-extruded into brand new impact shells, establishing a perfectly closed, 100\% recyclable material loop (R9) (demonstrated in \cite{handtke_2024}).
 \end{itemize}
@@ -3364,23 +3373,18 @@ While our TaaS model effectively resolves the AV industry's simulation-to-realit
 
 \subsection{Financial Exposure and Capital Intensity}
 
-While the TaaS model provides immense operational flexibility for our clients by shifting their costs to OPEX, its primary strategic limitation is the structural inversion of our own capital expenditure (CAPEX). Unlike a traditional hardware sales model, our enterprise must absorb the massive upfront costs of manufacturing the AEB Rabbit fleet, securing testing infrastructure, and insuring the assets before a single billable testing hour is executed. To validate that this front-loaded financial exposure does not compromise enterprise solvency, our strategy relies entirely on the financial models (explored in % [Paul Vogelberg: add reference to Harry's financial report]
- the report) dictating the minimum utilisation rates required to sustain the TaaS strategy.
+While the TaaS model provides immense operational flexibility for our clients by shifting their costs to OPEX, its primary strategic limitation is the structural inversion of our own capital expenditure (CAPEX). Unlike a traditional hardware sales model, our enterprise must absorb the massive upfront costs of manufacturing the AEB Rabbit fleet, securing testing infrastructure, and insuring the assets before a single billable testing hour is executed. To validate that this front-loaded financial exposure does not compromise enterprise solvency, our strategy relies on the financial models in Sections~\ref{sec:breakeven} and \ref{sec:downtime} dictating the minimum utilisation rates required to sustain the TaaS strategy.
 
 \subsection{Asset Ownership and the Maintenance Bottleneck}
 
-Under the Product-Service System (PSS) framework, retaining asset ownership inherently transfers the financial risk of hardware failure from the client to the enterprise. Because our revenue generation is strictly tethered to track uptime, any collision damage that exceeds our forecasted repair windows directly erodes our margin defensibility. Furthermore, prolonged downtime threatens our relationships with our definitive stakeholders (i.e. the testbed operators). Consequently, the commercial execution of this strategy is fundamentally dependent on rigorous Supply Chain Planning % [Paul Vogelberg: add reference to David's section]
-. The proposed modular inventory buffer and strict trackside recovery protocols act as the primary operational mitigation mechanism against our greatest commercial vulnerability.
+Under the Product-Service System (PSS) framework, retaining asset ownership inherently transfers the financial risk of hardware failure from the client to the enterprise. Because our revenue generation is strictly tethered to track uptime, any collision damage that exceeds our forecasted repair windows directly erodes our margin defensibility. Furthermore, prolonged downtime threatens our relationships with our definitive stakeholders (i.e. the testbed operators). Consequently, the commercial execution of this strategy is fundamentally dependent on rigorous Supply Chain Planning (Section~\ref{sec:supply_chain_planning}). The proposed modular inventory buffer and strict trackside recovery protocols act as the primary operational mitigation mechanism against our greatest commercial vulnerability.
 
 \subsection{The Regulatory "Cold Start" Problem}
 
-Finally, the strategy to natively integrate into established CAM Testbed UK facilities presents a regulatory "cold start" problem. Testbed operations directors and independent liability assessors (our "Stakekeepers") demand overwhelming empirical proof that our high-dynamic platform will not damage their permanent infrastructure or endanger personnel. However, we cannot capture market share until this safety is proven on a track. Overcoming this barrier requires rigorous, staged proof-of-concept testing prior to full commercial deployment. We mitigate this through the defined in the Design Requirements \& Prototype Planning % [Paul Vogelberg: add reference to Michael's work here]
-, which ensure the platform systematically achieves the minimum viable safety thresholds required to secure initial testbed approval.
-
-
+Finally, the strategy to natively integrate into established CAM Testbed UK facilities presents a regulatory "cold start" problem. Testbed operations directors and independent liability assessors (our "Stakekeepers") demand overwhelming empirical proof that our high-dynamic platform will not damage their permanent infrastructure or endanger personnel. However, we cannot capture market share until this safety is proven on a track. Overcoming this barrier requires rigorous, staged proof-of-concept testing prior to full commercial deployment. We mitigate this through the approach defined in Chapter~\ref{chap:eem_prototype_planning} (Design Requirements \& Prototype Planning), which ensures the platform systematically achieves the minimum viable safety thresholds required to secure initial testbed approval.
 
 % --- END INLINE: PaulVogelberg/Business/paul_business_body.tex ---
-\vspace{6pts}
+\vspace{6pt}
 \compactbib
 \end{refsection}
 
@@ -3394,6 +3398,7 @@ Finally, the strategy to natively integrate into established CAM Testbed UK faci
 % -----------------------------------------------------------------------------
 
 \chapterauthor{Commercially Driven Design Requirements and Prototype Planning}{Ziyang Xing}
+\label{chap:eem_prototype_planning}
 \contribution{This chapter frames the design requirements and prototype plan for the autonomous emergency braking (AEB) test carrier from an Engineering Entrepreneurship and Management (EEM) perspective. It links technical requirements to UK customer needs, standards-led testing expectations, prototype-risk reduction, and commercialisation logic.}
 
 \section{Purpose and commercial framing}
@@ -3702,6 +3707,7 @@ In contrast, other components can be managed in a more reactive manner, where ac
 Overall, the supply chain can be characterised as a centralised, agile, and failure-driven system, where decisions are adapted to the level of risk and uncertainty associated with different components. And the strategy reflects a strong alignment between system requirements and supply chain design, ensuring that operational continuity is maintained under uncertain conditions.
 
 \section{Supply Chain Planning}
+\label{sec:supply_chain_planning}
 
 \subsection{Planning Framework}
 
