@@ -1,0 +1,108 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{styling}[2026/02/10 Formula Student 3YP Report Styling]
+
+% --- Margins and Layout ---
+% Requirement: Margins not less than 20mm [cite: 15]
+\RequirePackage[margin=20mm]{geometry}
+
+% --- Typography ---
+% Requirement: Minimum 11pt font (handled in documentclass) [cite: 16]
+% Common Practice: Sans Serif font [cite: 36]
+\RequirePackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Requirement: Double line spacing [cite: 17]
+\RequirePackage{setspace}
+\doublespacing
+
+% Configure list spacing to match double-spaced text (no extra spacing)
+\RequirePackage{enumitem}
+\setlist{nosep}
+
+% Common Practice: Left justified [cite: 36]
+\RequirePackage[document]{ragged2e}
+
+% --- Structure ---
+% Requirement: More than three levels is confusing (limit to 3) [cite: 39]
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+% --- Essential Packages ---
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[english]{babel}
+\RequirePackage{csquotes} % Required by biblatex when babel is loaded
+\RequirePackage{amsmath}
+% Reduce display equation vertical whitespace globally to save page space.
+\setlength{\abovedisplayskip}{4pt}
+\setlength{\belowdisplayskip}{4pt}
+\setlength{\abovedisplayshortskip}{1pt}
+\setlength{\belowdisplayshortskip}{1pt}
+\setlength{\jot}{1pt}
+\setdisplayskipstretch{0.35}
+\AtBeginDocument{%
+  \setlength{\abovedisplayskip}{8pt}%
+  \setlength{\belowdisplayskip}{8pt}%
+  \setlength{\abovedisplayshortskip}{4pt}%
+  \setlength{\belowdisplayshortskip}{4pt}%
+  \setlength{\jot}{2pt}%
+}
+\RequirePackage{graphicx}
+\RequirePackage{float}
+\RequirePackage{subcaption}
+\RequirePackage{booktabs}
+\RequirePackage{siunitx}
+\RequirePackage{makecell}
+\RequirePackage[table]{xcolor}
+\RequirePackage{arydshln}
+\RequirePackage{hyperref}
+\RequirePackage{etoolbox}
+\RequirePackage{titlesec}
+
+% --- Heading Spacing ---
+% Keep global double spacing, but reduce excessive whitespace around headings.
+\titleformat{\chapter}[hang]{\Huge\bfseries}{\chaptername\ \thechapter}{1em}{}
+\titlespacing*{\chapter}{0pt}{0pt}{10pt}
+\titlespacing*{\section}{0pt}{10pt}{4pt}
+\titlespacing*{\subsection}{0pt}{8pt}{3pt}
+\titlespacing*{\subsubsection}{0pt}{6pt}{2pt}
+
+% --- Float Packing (page-limited report) ---
+% Balanced float profile: improve local order without large page-count penalty.
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{5}
+\renewcommand{\topfraction}{0.95}
+\renewcommand{\bottomfraction}{0.95}
+\renewcommand{\textfraction}{0.10}
+\renewcommand{\floatpagefraction}{0.75}
+\setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
+
+% --- Captions ---
+\RequirePackage{caption}
+\DeclareCaptionFont{reportdoublespacing}{\doublespacing}
+% Requirement: Table captions above, Figure captions below [cite: 74, 75]
+\captionsetup{font={normalsize,reportdoublespacing}, labelfont={bf,normalsize}}
+\captionsetup[sub]{font={normalsize,reportdoublespacing}, labelfont={bf,normalsize}}
+\captionsetup[table]{position=above, skip=10pt}
+\captionsetup[figure]{position=below, skip=6pt}
+
+% Enforce body-text-sized table content (hard limit requirement).
+\AtBeginEnvironment{table}{\normalsize}
+\AtBeginEnvironment{tabular}{\normalsize}
+\AtBeginEnvironment{tabular*}{\normalsize}
+
+% --- Referencing ---
+% Requirement: Vancouver/Numeric style with square brackets [cite: 79, 82]
+% Requirement: References NOT Bibliography [cite: 77]
+\RequirePackage[style=numeric, sorting=none, backend=biber]{biblatex}
+
+% --- Individual Identifiability ---
+% Requirement: Individual contributions must be clearly identifiable [cite: 18]
+\newcommand{\contribution}[1]{\medskip\noindent\textbf{Section Contribution: #1}\par}
+
+% Ensure the heading is "References", not "Bibliography"
+\DefineBibliographyStrings{english}{%
+  bibliography = {References},
+}

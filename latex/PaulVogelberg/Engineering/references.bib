@@ -1,52 +1,116 @@
 % Bibliography for Paul Vogelberg's Supercapacitor Section
 % Add your references here in BibTeX format
 
-% Example Formula Student Rules
-@manual{fs-rules2025,
-    title = {Formula Student Rules 2025},
-    organization = {Formula Student},
-    year = {2025},
-    note = {Version 1.0}
+% Formula Student Electric Vehicle Rules
+@manual{fs-ev-rules2025,
+  title = {Formula Student Electric Vehicle (FS-EV) Rules},
+  organization = {Formula Student},
+  year = {2025},
+  version = {1.0}
 }
 
 % Add your supercapacitor-related references below:
 
-@book{linden2011,
-  title={Linden's Handbook of Batteries},
-  author={Reddy, Thomas B.},
-  edition={4th},
-  year={2011},
-  publisher={McGraw-Hill Education},
-  note={Primary source for Pb-acid, NiMH, and general Li-ion ranges}
-}
-
-@article{miao2019,
-  title={Current Li-Ion Battery Technologies in Electric Vehicles and Opportunities for Advancements},
-  author={Miao, Yu and Hynan, Patrick and von Jouanne, Annette and Yokochi, Alexandre},
-  journal={Energies},
-  volume={12},
-  number={6},
-  pages={1074},
-  year={2019},
-  publisher={MDPI},
-  note={Source for LTO, LFP, and NMC comparisons}
-}
-
-@article{omar2014,
-  title={Lithium ion capacitor: A review of technology and thermal behaviors},
-  author={Omar, Noshin and Daowd, Mohamed and Hegazy, Omar and Al Sakka, Monzer and Coosemans, Thierry and Van Mierlo, Joeri},
-  journal={International Journal of Energy Research},
-  volume={38},
-  number={12},
-  pages={1529--1542},
-  year={2014},
-  note={Source for Li-ion Capacitor (LIC) specific data}
-}
-
-@misc{unmannedsystems2024,
-  title={High-Capacity Batteries for Drones \& Robotics: Technology Review},
-  author={{Unmanned Systems Technology}},
+@article{kalaiarasi2024tale,
+  title={Supercapacitors and rechargeable batteries, a tale of two technologies: Past, present and beyond},
+  author={Kalai Arasi, Azega Rajendra Babu and Smith, Anderson David and Chowdhury, Niladri Roy and Vyas, Agin and Li, Qi and Haque, Mohammad Mazharul and Xun, Qian and Zhang, Xiaoyan and Thurakkal, Shameel and Thiringer, Torbj{\"o}rn and others},
+  journal={Sustainable Materials and Technologies},
+  volume={41},
+  pages={16},
   year={2024},
-  howpublished={\url{https://www.unmannedsystemstechnology.com}},
-  note={Source for High-Discharge Li-Po (Drone) performance data}
+  publisher={Elsevier}
+}
+
+@techreport{menacher2016produktionstechnik,
+  author = {Menacher, Stefan},
+  title = {Produktionstechnik f{\"u}r Lithium-Ionen-Zellen (AP 4.2.1 -- AP 4.3.2)},
+  institution = {T{\"U}V S{\"U}D Battery Testing GmbH},
+  year = {2016},
+  type = {Teilvorhaben im Rahmen des Verbundprojekts ExZellTUM},
+  number = {F{\"o}rderkennzeichen: 03X4633C},
+  howpublished = {\href{https://edocs.tib.eu/files/e01fb16/873320050.pdf}{Report PDF}},
+  pages={24}
+}
+
+@article{koloch2025cellpack,
+  title={From Cell to Pack: Empirical Analysis of the Correlations Between Cell Properties and Battery Pack Characteristics of Electric Vehicles},
+  author={Koloch, Jan and Heienbrok, Mats and Kasperek, Maksymilian and Lienkamp, Markus},
+  note={Article},
+  year={2025},
+  pages={10-14}
+}
+
+@techreport{batpac2022manual,
+  author = {Knehr, Kevin W. and Kubal, Joseph J. and Nelson, Paul A. and Ahmed, Shabbir},
+  title = {Battery Performance and Cost Modeling for Electric-Drive Vehicles: A Manual for BatPaC v5.0},
+  institution = {Argonne National Laboratory},
+  number = {ANL/CSE-22/1},
+  year = {2022},
+  month = jul,
+  doi = {10.2172/1877590},
+  howpublished = {
+    \href{https://www.anl.gov/cse/batpac-model-software}{BatPaC model software}
+  }
+}
+
+@misc{epp_multiphysical_battery,
+  author = {Epp, Alexander},
+  title = {Multiphysical Models and Optimization for Conceptual Design of High-Voltage Battery Systems},
+  howpublished = {\href{https://publications.rwth-aachen.de/record/976905/files/976905.pdf}{Publication PDF}},
+  note = {Referenced page: 194}
+}
+
+% Component Datasheets (Formally Cited)
+@misc{nxp-mc33771-ds,
+  title={MC33771 Automotive Battery Cell Monitor IC Datasheet},
+  author={{NXP Semiconductors}},
+  howpublished={\href{https://www.nxp.com}{Datasheet}}
+}
+
+@misc{nxp-mc33664-ds,
+  title={MC33664 TPL Transceiver Interface Datasheet},
+  author={{NXP Semiconductors}},
+  howpublished={\href{https://www.nxp.com}{Datasheet}}
+}
+
+@misc{stm32-nucleo-f4,
+  title={STM32 Nucleo-F4 Development Board Reference Manual},
+  author={{STMicroelectronics}},
+  howpublished={\href{https://www.st.com}{Reference Manual}}
+}
+
+@misc{sech-c46w-3r0-0600,
+  title={SECH C46W-3R0-0600 Supercapacitor Cell Datasheet},
+  author={{Sech Co., Ltd.}},
+  howpublished={\href{https://www.sechsa.com/wp-content/uploads/220106-Sech-datasheet-46mm-cells-1.pdf}{Datasheet PDF}}
+}
+
+@misc{gmcc-c35s-3r0-0600,
+  title={GMCC C35S-3R0-0600 Supercapacitor Cell Datasheet},
+  author={{GMCC Supercapacitor Development Co., Ltd.}},
+  howpublished={\href{https://www.gmccsieyuan.com/uploads/C35S-3R0-0600-English.pdf}{Datasheet PDF}}
+}
+
+@misc{cda-chq-3r0607r-tw,
+  title={CDA CHQ-3R0607R-TW Supercapacitor Cell Datasheet},
+  author={{Cellcap / Dongyang Automotive}},
+  howpublished={\href{https://en.cda-cap.com/wp-content/uploads/2023/08/bus_elx_ds_4015_CHQ_series.pdf}{Datasheet PDF}}
+}
+
+@misc{ti-sn65hvd230-ds,
+  title={SN65HVD230 3.3-V CAN Transceiver Datasheet},
+  author={{Texas Instruments}},
+  howpublished={\href{https://www.ti.com}{Datasheet}}
+}
+
+@misc{eaton-bussmann-170m1759-ds,
+  title={Bussmann Series 170M1759 High-Speed Square Body Fuse Datasheet},
+  author={{Eaton}},
+  howpublished={\href{https://www.eaton.com}{Datasheet}}
+}
+
+@misc{earthx-etx12a-ds,
+  title={EarthX ETX12A Lithium Battery Product Data},
+  author={{EarthX}},
+  howpublished={\href{https://earthxbatteries.com}{Product Data}}
 }

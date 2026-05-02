@@ -19,151 +19,321 @@
 
 \refsection{0}
   \datalist[entry]{none/global//global/global}
-    \entry{linden2011}{book}{}
-      \name{author}{1}{}{%
-        {{hash=5624592f2a1d455063936c32ad0202d1}{%
-           family={Reddy},
-           familyi={R\bibinitperiod},
-           given={Thomas\bibnamedelima B.},
-           giveni={T\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {McGraw-Hill Education}%
-      }
-      \strng{namehash}{5624592f2a1d455063936c32ad0202d1}
-      \strng{fullhash}{5624592f2a1d455063936c32ad0202d1}
-      \strng{bibnamehash}{5624592f2a1d455063936c32ad0202d1}
-      \strng{authorbibnamehash}{5624592f2a1d455063936c32ad0202d1}
-      \strng{authornamehash}{5624592f2a1d455063936c32ad0202d1}
-      \strng{authorfullhash}{5624592f2a1d455063936c32ad0202d1}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{edition}{4th}
-      \field{note}{Primary source for Pb-acid, NiMH, and general Li-ion ranges}
-      \field{title}{Linden's Handbook of Batteries}
-      \field{year}{2011}
-    \endentry
-    \entry{miao2019}{article}{}
-      \name{author}{4}{}{%
-        {{hash=81c557b095aa0b3c22a2fbc1e2bfa711}{%
-           family={Miao},
-           familyi={M\bibinitperiod},
-           given={Yu},
-           giveni={Y\bibinitperiod}}}%
-        {{hash=0eca34955b6f2e5cff2eb31f1fb35698}{%
-           family={Hynan},
-           familyi={H\bibinitperiod},
-           given={Patrick},
-           giveni={P\bibinitperiod}}}%
-        {{hash=a5e747405d6d2c1e8566aa34f039cbf1}{%
-           family={Jouanne},
-           familyi={J\bibinitperiod},
-           given={Annette},
-           giveni={A\bibinitperiod},
-           prefix={von},
-           prefixi={v\bibinitperiod}}}%
-        {{hash=035f539275df4af447211d3f48ae8440}{%
-           family={Yokochi},
-           familyi={Y\bibinitperiod},
-           given={Alexandre},
+    \entry{kalaiarasi2024tale}{article}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{10}{}{%
+        {{hash=53f5eb96aa6a4aad2571308d5c943480}{%
+           family={Kalai\bibnamedelima Arasi},
+           familyi={K\bibinitperiod\bibinitdelim A\bibinitperiod},
+           given={Azega\bibnamedelimb Rajendra\bibnamedelima Babu},
+           giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=190f70c9db190a0606d2f7ccd7b5b738}{%
+           family={Smith},
+           familyi={S\bibinitperiod},
+           given={Anderson\bibnamedelima David},
+           giveni={A\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=afd28b9e40ad681e015255afaa7c89ee}{%
+           family={Chowdhury},
+           familyi={C\bibinitperiod},
+           given={Niladri\bibnamedelima Roy},
+           giveni={N\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=3fe6d8760630f7aa096852f32924b59c}{%
+           family={Vyas},
+           familyi={V\bibinitperiod},
+           given={Agin},
            giveni={A\bibinitperiod}}}%
+        {{hash=b247ada9c21c288f4dcabdae71378271}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Qi},
+           giveni={Q\bibinitperiod}}}%
+        {{hash=fbe97a41b8057397a56d6650a832ddb8}{%
+           family={Haque},
+           familyi={H\bibinitperiod},
+           given={Mohammad\bibnamedelima Mazharul},
+           giveni={M\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=6500ddc3486cd856dc4d38376d34bbaf}{%
+           family={Xun},
+           familyi={X\bibinitperiod},
+           given={Qian},
+           giveni={Q\bibinitperiod}}}%
+        {{hash=5b996621da6e0ca32bcc27f9c7ceaed4}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Xiaoyan},
+           giveni={X\bibinitperiod}}}%
+        {{hash=600a87a869e32a970037ec2d67b89c7b}{%
+           family={Thurakkal},
+           familyi={T\bibinitperiod},
+           given={Shameel},
+           giveni={S\bibinitperiod}}}%
+        {{hash=587d2575e8417dd9df02206b49f3b78c}{%
+           family={Thiringer},
+           familyi={T\bibinitperiod},
+           given={Torbjörn},
+           giveni={T\bibinitperiod}}}%
       }
       \list{publisher}{1}{%
-        {MDPI}%
+        {Elsevier}%
       }
-      \strng{namehash}{ccdc55aa4b15f82aaf7ae5f37020ede4}
-      \strng{fullhash}{dd4ae82865b2a0a9ab08c5cd4e3736a5}
-      \strng{bibnamehash}{ccdc55aa4b15f82aaf7ae5f37020ede4}
-      \strng{authorbibnamehash}{ccdc55aa4b15f82aaf7ae5f37020ede4}
-      \strng{authornamehash}{ccdc55aa4b15f82aaf7ae5f37020ede4}
-      \strng{authorfullhash}{dd4ae82865b2a0a9ab08c5cd4e3736a5}
+      \strng{namehash}{862bbc6bbc9375792312c81a7f9c301e}
+      \strng{fullhash}{04ec476181f85e28e345b5649e534c49}
+      \strng{bibnamehash}{862bbc6bbc9375792312c81a7f9c301e}
+      \strng{authorbibnamehash}{862bbc6bbc9375792312c81a7f9c301e}
+      \strng{authornamehash}{862bbc6bbc9375792312c81a7f9c301e}
+      \strng{authorfullhash}{04ec476181f85e28e345b5649e534c49}
       \field{sortinit}{1}
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{Energies}
-      \field{note}{Source for LTO, LFP, and NMC comparisons}
-      \field{number}{6}
-      \field{title}{Current Li-Ion Battery Technologies in Electric Vehicles and Opportunities for Advancements}
-      \field{volume}{12}
-      \field{year}{2019}
-      \field{pages}{1074}
+      \field{journaltitle}{Sustainable Materials and Technologies}
+      \field{title}{Supercapacitors and rechargeable batteries, a tale of two technologies: Past, present and beyond}
+      \field{volume}{41}
+      \field{year}{2024}
+      \field{pages}{16}
       \range{pages}{1}
     \endentry
-    \entry{omar2014}{article}{}
-      \name{author}{6}{}{%
-        {{hash=a32728f5626e57a1e0288f8037e26e45}{%
-           family={Omar},
-           familyi={O\bibinitperiod},
-           given={Noshin},
-           giveni={N\bibinitperiod}}}%
-        {{hash=3b3384d730d186d82764157ff602f1b6}{%
-           family={Daowd},
-           familyi={D\bibinitperiod},
-           given={Mohamed},
-           giveni={M\bibinitperiod}}}%
-        {{hash=c39d06ab65aee9f5115877830b2e2c35}{%
-           family={Hegazy},
-           familyi={H\bibinitperiod},
-           given={Omar},
-           giveni={O\bibinitperiod}}}%
-        {{hash=2ebc35adf6e94496449b40cce48f98d2}{%
-           family={Al\bibnamedelima Sakka},
-           familyi={A\bibinitperiod\bibinitdelim S\bibinitperiod},
-           given={Monzer},
-           giveni={M\bibinitperiod}}}%
-        {{hash=f98dc86f80d2af3d7184a43c469ed9b3}{%
-           family={Coosemans},
-           familyi={C\bibinitperiod},
-           given={Thierry},
-           giveni={T\bibinitperiod}}}%
-        {{hash=dc8c5dacdc5e6afa607ac983194ba975}{%
-           family={Van\bibnamedelima Mierlo},
-           familyi={V\bibinitperiod\bibinitdelim M\bibinitperiod},
-           given={Joeri},
-           giveni={J\bibinitperiod}}}%
-      }
-      \strng{namehash}{1981cdb019d9cf3255ade2c676ee8280}
-      \strng{fullhash}{6d87bc11dcc80c9ecb1aaa1837b6fa30}
-      \strng{bibnamehash}{1981cdb019d9cf3255ade2c676ee8280}
-      \strng{authorbibnamehash}{1981cdb019d9cf3255ade2c676ee8280}
-      \strng{authornamehash}{1981cdb019d9cf3255ade2c676ee8280}
-      \strng{authorfullhash}{6d87bc11dcc80c9ecb1aaa1837b6fa30}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{International Journal of Energy Research}
-      \field{note}{Source for Li-ion Capacitor (LIC) specific data}
-      \field{number}{12}
-      \field{title}{Lithium ion capacitor: A review of technology and thermal behaviors}
-      \field{volume}{38}
-      \field{year}{2014}
-      \field{pages}{1529\bibrangedash 1542}
-      \range{pages}{14}
-    \endentry
-    \entry{unmannedsystems2024}{misc}{}
+    \entry{sech-c46w-3r0-0600}{misc}{}
       \name{author}{1}{}{%
-        {{hash=8600c60cdd536bf8a442e4920bc72f74}{%
-           family={{Unmanned Systems Technology}},
-           familyi={U\bibinitperiod}}}%
+        {{hash=9f7f0cea6773ecffb7ec808a4c15481a}{%
+           family={{Sech Co., Ltd.}},
+           familyi={S\bibinitperiod}}}%
       }
-      \strng{namehash}{8600c60cdd536bf8a442e4920bc72f74}
-      \strng{fullhash}{8600c60cdd536bf8a442e4920bc72f74}
-      \strng{bibnamehash}{8600c60cdd536bf8a442e4920bc72f74}
-      \strng{authorbibnamehash}{8600c60cdd536bf8a442e4920bc72f74}
-      \strng{authornamehash}{8600c60cdd536bf8a442e4920bc72f74}
-      \strng{authorfullhash}{8600c60cdd536bf8a442e4920bc72f74}
+      \strng{namehash}{9f7f0cea6773ecffb7ec808a4c15481a}
+      \strng{fullhash}{9f7f0cea6773ecffb7ec808a4c15481a}
+      \strng{bibnamehash}{9f7f0cea6773ecffb7ec808a4c15481a}
+      \strng{authorbibnamehash}{9f7f0cea6773ecffb7ec808a4c15481a}
+      \strng{authornamehash}{9f7f0cea6773ecffb7ec808a4c15481a}
+      \strng{authorfullhash}{9f7f0cea6773ecffb7ec808a4c15481a}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://www.sechsa.com/wp-content/uploads/220106-Sech-datasheet-46mm-cells-1.pdf}{Datasheet PDF}}
+      \field{title}{SECH C46W-3R0-0600 Supercapacitor Cell Datasheet}
+    \endentry
+    \entry{gmcc-c35s-3r0-0600}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=0a24e58bba44a2ac39e91064528e7744}{%
+           family={{GMCC Supercapacitor Development Co., Ltd.}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{0a24e58bba44a2ac39e91064528e7744}
+      \strng{fullhash}{0a24e58bba44a2ac39e91064528e7744}
+      \strng{bibnamehash}{0a24e58bba44a2ac39e91064528e7744}
+      \strng{authorbibnamehash}{0a24e58bba44a2ac39e91064528e7744}
+      \strng{authornamehash}{0a24e58bba44a2ac39e91064528e7744}
+      \strng{authorfullhash}{0a24e58bba44a2ac39e91064528e7744}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://www.gmccsieyuan.com/uploads/C35S-3R0-0600-English.pdf}{Datasheet PDF}}
+      \field{title}{GMCC C35S-3R0-0600 Supercapacitor Cell Datasheet}
+    \endentry
+    \entry{cda-chq-3r0607r-tw}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=cd29df16d6c37ca27a959557ef2b236c}{%
+           family={{Cellcap / Dongyang Automotive}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{cd29df16d6c37ca27a959557ef2b236c}
+      \strng{fullhash}{cd29df16d6c37ca27a959557ef2b236c}
+      \strng{bibnamehash}{cd29df16d6c37ca27a959557ef2b236c}
+      \strng{authorbibnamehash}{cd29df16d6c37ca27a959557ef2b236c}
+      \strng{authornamehash}{cd29df16d6c37ca27a959557ef2b236c}
+      \strng{authorfullhash}{cd29df16d6c37ca27a959557ef2b236c}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://en.cda-cap.com/wp-content/uploads/2023/08/bus_elx_ds_4015_CHQ_series.pdf}{Datasheet PDF}}
+      \field{title}{CDA CHQ-3R0607R-TW Supercapacitor Cell Datasheet}
+    \endentry
+    \entry{batpac2022manual}{report}{}
+      \name{author}{4}{}{%
+        {{hash=eda4a0f7eb2c2c6ded8d988d5210e04e}{%
+           family={Knehr},
+           familyi={K\bibinitperiod},
+           given={Kevin\bibnamedelima W.},
+           giveni={K\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=692b1c122896997f102e5993ff8a0e32}{%
+           family={Kubal},
+           familyi={K\bibinitperiod},
+           given={Joseph\bibnamedelima J.},
+           giveni={J\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=a67c10e33c378f50537da50bdc896165}{%
+           family={Nelson},
+           familyi={N\bibinitperiod},
+           given={Paul\bibnamedelima A.},
+           giveni={P\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=f3e9f4082e3ae4e155660e803be71262}{%
+           family={Ahmed},
+           familyi={A\bibinitperiod},
+           given={Shabbir},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Argonne National Laboratory}%
+      }
+      \strng{namehash}{994c7e80868f8f23d6ea7447621888cf}
+      \strng{fullhash}{36f43efcde009d202315562b882ec7a3}
+      \strng{bibnamehash}{994c7e80868f8f23d6ea7447621888cf}
+      \strng{authorbibnamehash}{994c7e80868f8f23d6ea7447621888cf}
+      \strng{authornamehash}{994c7e80868f8f23d6ea7447621888cf}
+      \strng{authorfullhash}{36f43efcde009d202315562b882ec7a3}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://www.anl.gov/cse/batpac-model-software}{BatPaC model software}}
+      \field{month}{7}
+      \field{number}{ANL/CSE-22/1}
+      \field{title}{Battery Performance and Cost Modeling for Electric-Drive Vehicles: A Manual for BatPaC v5.0}
+      \field{type}{techreport}
+      \field{year}{2022}
+      \verb{doi}
+      \verb 10.2172/1877590
+      \endverb
+    \endentry
+    \entry{nxp-mc33771-ds}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=70a107d58d4aa1203cc8cde04480d72c}{%
+           family={{NXP Semiconductors}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{fullhash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{bibnamehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{authorbibnamehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{authornamehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{authorfullhash}{70a107d58d4aa1203cc8cde04480d72c}
+      \field{extraname}{1}
       \field{sortinit}{1}
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{howpublished}{\url{https://www.unmannedsystemstechnology.com}}
-      \field{note}{Source for High-Discharge Li-Po (Drone) performance data}
-      \field{title}{High-Capacity Batteries for Drones \& Robotics: Technology Review}
-      \field{year}{2024}
+      \field{howpublished}{\href{https://www.nxp.com}{Datasheet}}
+      \field{title}{MC33771 Automotive Battery Cell Monitor IC Datasheet}
+    \endentry
+    \entry{stm32-nucleo-f4}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=c38884ab3cf908c2798725960369391b}{%
+           family={{STMicroelectronics}},
+           familyi={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{c38884ab3cf908c2798725960369391b}
+      \strng{fullhash}{c38884ab3cf908c2798725960369391b}
+      \strng{bibnamehash}{c38884ab3cf908c2798725960369391b}
+      \strng{authorbibnamehash}{c38884ab3cf908c2798725960369391b}
+      \strng{authornamehash}{c38884ab3cf908c2798725960369391b}
+      \strng{authorfullhash}{c38884ab3cf908c2798725960369391b}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://www.st.com}{Reference Manual}}
+      \field{title}{STM32 Nucleo-F4 Development Board Reference Manual}
+    \endentry
+    \entry{ti-sn65hvd230-ds}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=67e54b1ee931f3f4bddfefa5fbde5fd8}{%
+           family={{Texas Instruments}},
+           familyi={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{fullhash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{bibnamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorbibnamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authornamehash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \strng{authorfullhash}{67e54b1ee931f3f4bddfefa5fbde5fd8}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://www.ti.com}{Datasheet}}
+      \field{title}{SN65HVD230 3.3-V CAN Transceiver Datasheet}
+    \endentry
+    \entry{eaton-bussmann-170m1759-ds}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=cb00541ad4a66bb27ad7b328542b139e}{%
+           family={{Eaton}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{cb00541ad4a66bb27ad7b328542b139e}
+      \strng{fullhash}{cb00541ad4a66bb27ad7b328542b139e}
+      \strng{bibnamehash}{cb00541ad4a66bb27ad7b328542b139e}
+      \strng{authorbibnamehash}{cb00541ad4a66bb27ad7b328542b139e}
+      \strng{authornamehash}{cb00541ad4a66bb27ad7b328542b139e}
+      \strng{authorfullhash}{cb00541ad4a66bb27ad7b328542b139e}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://www.eaton.com}{Datasheet}}
+      \field{title}{Bussmann Series 170M1759 High-Speed Square Body Fuse Datasheet}
+    \endentry
+    \entry{earthx-etx12a-ds}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=80bbb52a7fc8bae0572b796a63614068}{%
+           family={{EarthX}},
+           familyi={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{80bbb52a7fc8bae0572b796a63614068}
+      \strng{fullhash}{80bbb52a7fc8bae0572b796a63614068}
+      \strng{bibnamehash}{80bbb52a7fc8bae0572b796a63614068}
+      \strng{authorbibnamehash}{80bbb52a7fc8bae0572b796a63614068}
+      \strng{authornamehash}{80bbb52a7fc8bae0572b796a63614068}
+      \strng{authorfullhash}{80bbb52a7fc8bae0572b796a63614068}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://earthxbatteries.com}{Product Data}}
+      \field{title}{EarthX ETX12A Lithium Battery Product Data}
+    \endentry
+    \entry{nxp-mc33664-ds}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=70a107d58d4aa1203cc8cde04480d72c}{%
+           family={{NXP Semiconductors}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{fullhash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{bibnamehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{authorbibnamehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{authornamehash}{70a107d58d4aa1203cc8cde04480d72c}
+      \strng{authorfullhash}{70a107d58d4aa1203cc8cde04480d72c}
+      \field{extraname}{2}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://www.nxp.com}{Datasheet}}
+      \field{title}{MC33664 TPL Transceiver Interface Datasheet}
+    \endentry
+    \entry{epp_multiphysical_battery}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=1f6253a637f2bac51a5696789bd7b922}{%
+           family={Epp},
+           familyi={E\bibinitperiod},
+           given={Alexander},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{1f6253a637f2bac51a5696789bd7b922}
+      \strng{fullhash}{1f6253a637f2bac51a5696789bd7b922}
+      \strng{bibnamehash}{1f6253a637f2bac51a5696789bd7b922}
+      \strng{authorbibnamehash}{1f6253a637f2bac51a5696789bd7b922}
+      \strng{authornamehash}{1f6253a637f2bac51a5696789bd7b922}
+      \strng{authorfullhash}{1f6253a637f2bac51a5696789bd7b922}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\href{https://publications.rwth-aachen.de/record/976905/files/976905.pdf}{Publication PDF}}
+      \field{note}{Referenced page: 194}
+      \field{title}{Multiphysical Models and Optimization for Conceptual Design of High-Voltage Battery Systems}
     \endentry
   \enddatalist
 \endrefsection
