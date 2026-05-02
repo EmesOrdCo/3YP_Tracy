@@ -177,12 +177,12 @@ The first major structural design decision was the selection of the overall chas
  
 Each concept offers distinct advantages and to objectively evaluate these alternatives, a weighted Pugh decision matrix was used, allowing each concept to be assessed against criteria relevant to the sprint-optimised design objectives.
 
-\begin{figure}[h]
+\begin{table}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/Design_Pugh.png}
     \caption{Architecture Pugh Matrix}
-    \label{fig:design_pugh}
-\end{figure}
+    \includegraphics[width=0.8\textwidth]{images/Design_Pugh.png}
+    \label{tab:design_pugh}
+\end{table}
 
 The weighting is heavily biased toward Cost and Manufacturing (65 \% total). Table \ref{tab:chassis_cost_performance} illustrates the reasoning by the low weight rating for mass potential in the pugh matrix due to its minimal impact on perfomance within the range of different chassis masses.
 
@@ -235,11 +235,11 @@ Using a preliminary CAD model for the spaceframe built on SolidWorks using weldm
     \footnotesize
     \begin{tabular}{|l|c|c|c|c|c|}
         \hline
-        \textbf{Material} & \makecell{\textbf{Est. Chassis} \\ \textbf{Mass (kg)}} & \makecell{\textbf{Raw Material} \\ \textbf{Cost (£)}} & \makecell{\textbf{Strength} \\ \textbf{(MPa)}} & \makecell{\textbf{Performance} \\ \textbf{Est. (s)}} & \makecell{\textbf{Mfg.} \\ \textbf{Complexity}} \\
+        \textbf{Material} & \makecell{\textbf{Est. Chassis} \\ \textbf{Mass (kg)}} & \makecell{\textbf{Material} \\ \textbf{Cost (£)}} & \makecell{\textbf{Strength} \\ \textbf{(MPa)}} & \makecell{\textbf{Performance} \\ \textbf{Est. (s)}} & \makecell{\textbf{Mfg.} \\ \textbf{Complexity}} \\
         \hline
         {Mild Steel (CDS)}\cite{rapidmetals_mild_steel_tube} & 40 & 480 & 280 & 3.59 & Low (MIG) \\
         {AISI 1020 CD}\cite{matweb_aisi1020} & 40 & 550 & 420 & 3.59 & Low (MIG) \\
-        {4130 Chromoly}\cite{weldracing_25crmo4} & 31 & 1,050 & 560 & 3.57 & High (TIG + HAZ Control) \\
+        {4130 Chromoly}\cite{weldracing_25crmo4} & 31 & 1,050 & 560 & 3.57 & High (TIG + HAZ) \\
         {Docol R8}\cite{aedmetals_docol_r8} & 30 & 1,200 & 800 & 3.57 & Moderate (TIG/MIG) \\
         \hline
     \end{tabular}
@@ -249,12 +249,12 @@ The manufacturing complexity scores are due to the fact that 4130 chromoly requi
 
 \subsection{Pugh Matrix and Final Material Selection}
 
-\begin{figure}[h]
+\begin{table}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/Steel_pugh.png}
     \caption{Steel Pugh Matrix}
-    \label{fig:steel_pugh}
-\end{figure}
+    \includegraphics[width=0.8\textwidth]{images/Steel_pugh.png}
+    \label{tab:steel_pugh}
+\end{table}
 
 To finalize our selection we use the same pugh matrix as before (with stiffness removed as it is unifrom across all steel alloys). We have opted for AISI 1020 CD because it provides a 350--380 MPa yield strength (40\% higher than standard mild steel) while remaining cheap and easy to MIG weld and again sacrifices marginal performance improvements to avoid the high costs and complexities of the higher-end alloys. Additionally, the higher strengths of the 4130 Chromoly and Docol R8 are often limited by the weld and heat-affected zone, which typically has similar strength regardless of the parent material, reducing their benefit.
 
@@ -301,7 +301,7 @@ Once the frame geometry was established the secondary tubes were identified and 
         \caption{Bars Replaced with 20x2mm tubes}
         \label{fig:thin_bars}
     \end{subfigure}
-    %\caption{Two figures side by side}
+    \caption{Preliminary Operational Load Cases}
     %\label{fig:both}
 \end{figure}
 \vspace{-16pt}
