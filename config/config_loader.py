@@ -8,6 +8,7 @@ import sys
 
 # Import with fallback for both package and development modes
 try:
+    from .motor_presets import apply_motor_preset
     from .vehicle_config import (
         VehicleConfig, MassProperties, TireProperties, PowertrainProperties,
         AerodynamicsProperties, SuspensionProperties, ControlProperties,
@@ -18,6 +19,7 @@ except (ImportError, ValueError):
     package_root = Path(__file__).parent.parent.resolve()
     if str(package_root) not in sys.path:
         sys.path.insert(0, str(package_root))
+    from config.motor_presets import apply_motor_preset
     from config.vehicle_config import (
         VehicleConfig, MassProperties, TireProperties, PowertrainProperties,
         AerodynamicsProperties, SuspensionProperties, ControlProperties,
@@ -53,6 +55,8 @@ def load_config(config_path: Union[str, Path]) -> VehicleConfig:
             data = yaml.safe_load(f)
     else:
         raise ValueError(f"Unsupported config file format: {config_path.suffix}")
+
+    apply_motor_preset(data, data.get("motor_simulation_preset"))
     
     # Build configuration objects. Unknown keys (from legacy configs written
     # before the schema evolved) are silently dropped so the loader stays

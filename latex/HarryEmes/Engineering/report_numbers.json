@@ -1,12 +1,12 @@
 {
   "baseline": {
-    "final_time": 3.7189999999997014,
-    "final_velocity": 35.759142199184566,
+    "final_time": 3.721999999999701,
+    "final_velocity": 35.60200043422952,
     "peak_power_kW": 80.0,
     "min_fz_front": 208.6636539450687,
-    "t_transition": 1.9279999999998985,
-    "t_traction": 1.9279999999998985,
-    "t_power": 1.790999999999803,
+    "t_transition": 1.9109999999999003,
+    "t_traction": 1.9109999999999003,
+    "t_power": 1.8109999999998008,
     "early_launch_grip_util": 0.8974694112217795
   },
   "params": {
@@ -18,8 +18,8 @@
     "mu_max": 1.7,
     "Ng": 5.5,
     "eta_drv": 0.95,
-    "Kt": 0.822,
-    "Imax": 400.0,
+    "Kt": 0.95,
+    "Imax": 285.0,
     "Vbus": 600.0,
     "CdA": 0.8,
     "AS": 0.12,
@@ -29,8 +29,8 @@
   },
   "analytical_bound": {
     "t_cp": 2.5103735628081356,
-    "gap_s": 1.2086264371915658,
-    "gap_pct": 48.1452822439534
+    "gap_s": 1.2116264371915655,
+    "gap_pct": 48.26478637052824
   },
   "hand_calc": {
     "frr_hand": 19.62,
@@ -41,71 +41,71 @@
     "a_wheelie": 20.51181818181819
   },
   "power_transition": {
-    "T_m_peak": 328.79999999999995,
-    "omega_star": 243.30900243309006,
-    "v_star": 10.944879451448797
+    "T_m_peak": 270.75,
+    "omega_star": 295.47553093259467,
+    "v_star": 13.29151011500042
   },
   "convergence": {
-    "5.00ms": 3.719999999999943,
-    "2.00ms": 3.719999999999812,
-    "1.00ms": 3.7189999999997014,
-    "0.50ms": 3.718500000000409,
-    "0.20ms": 3.7185999999996233
+    "5.00ms": 3.724999999999943,
+    "2.00ms": 3.7219999999998117,
+    "1.00ms": 3.721999999999701,
+    "0.50ms": 3.7220000000004103,
+    "0.20ms": 3.721599999999623
   },
   "dry_wet": {
-    "dry": 3.7189999999997014,
+    "dry": 3.721999999999701,
     "wet": 4.914999999999976,
-    "delta": 1.1960000000002746
+    "delta": 1.193000000000275
   },
   "sensitivity": [
     {
       "label": "CG long. $L_{CG}$",
       "path": "mass.cg_x",
       "baseline": 1.14,
-      "dt_low_ms": 148.9999999999836,
-      "dt_high_ms": 206.9999999999772
+      "dt_low_ms": 147.9999999999837,
+      "dt_high_ms": 205.99999999997732
     },
     {
       "label": "Peak grip $p_{Dx1}$",
       "path": "tires.pacejka_pDx1",
       "baseline": 1.7,
-      "dt_low_ms": 182.99999999997985,
-      "dt_high_ms": -138.99999999998468
+      "dt_low_ms": 181.99999999997996,
+      "dt_high_ms": -137.9999999999848
     },
     {
       "label": "Wheel radius $r_w$",
       "path": "tires.radius_loaded",
       "baseline": 0.247409,
-      "dt_low_ms": 92.99999999998975,
+      "dt_low_ms": 91.99999999998987,
       "dt_high_ms": -60.99999999999328
     },
     {
       "label": "Gear ratio $N_g$",
       "path": "powertrain.gear_ratio",
       "baseline": 5.5,
-      "dt_low_ms": -57.99999999999361,
-      "dt_high_ms": 71.99999999999207
+      "dt_low_ms": -56.99999999999372,
+      "dt_high_ms": 70.99999999999218
     },
     {
       "label": "Driveline $\\eta_\\text{drv}$",
       "path": "powertrain.drivetrain_efficiency",
       "baseline": 0.95,
-      "dt_low_ms": 38.99999999999571,
-      "dt_high_ms": -26.999999999997026
+      "dt_low_ms": 39.999999999995595,
+      "dt_high_ms": -27.999999999996916
     },
     {
       "label": "CG height $h_{CG}$",
       "path": "mass.cg_z",
       "baseline": 0.22,
-      "dt_low_ms": 30.999999999996586,
+      "dt_low_ms": 29.999999999996696,
       "dt_high_ms": -29.999999999996696
     },
     {
       "label": "Mass $m_v$",
       "path": "mass.total_mass",
       "baseline": 200.0,
-      "dt_low_ms": 13.999999999998458,
-      "dt_high_ms": 0.9999999999998899
+      "dt_low_ms": 12.999999999998568,
+      "dt_high_ms": 1.9999999999997797
     },
     {
       "label": "Drag area $C_d A$",

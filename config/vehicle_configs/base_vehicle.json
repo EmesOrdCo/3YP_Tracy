@@ -1,7 +1,9 @@
 {
-  "_note": "The real car: YASA P400R motor + BAMOCAR-PG-D3-700/400 inverter + 200-cell supercapacitor stack (600 V nominal). Mass/track from the 3YP spreadsheet except cg_x: shifted forward from an earlier ultra-rear estimate so the sandbox stays pitch-stable (no wheelie) under launch. Use this config for parameter studies.",
+  "_note": "Mass/track from the 3YP spreadsheet (cg_x chosen for pitch-stable launch). Electrical envelope: simulation uses motor_simulation_preset p600r_provisional (see config/motor_presets.py); thesis text may still cite YASA P400R + BAMOCAR PG-D3. Supercap: 200-cell stack, 600 V nominal.",
+  "motor_simulation_preset": "p600r_provisional",
   "_hardware_sources": {
-    "motor": "yasa-p400rdatasheet-rev-14.pdf (370 Nm @ 450 A, Kt = 0.822, 8000 rpm = 838 rad/s, 160 kW peak @ 700 V).",
+    "motor_report_name": "YASA P400R (written report / student-facing naming).",
+    "motor_simulation": "Preset p600r_provisional — replace constants when P600R datasheet is issued.",
     "inverter": "BAMOCAR-PG-D3-700/600 (UNITEK PG-D3 family, supply 12-700 V DC, peak 600 A_lo / 425 A RMS, continuous 280 A RMS). Upgraded from PG-D3-700/400 to match Paul's accumulator V_finish=400 V design target; same form factor, same NDrive software, drop-in replacement on the DC-link.",
     "supercap_cell": "Eaton/Maxwell C46W-3R0-0600 (3.0 V, 600 F, 0.7 mOhm ESR per cell), 200 cells in series -> 600 V, 3 F, 0.14 Ohm."
   },
@@ -34,7 +36,7 @@
   },
   "powertrain": {
     "motor_torque_constant": 0.822,
-    "motor_max_current": 400.0,
+    "motor_max_current": 285.0,
     "motor_max_speed": 838.0,
     "motor_efficiency": 0.95,
     "battery_voltage_nominal": 600.0,

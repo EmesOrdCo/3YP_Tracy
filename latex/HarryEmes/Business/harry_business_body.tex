@@ -7,16 +7,14 @@ driver-based Python model consistent with the engineering
 chapter's sensitivity methodology~\cite{emes_engineering}: linked
 capex, opex, and revenue; P\&L and free cash flow; CAPEX inversion
 (Section~\ref{sec:inversion}); break-even and one-at-a-time
-sensitivities (Sections~\ref{sec:breakeven}--\ref{sec:sensitivity});
+sensitivities (Sections~\ref{sec:breakeven}--\ref{sec:business_sensitivity});
 NPV/IRR (Section~\ref{sec:npv}); and downtime stress
-(Section~\ref{sec:downtime}). Market sizing and day-rate inputs
-follow McConnell's market chapter~\cite{mcconnell_business}; PAS,
-fleet-recovery, and gatekeeper uptake assumptions align with the
-preceding business chapters~\cite{pas1882,pas1883,pas1885,alarp,cam_testbed_uk,ccav,thatcham}.%
+(Section~\ref{sec:downtime}). Market sizing and day-rate inputs follow
+Section~\ref{sec:market_and_competition}; fleet-recovery and gatekeeper uptake assumptions align with the
+preceding business chapters~\cite{alarp,cam_testbed_uk,ccav,thatcham}.%
 \footnote{This chapter, the Python financial model, all figures
-and prose, is the sole work of Harry Emes. Market material cited
-here is the work of Toby McConnell~\cite{mcconnell_business};
-prototype and supply-chain context is owed to the engineering
+and prose, is the sole work of Harry Emes. Market inputs are taken from
+Section~\ref{sec:market_and_competition}; prototype and supply-chain context is owed to the engineering
 chapters of the group report.}
 
 \medskip
@@ -52,7 +50,7 @@ chapters of the group report.}
 \noindent \textbf{Conclusion}: the TaaS financial structure clears
 standard venture-capital thresholds in the base case and is
 robust to adverse swings in the key commercial drivers
-(Section~\ref{sec:sensitivity}).
+(Section~\ref{sec:business_sensitivity}).
 
 % =====================================================================
 \section{Scope and methodology}
@@ -62,9 +60,9 @@ robust to adverse swings in the key commercial drivers
 
 \noindent Section scope: the model structure above is implemented
 end-to-end below; narrative in the Market and Strategy chapters is
-not repeated. Technical and operational priors (PAS, recovery,
+not repeated. Technical and operational priors (recovery,
 maintenance) are embedded in the driver set and cited where they
-enter the accounts~\cite{pas1882,pas1883,pas1885,alarp,cam_testbed_uk,ccav,thatcham}.
+enter the accounts~\cite{alarp,cam_testbed_uk,ccav,thatcham}.
 
 \begin{figure}[H]
 \centering
@@ -97,8 +95,7 @@ plan: \totalCapex.
 
 Capital is depreciated on a five-year straight-line basis. No
 residual value is modelled at Y5: in a PSS business, the physical
-asset is either refurbished in place under Yuze Jiang's 9R-framework
-loop (and therefore stays in service beyond the modelled window) or
+asset is either refurbished in place following the 9R lifecycle loop (Section~\ref{sec:9r_framework_application})---and therefore stays in service beyond the modelled window---or is
 retired in line with safety-critical-testing industry norms.
 
 \input{tables/capex_schedule.tex}
@@ -114,7 +111,7 @@ retired in line with safety-critical-testing industry norms.
 \caption{Y1 fixed-OPEX build-up. Legend in two columns for legibility.
   The salary-heavy stack is the reason utilisation (revenue per
   engineer per year) is the highest-leverage financial driver in
-  the sensitivity analysis (Section~\ref{sec:sensitivity}).}
+  the sensitivity analysis (Section~\ref{sec:business_sensitivity}).}
 \label{fig:opex_donut}
 \end{figure}
 
@@ -141,21 +138,21 @@ Revenue is modelled bottom-up from three driver arrays: test days
 sold, fleet size, and blended day-rate. Day-rate is the
 mix-weighted average of the Bronze / Silver / Gold packages
 (\pounds6\,k / \pounds8\,k / \pounds10\,k) benchmarked against
-the competitor set in McConnell's analysis~\cite{mcconnell_business}
+the competitor set in Section~\ref{sec:competitive_landscape}
 (AB~Dynamics~\cite{abdynamics_ar2024},
 UTAC~\cite{utac_facilities},
 HORIBA~\cite{horiba_brake}, and AVL~\cite{avl_profile}). Mix-shift
 from Bronze-heavy to Gold-heavy over five years drives blended
 day-rate from \pounds7.5\,k (Y1) to \pounds9.5\,k (Y5) without
 any individual-tier price movement -- important for the pricing
-discipline discussed in Section~\ref{sec:sensitivity}.
+discipline discussed in Section~\ref{sec:business_sensitivity}.
 
 \input{tables/revenue.tex}
 
-\paragraph{Reconciliation with McConnell's SOM.} Y5 forecast
-revenue of \yFiveRevenue ($\approx$\textdollar 2.7\,M) sits at
-\mbox{10--14\%} of McConnell's serviceable-obtainable-market
-estimate of \textdollar 26\,M~\cite{mcconnell_business} -- a
+\paragraph{Reconciliation with market sizing.}
+Y5 forecast revenue of \yFiveRevenue ($\approx$\textdollar 2.7\,M)
+sits at \mbox{10--14\%} of the serviceable-obtainable-market estimate
+(\textdollar 26\,M) in Section~\ref{subsec:som_estimation} -- a
 penetration consistent with a credible early-stage entrant, with
 upside if utilisation and mix outperform the base plan.
 
@@ -355,13 +352,13 @@ it does not imply year-by-year operating returns at that level.
 
 % ---------------------------------------------------------------------
 \subsection{Sensitivity analysis}
-\label{sec:sensitivity}
+\label{sec:business_sensitivity}
 % ---------------------------------------------------------------------
 
 Following the one-at-a-time methodology of the engineering
 chapter's sensitivity ranking~\cite{emes_engineering}, each driver
 is perturbed by $\pm 20\%$ ($\pm 50\%$ for inflation) and the
-resulting Y3 EBIT swings ranked in Figure~\ref{fig:tornado}.
+resulting Y3 EBIT swings ranked in Figure~\ref{fig:business_tornado}.
 
 \begin{figure}[H]
 \centering
@@ -370,7 +367,7 @@ resulting Y3 EBIT swings ranked in Figure~\ref{fig:tornado}.
   $\pm 50\%$) perturbation of each driver. Blended day-rate and
   utilisation dominate; fixed opex is second-order; CAPEX and
   inflation are third-order.}
-\label{fig:tornado}
+\label{fig:business_tornado}
 \end{figure}
 
 Two implications follow. First, \textbf{pricing discipline matters
@@ -386,22 +383,20 @@ there, rather than on cost-out or CAPEX engineering.
 \label{ch:risk_fin}
 % =====================================================================
 
-McConnell's risk taxonomy~\cite{mcconnell_business} treats the
-industry-level risk environment. This section adds the
-financial-risk view: how robust are the NPV and EBIT forecasts to
-an \emph{execution}-side failure on the fleet-maintenance
-dependency? In a TaaS business where revenue is utilisation-tethered
-(Section~\ref{sec:why_taas}), this is the single most important
-execution-risk question.
+Section~\ref{sec:risk_analysis_strategic_tradeoffs} covers industry-level
+risks. Here the focus is financial: if fleet maintenance fails
+operationally, how much do NPV and EBIT suffer? For TaaS, revenue follows
+utilisation (Section~\ref{sec:why_taas}), so that maintenance risk is the
+main execution risk.
 
 % ---------------------------------------------------------------------
 \subsection{Downtime sensitivity -- quantifying the maintenance dependency}
 \label{sec:downtime}
 % ---------------------------------------------------------------------
 
-David's maintenance protocols target a $<$30-minute fleet-recovery
-time on any single failure, which underpins the planned
-utilisation arrays in Table~\ref{tab:revenue}. Downtime is modelled
+Following Section~\ref{subsec:supply_chain_planning_framework}, we assume
+$<$30-minute fleet recovery from any single failure; this underpins the
+planned utilisation arrays in Table~\ref{tab:revenue}. Downtime is modelled
 as a fractional reduction in billable days: a downtime rate of
 $d\%$ delivers $(1-d)\cdot D_t$ billable days in year $t$. The fixed
 cost base is unchanged (the crew is still paid while the vehicle is
@@ -436,12 +431,12 @@ one-for-one into lost gross profit.
         also compresses the exit multiple
         (acquirers discount unreliability), NPV can flip negative
         at lower downtime levels.
-  \item \textbf{The financial cost of a maintenance-protocol
-        failure is asymmetric.} A 10\% systematic downtime costs
-        \pounds190\,k of Y5 revenue, \pounds154\,k of Y5 EBIT,
-        and \pounds390\,k of NPV@20\%. A 20\% systematic downtime
-        costs \pounds418\,k, \pounds308\,k, and \pounds781\,k
-        respectively.
+  \item \textbf{Maintenance is cheap to fund but expensive to starve.}
+        Relative to the recurring maintenance cash costs in the base plan,
+        the losses from systematic downtime dominate: at 10\% downtime,
+        \pounds190\,k of Y5 revenue, \pounds154\,k of Y5 EBIT, and
+        \pounds390\,k of NPV@20\% are lost; at 20\% downtime those figures
+        rise to \pounds418\,k, \pounds308\,k, and \pounds781\,k.
 \end{tightitemize}
 
 \paragraph{Implication for the maintenance budget.} The financial
@@ -482,10 +477,10 @@ territory. Three specific financial exposures follow:
         single-customer concentration.
 \end{tightitemize}
 
-These financial-risk mitigations tie back to the execution plan
-but are deliberately framed here in cash terms, because
-cash-runway protection is the financial-evaluation lens that
-McConnell's industry-risk taxonomy does not cover.
+These financial-risk mitigations align with the execution plan but are
+framed here as cash outcomes: Section~\ref{sec:risk_analysis_strategic_tradeoffs}
+treats industry-level strategic risk, whereas this subsection adds the
+liquidity and runway perspective needed for financial evaluation.
 
 % =====================================================================
 \section{Funding strategy, valuation and financial KPIs}
@@ -601,12 +596,13 @@ paired with the Y1 financial action it drives.
         compensated on mix-shift to Silver/Gold, not only on
         volume. \emph{Y1 action}: incentive plan pays on blended
         day-rate, not bookings.
-  \item \textbf{Gate Y4+ revenue on CAM~Testbed~UK / CCAV /
-        Thatcham acceptance.} The terminal-value assumption
-        (2.5$\times$ Y5 revenue) only holds if the platform is
-        regulator-approved. \emph{Y1 action}: commission the ISO /
-        IEC~17025 gap-analysis and initiate the CAM~Testbed~UK
-        relationship.
+  \item \textbf{Do not treat Y4+ revenue as guaranteed until UK partners have accepted the platform.}
+        Three main barriers: recognition on the CAM~Testbed~UK network~\cite{cam_testbed_uk},
+        credible engagement with CCAV (UK government CAV programme)~\cite{ccav}, and acceptance by
+        insurance-sector assessors such as Thatcham~\cite{thatcham}. The exit valuation (2.5$\times$ Y5 revenue)
+        only makes sense once those relationships are underway.
+        \emph{Y1 action}: commission an ISO/IEC~17025~\cite{iso17025} gap analysis and initiate the
+        CAM~Testbed~UK relationship.
   \item \textbf{Protect the Y2/Y3 cash boundary at all costs.}
         Only \pounds90\,k of buffer; compound shocks can
         cascade into a bridge round at a compressed valuation.
@@ -625,7 +621,7 @@ paired with the Y1 financial action it drives.
 \noindent The TaaS financial structure is viable and
 defensible. The single biggest threat to financial returns is not
 the external market, the competitors, or the cost base -- it is
-the execution of the maintenance protocol the model assumes.
+the execution of the recovery assumptions in Section~\ref{subsec:supply_chain_planning_framework} that the model assumes.
 Protecting that assumption is both the cheapest and
 highest-leverage financial action the operator can take.
 

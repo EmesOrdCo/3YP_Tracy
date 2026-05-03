@@ -984,8 +984,8 @@ def write_table_downtime(dt_df: pd.DataFrame) -> None:
 \\small
 \\caption{{Downtime sensitivity: effect of a persistent shortfall in 
 billable days on revenue, EBIT and project NPV. A \\textit{{downtime}} 
-of $d\\%$ models the case where David's maintenance protocols deliver 
-$(1-d)$ of the planned test days each year. Red values indicate an EBIT 
+of $d\\%$ models the case where trackside recovery under Section~\\ref{{subsec:supply_chain_planning_framework}}
+delivers only $(1-d)$ of the planned test days each year. Red values indicate an EBIT 
 or NPV that has turned negative.}}
 \\label{{tab:downtime}}
 \\begin{{tabular}}{{crrrrrr}}

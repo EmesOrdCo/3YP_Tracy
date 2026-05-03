@@ -245,9 +245,9 @@ def objective(x):
         return 10.0
 
 
-print("  Running 500-eval Nelder-Mead (shortened for convergence plot)...")
+print("  Running Nelder-Mead for convergence plot (max 271 objective evaluations)...")
 result = minimize(objective, x0, method="Nelder-Mead",
-                  options=dict(maxiter=500, maxfev=500,
+                  options=dict(maxiter=271, maxfev=271,
                                 xatol=1e-4, fatol=1e-4, disp=False))
 print(f"  Final x = {result.x}")
 print(f"  Final t = {result.fun:.3f} s  ({len(trace)} evals)")
@@ -256,31 +256,19 @@ iters = np.arange(1, len(trace) + 1)
 best_so_far = np.minimum.accumulate(np.array([tr["val"] for tr in trace]))
 times = np.array([tr["time"] for tr in trace])
 wheelies = np.array([tr["wheelie"] for tr in trace])
-powers = np.array([tr["peak_power"] for tr in trace]) / 1e3
-
-# Convergence plot (2 panels).
-fig, axes = plt.subplots(2, 1, figsize=(7.0, 5.2), sharex=True)
-ax = axes[0]
+# Single-panel convergence (time only; peak-power trace omitted for clarity).
+fig, ax = plt.subplots(figsize=(7.0, 3.5))
 ax.plot(iters, times, ".", ms=2.5, color="0.6", label="Eval $t_{75}$")
 ax.plot(iters, best_so_far, "-", color="#1f77b4", lw=1.6,
         label="Best feasible so far (incl. penalty)")
-ax.set(ylabel="Predicted 75 m time (s)",
+if wheelies.any():
+    ax.plot(iters[wheelies], times[wheelies], "x", ms=4.5,
+            color="#d62728", label="Wheelie (penalised)")
+ax.set(xlabel="Objective evaluation", ylabel="Predicted 75 m time (s)",
        title="Nelder–Mead convergence of the acceleration optimiser")
 ax.legend(loc="upper right")
 ax.grid(alpha=0.3)
 ax.set_ylim(3.3, 5.0)
-
-ax = axes[1]
-ax.plot(iters, powers, ".", ms=2.5, color="#9467bd", label="Peak electrical P")
-ax.axhline(80.0, color="r", ls="--", lw=1.0, label="FS-EV 2.2 cap")
-# Mark wheelie evaluations as red crosses on the same axis.
-if wheelies.any():
-    ax.plot(iters[wheelies], powers[wheelies], "x", ms=4.5,
-            color="#d62728", label="Wheelie (rejected)")
-ax.set(xlabel="Objective evaluation", ylabel="Peak electrical power (kW)")
-ax.legend(loc="lower right")
-ax.grid(alpha=0.3)
-ax.set_ylim(55, 90)
 
 fig.tight_layout()
 fig.savefig(FIG / "optim_convergence.pdf", bbox_inches="tight")

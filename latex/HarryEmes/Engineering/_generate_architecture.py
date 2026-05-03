@@ -49,6 +49,18 @@ def fit_box_text(s: str, width_chars: int) -> str:
     return "\n".join(out)
 
 
+def format_side_label(title: str) -> str:
+    """Two-line split for long layer titles so rotated text stays in the gutter."""
+    title = title.strip()
+    if len(title) <= 12:
+        return title
+    parts = title.split()
+    if len(parts) == 2:
+        return f"{parts[0]}\n{parts[1]}"
+    lines = textwrap.wrap(title, width=10)
+    return "\n".join(lines) if lines else title
+
+
 fig, ax = plt.subplots(figsize=(10.0, 6.5))
 ax.set_xlim(0, 10)
 ax.set_ylim(0, 10.2)
@@ -63,17 +75,23 @@ def layer(y, h, label, sub_label, boxes, fill):
         boxstyle="round,pad=0.02",
         linewidth=1.1, edgecolor=EDGE, facecolor=fill, zorder=1,
     ))
-    # Layer name on the left.
-    ax.text(0.55, y + h / 2, label, fontsize=11.5, weight="bold",
+    # Layer name on the left (rotated); keep inside band — split long titles,
+    # shrink font for tall stacks, anchor slightly right of band edge.
+    label_disp = format_side_label(label)
+    longest_line = max(len(line) for line in label_disp.split("\n"))
+    fs_main = min(11.5, 10.2 + 0.35 * h, 110 / max(longest_line, 6))
+    fs_sub = min(8.0, 7.2 + 0.12 * h, 72 / max(len(sub_label), 4))
+    x_main, x_sub = 0.68, 0.98
+    ax.text(x_main, y + h / 2, label_disp, fontsize=fs_main, weight="bold",
             color="0.15", rotation=90, va="center", ha="center", zorder=3,
             parse_math=False)
-    ax.text(0.90, y + h / 2, sub_label, fontsize=8, color="0.35",
+    ax.text(x_sub, y + h / 2, sub_label, fontsize=fs_sub, color="0.35",
             rotation=90, va="center", ha="center", zorder=3,
             parse_math=False)
 
     # Child boxes inside the layer.
     n = len(boxes)
-    x_start = 1.3
+    x_start = 1.38
     x_end = 9.6
     slot = (x_end - x_start) / n
     # Narrow slots → smaller type + tighter wrap width.
@@ -135,7 +153,7 @@ layer(0.20, 1.30, "Results", "analysis/",
       ["Sim.\nresult",
        "State\nhistory",
        "Plots\n(pyplot)",
-       "V&V /\nvalidation"],
+       "V&V\nvalidation"],
       CLR["results"])
 
 

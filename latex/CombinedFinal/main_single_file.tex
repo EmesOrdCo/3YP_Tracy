@@ -21,6 +21,8 @@
 \usepackage{tabularx}
 \usepackage{array}
 \usepackage{multirow}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
 
 \numberwithin{equation}{section}
 
@@ -654,6 +656,7 @@ The design is acceleration-specific. In a conventional Formula Student car, rear
 \checkme{Insert the final agreed vehicle-level targets here: predicted acceleration time, vehicle mass, wheelbase, centre-of-mass height, static axle distribution, tyre size, motor torque and final drive ratio. These values should match the vehicle dynamics and drivetrain chapters.}
 
 \section{Requirements and design constraints}
+\label{sec:suspension_requirements}
 
 The suspension and braking system requirements were derived from three sources: the acceleration-event objective, the Formula Student rule constraints, and the wider group vehicle architecture. For the acceleration event, the most important engineering needs are rear traction, stable launch behaviour, reduced mass and minimal tyre scrub during the high-speed part of the run. For compliance, the vehicle must retain a safe braking system, protected brake components, acceptable steering control and packaging within the permitted vehicle envelope. For team integration, the design must interface with the chassis, powertrain, accumulator, differential, chain drive and wheel package.
 
@@ -753,6 +756,7 @@ The design uses 100\% anti-squat, corresponding to a \SI{12.7}{\degree} anti-squ
 The multi-link geometry also allows a small static toe-in to be selected without accepting that toe-in throughout the complete run. A static toe-in of approximately \SI{0.15}{\degree} is used to stabilise the car at launch and during the first part of the acceleration run. The toe curve is then arranged so that the rear wheels tend towards approximately zero toe as the rear suspension moves under the relevant high-speed load state. This is intended to reduce lateral scrub and rolling resistance when the car has already passed the most traction-limited launch phase.
 
 \section{Anti-squat and dynamic toe-control strategy}
+\label{sec:antisquat_dynamic_toe}
 
 The most distinctive engineering feature of the design is the combined anti-squat and toe-control strategy. The rear toe angle is not treated as a fixed setup value. Instead, it is treated as a dynamic alignment target that changes with the load state of the car. The intended behaviour is simple: launch with a small toe-in value for stability, then approach zero rear toe when the vehicle reaches higher speed.
 
@@ -1469,6 +1473,7 @@ Other accumulator technologies in the table were considered, but not shown since
 Using this metric, asymmetric / hybrid supercapacitors are best; however, they are excluded further from consideration due to being in the research phase \cite{kalaiarasi2024tale}, leading to limited commercial availability and specification data to ground the design around. The focus is therefore on comparing symmetric supercapacitors and high-power lithium-polymer batteries, with the former expected to have a significant mass advantage due to superior power density.
 
 \subsection{Supercapacitor Analysis}
+\label{subsec:supercapacitor_analysis}
 
 Supercapacitors are treated as the primary candidate, with lithium-polymer cells used as a benchmark. Electric Double Layer Capacitor (EDLC) devices are selected within the symmetric supercapacitor class due to relatively high energy capacity. Energy for capacitors is given by:
 \vspace{6pt}
@@ -1834,17 +1839,15 @@ The accumulator system design combines proven supercapacitor technology with mod
 \label{sec:intro}
 % ---------------------------------------------------------------------
 
-The Formula Student Acceleration Event (FS-D~5) is a \SI{75}{\metre}
+The Formula Student Acceleration Event is a \SI{75}{\metre}
 standing start; for EVs, FS-EV~2.2 caps electrical power drawn from the
 accumulator at \SI{80}{\kilo\watt}, and FS-D~5.3.1 disqualifies runs
-over \SI{25}{\second}. A competitive configuration must be
-traction-limited at launch and power-limited later while respecting
-the power cap and avoiding front-axle lift; mass, centre of gravity,
-tyres, gearing, drivetrain efficiency, and electrical architecture are
-owned elsewhere in this report. A quantitative, rules-aware longitudinal
-simulation is used to rank design levers, reject configurations that
-breach FS-EV~2.2 or FS-D~5.3.1 before hardware commitment, predict the
-final agreed vehicle, and apportion margin across chapters.
+over \SI{25}{\second}. A competitive configuration will be 
+traction-limited at launch and power-limited later while ensuring compliance with
+the power cap and avoiding front-axle lift. A detailed and rigorous
+simulation is used to inform and prioritise design choices as well as reject configurations that
+breach FS-EV~2.2 or FS-D~5.3.1 before hardware commitments and predict the
+final agreed vehicle time.
 
 This chapter presents simulation methodology
 (Section~\ref{sec:methodology}); verification
@@ -1861,9 +1864,8 @@ The simulation solves a four-state longitudinal model
 ($\mathbf{x} = [x, v, \omega_{w,f}, \omega_{w,r}]^\top$) on a
 \SI{1}{\milli\second} timestep, computing tyre, aerodynamic, rolling
 and drive forces at each sub-step of a fourth-order Runge--Kutta
-integrator. Weight acts at the centre of gravity; aerodynamic drag and
-downforce follow from velocity; quasi-static load transfer yields
-per-axle normals; the Pacejka tyre model maps normal load and slip to
+integrator. Weight is constant and acts at the centre of gravity; aerodynamic drag and
+downforce scale with the square of velocity ; quasi-static load transfer causes normal forces on the axels; the Pacejka tyre model maps normal load and slip to
 tractive force; and the powertrain supplies rear wheel torque subject to
 the FS-EV~2.2 electrical power limit. Net longitudinal force advances the
 state via RK4. Each following subsection specifies one component of this
@@ -1889,12 +1891,12 @@ $F_x$ is the net tractive force at the contact patch, and
 $F_\text{drag}$ and $F_\text{rr}$ are aerodynamic drag and rolling
 resistance. The $4 I_w / r_w^2$ term is the translational mass
 equivalent of the rotational inertia of four wheels. For the baseline
-vehicle ($m_v = \SI{250}{\kilo\gram}$,
+vehicle ($m_v = \SI{200}{\kilo\gram}$,
 $I_w = \SI{0.10}{\kilo\gram\metre\squared}$,
 $r_w = \SI{0.247}{\metre}$), this contributes
-$4 I_w / r_w^2 = \SI{6.5}{\kilo\gram}$, a \SI{2.6}{\percent}
-effective-mass penalty. It is small but non-negligible over a
-\SI{75}{\metre} event and is retained throughout the analysis.
+$4 I_w / r_w^2 = \SI{6.5}{\kilo\gram}$, a \SI{3.3}{\percent}
+effective mass increase. It is small but non-negligible over a
+\SI{75}{\metre} event and is included in the simulation.
 
 % ---------------------------------------------------------------------
 \subsection{Quasi-static longitudinal load transfer}
@@ -1947,11 +1949,9 @@ gives $a_\text{wheelie} = \SI{20.5}{\metre\per\second\squared}$,
 comfortably above the simulated peak of
 \SI{12.86}{\metre\per\second\squared}.
 
-Anti-squat (ratio $\text{AS} \in [0, 1]$, from the Suspension chapter)
+Anti-squat (Section~\ref{sec:antisquat_dynamic_toe})
 multiplies Eq.~\ref{eq:load_transfer} by $(1 - k_\text{AS})$ with
-$k_\text{AS} = 0.2\,\text{AS}$. This gives a design-side lever to
-retain front normal force without lowering $h_{CG}$ or lengthening
-$L$.
+$k_\text{AS} = 0.2\,\text{AS}$. This allows us to keep more load on the front axle without dropping the centre of gravity or stretching the wheelbase.
 
 % ---------------------------------------------------------------------
 \subsection{Tyre force model}
@@ -1974,39 +1974,27 @@ the slip ratio is saturated to $\pm 1$ depending on the sign of
 wheel velocity, which is physically reasonable for a spinning wheel
 against a stationary vehicle.
 
-Two grip laws are implemented. A simple piecewise-linear model,
+Longitudinal friction coefficient $\mu(\kappa, F_z)$ is evaluated with
+the Pacejka Magic Formula \cite{pacejka2012},
 
 \begin{equation}
-\mu_\text{simple}(\kappa) =
-\begin{cases}
-\mu_\text{max} \, \dfrac{\kappa}{\kappa_\text{opt}} & \kappa \le \kappa_\text{opt}, \\[6pt]
-\mu_\text{max} \left(1 - \dfrac{\kappa - \kappa_\text{opt}}{1 - \kappa_\text{opt}}\right) & \kappa > \kappa_\text{opt},
-\end{cases}
-\label{eq:simple_mu}
-\end{equation}
-
-captures the essential rise-peak-decay shape with only two parameters
-$(\mu_\text{max}, \kappa_\text{opt})$ and is retained as a transparent
-sanity baseline. The Pacejka Magic Formula \cite{pacejka2012}
-
-\begin{equation}
-\mu_\text{Pacejka}(\kappa, F_z) = D \sin\!\Big( C \arctan\!\big( B\kappa - E(B\kappa - \arctan(B\kappa)) \big) \Big),
+\mu(\kappa, F_z) = D \sin\!\Big( C \arctan\!\big( B\kappa - E(B\kappa - \arctan(B\kappa)) \big) \Big),
 \label{eq:pacejka}
 \end{equation}
 
 with load-dependent peak $D = F_z (p_{Dx1} + p_{Dx2}\,\Delta F_z /
 F_{z,0})$ and dimensionless stiffness factor $B = p_{Kx1} +
-p_{Kx2}\,\Delta F_z / F_{z,0}$, is used for all quantitative results.
-The coefficients used in the baseline configuration are listed in
+p_{Kx2}\,\Delta F_z / F_{z,0}$.
+The coefficients are listed in
 Table~\ref{tab:pacejka}. They are derived from the Avon FSAE tyre
 lateral data available to the group and typical FSAE longitudinal
 characteristics reported in the literature \cite{milliken1995,
-pacejka2012}, scaled to match the peak friction coefficient
-($\mu_\text{max} = 1.7$) of the simpler model.
+pacejka2012}, scaled to a representative slick peak friction coefficient
+$\mu_\text{max} = 1.7$.
 
 \begin{table}[H]
 \centering
-\caption{Pacejka Magic Formula coefficients used in the baseline
+\caption{Pacejka Magic Formula coefficients used in the
 configuration. Load sensitivity is captured through $p_{Dx2}$ and
 $p_{Kx2}$; the reference load $F_{z,0}$ is chosen as a typical rear
 axle load during acceleration.}
@@ -2014,7 +2002,7 @@ axle load during acceleration.}
 \footnotesize
 \begin{tabular}{|l|c|l|}
 \hline
-\textbf{Coefficient} & \textbf{Baseline} & \textbf{Role} \\
+\textbf{Coefficient} & \textbf{Value} & \textbf{Role} \\
 \hline
 Shape factor $C$                & 1.65   & Controls sharpness of the peak. \\
 Peak-load coefficient $p_{Dx1}$ & 1.70   & Peak friction at nominal load. \\
@@ -2030,8 +2018,7 @@ Reference load $F_{z,0}$        & \SI{1500}{\newton} & Normalisation; typical re
 \subsubsection{Thermal grip window}
 \label{sec:thermal}
 
-Tyre grip is a strong function of carcass temperature. A compact
-lumped thermal model is available as an optional overlay on the
+Tyre grip depends heavily on temperature. A thermal model is available as an optional overlay on the
 Pacejka peak:
 
 \begin{equation}
@@ -2045,11 +2032,7 @@ $\sigma = \SI{60}{\kelvin}$ based on published FSAE slick data
 \cite{milliken1995}. The model captures the essential effect that
 cold tyres at launch ($T \sim \SI{25}{\celsius}$) operate at roughly
 $0.87\,\mu_\text{peak,0}$, while well-warmed tyres
-($T \sim T_\text{opt}$) deliver the full peak. The model is disabled
-in the baseline runs reported here because the acceleration event is
-short and the track-ready tyre temperature is set in the preceding
-warm-up lap rather than by the event itself, but it is retained for
-the robustness analysis (Section~\ref{sec:drywet}).
+($T \sim T_\text{opt}$) deliver the full peak.
 
 % ---------------------------------------------------------------------
 \subsection{Powertrain and the electrical power limit}
@@ -2058,16 +2041,16 @@ the robustness analysis (Section~\ref{sec:drywet}).
 
 FS-EV~2.2 caps \textit{electrical} power at the accumulator outlet at
 \SI{80}{\kilo\watt}, not mechanical power at the wheel. Limiting
-motor torque alone is therefore insufficient: the same motor torque
+motor torque alone is therefore insufficient as the same motor torque
 corresponds to a range of electrical powers depending on motor speed,
 drivetrain efficiency, and battery voltage.
 
-The model represents a YASA P400R permanent-magnet motor
+We model the chosen YASA P400R permanent-magnet motor
 ($K_t = \SI{0.822}{\newton\metre\per\ampere}$, peak AC current
 \SI{285}{\ampere} through the BAMOCAR PG-D3 inverter
 \cite{bamocar_pg, yasa_p400r}), a single-ratio reduction of
 $N_g = 5.5$, a drivetrain efficiency of $\eta_\text{drv} = 0.95$, and
-a \SI{600}{\volt} nominal supercapacitor bus (Paul's chapter). For a
+a \SI{600}{\volt} nominal supercapacitor bus (Section~\ref{subsec:supercapacitor_analysis}). For a
 requested wheel torque $T_w^\text{req}$:
 
 \begin{equation}
@@ -2094,62 +2077,78 @@ The peak motor torque is $T_m^\text{peak} = K_t I_\text{max} =
 $\omega^\star = P_\text{max}/T_m^\text{peak} = \SI{341}{\radian\per\second}$
 (\num{3260} rpm), corresponding to a vehicle speed of
 $v^\star = \omega^\star r_w / N_g = \SI{15.4}{\metre\per\second}$
-(\SI{55}{\kilo\metre\per\hour}). Every acceleration event above this
-speed is power-limited; for a \SI{75}{\metre} run reaching
-\SI{33}{\metre\per\second}, more than \SI{64}{\percent} of the run
-time is spent in the power-limited regime
-(Section~\ref{sec:final_run}).
-
+(\SI{55}{\kilo\metre\per\hour}). 
 % ---------------------------------------------------------------------
 \subsection{Launch strategy and traction control}
 \label{sec:launch}
 % ---------------------------------------------------------------------
 
-With \SI{1000}{\newton\metre} of peak wheel torque available at
-launch, the vehicle is comfortably traction-limited in the first
-\SI{1.4}{\second} of the run and the challenge is to match the
-requested torque to the instantaneous grip ceiling. A single
-open-loop torque command would produce excessive slip through the
-Pacejka peak on cold tyres, leading both to scrubbing losses and to
-transient front-axle lift. The simulation therefore implements a
-three-layer launch strategy that mirrors the control architecture a
-real vehicle would adopt.
+The controller must avoid torque demands that cold
+tyres and pitch equilibrium cannot support.
+Figure~\ref{fig:launch_control_flow} shows how each commanded torque is
+conditioned each timestep before it is applied to the longitudinal
+model.
 
-First, a grip-based ceiling is imposed: the requested wheel torque is
-capped at $T_\text{grip} = \mu_\text{peak}(F_{z,r}/2) F_{z,r} r_w$,
-evaluated at the current rear axle load. This prevents the
-commanded torque from ever exceeding the load-dependent Pacejka peak.
+\begin{figure}[htbp]
+\centering
+\begin{singlespace}
+\footnotesize
+\begin{tikzpicture}[
+  >={Stealth[length=2.4mm]},
+  node distance=6mm and 6mm,
+  blk/.style={rectangle, draw=black!70, line width=0.6pt, rounded corners=1.5pt,
+              inner sep=4pt, align=center, font=\footnotesize, minimum height=8mm},
+  ffblk/.style={blk, fill=black!4},
+  plant/.style={blk, fill=black!8, minimum height=12mm, text width=32mm},
+  sig/.style={font=\footnotesize\itshape},
+  fb/.style={->, line width=0.6pt, black!75, dashed},
+  ff/.style={->, line width=0.7pt, black!85}
+]
+% Feed-forward path
+\node[ffblk] (dem)  {Demand\\(launch logic)};
+\node[ffblk, right=of dem]    (grip)  {Grip cap\\$\mu_\text{peak} F_{z,r} r_w$};
+\node[ffblk, right=of grip]   (whl)   {Wheelie cap\\($F_{z,f}\!\ge\!\SI{50}{\newton}$)};
+\node[ffblk, right=of whl]    (ramp)  {Launch ramp\\$t<t_\text{ramp}$};
+\node[ffblk, right=of ramp]   (slip)  {Slip governor\\track $\kappa_\text{opt}$};
+\node[plant, right=of slip]   (plant) {\textbf{Vehicle (RK4)}\\longitudinal dynamics};
 
-Second, a pitch-moment wheelie cap is derived from
-Eq.~\ref{eq:normal_forces} by requiring $F_{z,f} \geq
-\SI{50}{\newton}$ (small positive margin against numerical
-transients), solving for the maximum admissible acceleration, and
-converting to an equivalent wheel torque. A closed-loop correction
-then scales the base torque by the observed $F_{z,f}$ whenever the
-measured front normal force falls below a margin threshold — this is
-what real launch controllers do with an IMU pitch channel.
+% Forward arrows
+\draw[ff] (dem)  -- (grip);
+\draw[ff] (grip) -- (whl);
+\draw[ff] (whl)  -- (ramp);
+\draw[ff] (ramp) -- (slip);
+\draw[ff] (slip) -- node[above, sig] {$T_w$} (plant);
 
-Third, for the first \SI{80}{\milli\second} a linear torque ramp
-$T_w \leftarrow T_w \cdot t / t_\text{ramp}$ is applied to give the
-rear wheel inertia time to track vehicle speed before the Pacejka
-peak is reached. A shorter ramp tends to spin the wheels through the
-peak before slip-based feedback can react.
+% Feedback bus: labels sit below the bus (clear of vertical taps)
+\coordinate (busR) at ($(plant.south)+(0,-11mm)$);
+\coordinate (busL) at (dem.south |- busR);
+\draw[fb] (plant.south) -- (busR);
+\draw[fb] (busR) -- (busL);
 
-Once moving, a slip-tracking governor targets the load-dependent
-Pacejka optimal slip ratio. A hard ceiling at twice the optimal slip
-immediately collapses torque to zero, recovering the wheel back into
-the stable-grip regime; a proportional reduction applies between the
-target and the ceiling. Together these mechanisms produce a
-mean grip utilisation of approximately
-\SI{103}{\percent}\footnote{Utilisation is computed against a
-reference peak-load product $\mu_{Dx1} F_z$, which is slightly below
-the load-sensitive peak actually produced by
-Eq.~\ref{eq:pacejka}, so values above \SI{100}{\percent} reflect the
-load-sensitivity bonus rather than super-grip.} during the
-traction-limited phase.
+\path (grip.south |- busR) coordinate (bg);
+\draw[fb] (bg) -- (grip.south);
+\node[sig, below=3pt of bg, anchor=north] {$F_{z,r}$};
+
+\path (whl.south |- busR) coordinate (bw);
+\draw[fb] (bw) -- (whl.south);
+\node[sig, below=3pt of bw, anchor=north] {$F_{z,f}$};
+
+\path (slip.south |- busR) coordinate (bs);
+\draw[fb] (bs) -- (slip.south);
+\node[sig, below=3pt of bs, anchor=north, align=center] {$\kappa$\\$\omega_w$};
+\end{tikzpicture}
+\end{singlespace}
+\caption{Launch traction-control block diagram. Solid arrows are feed-forward
+torque conditioning (demand $\to$ grip cap $\to$ wheelie cap $\to$ \SI{65}{\milli\second}
+S-curve ramp $\to$ slip governor); dashed arrows are feedback signals from the
+RK4 plant. Three feedback paths close the loop: rear normal load $F_{z,r}$ sets the
+grip ceiling, front normal load $F_{z,f}$ scales the wheelie cap, and rear
+slip $\kappa$ / wheel speed $\omega_w$ drive the slip-tracking governor.}
+\label{fig:launch_control_flow}
+\end{figure}
 
 % ---------------------------------------------------------------------
-\subsection{Aerodynamics and anti-squat}
+\subsection{Aerodynamics}
 \label{sec:aero}
 % ---------------------------------------------------------------------
 
@@ -2164,21 +2163,16 @@ F_{L,i} = \tfrac{1}{2} \rho \, C_{L,i} A_\text{ref} \, v^2
 \label{eq:aero}
 \end{equation}
 
-For the baseline $C_d A = \SI{0.8}{\metre\squared}$ at sea-level
+For the $C_d A = \SI{0.8}{\metre\squared}$ at sea-level
 density $\rho = \SI{1.225}{\kilo\gram\per\metre\cubed}$, the drag
 force at the terminal \SI{33}{\metre\per\second} is approximately
-\SI{540}{\newton} --- \SI{8}{\percent} of the instantaneous tractive
+\SI{540}{\newton}, just \SI{8}{\percent} of the instantaneous tractive
 force. Over the whole run, a $\pm 10\,\%$ perturbation of $C_d A$
 changes the \SI{75}{\metre} time by only $\pm\SI{8}{\milli\second}$
 (Section~\ref{sec:tornado}), confirming that an aerodynamic package
 with its associated mass and complexity has low marginal benefit for
 this event and supports the group's decision to descope bodywork
 development.
-
-The baseline configuration therefore runs with
-$C_{L,f} = C_{L,r} = 0$: no downforce is assumed. Load transfer
-during acceleration is therefore driven entirely by
-Eq.~\ref{eq:load_transfer}.
 
 % ---------------------------------------------------------------------
 \subsection{Numerical integration}
@@ -2187,27 +2181,22 @@ Eq.~\ref{eq:load_transfer}.
 
 The state vector
 $\mathbf{x} = [x, v, \omega_{w,f}, \omega_{w,r}]^\top$ evolves
-according to four coupled ordinary differential equations. Forward
-Euler gives local and global truncation errors of
-$\mathcal{O}(\Delta t^2)$ and $\mathcal{O}(\Delta t)$ respectively,
-and is sensitive to the rapid derivative changes that occur as the
-vehicle transitions between traction- and power-limited regimes,
-where the Pacejka peak and the electrical clipping in
-Eq.~\ref{eq:power_limit} can both activate within a single timestep.
-The fourth-order Runge--Kutta scheme \cite{press2007}
+according to four coupled ordinary differential equations. The Pacejka peak and the electrical clipping in
+Eq.~\ref{eq:power_limit} can both influence the derivative within a
+single timestep. The simulation therefore uses explicit fourth-order
+Runge--Kutta integration \cite{press2007},
 
 \begin{equation}
 \mathbf{x}_{n+1} = \mathbf{x}_n + \frac{\Delta t}{6}\left(\mathbf{k}_1 + 2\mathbf{k}_2 + 2\mathbf{k}_3 + \mathbf{k}_4\right),
 \label{eq:rk4}
 \end{equation}
 
-improves these to $\mathcal{O}(\Delta t^5)$ and
-$\mathcal{O}(\Delta t^4)$ at the cost of four force evaluations per
-step. A timestep of $\Delta t = \SI{1}{\milli\second}$ is used
+which has local truncation error $\mathcal{O}(\Delta t^5)$ and global
+error $\mathcal{O}(\Delta t^4)$ at the cost of four force evaluations
+per step. A timestep of $\Delta t = \SI{1}{\milli\second}$ is used
 throughout; Section~\ref{sec:convergence} shows that this is
 converged to within \SI{3}{\milli\second} of the limiting value
-obtained at $\Delta t = \SI{0.2}{\milli\second}$, which is well below
-the parametric uncertainty of the result.
+obtained at $\Delta t = \SI{0.2}{\milli\second}$.
 
 % ---------------------------------------------------------------------
 \subsection{Software architecture and tooling}
@@ -2222,14 +2211,13 @@ evaluated without modifying code. Rule compliance (FS-EV~2.2 and
 FS-D~5.3.1) is enforced by a dedicated Rules layer that runs
 automatically on every result object, so no illegal configuration
 can silently return a time.
-
-The simulation is additionally backed by a suite of unit tests
+For ease of use by the team, a GUI was developed for easy interface to the software.
+The simulation also includes a series of other components
 covering the tyre force model, powertrain and electrical limiting,
 dynamics solver, scoring formula, Monte-Carlo robustness sampler,
 sensitivity analyser, controller, and thermal overlay, together with
-an end-to-end integration test. A Streamlit-based interactive
-interface (single-run, parameter sweep, optimiser, gearing study,
-sensitivity, Monte Carlo, track conditions) sits above the same
+an end-to-end integration test. Several others elements such as single-run, parameter sweep, optimiser, gearing study,
+sensitivity, Monte Carlo and track conditions sits above the same
 physics core and is used by the other subsystem chapters to evaluate
 proposals (for example, the Drivetrain chapter's gear-ratio down-selection)
 without re-running command-line scripts. The architecture is
@@ -2241,7 +2229,7 @@ summarised in Figure~\ref{fig:architecture}.
 \caption{Software architecture of the simulation. The five-layer
 Python core (Config, Vehicle Models, Dynamics, Rules, Results)
 enforces FS-EV~2.2 and FS-D~5.3.1 compliance on every simulated
-configuration. A Streamlit-based GUI sits above the core and is used
+configuration. A GUI sits above the core and is used
 by the other subsystem chapters to evaluate parameter proposals
 interactively.}
 \label{fig:architecture}
@@ -2252,79 +2240,63 @@ interactively.}
 \label{sec:vv}
 % ---------------------------------------------------------------------
 
-Verification and validation proceed along four strands: an analytical
-lower bound on achievable performance
-(Section~\ref{sec:analytical_bound}), hand-calculation agreement at
-representative states (Section~\ref{sec:handcalc}), numerical
-convergence with timestep (Section~\ref{sec:convergence}), and a
-comparison between the simple and Pacejka tyre laws
-(Section~\ref{sec:simple_vs_pacejka}).
+Three checks support the model: a constant-power lower bound
+(Section~\ref{sec:analytical_bound}), algebraic spot checks
+(Table~\ref{tab:handcalc}), and timestep convergence
+(Section~\ref{sec:convergence}).
 
 % ---------------------------------------------------------------------
 \subsection{Analytical lower bound}
 \label{sec:analytical_bound}
 % ---------------------------------------------------------------------
 
-A useful sanity check on any acceleration simulator is a
-closed-form lower bound. For a vehicle of mass $m$ delivering
-constant power $P$ from rest with no drag, rolling resistance or
-traction limit, velocity and position follow
+If a car with mass $m$ was given constant power $P$ from rest with no drag,
+rolling resistance, or traction limit, then
 $v(t) = \sqrt{2Pt/m}$ and
-$x(t) = \tfrac{2}{3}\sqrt{2P/m}\,t^{3/2}$. Inverting at
-$x = d = \SI{75}{\metre}$ gives
+$x(t) = \tfrac{2}{3}\sqrt{2P/m}\,t^{3/2}$. At $x=d=\SI{75}{\metre}$,
 
 \begin{equation}
 t_\text{cp} = \left(\frac{d}{\tfrac{2}{3}\sqrt{2P/m}}\right)^{2/3}.
 \label{eq:analytical_bound}
 \end{equation}
 
-For the baseline vehicle ($m = \SI{250}{\kilo\gram}$,
-$P = \SI{80}{\kilo\watt}$), Eq.~\ref{eq:analytical_bound} gives
-$t_\text{cp} = \SI{2.70}{\second}$ while the simulator predicts
-\SI{3.78}{\second}. Most of the \SI{1.08}{\second} gap is attributed to
-the traction-limited launch (shortfall against the \SI{80}{\kilo\watt}
-electrical ceiling during grip-limited acceleration), with aerodynamic
-drag and drivetrain inefficiency adding secondary penalties; rolling
-resistance is negligible over \SI{75}{\metre}, consistent with
-Section~\ref{sec:tornado}.
+For $m=\SI{250}{\kilo\gram}$ and $P=\SI{80}{\kilo\watt}$,
+Eq.~\ref{eq:analytical_bound} gives $t_\text{cp}=\SI{2.70}{\second}$
+versus \SI{3.78}{\second} from the full simulator. The gap is dominated
+by traction-limiting with drag and drivetrain losses being secondary factors. Rolling
+resistance is negligible at this distance (Section~\ref{sec:tornado}).
 
 % ---------------------------------------------------------------------
 \subsection{Analytical hand-calculation agreement}
 \label{sec:handcalc}
 % ---------------------------------------------------------------------
 
-Four representative quantities are compared in
-Table~\ref{tab:handcalc} against closed-form expressions: rolling
-resistance and associated power at a representative cruise
-velocity; launch acceleration computed directly from the launch
-torque limit; and the wheelie-onset acceleration from the
-pitch-moment balance in Eq.~\ref{eq:wheelie}. The wheelie margin is
-large (simulated peak acceleration is \SI{37}{\percent} below the
-wheelie threshold), in line with the $F_{z,f} > 0$ observation in
-Section~\ref{sec:final_run}.
+Table~\ref{tab:handcalc} compares hand calculated estimates with the code for
+rolling resistance and sustaining power at \SI{20}{\metre\per\second},
+unramped launch acceleration at the torque cap, and the wheelie limit
+from Eq.~\ref{eq:wheelie}. 
 
 \begin{table}[H]
 \centering
-\caption{Analytical hand-calculation agreement. The launch discrepancy
-is expected: the simulation's \SI{80}{\milli\second} torque ramp
-(Section~\ref{sec:launch}) actively suppresses peak torque below the
-unramped analytical value.}
+\caption{Algebraic checks vs.\ simulation (launch differs due to the
+\SI{80}{\milli\second} ramp in Section~\ref{sec:launch}).}
 \label{tab:handcalc}
 \footnotesize
-\begin{tabular}{|l|c|c|l|}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash\hsize=1.55\hsize}X|c|c|>{\raggedright\arraybackslash\hsize=0.45\hsize}X|}
 \hline
 \textbf{Quantity} & \textbf{Hand calc.} & \textbf{Simulation} & \textbf{Comment} \\
 \hline
-Rolling resistance at $v = \SI{20}{\metre\per\second}$ (\si{\newton})
-  & 24.5 & 24.5 & Exact; same $C_\text{rr}$ used. \\
-Drive power to maintain $v = \SI{20}{\metre\per\second}$ (\si{\watt})
+Rolling resistance at \SI{20}{\metre\per\second} (\si{\newton})
+  & 24.5 & 24.5 & Exact; same $C_\text{rr}$. \\
+Power to sustain \SI{20}{\metre\per\second} (\si{\watt})
   & 490 & 490 & Exact. \\
-Launch acceleration, unramped torque cap (\si{\metre\per\second\squared})
-  & 15.76 & 12.66 & Sim uses \SI{80}{\milli\second} ramp. \\
-Wheelie-onset acceleration (\si{\metre\per\second\squared})
+Launch accel., unramped cap (\si{\metre\per\second\squared})
+  & 15.76 & 12.66 & Sim: \SI{80}{\milli\second} ramp. \\
+Wheelie-limit accel.\ (\si{\metre\per\second\squared})
   & 20.51 & $\ge 12.86$ (no wheelie) & Margin \SI{37}{\percent}. \\
 \hline
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 % ---------------------------------------------------------------------
@@ -2332,77 +2304,41 @@ Wheelie-onset acceleration (\si{\metre\per\second\squared})
 \label{sec:convergence}
 % ---------------------------------------------------------------------
 
-Table~\ref{tab:dt_convergence} reports the simulated \SI{75}{\metre}
-time as the timestep is halved from \SI{5}{\milli\second} to
-\SI{0.2}{\milli\second}. The adopted
-$\Delta t = \SI{1}{\milli\second}$ lies \SI{3}{\milli\second} above
-the limit value at \SI{0.2}{\milli\second}
-(\SI{0.08}{\percent}), which is two orders of magnitude below the
-sensitivity to any single vehicle parameter at $\pm 10\,\%$
-(Section~\ref{sec:tornado}). Numerical integration error is therefore
-negligible relative to parametric uncertainty, and the timestep
-choice is justified.
+Table~\ref{tab:dt_convergence} lists $t_{75}$ for a coarse timestep, the
+adopted $\Delta t=\SI{1}{\milli\second}$, and a fine reference at
+\SI{0.2}{\milli\second}. At \SI{1}{\milli\second}, $t_{75}$ differs by
+\SI{3}{\milli\second} (\SI{0.08}{\percent}) from the reference---roughly
+two orders of magnitude below the $\pm10\,\%$ single-parameter
+sensitivities in Section~\ref{sec:tornado}, so discretisation error is
+negligible next to modelling uncertainty.
 
 \begin{table}[H]
 \centering
-\caption{Convergence of the predicted \SI{75}{\metre} time with
-timestep. The adopted value of \SI{1}{\milli\second} is converged to
-within \SI{0.08}{\percent} of the limiting continuous-time result.}
+\caption{$t_{75}$ vs.\ timestep (reference: $\Delta t=\SI{0.2}{\milli\second}$).}
 \label{tab:dt_convergence}
 \footnotesize
 \begin{tabular}{|c|c|c|}
 \hline
-$\Delta t$ (ms) & $t_{75}$ (s) & Deviation from $\Delta t = 0.2$ ms (ms) \\
+$\Delta t$ (ms) & $t_{75}$ (s) & Deviation from ref.\ (ms) \\
 \hline
 5.00 & 3.825 & $+45.6$ \\
-2.00 & 3.788 & $+8.6$ \\
 1.00 & 3.782 & $+2.6$ \\
-0.50 & 3.780 & $+0.6$ \\
-0.20 & 3.779 & $0.0$ (reference) \\
+0.20 & 3.779 & $0.0$ \\
 \hline
 \end{tabular}
 \end{table}
-
-% ---------------------------------------------------------------------
-\subsection{Simple versus Pacejka tyre model}
-\label{sec:simple_vs_pacejka}
-% ---------------------------------------------------------------------
-
-The two tyre laws of Section~\ref{sec:tyre} give qualitatively
-similar force-vs-slip curves with quantitatively different behaviour
-in the launch phase. Figure~\ref{fig:simple_vs_pacejka} overlays both
-laws at a representative axle load of \SI{1500}{\newton}. The
-Pacejka law's load sensitivity raises the peak friction coefficient
-as the rear axle load grows under acceleration-induced transfer,
-which produces a modestly faster early launch than the simple law at
-the same $\mu_\text{max}$. The curves converge once the vehicle
-enters the power-limited regime
-($v > v^\star = \SI{15.4}{\metre\per\second}$), where tractive force
-is no longer set by grip.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.75\textwidth]{simple_vs_pacejka.png}
-\caption{Friction coefficient vs slip ratio under both tyre laws at
-$F_z = \SI{1500}{\newton}$. Pacejka's load sensitivity (not shown
-here) additionally raises the peak at higher loads, producing a
-stronger launch than the simple law at the same $\mu_\text{max}$.}
-\label{fig:simple_vs_pacejka}
-\end{figure}
 
 % ---------------------------------------------------------------------
 \section{Parameter Sensitivity and Design Optimisation}
 \label{sec:sensitivity}
 % ---------------------------------------------------------------------
 
-The purpose of this section is twofold: to rank the vehicle
+The purpose of this section is to rank the vehicle
 parameters by their influence on the \SI{75}{\metre} time
 (Section~\ref{sec:tornado}), providing the target ranges used by the
 neighbouring chapters; and to report the outcome of a numerical
 optimisation over the design vector
-(Section~\ref{sec:optimisation}). A short robustness analysis
-against track surface conditions closes the section
-(Section~\ref{sec:drywet}).
+(Section~\ref{sec:optimisation}). 
 
 % ---------------------------------------------------------------------
 \subsection{One-at-a-time sensitivity ranking}
@@ -2421,20 +2357,17 @@ caption).
 \centering
 \includegraphics[width=0.85\textwidth]{figures/tornado.pdf}
 \caption{One-at-a-time sensitivity of the \SI{75}{\metre} time to a
-$\pm 10\,\%$ perturbation of each vehicle parameter. Centre-of-gravity
-longitudinal position and tyre peak grip dominate; drivetrain
-efficiency, gear ratio, mass and wheel radius form a second band;
-aerodynamic drag and rolling resistance are negligible over
-\SI{75}{\metre}.}
+$\pm 10\,\%$ perturbation of each vehicle parameter. }
 \label{fig:tornado}
 \end{figure}
 
 The ranking has two practical consequences. First, the two dominant
-levers (longitudinal CG and tyre peak grip) sit in different chapters
-and cannot both be improved in isolation: moving the battery forward
-to reduce $L_{CG}$ changes the accumulator packaging (Paul's chapter),
-and increasing peak grip is constrained by tyre availability and
-budget (Suspension chapter). Second, the aerodynamic and
+levers (longitudinal CG and tyre peak grip) sit in different subsystems
+and cannot both be improved in isolation: shifting the accumulator forward
+to reduce $L_{CG}$ couples to mechanical packaging
+(Section~\ref{sec:mechanical_design_packaging}), and raising peak grip is
+constrained by tyre availability and budget within the suspension and
+wheel package (Section~\ref{sec:suspension_requirements}). Second, the aerodynamic and
 rolling-resistance contributions are sufficiently small that
 investment in either is better deployed on mass or driveline
 efficiency.
@@ -2446,7 +2379,7 @@ efficiency.
 
 A 500-sample Monte Carlo run was performed to quantify the
 robustness of the predicted \SI{75}{\metre} time to realistic
-parametric uncertainty. Each sample draws total vehicle mass
+uncertainty in the parameters. Each sample draws total vehicle mass
 ($\sigma = \SI{8}{\kilo\gram}$), peak tyre grip
 ($p_{Dx1}$, $\sigma = 6\,\%$), longitudinal and vertical
 centre-of-gravity positions
@@ -2459,26 +2392,21 @@ Figure~\ref{fig:mc_histogram}.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.82\textwidth]{figures/mc_histogram.pdf}
-\caption{Distribution of the predicted \SI{75}{\metre} time over
-\num{500} Monte Carlo samples. The mean of \SI{4.03}{\second} sits
-slightly above the baseline \SI{3.78}{\second} because the response
-is asymmetric: unfavourable perturbations (lower grip, heavier,
-higher CG) produce a larger time penalty than favourable
-perturbations give a reduction. All \num{500} samples satisfied
-FS-EV~2.2 and FS-D~5.3.1 and remained wheelie-free.}
+\caption{Distribution of predicted \SI{75}{\metre} time over
+\num{500} Monte Carlo samples using the Gaussian parameter draws
+described above.}
 \label{fig:mc_histogram}
 \end{figure}
 
-The mean is \SI{4.03}{\second}, the standard deviation is
-\SI{120}{\milli\second}, and the 5--95 percentile band spans
-\SIrange{3.86}{4.27}{\second}. Crucially, \textit{all} 500 samples
-satisfy FS-EV~2.2, finish within the \SI{25}{\second} threshold, and
-avoid a wheelie, confirming that the baseline design has ample
-compliance margin across the plausible parameter envelope. The
-positive skew of the distribution reflects the convex nature of the
-response: a $10\,\%$ degradation in any of the dominant parameters
-(grip, CG position) costs more time than a $10\,\%$ improvement
-recovers, as already observed in Section~\ref{sec:tornado}.
+Figure~\ref{fig:mc_histogram} summarises the sample distribution:
+mean \SI{4.03}{\second} (standard deviation
+\SI{120}{\milli\second}), with the 5--95 percentile band
+\SIrange{3.86}{4.27}{\second}. The mean sits above the optimal
+baseline \SI{3.78}{\second} and the histogram is positively skewed due to the 
+unfavourable changes (lower grip, higher mass, higher CG) which cost more time.
+in Section~\ref{sec:tornado}. Every sample remained compliant with
+FS-EV~2.2 and FS-D~5.3.1 ($t_{75} < \SI{25}{\second}$) with no wheelie
+($\min F_{z,f} > 0$), indicating substantial margin for the car.
 
 % ---------------------------------------------------------------------
 \subsection{Design optimisation}
@@ -2486,20 +2414,20 @@ recovers, as already observed in Section~\ref{sec:tornado}.
 % ---------------------------------------------------------------------
 
 The sensitivity ranking above identifies which levers matter but does
-not resolve their optimal combination: several are coupled (gear
+not resolve their optimal combination. Several are coupled, such as gear
 ratio and wheel radius through the driveline, CG position and
-wheelbase through packaging, mass and grip through vertical load).
+wheelbase through packaging, mass and grip through vertical load.
 A formal optimisation is therefore performed over the seven
 independent decision variables listed in
 Table~\ref{tab:optim_setup}, with the remaining parameters held at
-their hardware-pinned values (motor, inverter, supercapacitor pack,
+their hardware determined values (motor, inverter, supercapacitor pack,
 FS rule limits).
 
 \begin{table}[H]
 \centering
-\caption{Optimisation setup: seven decision variables with physically
+\caption{Optimisation setup Seven decision variables with physically
 motivated bounds. All other vehicle parameters are held at
-hardware-pinned values corresponding to the YASA P400R motor, BAMOCAR
+hardware determined values corresponding to the YASA P400R motor, BAMOCAR
 PG-D3 inverter, and \num{200}-cell supercap stack
 \cite{bamocar_pg, yasa_p400r}.}
 \label{tab:optim_setup}
@@ -2514,52 +2442,36 @@ Gear ratio $N_g$                          & 5.5 & [3.0, 7.0] & Drivetrain chapte
 Wheel radius $r_w$ (\si{\metre})          & 0.247 & [0.20, 0.28] & 10-inch vs 13-inch rim options. \\
 Pacejka $\kappa_\text{opt}$               & 0.14 & [0.08, 0.20] & Slick tyre literature range. \\
 Launch torque limit (\si{\newton\metre})  & 1000 & [400, 1200] & YASA peak torque. \\
-Anti-squat $\text{AS}$                    & 0.12 & [0.00, 1.00] & Suspension chapter range. \\
+Anti-squat $\text{AS}$                    & 0.12 & [0.00, 1.00] & Section~\ref{sec:antisquat_dynamic_toe}. \\
 \hline
 \end{tabular}
 \end{table}
 
-The objective is the predicted \SI{75}{\metre} time subject to three
+The objective is to minimise the \SI{75}{\metre} time subject to three
 constraints enforced by the Rules layer: FS-EV~2.2 (peak electrical
 power $\leq \SI{80}{\kilo\watt}$), FS-D~5.3.1 (finish time
 $< \SI{25}{\second}$), and no wheelie
-($\min F_{z,f} > 0$). The constraints are baked into the simulation
-(configurations that violate them return their full time but are
-reported as non-compliant), so the optimiser can use an unconstrained
-algorithm. The Nelder--Mead simplex method from SciPy is used
-\cite{press2007} because the objective is non-differentiable
-(compliance flags) and the parameter space is low-dimensional.
+($\min F_{z,f} > 0$). Configurations that violate them return their full time but are
+reported as non-compliant.
+SciPy's Nelder--Mead optimiser \cite{press2007} minimises \(t_{75}\) by
+trying new parameter sets and comparing simulated times in order to tune seven parameters.
 
 Figure~\ref{fig:optim_convergence} shows the objective convergence
-over the first \num{271} evaluations. The best feasible time
-decreases monotonically from the \SI{3.78}{\second} baseline, with
-the simplex rejecting any move that triggers a wheelie
-(visible in the lower panel as red crosses) or breaches the
-\SI{80}{\kilo\watt} cap. The search converges to
-\textbf{\SI{3.67}{\second}} — a \SI{2.9}{\percent} improvement —
-with the parameter set shown in Table~\ref{tab:optim_result}. All
-three constraints are satisfied at the optimum, and the minimum
-front normal force remains comfortably positive.
+over the first \num{243} evaluations. 
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.82\textwidth]{figures/optim_convergence.pdf}
-\caption{Convergence of the Nelder--Mead optimiser over \num{271}
-objective evaluations. Upper panel: every evaluated \SI{75}{\metre}
-time (grey dots) together with the best-so-far feasible time
-(blue). Lower panel: peak electrical power per evaluation against
-the FS-EV~2.2 cap; wheelie-violating evaluations are marked as red
-crosses and rejected by the penalty in the objective.}
+\caption{Convergence of the Nelder--Mead optimiser over \num{243}
+objective evaluations: evaluated \SI{75}{\metre} time (grey dots),
+best-so-far curve (blue), and wheelie-violating evaluations (red crosses,
+penalised in the objective).}
 \label{fig:optim_convergence}
 \end{figure}
 
 \begin{table}[H]
 \centering
-\caption{Optimisation result. The converged design moves the CG
-forward relative to the baseline, tightens the gear ratio and
-increases anti-squat, and chooses a modestly smaller wheel radius.
-The launch torque cap is reduced to prevent the tyre from spinning
-through the Pacejka peak.}
+\caption{Optimisation results and changes to parameters.}
 \label{tab:optim_result}
 \footnotesize
 \begin{tabular}{|l|c|c|c|}
@@ -2579,7 +2491,7 @@ Anti-squat $\text{AS}$            & 0.12 & 0.36 & $+200\,\%$ \\
 \end{tabular}
 \end{table}
 
-The optimiser's choices are physically interpretable: the CG shift
+The optimiser's choices have physical interpretations. The CG shift
 forward and the anti-squat increase together preserve front normal
 force despite the reduced launch torque cap (which itself prevents
 the wheels from spinning through the Pacejka peak); the smaller
@@ -2594,30 +2506,22 @@ Section~\ref{sec:final_params}.
 \label{sec:drywet}
 % ---------------------------------------------------------------------
 
-The acceleration event is run on a specified track, but ambient
-conditions vary between rounds. Scaling the Pacejka peak grip by a
-surface-condition multiplier (\num{1.0} for dry slicks on clean
+The ambient conditions for the track may vary on the day. 
+Scaling the Pacejka peak grip by a
+surface condition multiplier (\num{1.0} for dry slicks on clean
 tarmac, \num{0.60} for the same slicks on a water film
 \cite{milliken1995}) gives a wet-track prediction of
 \SI{4.83}{\second} versus \SI{3.78}{\second} dry --- a
-\SI{28}{\percent} time penalty (Figure~\ref{fig:drywet}). Both
-configurations remain inside the \SI{25}{\second} disqualification
-threshold and neither exceeds the \SI{80}{\kilo\watt} power cap,
-confirming that the design is rule-compliant across the plausible
-track-condition envelope. In wet conditions the phase transition
+\SI{28}{\percent} time penalty (Figure~\ref{fig:drywet}). In wet conditions the phase transition
 (Section~\ref{sec:constraint_activity}) shifts later in the run: the
 vehicle spends more of the event traction-limited and less of it
-power-limited, which is consistent with the reduced grip ceiling at
-every velocity.
+power-limited, which is consistent with the intuitive result.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{figures/dry_wet.pdf}
 \caption{Velocity trace under dry and wet surface conditions (peak
-grip multiplier \num{1.0} vs \num{0.60}). The \SI{28}{\percent} time
-penalty on wet tracks is dominated by the extended traction-limited
-phase; both configurations remain compliant with FS-EV~2.2 and
-FS-D~5.3.1.}
+grip multiplier \num{1.0} vs \num{0.60}).}
 \label{fig:drywet}
 \end{figure}
 
@@ -2629,8 +2533,7 @@ FS-D~5.3.1.}
 The final agreed vehicle configuration combines decisions across the
 Chassis, Suspension, Drivetrain, and Supercapacitors chapters. The
 simulation takes the finalised configuration as input and produces
-predicted performance traces together with checks against FS-EV~2.2,
-FS-D~5.3.1, and pitch stability.
+predicted performance traces.
 
 % ---------------------------------------------------------------------
 \subsection{Final agreed parameter set}
@@ -2639,33 +2542,39 @@ FS-D~5.3.1, and pitch stability.
 
 \begin{table}[H]
 \centering
-\caption{Final agreed parameter set, assembled from the other
-chapters' component decisions plus this chapter's optimisation
-result. Values marked with an asterisk are hardware-pinned and not
-optimisation variables. Remaining values will be substituted once the
-other chapters finalise their numbers.}
+\caption{Final agreed parameter set: principal inputs matching the
+longitudinal simulation baseline (Section~\ref{sec:monte_carlo},
+Table~\ref{tab:pacejka}), with electrical hardware figures from the
+Drivetrain and Supercapacitors chapters.}
 \label{tab:final_parameters}
 \footnotesize
 \begin{tabular}{|l|c|c|l|}
 \hline
 \textbf{Parameter} & \textbf{Symbol} & \textbf{Value} & \textbf{Source} \\
 \hline
-Total vehicle mass & $m_v$ & [PH] \si{\kilo\gram} & All chapters \\
-Wheelbase & $L$ & 1.60\si{\metre}$^\ast$ & Chassis \\
-CG longitudinal & $L_{CG}$ & [PH] \si{\metre} & Chassis \\
-CG height & $h_{CG}$ & [PH] \si{\metre} & Chassis \\
-Wheel radius & $r_w$ & [PH] \si{\metre} & Suspension / tyres \\
-Peak tyre grip & $p_{Dx1}$ & [PH] & Suspension / tyres \\
-Accumulator nominal voltage & $V_\text{bus}$ & 600\si{\volt}$^\ast$ & Supercapacitors \\
-Accumulator mass & $m_\text{acc}$ & 27.8\si{\kilo\gram}$^\ast$ & Supercapacitors \\
-Motor torque constant & $K_t$ & 0.822\si{\newton\metre\per\ampere}$^\ast$ & Drivetrain (YASA P400R) \\
-Motor peak RMS current & $I_m^\text{peak}$ & 285\si{\ampere}$^\ast$ & Drivetrain (BAMOCAR PG-D3) \\
-Gear ratio & $N_g$ & [PH] & Drivetrain \\
-Drivetrain efficiency & $\eta_\text{drv}$ & [PH] & Drivetrain \\
+Total vehicle mass & $m_v$ & 200\si{\kilo\gram} & Section~\ref{sec:monte_carlo}; chassis $<$\SI{220}{\kilo\gram} \\
+Wheelbase & $L$ & 1.60\si{\metre} & Chassis \\
+CG longitudinal & $L_{CG}$ & 1.14\si{\metre} & Section~\ref{sec:load_transfer} \\
+CG height & $h_{CG}$ & 0.22\si{\metre} & Section~\ref{sec:load_transfer} \\
+Wheel radius & $r_w$ & 0.247\si{\metre} & Section~\ref{sec:monte_carlo}; loaded radius \\
+Peak tyre grip & $p_{Dx1}$ & 1.70 & Table~\ref{tab:pacejka} \\
+Accumulator nominal voltage & $V_\text{bus}$ & 600\si{\volt} & Supercapacitors \\
+Accumulator mass & $m_\text{acc}$ & 27.8\si{\kilo\gram} & Supercapacitors \\
+Motor torque constant & $K_t$ & 0.822\si{\newton\metre\per\ampere} & Drivetrain (YASA P400R) \\
+Motor peak RMS current & $I_m^\text{peak}$ & 285\si{\ampere} & Drivetrain (BAMOCAR PG-D3) \\
+Gear ratio & $N_g$ & 5.5 & Section~\ref{sec:powertrain} \\
+Drivetrain efficiency & $\eta_\text{drv}$ & 0.95 & Section~\ref{sec:powertrain} \\
 Drag area & $C_d A$ & 0.80\si{\metre\squared} & Chassis \\
-Anti-squat ratio & $\text{AS}$ & [PH] & Suspension \\
+Anti-squat ratio & $\text{AS}$ & 0.36 & Section~\ref{sec:monte_carlo}; geometry Section~\ref{sec:antisquat_dynamic_toe} \\
 \hline
 \end{tabular}
+\medskip
+
+\noindent\footnotesize\textit{Note.}
+The runnable simulation configuration contains many further parameters
+(for example full tyre coefficients, launch-controller timings, and
+numerical settings); Table~\ref{tab:final_parameters} lists only the
+main quantities needed for cross-chapter integration.
 \end{table}
 
 % ---------------------------------------------------------------------
@@ -2673,21 +2582,17 @@ Anti-squat ratio & $\text{AS}$ & [PH] & Suspension \\
 \label{sec:constraint_activity}
 % ---------------------------------------------------------------------
 
-Figure~\ref{fig:final_run} shows the predicted four-channel trace of
-the baseline vehicle, anchoring the numerical discussion while the
-final agreed parameters are confirmed. Three features are worth
+Figure~\ref{fig:final_run} shows the predicted trace of
+the vinalised vehicle. Three features are worth
 commenting on explicitly, because they determine where design effort
-is most profitably spent.
+is ideally spent.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{figures/final_run.pdf}
 \caption{Predicted performance of the baseline vehicle. The
 grey dashed line at $t^\star = \SI{1.37}{\second}$ marks the
-transition from the traction-limited to the power-limited regime.
-Instantaneous electrical power (lower left) saturates cleanly at
-the FS-EV~2.2 cap, and the front normal force (lower right) remains
-positive throughout the run.}
+transition from the traction-limited to the power-limited regime.}
 \label{fig:final_run}
 \end{figure}
 
@@ -2696,11 +2601,7 @@ the total run time) in the traction-limited regime and
 \SI{2.41}{\second} (\SI{64}{\percent}) in the power-limited regime,
 with the transition occurring at
 $v^\star = \SI{15.4}{\metre\per\second}$ as predicted analytically
-in Section~\ref{sec:powertrain}. The grip utilisation during the
-traction-limited phase averages approximately \SI{103}{\percent}
-relative to the reference Pacejka peak, confirming the launch
-controller (Section~\ref{sec:launch}) tracks the load-dependent grip
-ceiling closely.
+in Section~\ref{sec:powertrain}.
 
 Second, the electrical power saturates cleanly at \SI{79.80}{\kilo\watt}
 (against the \SI{80}{\kilo\watt} cap), without overshoot, throughout
@@ -2714,21 +2615,18 @@ acceleration and recovers as the vehicle enters the power-limited
 phase. The \SI{158}{\newton} minimum is a \SI{22}{\percent} fraction
 of the static load, which is ample margin against the wheelie
 threshold and validates the choice of anti-squat and CG
-geometry for the baseline configuration.
+geometry for the final configuration.
 
 % ---------------------------------------------------------------------
 \section{Discussion and Limitations}
 \label{sec:discussion}
 % ---------------------------------------------------------------------
 
-The model scope is validated in Section~\ref{sec:vv}. Main gaps:
-\textbf{driveline torsional compliance} (minor launch oscillation),
-\textbf{motor electrical dynamics} (finite torque rise time and brief dips),
-\textbf{fixed $V_\text{bus}$} versus supercap voltage sag (priority extension
-with Paul's pack model), and \textbf{driver reaction time}
-(\SIrange{0.2}{0.4}{\second} omitted). Combined with
-Section~\ref{sec:monte_carlo}, the headline \SI{75}{\metre} time is
-estimated within roughly $\pm \SI{0.20}{\second}$.
+The simulation is highly detailed and
+consistent with the validation evidence in Section~\ref{sec:vv}, but it
+omits a few other models that could reduce the gap between sim and reality. Main gaps:
+\textbf{driveline torsional compliance} (minor launch oscillation; beyond the rigid torque path implied by Section~\ref{sec:mechanical_design_packaging}) and
+\textbf{motor electrical dynamics} (finite torque rise time and brief dips; beyond the quasi-static electrical limit in Section~\ref{sec:powertrain}). \textbf{Driver reaction time} is intentionally excluded because this is a vehicle-only model used to inform design decisions; when benchmarking against competitor times it would be prudent to add a fixed \SIrange{0.2}{0.4}{\second} offset.
 
 % ---------------------------------------------------------------------
 \section{Conclusions and Further Work}
@@ -2747,24 +2645,17 @@ Sections~\ref{sec:vv}--\ref{sec:discussion}:
     \item Dominant sensitivities: longitudinal CG and peak grip;
           secondary band: wheel radius, driveline efficiency, mass,
           gearing (Section~\ref{sec:tornado}).
-    \item Optimisation (\num{271} Nelder--Mead evaluations) yields
+    \item Optimisation yields
           \SI{3.67}{\second} versus \SI{3.78}{\second} baseline
-          (Section~\ref{sec:optimisation}).
-    \item Wet-track scaling remains inside rule limits
-          (Section~\ref{sec:drywet}).
-    \item Under FS-D~5.3.2 with a notional $T_\text{fastest}=\SI{3.5}{\second}$,
-          the baseline predicts \num{59.2}/75 points and the optimised
-          set \num{65.1}/75.
+          (Section~\ref{sec:optimisation}) with our final run having slightly suboptimal parameters due to other design considerations
+    \item Final optimal run time of 3.73 optimal dry race with a Monte Carlo average of 4.02s
 \end{itemize}
 
 \subsection*{Further work}
 
 \begin{itemize}
-    \item Calibrate Pacejka coefficients from measured longitudinal tyre data.
-    \item Couple accumulator voltage sag (Supercapacitors chapter); optionally
-          add driveline torsion and motor transient effects.
-    \item Re-scope the framework to Skidpad/Autocross if championship score
-          trades appear.
+    \item Calibrate Pacejka coefficients even further from emperical tyre data.
+    \item Add driveline torsion and motor electrical dynamic effects.
 \end{itemize}
 
 % ---------------------------------------------------------------------
@@ -2782,6 +2673,7 @@ Sections~\ref{sec:vv}--\ref{sec:discussion}:
 \graphicspath{{../TobyMcConnell/Business/}}
 % --- BEGIN INLINE: TobyMcConnell/Business/toby_business_body.tex ---
 \chapterauthor{Market and Competition Analysis}{Toby McConnell}
+\label{sec:market_and_competition}
 
 \section{Introduction and Executive Summary}
 
@@ -2909,6 +2801,7 @@ Occasion-based segmentation further reinforces this alignment. Testing occurs du
 Overall, segmentation analysis indicates strong alignment between this market’s priorities and the platform’s core value proposition. Further analysis in the following sections will also evaluate the strategic fit and competitive positioning within this segment.
 
 \section{Competitive Landscape Analysis}
+\label{sec:competitive_landscape}
 
 \subsection{Macro Analysis: Porter's 5 Forces}
 
@@ -3047,6 +2940,7 @@ Comparing these segments highlights differences in adoption speed, revenue poten
 Based on this analysis, a phased targeting strategy is appropriate. Initial focus should be placed on EV startups and some specific AI technology firms to generate validation data, refine the platform, and establish market credibility. This early adoption can then support engagement with large OEMs as long-term strategic customers. This approach balances rapid entry with scalable growth.
 
 \subsection{Servicable Obtainable Market (SOM) Estimation}
+\label{subsec:som_estimation}
 
 Having established a phased targeting strategy, the market opportunity can be refined by estimating the Serviceable Available Market (SAM) and the Serviceable Obtainable Market (SOM). While the total addressable market is global, the initial commercial focus is centered entirely on the UK market, serving as a strategic beachhead for the platform.
 
@@ -3123,6 +3017,7 @@ Competitive advantage is therefore more likely to rely on trade secrets and accu
 Additional barriers arise from the specialised engineering integration required and the need for early partnerships with automotive manufacturers. As a result, IP should be viewed as supportive rather than primary, with advantage driven by technical know-how, data, and early market adoption.
 
 \section{Risk Analysis and Strategic Trade-offs}
+\label{sec:risk_analysis_strategic_tradeoffs}
 
 A range of risks must be considered when assessing the feasibility and commercialisation of the product.
 
@@ -3396,6 +3291,7 @@ In the automotive sector, traditional Life Cycle Assessments (LCA) frequently re
 At the macro-business level, the enterprise's Testing-as-a-Service (TaaS) model operates strictly as a Result-Oriented Product-Service System (PSS). Specifically, it aligns with the classification of Activity Management and Outsourcing (Category 6) \cite[p.~254]{tukker}. By operating this centralised PSS model at established UK testbeds, we prevent multiple of our potential clients from needlessly extracting raw materials to manufacture and maintain their own low-utilisation testing fleets.
 
 \subsection{The 9R Framework Application}
+\label{sec:9r_framework_application}
 
 To achieve absolute alignment between environmental sustainability and commercial efficiency, the enterprise governs its lifecycle strategy through the 9R Circular Economy Framework \cite[p.~5]{potting_2017}. Because asset ownership is retained under the TaaS model, we are financially incentivised to maximise hardware lifespan. At the macro-level, this overarching Product-Service System (PSS) successfully executes the framework's highest tiers-Smarter product use and manufacture (R0-R2)-by refusing redundant OEM manufacturing and reducing overall material extraction across the industry.
 
@@ -3751,6 +3647,7 @@ Overall, the supply chain can be characterised as a centralised, agile, and fail
 \label{sec:supply_chain_planning}
 
 \subsection{Planning Framework}
+\label{subsec:supply_chain_planning_framework}
 
 Given the operational nature of the system, supply chain planning is driven by the objective of maximising system availability through effective management of failure risk.
 
@@ -4006,21 +3903,17 @@ Where applicable, detailed and publicly available data sources are cited in the 
 \chapterauthor{Financial Analysis}{Harry Emes}
 % =====================================================================
 
-\noindent This chapter quantifies the five-year TaaS plan using one
-driver-based Python model consistent with the engineering
-chapter's sensitivity methodology~\cite{emes_engineering}: linked
+\noindent This chapter discusses the five-year TaaS plan using a Python based financial model to link
 capex, opex, and revenue; P\&L and free cash flow; CAPEX inversion
 (Section~\ref{sec:inversion}); break-even and one-at-a-time
-sensitivities (Sections~\ref{sec:breakeven}--\ref{sec:sensitivity});
+sensitivities (Sections~\ref{sec:breakeven}--\ref{sec:business_sensitivity});
 NPV/IRR (Section~\ref{sec:npv}); and downtime stress
-(Section~\ref{sec:downtime}). Market sizing and day-rate inputs
-follow McConnell's market chapter~\cite{mcconnell_business}; PAS,
-fleet-recovery, and gatekeeper uptake assumptions align with the
-preceding business chapters~\cite{pas1882,pas1883,pas1885,alarp,cam_testbed_uk,ccav,thatcham}.%
+(Section~\ref{sec:downtime}). Market sizing and day-rate inputs follow
+Section~\ref{sec:market_and_competition}; fleet-recovery and  uptake assumptions align with the
+preceding business chapters~\cite{alarp,cam_testbed_uk,ccav,thatcham}.%
 \footnote{This chapter, the Python financial model, all figures
-and prose, is the sole work of Harry Emes. Market material cited
-here is the work of Toby McConnell~\cite{mcconnell_business};
-prototype and supply-chain context is owed to the engineering
+and prose, is the sole work of Harry Emes. Market inputs are taken from
+Section~\ref{sec:market_and_competition}; prototype and supply-chain context is owed to the engineering
 chapters of the group report.}
 
 \medskip
@@ -4056,7 +3949,7 @@ chapters of the group report.}
 \noindent \textbf{Conclusion}: the TaaS financial structure clears
 standard venture-capital thresholds in the base case and is
 robust to adverse swings in the key commercial drivers
-(Section~\ref{sec:sensitivity}).
+(Section~\ref{sec:business_sensitivity}).
 
 % =====================================================================
 \section{Scope and methodology}
@@ -4065,10 +3958,7 @@ robust to adverse swings in the key commercial drivers
 % =====================================================================
 
 \noindent Section scope: the model structure above is implemented
-end-to-end below; narrative in the Market and Strategy chapters is
-not repeated. Technical and operational priors (PAS, recovery,
-maintenance) are embedded in the driver set and cited where they
-enter the accounts~\cite{pas1882,pas1883,pas1885,alarp,cam_testbed_uk,ccav,thatcham}.
+end-to-end below. Recovery and maintenance assumptions are built into the model inputs and are cited when they enter the model~\cite{alarp,cam_testbed_uk,ccav,thatcham}.
 
 \begin{figure}[H]
 \centering
@@ -4090,19 +3980,18 @@ enter the accounts~\cite{pas1882,pas1883,pas1885,alarp,cam_testbed_uk,ccav,thatc
 % ---------------------------------------------------------------------
 
 The operator owns the fleet; the customer rents days. Every pound
-of AEB~Rabbit capital therefore sits on our balance sheet, is
+of capital therefore sits on our balance sheet, is
 financed from equity until the business turns cash-positive, and is
-recovered through the day-rate. Per-vehicle build is
-\capexPerVehicle; the
+recovered through the utilisation. Per-vehicle build is
+\capexPerVehicle and the
 Y1 setup adds \pounds50\,k in workshop fit-out and data-platform
 infrastructure. Fleet growth (2nd vehicle in Y3, 3rd in Y5) drives
 a further \pounds620\,k of capex over Y3--Y5. Total capex over the five-year
-plan: \totalCapex.
+plan is \totalCapex.
 
-Capital is depreciated on a five-year straight-line basis. No
-residual value is modelled at Y5: in a PSS business, the physical
-asset is either refurbished in place under Yuze Jiang's 9R-framework
-loop (and therefore stays in service beyond the modelled window) or
+Capital is depreciated linearly across the 5 years. No
+residual value of the car is modelled at Y5. In a PSS business, the physical
+asset is either refurbished in place following the 9R lifecycle loop (Section~\ref{sec:9r_framework_application})*,and therefore stays in service beyond the modelled window, or is
 retired in line with safety-critical-testing industry norms.
 
 % --- BEGIN INLINE: HarryEmes/Business/tables/capex_schedule.tex ---
@@ -4134,10 +4023,10 @@ one-off Y1 company setup \pounds50k.}
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.92\textwidth,height=0.44\textheight,keepaspectratio]{cost_structure_opex.pdf}
-\caption{Y1 fixed-OPEX build-up. Legend in two columns for legibility.
+\caption{Y1 fixed-OPEX build-up. 
   The salary-heavy stack is the reason utilisation (revenue per
   engineer per year) is the highest-leverage financial driver in
-  the sensitivity analysis (Section~\ref{sec:sensitivity}).}
+  the sensitivity analysis (Section~\ref{sec:business_sensitivity}).}
 \label{fig:opex_donut}
 \end{figure}
 
@@ -4145,8 +4034,7 @@ one-off Y1 company setup \pounds50k.}
 \fixedOpexYOne), with the remainder split across workshop rent,
 insurance, certification fees, data-platform hosting, marketing,
 vehicle maintenance, and professional services.
-The model inflates fixed opex at 3\% per year (UK CPIH 2023--25 trend) and
-adds step-changes for each fleet-growth hire.
+The model inflates fixed opex at 3\% per year (UK CPIH 2023--25 trend) and increases staffing with fleet size.
 
 Variable cost per test day is \pounds2,300 (Y1), comprising tyres
 and consumables (\pounds800), transport (\pounds600), crew
@@ -4160,18 +4048,18 @@ the break-even analysis below.
 \label{sec:revenue}
 % ---------------------------------------------------------------------
 
-Revenue is modelled bottom-up from three driver arrays: test days
+Revenue is modelled with 3 parameters: test days
 sold, fleet size, and blended day-rate. Day-rate is the
 mix-weighted average of the Bronze / Silver / Gold packages
 (\pounds6\,k / \pounds8\,k / \pounds10\,k) benchmarked against
-the competitor set in McConnell's analysis~\cite{mcconnell_business}
+the competitor set in Section~\ref{sec:competitive_landscape}
 (AB~Dynamics~\cite{abdynamics_ar2024},
 UTAC~\cite{utac_facilities},
 HORIBA~\cite{horiba_brake}, and AVL~\cite{avl_profile}). Mix-shift
 from Bronze-heavy to Gold-heavy over five years drives blended
 day-rate from \pounds7.5\,k (Y1) to \pounds9.5\,k (Y5) without
 any individual-tier price movement -- important for the pricing
-discipline discussed in Section~\ref{sec:sensitivity}.
+discipline discussed in Section~\ref{sec:business_sensitivity}.
 
 % --- BEGIN INLINE: HarryEmes/Business/tables/revenue.tex ---
 \begin{table}[H]
@@ -4196,10 +4084,10 @@ Gross margin (\%) & 69.3 & 70.6 & 71.8 & 72.8 & 73.7 \\
 \end{tabular}
 \end{table}
 % --- END INLINE: HarryEmes/Business/tables/revenue.tex ---
-\paragraph{Reconciliation with McConnell's SOM.} Y5 forecast
-revenue of \yFiveRevenue ($\approx$\textdollar 2.7\,M) sits at
-\mbox{10--14\%} of McConnell's serviceable-obtainable-market
-estimate of \textdollar 26\,M~\cite{mcconnell_business} -- a
+\paragraph{Reconciliation with market sizing.}
+Y5 forecast revenue of \yFiveRevenue ($\approx$\textdollar 2.7\,M)
+sits at \mbox{10--14\%} of the serviceable-obtainable-market estimate
+(\textdollar 26\,M) in Section~\ref{subsec:som_estimation} -- a
 penetration consistent with a credible early-stage entrant, with
 upside if utilisation and mix outperform the base plan.
 
@@ -4208,12 +4096,10 @@ upside if utilisation and mix outperform the base plan.
 \label{sec:inversion}
 % ---------------------------------------------------------------------
 
-Figure~\ref{fig:inversion} makes the TaaS CAPEX-inversion concrete.
 Annual CAPEX is heavily front-loaded (Y1 = \pounds360\,k) and then
 steps at each fleet expansion; annual revenue ramps
 gradually with utilisation. Cumulative revenue crosses cumulative
-CAPEX in \inversionCrossover -- faster than a naive reading of the
-plan would suggest, because the pilot-year utilisation of 40 test
+CAPEX in \inversionCrossover because the pilot-year utilisation of 40 test
 days already generates \yOneRevenue against a Y1 CAPEX spend of
 \pounds360\,k.
 
@@ -4222,10 +4108,7 @@ days already generates \yOneRevenue against a Y1 CAPEX spend of
 \includegraphics[width=\textwidth]{capex_inversion.pdf}
 \caption{CAPEX-inversion timeline. Left: annual CAPEX out vs.
   annual revenue in. Right: cumulative CAPEX (red) vs. cumulative
-  revenue (green). The red-shaded region is the ``TaaS burden''
-  period during which cumulative CAPEX exceeds cumulative revenue;
-  the green region is the ``recouped'' period after
-  \inversionCrossover.}
+  revenue (green). }
 \label{fig:inversion}
 \end{figure}
 
@@ -4236,21 +4119,20 @@ until Y3, and cumulative \emph{EBIT} does not cross cumulative
 CAPEX until Y5. The CAPEX inversion is therefore a necessary but
 not sufficient condition for financial viability; the break-even
 and NPV analyses in Section~\ref{ch:be_npv} assess the sufficient
-condition.
+condition in more detail.
 
 % ---------------------------------------------------------------------
 \subsection{Five-year profit \& loss forecast}
 \label{sec:pnl}
 % ---------------------------------------------------------------------
 
-Table~\ref{tab:pnl} is the five-year P\&L summary; every column is
-a downstream result of the cost and revenue models above. Three
+Table~\ref{tab:pnl} is the five-year P\&L summary. There are three
 features are worth noting:
 
 \begin{tightitemize}
   \item \textbf{EBITDA turns positive in Y4}, well before net
         profit, reflecting the drag of depreciation in a
-        capex-heavy service business.
+        capex-heavy business.
   \item \textbf{Operating-leverage tipping point at Y3.} Gross
         profit grows faster than fixed opex from Y3 onwards;
         Y3 is the \emph{commercial} break-even year, Y4 is the
@@ -4291,7 +4173,7 @@ Net profit & -402 & -292 & -156 & 12 & 293 \\
   (variable, fixed, depreciation) with net-profit trajectory
   overlaid (red, right axis). Net profit crosses zero in Y4 --
   the accounting break-even year -- and reaches \pounds293\,k
-  net of tax in Y5.}
+  net in Y5.}
 \label{fig:revenue_ramp}
 \end{figure}
 
@@ -4300,7 +4182,7 @@ Net profit & -402 & -292 & -156 & 12 & 293 \\
 \label{sec:cash_flow}
 % ---------------------------------------------------------------------
 
-A capex-heavy TaaS business lives or dies on cash, not on
+A capex-heavy TaaS business requires cash to survive, not simply
 accounting profit. Figure~\ref{fig:cash} summarises free cash flow,
 equity raises, and cumulative cash balance.
 
@@ -4318,10 +4200,9 @@ equity raises, and cumulative cash balance.
 Two moments deserve attention. First, end-Y2 cash balance is
 \pounds90\,k -- the tightest point in the plan, after absorbing
 two years of operating loss. A delayed Series~A would push the
-company into a bridge-round conversation; the Series~A
-therefore targets a Q4-Y2 close rather than a Y3 close.
-Second, Y5 free cash flow is \pounds179\,k positive even after the
-\capexPerVehicle third-vehicle purchase -- the plan is genuinely
+company into a bridge-round conversation.
+Secondly, Y5 free cash flow is \pounds179\,k positive even after the
+\capexPerVehicle third-vehicle purchase meaning the business is genuinely
 self-funding by Y5.
 
 % =====================================================================
@@ -4359,10 +4240,7 @@ per day is \contributionMargin; fixed costs plus depreciation total
 \end{figure}
 
 Y1--Y3 sit below break-even (as expected for an early-stage TaaS
-build-out); Y4 is above; Y5 is comfortably above. The gap between
-the \breakEvenDays-day requirement and the Y1 plan of 40 days is
-the explicit financial quantification of the ``TaaS burden''
-period discussed in Section~\ref{sec:inversion}.
+build-out); Y4 is above; Y5 is comfortably above. 
 
 % ---------------------------------------------------------------------
 \subsection{NPV and IRR -- the capital-budgeting view}
@@ -4390,7 +4268,7 @@ Y5 revenue~\cite{abdynamics_ar2024,damodaran2012}, yielding
 \paragraph{Result.} Figure~\ref{fig:npv} plots $\mathrm{NPV}(r)$
 at representative hurdle rates (same annual FCF series as
 Figure~\ref{fig:cash}, pre-equity post-CAPEX, plus the Y5
-terminal value stated in the Method paragraph). At the 20\%
+terminal value). At the 20\%
 VC-central rate the project NPV is \npvBase; at the 25\%
 high-hurdle rate it is \npvHurdle; IRR is \irr.
 
@@ -4409,7 +4287,7 @@ high-hurdle rate it is \npvHurdle; IRR is \irr.
 \end{figure}
 
 \paragraph{Interpretation.} The project clears standard VC-hurdle
-tests comfortably. Two caveats apply. First, \textbf{almost all
+tests comfortably but two caveats apply. First, \textbf{almost all
 of the NPV is present-value terminal value}, not operational cash
 flow: at 20\% the PV of the \terminalValue terminal alone is
 \pounds2.1\,M, against \pounds0.8\,M of negative PV from the Y1--Y3
@@ -4421,22 +4299,21 @@ it does not imply year-by-year operating returns at that level.
 
 % ---------------------------------------------------------------------
 \subsection{Sensitivity analysis}
-\label{sec:sensitivity}
+\label{sec:business_sensitivity}
 % ---------------------------------------------------------------------
 
-Following the one-at-a-time methodology of the engineering
-chapter's sensitivity ranking~\cite{emes_engineering}, each driver
+To ensure we survive to realise the Y5 exit value that bolsters our NPV, we performed sensitivity rankings to determine threats. Each parameter
 is perturbed by $\pm 20\%$ ($\pm 50\%$ for inflation) and the
-resulting Y3 EBIT swings ranked in Figure~\ref{fig:tornado}.
+resulting Y3 EBIT swings ranked in Figure~\ref{fig:business_tornado}.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{tornado.pdf}
 \caption{Tornado sensitivity of Y3 EBIT to $\pm 20\%$ (or
-  $\pm 50\%$) perturbation of each driver. Blended day-rate and
+  $\pm 50\%$ for inflation) perturbation of each driver. Blended day-rate and
   utilisation dominate; fixed opex is second-order; CAPEX and
   inflation are third-order.}
-\label{fig:tornado}
+\label{fig:business_tornado}
 \end{figure}
 
 Two implications follow. First, \textbf{pricing discipline matters
@@ -4444,35 +4321,30 @@ more than cost discipline}: a 20\% day-rate swing is worth
 \pounds374\,k of Y3 EBIT whereas a 20\% fixed-opex swing is worth
 \pounds228\,k. Second, the two top drivers (day-rate and
 utilisation) are the two most directly in the operating team's
-control -- management attention earns the highest marginal return
-there, rather than on cost-out or CAPEX engineering.
+control so maintanance and commercial behaviour is more important than reducing cost or CAPEX.
 
 % =====================================================================
 \section{Financial risk: the downtime case}
 \label{ch:risk_fin}
 % =====================================================================
 
-McConnell's risk taxonomy~\cite{mcconnell_business} treats the
-industry-level risk environment. This section adds the
-financial-risk view: how robust are the NPV and EBIT forecasts to
-an \emph{execution}-side failure on the fleet-maintenance
-dependency? In a TaaS business where revenue is utilisation-tethered
-(Section~\ref{sec:why_taas}), this is the single most important
-execution-risk question.
+Section~\ref{sec:risk_analysis_strategic_tradeoffs} covers industry-level
+risks. Here the focus is financial so we need to understand how much do NPV and EBIT suffers if fleet maintenance fails
+operationally. For TaaS, revenue follows
+utilisation (Section~\ref{sec:why_taas}), so the main risk is maintenance. 
 
 % ---------------------------------------------------------------------
 \subsection{Downtime sensitivity -- quantifying the maintenance dependency}
 \label{sec:downtime}
 % ---------------------------------------------------------------------
 
-David's maintenance protocols target a $<$30-minute fleet-recovery
-time on any single failure, which underpins the planned
-utilisation arrays in Table~\ref{tab:revenue}. Downtime is modelled
+Following Section~\ref{subsec:supply_chain_planning_framework}, we assume
+$<$30-minute fleet recovery from any single failure; this underpins the
+planned utilisation arrays in Table~\ref{tab:revenue}. Downtime is modelled
 as a fractional reduction in billable days: a downtime rate of
 $d\%$ delivers $(1-d)\cdot D_t$ billable days in year $t$. The fixed
 cost base is unchanged (the crew is still paid while the vehicle is
-grounded), so every percentage point of downtime translates
-one-for-one into lost gross profit.
+grounded), so every percentage point of downtime results in lost gross profit.
 
 % --- BEGIN INLINE: HarryEmes/Business/tables/downtime.tex ---
 \begin{table}[H]
@@ -4480,8 +4352,8 @@ one-for-one into lost gross profit.
 \small
 \caption{Downtime sensitivity: effect of a persistent shortfall in 
 billable days on revenue, EBIT and project NPV. A \textit{downtime} 
-of $d\%$ models the case where David's maintenance protocols deliver 
-$(1-d)$ of the planned test days each year. Red values indicate an EBIT 
+of $d\%$ models the case where trackside recovery under Section~\ref{subsec:supply_chain_planning_framework}
+delivers only $(1-d)$ of the planned test days each year. Red values indicate an EBIT 
 or NPV that has turned negative.}
 \label{tab:downtime}
 \begin{tabular}{crrrrrr}
@@ -4525,12 +4397,12 @@ or NPV that has turned negative.}
         also compresses the exit multiple
         (acquirers discount unreliability), NPV can flip negative
         at lower downtime levels.
-  \item \textbf{The financial cost of a maintenance-protocol
-        failure is asymmetric.} A 10\% systematic downtime costs
-        \pounds190\,k of Y5 revenue, \pounds154\,k of Y5 EBIT,
-        and \pounds390\,k of NPV@20\%. A 20\% systematic downtime
-        costs \pounds418\,k, \pounds308\,k, and \pounds781\,k
-        respectively.
+  \item \textbf{Maintenance is cheap to fund but expensive to starve.}
+        Relative to the recurring maintenance cash costs in the base plan,
+        the losses from systematic downtime dominate: at 10\% downtime,
+        \pounds190\,k of Y5 revenue, \pounds154\,k of Y5 EBIT, and
+        \pounds390\,k of NPV@20\% are lost; at 20\% downtime those figures
+        rise to \pounds418\,k, \pounds308\,k, and \pounds781\,k.
 \end{tightitemize}
 
 \paragraph{Implication for the maintenance budget.} The financial
@@ -4571,10 +4443,8 @@ territory. Three specific financial exposures follow:
         single-customer concentration.
 \end{tightitemize}
 
-These financial-risk mitigations tie back to the execution plan
-but are deliberately framed here in cash terms, because
-cash-runway protection is the financial-evaluation lens that
-McConnell's industry-risk taxonomy does not cover.
+These financial-risk mitigations align with the execution plan but are
+framed here as cash outcomes.
 
 % =====================================================================
 \section{Funding strategy, valuation and financial KPIs}
@@ -4672,7 +4542,7 @@ The plan is tracked on eight KPIs: \emph{revenue},
 model), plus \emph{incident-free test days} and
 \emph{unplanned fleet downtime} -- the two execution-level signals
 that protect the financial downside case from
-Section~\ref{ch:risk_fin}. A red reading on any one triggers a
+Section~\ref{ch:risk_fin}. A red reading on any one should trigger a
 board-level review.
 
 % =====================================================================
@@ -4680,11 +4550,11 @@ board-level review.
 \label{ch:concl}
 % =====================================================================
 
-The AEB~Rabbit TaaS business clears standard capital-budgeting
-thresholds in the base case: project NPV of \npvBase at a 20\%
+The TaaS business clears standard capital-budgeting
+thresholds: project NPV of \npvBase at a 20\%
 VC-central discount rate, IRR of \irr, and break-even in
 \breakEvenYear at \breakEvenDays test days/year. The financial
-structure is typical of a capex-inverted services build-out -- loss
+structure is typical of a capex-inverted Testing as a Service -- loss
 through Y3, cash-thin at the Y2/Y3 boundary, and NPV dominated by
 the present value of the Y5 exit. Six recommendations follow, each
 paired with the Y1 financial action it drives.
@@ -4708,12 +4578,13 @@ paired with the Y1 financial action it drives.
         compensated on mix-shift to Silver/Gold, not only on
         volume. \emph{Y1 action}: incentive plan pays on blended
         day-rate, not bookings.
-  \item \textbf{Gate Y4+ revenue on CAM~Testbed~UK / CCAV /
-        Thatcham acceptance.} The terminal-value assumption
-        (2.5$\times$ Y5 revenue) only holds if the platform is
-        regulator-approved. \emph{Y1 action}: commission the ISO /
-        IEC~17025 gap-analysis and initiate the CAM~Testbed~UK
-        relationship.
+  \item \textbf{Do not treat Y4+ revenue as guaranteed until UK partners have accepted the platform.}
+        Three main barriers: recognition on the CAM~Testbed~UK network~\cite{cam_testbed_uk},
+        credible engagement with CCAV (UK government CAV programme)~\cite{ccav}, and acceptance by
+        insurance-sector assessors such as Thatcham~\cite{thatcham}. The exit valuation (2.5$\times$ Y5 revenue)
+        only makes sense once those relationships are underway.
+        \emph{Y1 action}: commission an ISO/IEC~17025~\cite{iso17025} gap analysis and initiate the
+        CAM~Testbed~UK relationship.
   \item \textbf{Protect the Y2/Y3 cash boundary at all costs.}
         Only \pounds90\,k of buffer; compound shocks can
         cascade into a bridge round at a compressed valuation.
@@ -4729,12 +4600,11 @@ paired with the Y1 financial action it drives.
 
 \medskip
 
-\noindent The TaaS financial structure is viable and
-defensible. The single biggest threat to financial returns is not
+\noindent The TaaS financial structure is viable. The single biggest threat to financial returns is not
 the external market, the competitors, or the cost base -- it is
-the execution of the maintenance protocol the model assumes.
+the execution of the recovery assumptions in Section~\ref{subsec:supply_chain_planning_framework} that the model assumes.
 Protecting that assumption is both the cheapest and
-highest-leverage financial action the operator can take.
+highest impact financial action that we can take.
 
 % =====================================================================
 \compactbib
