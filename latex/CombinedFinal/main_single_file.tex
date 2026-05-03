@@ -894,18 +894,19 @@ The objective of this event is to minimise the time required to travel a short s
 \begin{table}[H]
 \centering
 \small
+\setlength{\tabcolsep}{24pt}
 
 \caption{Design Constraints from FSUK Rule\cite{fs-ev-rules2026}}
 \label{tab:FSUK_constraints}
 
-\begin{tabular}{ll}
+\begin{tabularx}{0.4\textwidth}{l X}
 \toprule
 \textbf{Constraints} & \textbf{Limit} \\
 \midrule
 Max Power & 80\,kW \\
 Max Current & 500\,A \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 Within these constraints, the powertrain system must efficiently convert electrical energy from a supercapacitor-based storage system into mechanical torque at the wheels, in order to maximise acceleration performance.
@@ -931,9 +932,9 @@ Other factors, such as cost and component lead time, must also be considered. Tr
 
 The powertrain system considered in this work focuses on the components between the accumulator (battery system) and the output shaft, as illustrated in Figure~\ref{fig:powertrain}.
 
-Electrical energy is supplied from the accumulator to the inverter, which converts DC electrical power into controlled AC power for the motor. The motor generates torque, which is transmitted through the drivetrain system and differential to the output shaft, delivering mechanical power to the wheel assembly, which is considered external to this work.
+Electrical energy is supplied from the accumulator to the inverter, which converts DC power into controlled AC power for the motor. The motor generates torque, which is transmitted through the drivetrain and differential to the output shaft, delivering mechanical power to the wheel assembly, which is considered external to this work.
 
-The control system operates in parallel with the powertrain hardware. Driver inputs from the accelerator and brake pedals are processed by the controller, which guarantees the system is operating under Formula Student UK Rule and then generates a torque request. This torque request is converted into a current reference signal and sent to the inverter, which regulates motor current to achieve the desired torque output.
+The control system operates in parallel with the powertrain hardware. Driver inputs from the accelerator and brake pedals are processed by the controller, which guarantees the system is operating under Formula Student UK Rule~\cite{fs-ev-rules2026} and then generates a torque request. This torque request is converted into a current reference signal and sent to the inverter, which regulates motor current to achieve the desired torque output.
 
 Feedback from the powertrain hardware, in the form of shaft or wheel speed, is returned to the controller as a speed feedback signal. This enables the controller to enforce system constraints and maintain stable operation.
 
@@ -947,8 +948,7 @@ Overall, the system is designed to transfer electrical energy from the accumulat
 \subsection{Motor Configuration}
 % Ask Michael
 
-The powertrain architecture adopts a centralised single-motor configuration, as determined by the overall vehicle design.
-%Cite Michael's analysis
+The powertrain architecture adopts a centralised single-motor configuration, as determined by the overall vehicle design (based on analysis from Ziyang Xing).
 
 A multi-motor configuration can provide advantages such as torque vectoring and improved traction control. However, for the \SI{75}{\meter} acceleration event, the vehicle primarily operates under straight-line conditions, where the benefits of torque vectoring are limited.
 
@@ -990,27 +990,32 @@ Cooling requirements, cost, and lead time are assigned lower weightings, as they
 \caption{Merit Matrix for Motor Selection}
 \label{tab:motor_selection}
 
-\begin{tabular}{lccccccc}
+\begin{tabularx}{\textwidth}{>{\centering\arraybackslash}X *{6}{>{\centering\arraybackslash}X} >{\centering\arraybackslash}X}
 \toprule
-\textbf{Criteria} 
-& \shortstack{EMRAX \\ MV Air} 
-& \shortstack{EMRAX \\ MV Liquid} 
-& \shortstack{EMRAX \\ MV Comb} 
-& \shortstack{EMRAX \\ HV Air} 
-& \shortstack{EMRAX \\ HV Liquid} 
-& \shortstack{EMRAX \\ HV Comb} 
-& \shortstack{YASA \\ P400R} \\
+ Motor & Cost & Lead Time & Power Density & Peak Torque & Voltage Compat. & Cooling & \textbf{Score} \\
 \midrule
-Cost & 2 & 2 & 2 & 1 & 1 & 1 & 0 \\
-Lead Time & 1 & 1 & 1 & 1 & 1 & 1 & 0 \\
-Power Density & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
-Peak Torque & 0 & 0 & 0 & 0 & 0 & 0 & 3 \\
-Voltage Compatibility & 2 & 2 & 2 & 1 & 1 & 1 & 2 \\
-Cooling System & 3 & 1 & 2 & 3 & 1 & 2 & 2 \\
+
+\textbf{Weighting} 
+& 1 & 1 & 2 & 4 & 2 & 1 & {}\\
+
 \midrule
-\textbf{Overall Score} & 21 & 13 & 17 & 18 & 10 & 14 & 22 \\
+\shortstack{EMRAX \\ MV Air}
+& 2 & 1 & 1 & 0 & 2 & 0 & 18 \\
+\shortstack{EMRAX \\ MV Liquid}
+& 2 & 1 & 1 & 0 & 2 & 2 & 14 \\
+\shortstack{EMRAX \\ MV Comb}
+& 2 & 1 & 1 & 0 & 2 & 1 & 16 \\
+\shortstack{EMRAX \\ HV Air}
+& 1 & 1 & 1 & 0 & 1 & 0 & 15 \\
+\shortstack{EMRAX \\ HV Liquid}
+& 1 & 1 & 1 & 0 & 1 & 2 & 11 \\
+\shortstack{EMRAX \\ HV Comb}
+& 1 & 1 & 1 & 0 & 1 & 1 & 13 \\
+\shortstack{\textbf{YASA} \\ \textbf{P400R}}
+& 0 & 0 & 1 & 3 & 2 & 2 & \textbf{22} \\
+
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 The results show that the YASA P400R achieves the highest overall score, primarily due to its superior peak torque performance, which has the greatest influence on acceleration capability.
@@ -1033,7 +1038,7 @@ This ensures that the motor operates within the power limit while still deliveri
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{YASA_Motor_Operation_Graph.png}
+    \includegraphics[width=0.75\linewidth]{YASA_Motor_Operation_Graph.png}
     \caption{YASA P400R Operation Curve}
     \label{fig:motor_operation}
 \end{figure}
@@ -1119,7 +1124,7 @@ Inverter & Constraint & Cost & Lead Time & Voltage Range & Weight & Score \\
 DMC544 & Pass & 0 & 0 & 0 & 0 & 0 \\
 BAMOCAR 400/400 & Fail & -- & -- & -- & -- & 0 \\
 BAMOCAR 700/250 & Fail & -- & -- & -- & -- & 0 \\
-BAMOCAR 700/400 & Pass & 3 & 1 & 2 & 1 & 9 \\
+\textbf{BAMOCAR 700/400} & Pass & 3 & 1 & 2 & 1 & \textbf{9} \\
 CM200DX & Pass & 2 & 1 & 1 & 2 & 7 \\
 CM200DZ & Pass & 1 & 1 & 2 & 2 & 8 \\
 \bottomrule
@@ -1145,7 +1150,7 @@ The controller processes sensor inputs, including accelerator and brake pedal si
 
 \begin{figure}
         \centering
-        \includegraphics[width=0.5\linewidth]{Block_Diagram_for_Control_System.png}
+        \includegraphics[width=0.7\linewidth]{Block_Diagram_for_Control_System.png}
         \caption{Block Diagram for Control System}
         \label{fig:control_system_block}
 \end{figure}
@@ -1192,23 +1197,38 @@ After applying basic voltage and communication constraints, a merit matrix is us
 
 \begin{table}[H]
 \centering
+\small
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{3pt}
+
 \caption{Merit Matrix for Controller Selection}
 \label{tab:controller_selection}
-\begin{tabular}{lcccc}
+
+\makebox[\textwidth][c]{
+\begin{tabularx}{0.95\textwidth}{p{2cm} *{7}{>{\centering\arraybackslash}X} >{\centering\arraybackslash}X}
 \toprule
-Criteria & STM32 & Arduino Uno & TI C2000 & NXP S32K \\
+ ECU & Supply Voltage & Weight & Cost & Processing Time & System Latency & CAN Capability & Reliability & \textbf{Score} \\
 \midrule
-Supply Voltage & Pass & Pass & Pass & Pass \\
-Weight & 3 & 1 & 2 & 2 \\
-Cost & 3 & 1 & 2 & 2 \\
-Processing Time & 1 & 2 & 2 & 1 \\
-Latency & 1 & 2 & 2 & 1 \\
-CAN Capability & Pass & Fail & Pass & Pass \\
-Reliability & 1 & 1 & 1 & 1 \\
+
+Weighting
+& Pass/Fail & 1 & 2 & 2 & 2 & Pass/Fail & 2 & --\\
 \midrule
-Overall Score & 15 & 13 & 12 & 12 \\
+
+\textbf{STM32}
+& Pass & 3 & 3 & 1 & 1 & Pass & 1 & \textbf{15} \\
+
+Arduino Uno
+& Pass & 1 & 1 & 2 & 2 & Fail & 1 & -- \\
+
+TI C2000
+& Pass & 2 & 2 & 2 & 2 & Pass & 1 & 12 \\
+
+NXP S32K
+& Pass & 2 & 2 & 1 & 1 & Pass & 1 & 12 \\
+
 \bottomrule
-\end{tabular}
+\end{tabularx}
+}
 \end{table}
 
 The results indicate that the STM32 achieves the highest overall score due to its balanced performance in cost, weight, processing capability, communication support, and reliability.
@@ -1234,7 +1254,7 @@ The SDC is implemented as a series-connected circuit of safety devices, includin
 %bigger figure
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\linewidth]{Shutdown_Circuit_Design.png}
+    \includegraphics[width=\linewidth]{Shutdown_Circuit_Design.png}
     \caption{ Shutdown Circuit Design\cite{fs-ev-rules2026}
     }
     \label{fig:shutdown_circuit_design}
@@ -1294,23 +1314,23 @@ However, system-level considerations show that incorporating a differential enab
 
 \begin{table}[H]
 \centering
-\caption{Comparison of Drivetrain Configurations}
+\caption{Comparison of Drivetrain Configurations (based on Breaking system analysis from Ziyang Xing)}
 \label{tab:drivetrain_comparison}
 \begin{tabular}{lcccc}
 \toprule
 Configuration & Component & Quantity & Weight per Unit (kg) & Total Weight (kg) \\
 \midrule
-\multirow{3}{*}{No Differential} 
+\multirow{4}{*}{Without Differential}
 & Braking System & 2 & 1.8 & 3.6 \\
 & Upright & 2 & 1.2 & 2.4 \\
 & Differential & 0 & -- & 0 \\
-& Total & & & 6 \\
+& Total & & & \textbf{6}\\
 \midrule
-\multirow{3}{*}{With Differential} 
+\multirow{4}{*}{With Differential} 
 & Braking System & 1 & 1.8 & 1.8 \\
 & Upright & 1 & 0.8 & 0.8 \\
 & Differential & 1 & 2.5 & 2.5 \\
-& Total & & & 5.1 \\
+& Total & & & \textbf{5.1} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1326,7 +1346,7 @@ achieves the highest overall score due to its low mass and adequate torque capab
 
 \section{Summary}
 
-The powertrain system is designed to maximise acceleration performance under the constraints of the Formula Student UK.
+The powertrain system is designed to maximise acceleration performance under the constraints of the Formula Student UK\cite{fs-ev-rules2026}.
 %how to say FSUK, everyone should say the same
 
 A centralised single-motor architecture is selected to reduce system complexity and mass. The YASA P400R motor is chosen based on its superior torque performance and compatibility with the electrical system.
@@ -1341,9 +1361,7 @@ The inclusion of a differential enables a centralised braking configuration, red
 
 Overall, the design demonstrates an integrated approach that balances performance, safety, and practicality, resulting in an efficient and competitive powertrain system.
 
-\section*{Note}
-
-This section is intentionally left blank to accommodate references and any potential updates or modifications that may be required during subsequent stages of the project.
+\newpage
 
 \compactbib
 % --- END INLINE: Yuze Jiang/Engineering/main.tex ---
