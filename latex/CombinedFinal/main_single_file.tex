@@ -911,11 +911,20 @@ Max Current & 500\,A \\
 
 Within these constraints, the powertrain system must efficiently convert electrical energy from a supercapacitor-based storage system into mechanical torque at the wheels, in order to maximise acceleration performance.
 
+From basic vehicle dynamics, acceleration can be expressed as:
+\begin{equation}
+a = \frac{F}{m}
+\end{equation}
+where $F$ is the tractive force at the wheels and $m$ is the vehicle mass.
+
+This indicates that acceleration performance can be improved by either increasing the available tractive force or reducing the overall system mass. The powertrain system directly influences the generation of tractive force through motor torque, inverter capability, and drivetrain efficiency, while system-level design choices impact the overall mass.
+
+Therefore, the design approach focuses on maximising torque delivery while minimising system mass, resulting in a balanced optimisation of acceleration performance.
 \subsection{Problem Definition}
 
-Vehicle mass is a primary factor in determining acceleration performance, as increased mass directly reduces the acceleration for a given power level. Minimising system weight while maintaining sufficient power supply and structural robustness is therefore a key design challenge.
+Vehicle mass is a key factor in determining acceleration performance, as increased mass directly reduces the acceleration for a given tractive force. Minimising system weight while maintaining sufficient power supply and structural robustness is therefore a key design challenge.
 
-The use of a supercapacitor-based energy storage system introduces additional complexity, as the supply voltage decreases during discharge. This affects the available power throughout the acceleration event and requires careful consideration in both powertrain and control system design.
+The use of a supercapacitor-based energy storage system introduces additional complexity, as the supply voltage decreases during discharge. This affects the ability to sustain desired power output throughout the acceleration event and requires careful consideration in both powertrain and control system design.
 
 In addition, the system must comply with safety requirements defined by the Formula Student rules. The shutdown circuit (SDC) provides fail-safe protection through independent hardware, operating separately from the controller to ensure safe system shutdown in fault conditions.
 
@@ -971,14 +980,21 @@ The EMRAX 208 is available in both medium and high voltage variants, with differ
 
 The motor selection is based on a set of weighted criteria reflecting both performance requirements and practical considerations, as summarised in Table~\ref{tab:motor_selection}.
 
-Peak torque is assigned the highest weighting, as it directly determines the ability to generate traction and achieve high acceleration.
+Peak torque is assigned the highest weighting, as it directly determines the tractive force that can be generated at the wheels, and hence the achievable vehicle acceleration. The relationship between motor torque and tractive force can be expressed as:
+\begin{equation}
+F = \frac{T}{r}
+\end{equation}
+where $T$ is the motor torque and $r$ is the effective wheel radius. The resulting vehicle acceleration is then given by:
+\begin{equation}
+a = \frac{F}{m} = \frac{T}{mr}
+\end{equation}
+where $m$ is the vehicle mass.
 
-Power density is considered as a secondary performance indicator, influencing system mass and packaging.
+These relationships indicate that higher torque leads directly to higher tractive force and acceleration. This simplified analysis neglects secondary effects such as aerodynamic drag and drivetrain losses, which are negligible for this short-duration, low-speed acceleration event. Furthermore, electric motors typically operate in a torque-limited region at low speeds and a power-limited region at higher speeds. During the 75\,m acceleration event, the vehicle operates predominantly in the low-speed regime, where performance is constrained by available torque rather than power. As a result, maximising peak torque is prioritised for this application.
 
-Voltage compatibility is prioritised due to the variable voltage characteristics of the supercapacitor system.
+Power density is considered as a secondary performance indicator, influencing system mass and packaging. Voltage compatibility is also prioritised due to the variable voltage characteristics of the supercapacitor-based energy storage system.
 
 Cooling requirements, cost, and lead time are assigned lower weightings, as they have limited impact on short-duration acceleration performance.
-
 \subsection{Evaluation}
 
 \begin{table}[H]
@@ -1103,10 +1119,18 @@ First, candidate inverters must satisfy minimum electrical constraints, includin
 
 Among the feasible candidates, the selection is based on system-level performance considerations.
 
-Voltage range is assigned the highest priority, as it determines the flexibility of the supercapacitor-based energy storage system. A wider operating range allows better utilisation of the available energy during discharge.
+Voltage range is assigned the highest priority, as it determines the flexibility of the supercapacitor-based energy storage system. In this design, the minimum operating voltage is constrained at 350V to ensure stable operation within the desired motor operating region. As a result, the usable energy is primarily determined by the maximum allowable voltage. The energy stored in the supercapacitor can be expressed as:
+\begin{equation}
+E = \frac{1}{2} C V^2
+\end{equation}
+and the usable energy over the operating range is therefore:
+\begin{equation}
+E_{\text{usable}} = \frac{1}{2} C \left( V_{\max}^2 - V_{\min}^2 \right)
+\end{equation}
+
+With a fixed minimum voltage, a higher allowable maximum voltage increases the usable energy, allowing a reduction in the required capacitance and therefore system mass. Conversely, a limited voltage range would require additional capacitor units to meet the energy demand, increasing system weight.
 
 Additional factors such as cost, lead time, and system mass are considered with lower weighting, as they have less influence on overall performance.
-
 \subsection{Evaluation}
 
 A constraint-based filtering is first applied. Inverters that fail to meet the minimum electrical requirements are eliminated from further consideration.
@@ -1142,11 +1166,7 @@ Based on the evaluation, the BAMOCAR PG-D3-700/400 is selected as the inverter f
 \section{Controller Design}
 
 \subsection{Control Architecture}
-
-The control system is responsible for generating motor torque demand based on driver input while ensuring safe and stable operation.
-
-The controller processes sensor inputs, including accelerator and brake pedal signals, speed feedback, and battery measurements. These signals are used to perform plausibility checks, calculate torque demand, and enforce system constraints such as power and current limits.
-
+The control system is responsible for generating motor torque demand based on driver input, while ensuring safe and stable operation through the enforcement of system constraints.
 
 \begin{figure}
         \centering
@@ -1173,11 +1193,15 @@ If an inconsistency is detected, the torque request is immediately set to zero t
 In addition, a brake override strategy is implemented, where motor torque is reduced to zero when braking is detected.
 
 \subsection{Torque Control Strategy}
-
 The controller calculates the required motor torque based on driver input using a feedforward approach.
 
-The torque demand is converted into a current reference using the motor torque constant. To ensure smooth operation, torque commands are subject to rate limiting to avoid abrupt changes in output.
+Motor torque is proportional to the phase current, which can be expressed as:
+\begin{equation}
+T = k_t I
+\end{equation}
+where $k_t$ is the motor torque constant and $I$ is the motor current.
 
+The torque demand is therefore converted into a current reference using the motor torque constant. To ensure smooth operation, torque commands are subject to rate limiting to avoid abrupt changes in output.
 \subsection{Constraint and Feedback Handling}
 
 Feedback from motor and wheel speed is used to monitor system behaviour and slip conditions. When excessive slip is detected, the torque request is reduced to maintain traction.
@@ -1241,10 +1265,7 @@ Based on the evaluation, the STM32 platform is selected as the controller for th
 
 \subsection{Overview of Shutdown Circuit}
 
-The shutdown circuit (SDC) is a critical safety system designed to ensure immediate disconnection of the tractive system under fault conditions. It provides fail-safe protection by interrupting the power supply when unsafe conditions are detected.
-
-This ensures that critical safety functions remain reliable even in the event of controller failure.
-
+The shutdown circuit (SDC) is a critical safety system designed to ensure immediate disconnection of the tractive system under fault conditions. This architecture is selected to guarantee fail-safe operation through a hardware-based implementation that remains effective even in the event of controller failure.
 \subsection{Shutdown Circuit Architecture}
 
 The shutdown circuit is designed based on Formula Student UK (FSUK) safety requirements, which mandate a non-programmable, hardware-based system to ensure reliable and fail-safe operation.
@@ -1360,9 +1381,9 @@ In addition, system-level optimisation is applied to the mechanical design. A li
 The inclusion of a differential enables a centralised braking configuration, reducing overall system mass.
 
 Overall, the design demonstrates an integrated approach that balances performance, safety, and practicality, resulting in an efficient and competitive powertrain system.
+\vspace{1em}
 %maybe add some system images here
 %maybe add final parameters here
-\newpage
 
 \compactbib
 % --- END INLINE: Yuze Jiang/Engineering/main.tex ---
