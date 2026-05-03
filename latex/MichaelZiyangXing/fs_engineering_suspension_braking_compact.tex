@@ -15,6 +15,7 @@ The design is acceleration-specific. In a conventional Formula Student car, rear
 \checkme{Insert the final agreed vehicle-level targets here: predicted acceleration time, vehicle mass, wheelbase, centre-of-mass height, static axle distribution, tyre size, motor torque and final drive ratio. These values should match the vehicle dynamics and drivetrain chapters.}
 
 \section{Requirements and design constraints}
+\label{sec:suspension_requirements}
 
 The suspension and braking system requirements were derived from three sources: the acceleration-event objective, the Formula Student rule constraints, and the wider group vehicle architecture. For the acceleration event, the most important engineering needs are rear traction, stable launch behaviour, reduced mass and minimal tyre scrub during the high-speed part of the run. For compliance, the vehicle must retain a safe braking system, protected brake components, acceptable steering control and packaging within the permitted vehicle envelope. For team integration, the design must interface with the chassis, powertrain, accumulator, differential, chain drive and wheel package.
 
@@ -114,6 +115,7 @@ The design uses 100\% anti-squat, corresponding to a \SI{12.7}{\degree} anti-squ
 The multi-link geometry also allows a small static toe-in to be selected without accepting that toe-in throughout the complete run. A static toe-in of approximately \SI{0.15}{\degree} is used to stabilise the car at launch and during the first part of the acceleration run. The toe curve is then arranged so that the rear wheels tend towards approximately zero toe as the rear suspension moves under the relevant high-speed load state. This is intended to reduce lateral scrub and rolling resistance when the car has already passed the most traction-limited launch phase.
 
 \section{Anti-squat and dynamic toe-control strategy}
+\label{sec:antisquat_dynamic_toe}
 
 The most distinctive engineering feature of the design is the combined anti-squat and toe-control strategy. The rear toe angle is not treated as a fixed setup value. Instead, it is treated as a dynamic alignment target that changes with the load state of the car. The intended behaviour is simple: launch with a small toe-in value for stability, then approach zero rear toe when the vehicle reaches higher speed.
 
