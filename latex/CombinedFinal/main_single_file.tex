@@ -3067,13 +3067,19 @@ The proposed platform fills a critical market gap by combining high realism with
 
 \section{Introduction to the Strategic Pivot}
 
-The UK Connected and Automated Mobility (CAM) sector faces a critical simulation-to-reality gap; regulators and insurers demand exhaustive physical edge-case validation before approving autonomous deployments, yet Original Equipment Manufacturers (OEMs) often lack agile hardware to execute these high-risk tests safely. To address this bottleneck, our enterprise executes a foundational strategic manoeuvre: pivoting from the development and sale of a physical engineering asset (the AEB Rabbit) to providing a comprehensive Testing-as-a-Service (TaaS) platform. This allows autonomous vehicle (AV) developers to access high-fidelity physical validation data without bearing the cost of maintaining their own target fleets.
+The UK Connected and Automated Mobility (CAM) sector faces a simulation-to-reality gap: regulators and insurers require physical edge-case validation evidence before approving autonomous deployments, yet Original Equipment Manufacturers (OEMs) often lack agile hardware to execute high-risk tests safely. The enterprise addresses this by pivoting the AEB Rabbit from a product into a Testing-as-a-Service (TaaS) platform, giving autonomous vehicle (AV) developers access to high-fidelity validation data without owning and maintaining target fleets.
 
-This service model is enabled by our vehicle's specialised engineering architecture. Designed for rapid acceleration rather than cruising, the AEB Rabbit utilises a supercapacitor energy storage system to execute repeatable, less-than-10-second "panic" manoeuvres that mimic erratic human behaviour. To guarantee the high track utilisation required for TaaS profitability, the platform employs a modular supply chain strategy. By standardising replaceable impact shells and maintaining a buffer of drivetrain components, the enterprise ensures swift trackside mechanical recovery following a severe collision, protecting operational throughput.
+This service model is enabled by the vehicle's sprint-oriented architecture. The AEB Rabbit utilises a supercapacitor energy storage system to execute repeatable, sub-10-second "panic" manoeuvres that mimic erratic human behaviour. Because profitability depends on utilisation, the platform standardises replaceable impact shells and maintains a buffer of drivetrain components to enable rapid trackside recovery after contact.
 
-Strategically, our Go-To-Market plan bypasses individual OEM bureaucratic delays by natively integrating the AEB Rabbit directly into established CAM Testbed UK facilities. Here, the enterprise serves as an ethical and legal buffer for AV developers. By operating strictly within defined Operational Design Domains (PAS 1883), governed by Safety Management Systems (PAS 1881), and providing immutable "black box" telemetry (PAS 1882), we absorb the physical risks of extreme edge-case testing. This provides the undeniable empirical evidence required by insurers and regulators to safely determine liability in a post-human-driver landscape.
+Strategically, the Go-To-Market plan bypasses individual OEM procurement delays by integrating the AEB Rabbit into established CAM Testbed UK facilities. Operating within controlled Operational Design Domains defined using PAS 1883 taxonomy, and adopting safety governance and telemetry practices designed with reference to PAS 1881 and PAS 1882, the service absorbs the physical risks of edge-case testing while producing a tamper-evident evidence trail for insurers and regulators.
 
-Finally, this enterprise achieves rigorous environmental alignment without compromising commercial viability. At the macro level, the TaaS model operates as a Use/Result-Oriented Product-Service System (PSS), aggregating industry demand and preventing redundant OEM hardware manufacturing. Because the enterprise retains asset ownership under this model, we are financially incentivised to execute the 9R Circular Economy Framework. Sustainability is actively achieved through inherited lifecycle extension: utilising high-duty cycle supercapacitors, instituting drivetrain remanufacturing loops, and deploying recyclable Expanded Polypropylene (EPP) sacrificial shells to drastically reduce the operation's embodied carbon.
+This integrates the Chapter 6 customer logic with the market-access logic: CAM testbeds are the channel and adoption gatekeeper; EV start-ups and selected AV/AI development firms are the early paying users; and large OEMs become later strategic customers once pilot evidence and utilisation are proven.
+
+Finally, the TaaS model aligns sustainability with commercial incentives. As a Use/Result-Oriented Product-Service System (PSS), it aggregates demand, reduces redundant OEM fleet manufacturing, and (through retained ownership) incentivises 9R circular practices. Sustainability is delivered through lifecycle extension, remanufacturing loops, and recyclable Expanded Polypropylene (EPP) sacrificial shells that reduce embodied carbon.
+
+The strategic through-line of this report is that UK autonomous vehicle developers face a simulation-to-reality validation gap: existing solutions are either too virtual, too slow to reconfigure, or too capital-intensive for repeated edge-case testing. The AEB Rabbit addresses this gap by offering high-dynamics physical validation as a Testing-as-a-Service (TaaS) platform embedded within UK CAM testbeds. This strategy creates value for AV developers, testbed operators, insurers, regulators, and the enterprise itself, but only if three conditions are met: testbed acceptance, credible safety evidence, and sufficient utilisation to justify the asset-heavy service model.
+
+At prototype stage, the enterprise should not claim full certification or compliance. Instead, the strategic objective is to design the platform, data architecture, and operating procedures with reference to relevant PAS frameworks so that future commercial trials can progress toward formal acceptance.
 
 \section{Macro-Environmental Dynamics and the UK Ecosystem}
 
@@ -3081,44 +3087,51 @@ Our strategy leverages the government's investment focus, as outlined in the Zen
 
 \subsection{The Zenzic UK CAM Roadmap}
 
-The most critical macro-environmental tool available for this analysis is the UK Connected and Automated Mobility (CAM) Roadmap to 2035, coordinated by Zenzic, a joint venture between UK industry and government \cite{zenzic_about}. The Roadmap acts as a comprehensive vision of the path required to create scalable solutions and bring CAM technologies to reality.
+The UK Connected and Automated Mobility (CAM) Roadmap to 2035, coordinated by Zenzic (a joint venture between UK industry and government), provides the macro-environment framing for this strategy \cite{zenzic_about}.
 
-According to the executive summary \cite[p.~5,11,14]{cracknell_2023}, despite aggressive timelines to deploy self-driving vehicles by 2025, the UK AV sector is currently bottlenecked by a lack of physical, real-world validation. Regulators are hesitant to approve deployments without overwhelming proof of safety, and OEMs are concerned that a single public incident will derail their progress. The industry cannot scale until it can rigorously and safely test edge cases physically.
+Its executive summary notes that, despite aggressive timelines, the UK AV sector remains bottlenecked by a lack of physical validation: regulators want robust safety evidence and OEMs fear that a single public incident could derail deployment \cite[p.~5,11,14]{cracknell_2023}.
 
-Our testing vehicles provide the critical physical validation layer required to bridge the gap between simulation and public deployment. We allow clients to safely generate the data needed to satisfy regulators, achieve pre-certification, and protect brand reputation from public incidents.
+Our platform provides the physical layer to bridge simulation and deployment, allowing clients to generate safety evidence under controlled conditions and reduce reputational risk.
 
-The total addressable market is expanding rapidly due to acute global labour shortages in freight, logistics, and public transport \cite[p.~6]{wef_2021}. As operators are increasingly incentivised to adopt No-User-in-Charge (NUiC) vehicles, OEMs are scaling their platforms faster than ever to meet this structural deficit \cite[p.~9,11,17]{cracknell_2023}. Every new platform and iteration requires exhaustive physical testing, creating recurring demand for validation equipment.
-This venture is strategically aligned with the Centre for Connected and Autonomous Vehicles' (CCAV) ongoing Automated Vehicles Act implementation programme \cite{lawcom_avs_2024}, which transitions the UK from regulatory theory into active commercial deployment. Concurrently, the Zenzic roadmap identifies the rapid acceleration of the domestic CAM supply chain as a primary macro-environmental driver for the sector \cite[p.~9,10,19]{cracknell_2023}. As the government actively seeks to build a world-class, sovereign CAM ecosystem with a strict legislative emphasis on physical safety assurance, our enterprise is ideally positioned to capture targeted grant funding. By aligning our business with the criteria of active government initiatives, specifically the £150 million CAM Pathfinder Programme to accelerate commercial market readiness \cite{pockney_2026}, we can leverage state-sponsored funding to integrate our physical validation tools directly into the UK's deployment infrastructure.
+The total addressable market is expanding due to labour shortages in freight, logistics, and public transport \cite[p.~6]{wef_2021}. As operators pursue No-User-in-Charge (NUiC) vehicles, OEMs are accelerating platform iteration, creating recurring demand for validation equipment \cite[p.~9,11,17]{cracknell_2023}. The venture also aligns with CCAV’s Automated Vehicles Act implementation programme \cite{lawcom_avs_2024} and the roadmap’s emphasis on accelerating the domestic CAM supply chain \cite[p.~9,10,19]{cracknell_2023}. This positioning supports grant-funded integration into the UK’s deployment infrastructure, including the £150 million CAM Pathfinder Programme \cite{pockney_2026}.
 
 \subsection{Utilising CAM Testbed UK}
 
-The UK offers a highly concentrated target market through 'CAM Testbed UK', a unified network of world-leading physical and virtual testbeds. Because safety-critical edge cases occur rarely and are dangerous to replicate in real-world traffic, developers cannot rely on waiting for them to naturally occur on public roads \cite[p.~12]{chen_2024}. Our vehicles solve this by allowing test engineers to repeatedly and safely recreate high-stakes, erratic scenarios in controlled environments. This rigorous scenario-based testing directly assists OEMs in meeting the BSI PAS 1881 standard to reduce testing risks to a level that is as low as reasonably practicable (ALARP) \cite[p.~1]{pas1881}, thereby fortifying their Operational Safety Case for regulatory approval.
+The UK offers a concentrated route to market through CAM Testbed UK, a unified network of physical and virtual testbeds. Because safety-critical edge cases are rare and dangerous to replicate in real-world traffic, developers cannot rely on encountering them on public roads \cite[p.~12]{chen_2024}. Our platform enables repeated, controlled recreation of high-stakes scenarios, supporting PAS 1881-style safety governance and ALARP risk reduction \cite[p.~1]{pas1881}.
 
-Our system acts as the essential physical ground-truth required to validate the UK's investments in virtual simulation. Our product enables state-of-the-art facilities to correlate their virtual 'digital-twin' testing with real-world sensor data. Instead of focusing on targeting individual OEMs, with a heavy customer acquisition cost and prolonged procurement cycle, our strategy natively integrates the platform into the service offerings of centralised CAM Testbed facilities. This positioning establishes the enterprise as an indispensable, embedded supplier to the global testing hubs where the entire autonomous mobility industry already meets.
+The system provides physical ground-truth to validate UK investments in virtual simulation by correlating digital-twin testing with real-world sensor data. Rather than targeting individual OEMs with long procurement cycles, the strategy integrates into testbed service offerings, positioning the enterprise as an embedded supplier.
 
-There is an established, proven precedent of demand within the CAM Testbed UK network for our precise technology. For instance, during the recent £5.8M project at the Culham Science Centre (a CAM Testbed UK facility), the delivery partners explicitly utilised government grant funding to purchase a motorised pedestrian dummy to increase their safety testing options \cite[p.~2]{culham_2024}. While these testbeds are currently investing in low-speed pedestrian targets, our TaaS model builds upon this precedent by filling the unaddressed, high-value gap for highly dynamic, high-mass vehicular targets. Our business is perfectly timed to capture this active, ongoing capital expenditure from UK testing facilities looking to maintain their global competitiveness.
+There is precedent for grant-funded test-target procurement within CAM Testbed UK. For example, a recent £5.8M project at the Culham Science Centre funded a motorised pedestrian dummy to expand safety test options \cite[p.~2]{culham_2024}. Our TaaS model extends this logic to an unaddressed gap: highly dynamic, high-mass vehicular targets.
+
+The UK is therefore not selected simply because the project is UK-based. It is selected because it combines policy support, CAM-specific test infrastructure, emerging automated vehicle legislation, BSI PAS safety frameworks, insurance and liability stakeholders, and public funding into a concentrated adoption ecosystem. Larger international markets may offer greater long-term scale, but the UK provides a lower-friction first market in which the enterprise can generate evidence, secure testbed credibility, and build regulatory legitimacy before expansion.
+
+\noindent\textbf{Implication:} the UK CAM ecosystem makes testbeds the most logical initial route to market, because they concentrate the infrastructure, customers, regulators, and safety expectations needed to prove the service.
 
 \section{Manoeuvring to the Testing-as-a-Service (TaaS) Model}
 
-As autonomous vehicle (AV) architectures evolve from modular pipelines to end-to-end (E2E) AI systems, an emerging market demand has surfaced for advanced dynamic testing. E2E systems frequently suffer from "causal confusion"---a critical failure mode where the model relies on spurious correlations that can lead to catastrophic failures during real-world deployment \cite[p.~11--12]{chen_2024}. While developers primarily evaluate these models through offline, open-loop frameworks, the literature explicitly warns that such methods fail to measure a system's ability to recover from physical drift and do not provide conclusive evidence of safe driving behaviour \cite[p.~7]{chen_2024}. Consequently, rigorous, closed-loop dynamic benchmarking is not just beneficial, but fundamentally required.
+As AV architectures evolve toward end-to-end (E2E) AI systems, demand grows for advanced dynamic testing. E2E systems can suffer from "causal confusion" where models rely on spurious correlations that fail under real-world conditions \cite[p.~11--12]{chen_2024}. Because offline, open-loop evaluations do not measure recovery from physical drift or provide conclusive evidence of safe driving behaviour \cite[p.~7]{chen_2024}, closed-loop dynamic benchmarking is required.
 
-Rather than relying on the traditional automotive diagnostic model that forces end-users into capital-intensive (CAPEX) hardware purchases, our enterprise addresses this critical evaluation gap through a TaaS delivery model. By strategically pivoting our physical engineering asset to a service-based approach, we equip client organisations, such as EV start-ups and OEM innovation divisions (targeting rationale in Section~\ref{sec:target_market_selection}), with the dynamic, closed-loop physical environments required to expose and resolve causal confusion cost-effectively. Crucially, this model absorbs the operational burdens of hardware maintenance, infrastructure, and rapid technological obsolescence.
+Rather than forcing end-users into capital-intensive (CAPEX) hardware purchases, the enterprise addresses this evaluation gap through TaaS. This provides EV start-ups and selected AV/AI development firms (Section~\ref{sec:target_market_selection}) with dynamic, closed-loop physical validation while the enterprise absorbs maintenance, infrastructure, and obsolescence burdens; OEMs are engaged later once testbed acceptance and early evidence packages reduce procurement risk.
 
 \subsection{Hardware Specialisation: The "Sprint" Advantage}
 
-This TaaS strategy is explicitly necessitated by the unique mechanical profile of our adapted Formula Student (FS) architecture. The AEB Rabbit is not designed for a long duty cycle, but for short, high-power manoeuvres on the order of a few seconds (see the acceleration-event performance in Section~\ref{sec:final_run}).
+This TaaS strategy is enabled by the mechanical profile of the adapted Formula Student (FS) architecture. The AEB Rabbit is designed for short, high-power manoeuvres rather than long duty cycles (Section~\ref{sec:final_run}).
 
-While this short operational runtime could render the vehicle unviable as a traditional commercial product for direct purchase, it is the performance envelope required to simulate extreme, dynamic edge cases (such as an erratic pedestrian darting into traffic, or a fast vehicle cutting across lanes). In our model, the client purchases the accurate data generated from a "panic" manoeuvre. Behind the scenes, our enterprise manages the operational duty cycle, using the accumulator's repeatable short-duty-cycle power delivery (Figure~\ref{fig:supercap_discharge}), providing reliable value to the client.
+While this profile would limit direct ownership use-cases, it matches the envelope required to simulate extreme dynamic edge cases. In the TaaS model, customers buy the validated data from a "panic" manoeuvre while the enterprise manages duty-cycle constraints using the accumulator's repeatable short-duty-cycle power delivery (Figure~\ref{fig:supercap_discharge}).
 
 \subsection{Full-Service Integration over Hardware Rental}
 
-Our TaaS model fundamentally lowers this barrier to entry. By providing the self-propelled target, trained safety operators operating in accordance with PAS 1884 \cite{pas1884}, and continuous data-logging architecture compliant with PAS 1882 \cite{pas1882}, we eliminate the need for our clients to train their own staff on complex, hazardous testing procedures. The client can simply specify the conditions in which their automated vehicle should safely operate (the Operational Design Domain (ODD) parameters), and our enterprise can execute the required scenario to deliver the empirical data required for their safety cases.
+The TaaS model lowers barriers to entry by providing the self-propelled target, trained safety operators working to procedures informed by PAS 1884 \cite{pas1884}, and continuous data logging intended to generate evidence compatible with PAS 1882-style investigation trails \cite{pas1882}. Clients specify the Operational Design Domain (ODD) parameters and the enterprise executes the scenario to deliver empirical data for safety cases.
 
 \subsection{Supply Chain and Margin Defensibility}
 
-The commercial viability of this TaaS model relies heavily on high utilisation rates and minimal track downtime. Because the AEB Rabbit will inevitably be subjected to physical impacts during edge-case validation, traditional testing rigs could suffer catastrophic, costly downtime.
+Commercial viability relies on high utilisation and minimal track downtime. Because the AEB Rabbit will be subjected to physical impacts during edge-case validation, downtime control is a primary constraint.
 
-Our platform utilises a modular architectural design, which supports sustained profitability. By using standardised components and classifying them based on wear and collision probability, our supply chain strategy can enable rapid trackside mechanical recovery for the most likely repairs. This modularity prevents total loss of the asset during a collision and isolates damage to affordable, replaceable outer components while protecting the high-value drivetrain. This strategic resilience secures consistent test throughput, directly underpinning the enterprise's robust operational expenditure (OPEX) forecasts and ensuring a predictable return on investment (ROI).
+The platform uses a modular architecture to support rapid trackside recovery. Standardised components are classified by wear and collision probability, isolating damage to low-cost outer components while protecting the high-value drivetrain. This resilience sustains throughput, supporting OPEX forecasts and predictable ROI.
+
+\noindent\textbf{Implication:} TaaS converts the AEB Rabbit's short-duty-cycle sprint capability from a hardware limitation into a service advantage, because customers buy validated panic-manoeuvre evidence rather than vehicle ownership.
+
+Building on the customer-segmentation and product-market fit analysis in Section~\ref{sec:target_market_selection} and the customer personas in Section~\ref{sec:personas}, this chapter focuses on a different question: which stakeholders control adoption, legitimacy, and market access?
 
 \section{Stakeholder Salience Identification}
 
@@ -3131,7 +3144,7 @@ Our platform utilises a modular architectural design, which supports sustained p
 \label{fig:stakeholder_salience_typology}
 \end{figure}
 
-While traditional matrices (such as RACI) map static operational responsibilities, the high-risk, heavily regulated nature of the CAM sector demands a dynamic framework for strategic resource allocation. The Mitchell et al. Stakeholder Salience Model \cite{mitchell_1997} is appropriate for this enterprise because it accounts for rapid, event-driven shifts in stakeholder priority and allows the management team to focus limited engagement capital on actors possessing two or more salience attributes. The model uses the triad of power, legitimacy, and urgency (Figure~\ref{fig:stakeholder_salience_typology}).
+While traditional matrices (such as RACI) map static responsibilities, the high-risk CAM sector demands a dynamic framework for prioritisation. The Mitchell et al. Stakeholder Salience Model \cite{mitchell_1997} captures rapid, event-driven shifts and focuses engagement on actors possessing two or more attributes. The model uses the triad of power, legitimacy, and urgency (Figure~\ref{fig:stakeholder_salience_typology}).
 
 In accordance with Proposition 1a, which asserts that ``stakeholder salience will be low where only one of the stakeholder attributes (power, legitimacy, and urgency) is perceived by managers to be present'' \cite[p.~874]{mitchell_1997}, this report focuses its active engagement strategy on stakeholders possessing two or more of these attributes.
 
@@ -3151,10 +3164,10 @@ For each stakeholder mentioned above, the salience class, value exchange, and co
 \begin{table}[htbp]
 \centering
 \small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.3} % Slightly increased to replace \setstretch and keep rows comfortable
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
 \caption{Strategic Engagement and Value Exchange Matrix}\label{tab:strategic_engagement_matrix}
-\begin{tabular}{|>{\raggedright\arraybackslash}p{0.14\linewidth}|>{\raggedright\arraybackslash}p{0.16\linewidth}|>{\raggedright\arraybackslash}p{0.24\linewidth}|>{\raggedright\arraybackslash}p{0.24\linewidth}|>{\raggedright\arraybackslash}p{0.12\linewidth}|}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{0.12\linewidth}|>{\raggedright\arraybackslash}p{0.14\linewidth}|>{\raggedright\arraybackslash}p{0.22\linewidth}|>{\raggedright\arraybackslash}p{0.26\linewidth}|>{\raggedright\arraybackslash}p{0.14\linewidth}|}
 \hline
 \textbf{Stakeholder Group} & \textbf{Salience Class} & \multicolumn{2}{c|}{\textbf{The Value Exchange}} & \textbf{Compliance Mechanism} \\
 \cline{3-4}
@@ -3185,40 +3198,43 @@ Cyber-Threat Actors & Dangerous & Goal: Exploit systemic vulnerabilities for dis
 
 \subsection{Continuations to the model}
 
-While Table~\ref{tab:strategic_engagement_matrix} maps the salience of these groups, it is important to distinguish the structural nature of their power. Within our dominant and definitive categories, actors such as CCAV, Thatcham Research, and BSI operate explicitly as ``stakekeepers'' \cite[p.~121]{fassin_2009}. Unlike traditional stakeholders who hold direct financial investments in the enterprise, stakekeepers are independent regulatory and certification bodies. They possess institutional legitimacy and the power to dictate market access, meaning our strategy must prioritise their compliance requirements as foundational, non-negotiable operational constraints.
+While Table~\ref{tab:strategic_engagement_matrix} maps salience, it is important to distinguish the structural nature of power. Actors such as CCAV, Thatcham Research, and BSI operate as ``stakekeepers'' \cite[p.~121]{fassin_2009}: independent regulatory and certification bodies with legitimacy and the ability to dictate market access. Their requirements therefore become foundational operational constraints.
 
 The enterprise treats these attributes not as binary states, but as a continuum. Latent groups are subjected to continuous passive monitoring to ensure we anticipate any escalation in their urgency or power before they cross the threshold into definitive threats.
 
+\noindent\textbf{Implication:} commercial success depends not only on paying customers, but also on stakeholders who control legitimacy and access, especially testbed operators, insurers, and regulators.
+
 \section{Execution plan for stakeholder acceptance}
 
-This is the first-year execution plan to convert the stakeholder salience analysis into practical acceptance. In this market, ``stakekeepers'' (testbed operators, regulators, and insurers/investigators) are the gate to market access (summarised in Table~\ref{tab:strategic_engagement_matrix}), so success depends on evidence quality, safety governance, and operational uptime. The plan below sequences engagement to de-risk initial approvals while keeping the service economics credible.
+This first-year execution plan converts the salience analysis into practical acceptance. In this market, stakekeepers (testbed operators, regulators, and insurers/investigators) gate market access (Table~\ref{tab:strategic_engagement_matrix}), so success depends on evidence quality, safety governance, and operational uptime.
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \small
-\singlespacing
 \setlength{\tabcolsep}{3pt}
-\renewcommand{\arraystretch}{1.08}
-\caption{Stakeholder engagement roadmap (Year 1): engagement deliverables and acceptance gates.}
+\renewcommand{\arraystretch}{1.15}
+\caption{Stakeholder acceptance roadmap (Year 1): deliverables, value capture, \& acceptance gates.}
 \label{tab:stakeholder_engagement_roadmap}
-\begin{tabularx}{\textwidth}{p{0.18\textwidth} p{0.12\textwidth} X p{0.20\textwidth}}
-\toprule
-\textbf{Stakeholder} & \textbf{Salience class} & \textbf{Engagement activity and deliverable} & \textbf{Acceptance gate} \\
-\midrule
-Testbed operator & Definitive & Safety induction and operating-envelope sign-off; E-stop drills; recovery procedure and spares plan. & Pilot slot granted; operator sign-off \\
-\midrule
-Insurer / investigator & Definitive & Telemetry access protocol (``black box'' logging) and investigator-ready incident package template (data, timeline, deviations). & Agreement logs support attribution \\
-\midrule
-Regulator / authority & Dominant & Safety case pack (hazard log, SOPs, change control) and controlled-trial briefing pack. & No-blocker feedback for controlled trials \\
-\midrule
-OEM / AV developer & Discretionary (latent) & Scenario catalogue; repeatability report format; clear ODD boundaries for each test day. & Paid pilot or LOI \\
-\midrule
-Suppliers & Definitive & Modular BOM; spares strategy; lead-time risk register; refurbishment loop definition. & Availability and turnaround agreed \\
-\midrule
-Public / VRUs (proxy) & Dependent & Plain-language rationale for off-public-road edge-case testing; evidence-first posture. & No reputational blocker \\
-\bottomrule
-\end{tabularx}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{0.17\linewidth}|>{\raggedright\arraybackslash}p{0.34\linewidth}|>{\raggedright\arraybackslash}p{0.28\linewidth}|>{\raggedright\arraybackslash}p{0.15\linewidth}|}
+\hline
+\textbf{Stakeholder (salience)} & \textbf{Engagement activity \& deliverable} & \textbf{Value captured (why TaaS)} & \textbf{Acceptance gate} \\
+\hline
+Testbed operator (Definitive $\rightarrow$ Essential) & Safety induction and operating-envelope sign-off; E-stop drills; recovery procedure and spares plan. & Higher utilisation; de-risked on-site operations without building their own target capability. & Pilot slot granted; operator sign-off \\
+\hline
+Regulator / authority (Dominant $\rightarrow$ Essential) & Safety case pack (hazard log, SOPs, change control) and controlled-trial briefing pack. & Empirical support beyond simulation-only validation; comparable evidence across trials. & No-blocker feedback for controlled trials \\
+\hline
+Insurer / investigator (Definitive $\rightarrow$ Essential) & Telemetry access protocol (``black box'' logging) and investigator-ready incident package template (data, timeline, deviations). & Clear attribution evidence for pricing and liability decisions from independent telemetry. & Agreement logs support attribution \\
+\hline
+Suppliers (Definitive $\rightarrow$ Essential) & Modular BOM; spares strategy; lead-time risk register; refurbishment loop definition. & Predictable spares and refurbishment demand; clear requirements reduce integration risk. & Availability and turnaround agreed \\
+\hline
+OEM / AV developer (Latent $\rightarrow$ High) & Scenario catalogue; repeatability report format; clear ODD boundaries for each test day. & Pay-per-use edge-case validation without CAPEX or maintaining a target fleet. & Paid pilot or LOI \\
+\hline
+Public / VRUs (Dependent $\rightarrow$ Supporting) & Plain-language rationale for off-public-road edge-case testing; evidence-first posture. & Reduced exposure to public-road trials; legitimacy from an evidence-first safety posture. & No reputational blocker \\
+\hline
+\end{tabular}
 \end{table}
+
+This roadmap makes value capture explicit: customers buy validated evidence and repeatability, testbeds gain utilisation, regulators and insurers gain credible assurance data, and the enterprise gains recurring revenue only if acceptance gates are met.
 
 \subsection{Operational success metrics}
 
@@ -3231,8 +3247,12 @@ The following metrics are reported monthly to provide early warning of safety, e
     \item \textbf{Commercial traction:} conversion from pilot discussions to paid pilots/contracts; repeat booking rate; blended day-rate trend.
 \end{itemize}
 
-\section{User Personas}
+\noindent\textbf{Implication:} the first-year execution plan must prioritise stakeholder acceptance before scale, because without testbed approval, evidence credibility, and operational uptime, the service cannot reach commercial deployment.
+
+\section{Stakeholder Acceptance Personas}
 \label{sec:paul_personas}
+
+These personas are not intended to repeat the customer personas in Section~\ref{sec:personas}. Instead, they represent adoption gatekeepers whose approval determines whether the TaaS model can operate commercially within the UK CAM ecosystem.
 
 \subsection{The CAM Testbed Operations Director (The Partner)}
 
@@ -3244,7 +3264,7 @@ The following metrics are reported monthly to provide early warning of safety, e
 
 \textbf{Pains:} Unpredictable, bespoke test-target suppliers. When a client's custom testing dummy shatters during a high-speed impact, the track must be shut down for hours to clear hazardous debris. This destroys the daily testing schedule, forces the facility to issue refunds for lost time, and artificially caps their revenue.
 
-\textbf{Decision Influence \& Value Exchange:} Controls the "approved vendor" list for the facility. By exclusively partnering with our TaaS platform, they guarantee their clients rapid trackside recovery times. Furthermore, by transferring operational liability to our PAS 1884-compliant safety staff \cite{pas1884}, we directly boost their facility's daily throughput and derisk their commercial operations, making us an indispensable embedded supplier.
+\textbf{Decision Influence \& Value Exchange:} Controls the "approved vendor" list for the facility. By exclusively partnering with our TaaS platform, they guarantee their clients rapid trackside recovery times. Furthermore, by transferring operational liability to our safety staff trained to PAS 1884-informed operating expectations \cite{pas1884}, we directly boost their facility's daily throughput and derisk their commercial operations, making us an indispensable embedded supplier.
 
 \subsection{The Independent Liability Assessor (The Gatekeeper)}
 
@@ -3256,7 +3276,7 @@ The following metrics are reported monthly to provide early warning of safety, e
 
 \textbf{Pains:} Competing narratives during track incidents. AV developers often blame testing equipment or track conditions for edge-case failures rather than their own algorithms. This ambiguity makes it impossible for assessors to confidently price risk premiums or assign legal liability.
 
-\textbf{Decision Influence \& Value Exchange:} Holds the ultimate veto over a vehicle's public road certification. By utilising our dummy vehicle's Electronic Control Unit (ECU) in compliance with PAS 1882 \cite{pas1882}, our platform provides them with an incorruptible, third-party "black box." We deliver objective telemetry that is completely independent of the OEM, solving their core data-integrity problem and incentivising them to mandate our platform for future Operational Safety Cases.
+\textbf{Decision Influence \& Value Exchange:} Holds the ultimate veto over a vehicle's public road certification. By utilising our dummy vehicle's Electronic Control Unit (ECU) to produce a tamper-evident evidence trail aligned with PAS 1882-style expectations \cite{pas1882}, our platform provides them with an incorruptible, third-party "black box." We deliver objective telemetry that is completely independent of the OEM, solving their core data-integrity problem and incentivising them to mandate our platform for future Operational Safety Cases.
 
 \section{Integrated Strategy for Ethics, Liability, and Safety Assurance}
 
@@ -3264,31 +3284,33 @@ The UK Automated Vehicles Act 2024 fundamentally shifts legal liability away fro
 
 \subsection{The Ethical Safety Buffer}
 
-The industry faces a moral imperative to deploy life-saving AV technology, but balancing this with the severe risks of high-speed validation testing presents a profound ethical dilemma. Industry standards, such as BSI PAS 1881 \cite{pas1881}, mandate that public welfare must be protected and all operational risks reduced to a level that is "as low as reasonably practicable" (ALARP).
+The industry faces a moral imperative to deploy life-saving AV technology, but high-speed validation testing introduces severe risks. PAS 1881-style expectations require that public welfare is protected and operational risks are reduced to a level that is "as low as reasonably practicable" (ALARP) \cite{pas1881}.
 
-Our testing platform serves as an ethical and safety buffer. By allowing developers to conduct hazardous fault injection testing and edge-case validation within strictly defined Operational Design Domains (ODD) compliant with PAS 1883 \cite{pas1883}, we absorb their physical risk. This ensures the public is never subjected to the dangers of immature AV systems, fulfilling the ethical impact assessment requirements of PAS 1881 \cite{pas1881} while establishing the foundation for the client's Operational Safety Case. Furthermore, by providing an affordable TaaS platform, we lower the barrier-to-entry to testing, elevating the overall safety baseline of the industry beyond just the incumbent manufacturers.
+Our testing platform serves as an ethical and safety buffer. By enabling hazardous fault injection and edge-case validation within strictly defined Operational Design Domains (ODD) specified using PAS 1883 taxonomy \cite{pas1883}, the service absorbs physical risk in controlled environments rather than on public roads. This supports PAS 1881-style ethical impact assessment and safety governance \cite{pas1881} while lowering barriers to credible testing.
 
 \subsection{Liability Demarcation through Data Transparency}
 
-Under the UK Law Commission's framework, our clients (operating as ASDEs) assume full legal responsibility for their vehicle's dynamic driving behaviour when their automated driving system (ADS) is engaged \cite{lawcom_avs_2024}. However, during physical edge-case validation, collisions are an expected outcome. To protect our enterprise from unwarranted fault attribution and navigate the ambiguity of high-speed collisions, insurers and legal investigators require unhindered access to telemetry \cite{thatcham_2026}. Therefore, our strategy utilises the dummy vehicle's Electronic Control Unit (ECU) to provide continuous, high-fidelity data logging in compliance with PAS 1882 \cite{pas1882}. Acting as an incorruptible ``black box'', this system creates an immutable record of our hardware's telemetry. This transparency creates a clear demarcation of liability, ensuring that if an incident occurs while our equipment operates within its defined parameters, legal and financial responsibility falls definitively on the ASDE's algorithmic failure, thereby shielding our enterprise from unwarranted exposure.
+Under the UK Law Commission's framework, clients (as ASDEs) assume legal responsibility for dynamic driving behaviour when the automated driving system (ADS) is engaged \cite{lawcom_avs_2024}. During physical edge-case validation, collisions can be an expected outcome, so insurers and investigators require unhindered access to telemetry \cite{thatcham_2026}. The dummy vehicle's Electronic Control Unit (ECU) therefore provides continuous, high-fidelity logging intended to be compatible with PAS 1882-style evidence requirements \cite{pas1882}. Acting as a tamper-evident ``black box'', this transparency supports clear liability demarcation when the equipment operates within defined parameters.
 
 \subsection{Algorithmic Bias, Cybersecurity, and Continuous Learning}
 
-Safety and legal compliance are not static achievements. As testbeds and vehicles become highly interconnected nodes, insurers and regulators highlight systemic vulnerabilities, such as algorithmic bias and cyber-threats, as primary risk factors.
+Safety and legal compliance are not static achievements. As testbeds and vehicles become interconnected, insurers and regulators highlight systemic vulnerabilities such as algorithmic bias and cyber-threats.
 
-While the enterprise does not develop the internal AI algorithms of client vehicles, it is fundamentally responsible for the physical environments used to validate them. A critical systemic vulnerability in AV development is algorithmic "overfitting", where autonomous systems are trained exclusively against predictable, compliant traffic patterns and uniform vehicle shapes. To mitigate this, our platform institutes strict governance over physical scenario curation. By deploying modular target shells that replicate both a comprehensive matrix of vehicular geometries and high-dynamic, erratic behaviours, the enterprise prevents AVs from being validated in an artificially sanitised environment. This robust scenario diversity directly supports the UK Law Commission’s (2022) mandate that ASDEs must prove their systems can drive safely and legally across all foreseeable traffic conditions before public deployment \cite[pp.~49, 81--82, 87]{lawcom_2022}, thereby fortifying the client’s Operational Safety Case under PAS 1881 \cite{pas1881}.
+While the enterprise does not develop client AI algorithms, it is responsible for the physical environments used to validate them. A critical vulnerability is algorithmic "overfitting", where systems are trained only against predictable traffic patterns and uniform vehicle shapes. The platform therefore governs physical scenario curation by deploying modular target shells that span vehicular geometries and high-dynamic behaviours, avoiding an artificially sanitised validation environment. This supports the UK Law Commission’s (2022) mandate that ASDEs must prove safe and legal driving across foreseeable traffic conditions before public deployment \cite[pp.~49, 81--82, 87]{lawcom_2022} and strengthens PAS 1881-style safety case expectations \cite{pas1881}.
 
-To protect systemic integrity, our platform must align with PAS 1885 \cite{pas1885} cybersecurity principles, utilising encrypted communication protocols to prevent unauthorised software modifications or remote hijacking during coordinated manoeuvres.
+To protect systemic integrity, the platform should be informed by PAS 1885 \cite{pas1885} cybersecurity principles, using encrypted communication to reduce the risk of unauthorised modification or remote hijacking.
 
-Finally, all these elements are governed by a PAS 1881-compliant Safety Management System (SMS) \cite{pas1881}. By treating our safety cases as "live documents", any track near-misses or unexpected component behaviours are immediately fed back into a mandatory change-control loop, ensuring continuous operational improvement and ongoing regulatory compliance.
+Finally, these elements are governed by a Safety Management System (SMS) designed with reference to PAS 1881 \cite{pas1881}. Treating safety cases as "live documents" ensures near-misses and unexpected component behaviours feed into change control for continuous improvement.
 
 \section{Sustainability, Lifecycle, and the Circular Economy}
 
-In the automotive sector, traditional Life Cycle Assessments (LCA) frequently rely on methodologies that weight tailpipe greenhouse gas emissions against the energy grid mix. However, for a fully electric, TaaS platform, the operational use-phase is effectively zero-emission. Because almost half of an EV's life cycle Global Warming Potential (GWP) is locked into its manufacturing \cite[p.~56]{hawkins_2013}, the strategic sustainability focus must pivot sharply away from operational emissions. To combat this production-heavy footprint, the report mandates "effective recycling programs and improved EV lifetimes" \cite[p.~61]{hawkins_2013}. Consequently, the enterprise directly operationalises these mandates by deploying a Product-Service System (PSS) framework to structurally extend the vehicle's lifespan, whilst utilising the 9R Circular Economy framework to execute closed-loop recycling, thereby reducing the environmental impact of autonomous validation to a level that is as low as reasonably practicable (ALARP).
+Sustainability is treated here as a strategic consequence of the TaaS model rather than as a separate design topic. Because the enterprise retains ownership of the vehicle fleet, environmental incentives and commercial incentives become aligned: longer asset life, repairability, recyclability, and reduced redundant manufacturing all improve both sustainability and margin resilience.
+
+In the automotive sector, Life Cycle Assessments (LCA) often emphasise tailpipe emissions and grid mix. For an electric TaaS platform, the use-phase is effectively zero-emission, so sustainability pivots to manufacturing impacts: almost half of an EV's life cycle Global Warming Potential (GWP) is locked into production \cite[p.~56]{hawkins_2013}. The report therefore mandates "effective recycling programs and improved EV lifetimes" \cite[p.~61]{hawkins_2013}. The enterprise operationalises this through a Product-Service System (PSS) framework (life extension) and the 9R Circular Economy framework (closed-loop recycling), reducing the environmental impact of autonomous validation toward ALARP.
 
 \subsection{Product-Service Systems (PSS) Framework}
 
-At the macro-business level, the enterprise's Testing-as-a-Service (TaaS) model operates strictly as a Result-Oriented Product-Service System (PSS). Specifically, it aligns with the classification of Activity Management and Outsourcing (Category 6) \cite[p.~254]{tukker}. By operating this centralised PSS model at established UK testbeds, we prevent multiple of our potential clients from needlessly extracting raw materials to manufacture and maintain their own low-utilisation testing fleets.
+At the macro-business level, the TaaS model is a Result-Oriented Product-Service System (PSS), aligning with Activity Management and Outsourcing (Category 6) \cite[p.~254]{tukker}. Centralising this service at UK testbeds reduces redundant material extraction by avoiding multiple low-utilisation client fleets.
 
 \subsection{The 9R Framework Application}
 \label{sec:9r_framework_application}
@@ -3303,21 +3325,29 @@ However, at the micro-level, we face a critical engineering constraint: the reli
     \item The Sacrificial Shell (Useful Application of Materials: R8 Recycle): The most significant hardware update to our initial design is the external target shell, our highest-wear component. The strategic plan explicitly rejects rigid composites, like carbon fibre, which utilise thermoset plastics. This material not only makes the component difficult to sustainably recycle, with the vast majority sent to landfills \cite[p.~2]{morici_2022}, but also introduces hazardous track debris through shattering. Instead, the enterprise specifies the use of Recycled Expanded Polypropylene (rEPP), which is a highly impact-absorbent, low-cost, and lightweight thermoplastic foam, already used in automotive pedestrian protection applications \cite[p.~1]{ramaswamy_2017}. Following a track collision, the shattered EPP shells can be cleanly collected, melted down, and re-extruded into brand new impact shells, establishing a perfectly closed, 100\% recyclable material loop (R9) (demonstrated in \cite{handtke_2024}).
 \end{itemize}
 
+\noindent\textbf{Implication:} sustainability is not a separate reputational claim; it reinforces the economics of TaaS because asset ownership incentivises repair, reuse, refurbishment, and high utilisation.
+
 \section{Strategic Limitations \& Cross-Functional Dependencies}
 
-While our TaaS model effectively resolves the AV industry's simulation-to-reality gap, it introduces significant internal vulnerabilities. To ensure commercial viability, these strategic limitations must be actively managed through cross-functional engineering and financial integrations.
+The following limitations are not isolated risks within the strategy function. They are cross-functional dependencies that determine whether the TaaS model is commercially viable. Financial exposure is tested through the financial model (Sections~\ref{sec:breakeven} and \ref{sec:downtime}), operational resilience is developed through the supply-chain plan (Section~\ref{sec:supply_chain_planning}), and minimum viable safety is addressed through prototype planning (Chapter~\ref{chap:eem_prototype_planning}).
+
+While the TaaS model addresses the simulation-to-reality gap, it introduces internal vulnerabilities that must be managed through engineering and financial integration.
 
 \subsection{Financial Exposure and Capital Intensity}
 
-While the TaaS model provides immense operational flexibility for our clients by shifting their costs to OPEX, its primary strategic limitation is the structural inversion of our own capital expenditure (CAPEX). Unlike a traditional hardware sales model, our enterprise must absorb the massive upfront costs of manufacturing the AEB Rabbit fleet, securing testing infrastructure, and insuring the assets before a single billable testing hour is executed. To validate that this front-loaded financial exposure does not compromise enterprise solvency, our strategy relies on the financial models in Sections~\ref{sec:breakeven} and \ref{sec:downtime} dictating the minimum utilisation rates required to sustain the TaaS strategy.
+While TaaS shifts client costs to OPEX, the primary limitation is the inversion of enterprise capital expenditure (CAPEX). The enterprise must fund fleet manufacture, infrastructure, and insurance before revenue begins. Solvency therefore depends on achieving the minimum utilisation rates implied by Sections~\ref{sec:breakeven} and \ref{sec:downtime}.
 
 \subsection{Asset Ownership and the Maintenance Bottleneck}
 
-Under the Product-Service System (PSS) framework, retaining asset ownership inherently transfers the financial risk of hardware failure from the client to the enterprise. Because our revenue generation is strictly tethered to track uptime, any collision damage that exceeds our forecasted repair windows directly erodes our margin defensibility. Furthermore, prolonged downtime threatens our relationships with our definitive stakeholders (i.e. the testbed operators). Consequently, the commercial execution of this strategy is fundamentally dependent on rigorous Supply Chain Planning (Section~\ref{sec:supply_chain_planning}). The proposed modular inventory buffer and strict trackside recovery protocols act as the primary operational mitigation mechanism against our greatest commercial vulnerability.
+Under the PSS framework, retained ownership transfers hardware failure risk to the enterprise. Because revenue is tethered to uptime, collision damage that exceeds forecast repair windows erodes margins and can threaten testbed relationships. Commercial execution therefore depends on Supply Chain Planning (Section~\ref{sec:supply_chain_planning}), including modular spares buffers and trackside recovery protocols.
 
 \subsection{The Regulatory "Cold Start" Problem}
 
-Finally, the strategy to natively integrate into established CAM Testbed UK facilities presents a regulatory "cold start" problem. Testbed operations directors and independent liability assessors (our "Stakekeepers") demand overwhelming empirical proof that our high-dynamic platform will not damage their permanent infrastructure or endanger personnel. However, we cannot capture market share until this safety is proven on a track. Overcoming this barrier requires rigorous, staged proof-of-concept testing prior to full commercial deployment. We mitigate this through the approach defined in Chapter~\ref{chap:eem_prototype_planning} (Design Requirements \& Prototype Planning), which ensures the platform systematically achieves the minimum viable safety thresholds required to secure initial testbed approval.
+Finally, integrating into established CAM Testbed UK facilities creates a regulatory "cold start" problem. Operations directors and liability assessors (stakekeepers) require empirical proof that the platform will not damage infrastructure or endanger personnel, but this evidence is difficult to generate without track access. The mitigation is staged proof-of-concept testing aligned to Chapter~\ref{chap:eem_prototype_planning} (Design Requirements \& Prototype Planning), ensuring the platform reaches minimum viable safety thresholds required for initial approval.
+
+The minimum viable strategic conditions for the TaaS model are therefore: first, at least one CAM testbed must approve controlled pilot operation; second, telemetry and incident evidence must be credible to insurers, regulators, and customers; third, paid pilots must convert into repeat bookings; fourth, utilisation must approach the break-even threshold identified in the financial model (Section~\ref{sec:breakeven}); and fifth, downtime must remain within the recovery assumptions supported by the supply-chain plan (Section~\ref{sec:supply_chain_planning}). If any of these conditions fail, the strategy should be narrowed before further fleet expansion.
+
+\noindent\textbf{Implication:} the strategy is only commercially defensible if the operational recovery assumptions and financial utilisation thresholds in later chapters are realistic.
 
 % --- END INLINE: PaulVogelberg/Business/paul_business_body.tex ---
 \vspace{6pt}
