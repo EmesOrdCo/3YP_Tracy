@@ -3719,37 +3719,167 @@ The resulting failure probabilities are then used to support subsequent operatio
 
 A summary of the FMEA results for the powertrain components is presented in Table~\ref{tab:fmea}, illustrating how failure likelihood and recovery time combine to determine overall risk. A detailed FMEA covering other subsystems is provided in the logbook.
 
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1}
+
+\caption{Failure Mode and Effect Analysis for Powertrain Components}
+\label{tab:fmea}
+
+\begin{tabularx}{\textwidth}{
+l
+X
+p{0.14\textwidth}
+X
+p{0.12\textwidth}
+}
+\toprule
+
+Component &
+Non-collision Failure Mode &
+Non-collision Failure Prob. &
+Collision Failure Mode &
+Collision Failure Prob. \\
+
+\midrule
+
+Electric Motor &
+Overheating / Bearing wear &
+0.0002 &
+Impact-induced damage (minor) &
+0.005 \\
+
+Controller (VCU) &
+Overcurrent / Firmware fault &
+0.0003 &
+Shock / Connection fault &
+0.008 \\
+
+Inverter &
+Overheating / IGBT failure &
+0.0003 &
+Impact-induced electrical fault &
+0.010 \\
+
+Drive Shaft &
+Wear / Fatigue &
+0.0005 &
+Impact bending &
+0.080 \\
+
+Sprocket &
+Wear &
+0.0005 &
+Impact break &
+0.100 \\
+
+Chain &
+Fatigue / Elongation &
+0.0010 &
+Impact failure &
+0.100 \\
+
+Differential &
+Gear / Bearing wear &
+0.0005 &
+Impact-induced internal damage &
+0.010 \\
+
+Power Wiring &
+Loose / Connector failure &
+0.0020 &
+Impact disconnection &
+0.050 \\
+
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Operational Simulation - Monte Carlo}
+
+While the FMEA provides detailed information on failure behaviour, supply chain planning additionally requires an understanding of how different components influence spare consumption and recovery responsiveness across the system.
+
+To support this, a simplified operational Monte Carlo simulation is introduced using the failure probabilities and lead times obtained from the FMEA\cite{montecarlo}. Each simulation run represents a typical operational quarter consisting of 75 contact events, estimated from the financial and market growth analysis conducted by Harry. Contact events include both minor and major impacts occurring during testing activities. Component failures during each quarter are then estimated using a binomial distribution based on the corresponding failure probabilities obtained from the FMEA. And to reduce stochastic variation and improve the stability of the results, the simulation is repeated over 1000 Monte Carlo iterations.
+\[
+N_{\text{failure}} \sim \text{Binomial}(75,\, P_{\text{failure} \mid \text{contact}})
+\]
+
+\begin{table}[h]
+\centering
+\caption{Monte Carlo-based spare planning results for powertrain components over a typical operational quarter.}
+\label{tab:inventory_policy}
+\renewcommand{\arraystretch}{1.3}
+
+\resizebox{\textwidth}{!}{
+\begin{tabular}{lccccc}
+\hline
+
+\textbf{Part} &
+
+\makecell{\textbf{Lead Time} \\
+\textbf{(days)}} &
+
+\makecell{\textbf{Failure Prob.} \\
+\textbf{per Contact}} &
+
+\makecell{\textbf{Average Spare} \\
+\textbf{Consumption} \\
+\textbf{(/quarter)}} &
+
+\makecell{\textbf{Expected Consumption} \\
+\textbf{During Lead Time}} &
+
+\makecell{\textbf{Recommended} \\
+\textbf{Spare Inventory}} \\
+
+\hline
+
+Electric Motor & 35 & 0.005 & 0.37 & 0.15 & 1 \\
+Controller (VCU) & 7 & 0.008 & 0.59 & 0.05 & 1 \\
+Inverter & 28 & 0.010 & 0.77 & 0.24 & 1 \\
+Drive Shaft & 21 & 0.080 & 5.95 & 1.37 & 2 \\
+Sprocket & 14 & 0.100 & 7.50 & 1.16 & 2 \\
+Chain & 7 & 0.100 & 7.39 & 0.57 & 1 \\
+Differential & 14 & 0.010 & 0.76 & 0.12 & 1 \\
+Power Wiring & 3 & 0.050 & 3.89 & 0.13 & 1 \\
+
+\hline
+\end{tabular}
+}
+
+\end{table}
+
+\subsection{Inventory Policy}
+
+The simulation results provide an estimate of the expected component consumption occurring during supplier lead time, representing the expected spare demand before replenishment can be completed.
+
+Based on these estimates, inventory requirements are determined using a conservative availability-oriented policy. Consistent with the availability-oriented strategy defined previously, expected consumption values are rounded upwards when determining spare inventory levels in order to reduce the risk of stock depletion during operation.
+
+In addition, a minimum inventory level of one spare component is maintained even for components with relatively low expected consumption. Although some components exhibit low expected failure frequency, long replenishment lead times and operational criticality make fully reactive replacement strategies impractical.
+
+
 
 \subsection{Risk Classification}
 
-Building on the FMEA results, which provide a detailed view of individual component failures, a more aggregated perspective is required to support decision-making at the system level. While the FMEA highlights how each component behaves, it does not directly indicate how resources should be prioritised across the system.
+Building on the inventory policy analysis, a replenishment classification framework is introduced to distinguish different spare preparation and supply response behaviours across the system.
 
-To support decisions on whether and how spare parts should be prepared, a baseline scenario is first considered in which no spare parts are available, so that system recovery depends entirely on component replacement. Under this assumption, lead time is used as a proxy for recovery time, representing the full duration of disruption following a failure.
+As illustrated in Figure~\ref{fig:riskclassification1}, components are classified according to two key dimensions: expected spare parts consumption and supplier lead time. Expected spare parts consumption reflects the inventory burden associated with each component, while lead time represents the level of supply responsiveness required for recovery.
 
-This approach effectively combines principles from failure analysis and supply chain planning. In particular, it reflects the general concept of risk as a function of likelihood and consequence, where failure probability represents the likelihood of disruption and lead time captures its impact in terms of system downtime.
+Fixed operational boundaries are used to define the classification regions, where components with expected spare parts consumption greater than two units per quarter are classified as high-consumption components, while components with lead times exceeding two weeks are classified as high-responsiveness components.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{Conceptual_classification_of_component_risk.png}
+    \includegraphics[width=0.75\linewidth]{Classification_of_component_risk.png}
     \caption{Conceptual classification of component risk}
-    \label{fig:riskclassification}
+    \label{fig:riskclassification1}
 \end{figure}
 
 Based on this, components are classified according to two key factors: failure likelihood and lead time, which together determine how frequently disruptions occur and how long the system is affected when they do. A conceptual classification is first introduced in Figure~\ref{fig:riskclassification}, defining four categories based on these dimensions. The boundaries between categories are defined using median values, providing a consistent and relative basis for comparison.
 
-The classification is applied to the system under both non-collision and collision conditions. Figure~\ref{fig:non-collision} presents the distribution under normal operation (non-collision conditions), while Figure~\ref{fig:collision} shows the corresponding distribution under collision conditions. This comparison highlights how certain components shift into higher-risk regions when exposed to impact.
+The framework is then evaluated under contact operating conditions, as shown in Figure~\ref{fig:collision}. Under these conditions, several driveline components shift towards regions requiring higher inventory levels and more responsive supply chain strategies.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.95\linewidth]{non_collision.png}
-    \caption{Component classification under non-collision conditions (need further updates after getting data from other teams mates and make the text in the figure bigger) }
-    \label{fig:non-collision}
-\end{figure}
-%need update from Michael
-
-From this representation, components can be grouped into four categories: high-risk components with both high failure likelihood and long lead time; frequent components that fail often but are relatively quick to recover; long lead-time components that fail less frequently but result in extended downtime; and low-risk components with both low failure likelihood and limited operational impact.
-
-This classification provides a structured basis for prioritising components and informs decisions on spare allocation and preparation levels, ensuring that resources are focused on components with the greatest impact on system availability
+From this classification, components can be grouped into four replenishment categories: high-risk components requiring both high inventory preparation and responsive supply; frequent-consumption components requiring continuous replenishment; strategic spare components with low expected consumption but long replenishment delay; and low-risk components that can be managed more reactively.
 
 \begin{figure}
     \centering
@@ -3759,35 +3889,33 @@ This classification provides a structured basis for prioritising components and 
 \end{figure}
 %need update from Michael
 
-\subsection{Spare Planning}
+\subsection{Inventory management}
 
-Based on the risk classification, spare part decisions are differentiated across components rather than applied uniformly. Since the objective is to maintain continuous operation, all components require some level of backup; however, the amount of inventory held depends on their impact on system continuity.
+Based on the replenishment classification framework, inventory management is differentiated across components rather than applying a uniform spare policy throughout the system. As illustrated in Figure~\ref{fig:riskclassification1}, different combinations of spare consumption behaviour and lead time require different replenishment strategies in order to balance operational continuity with inventory efficiency.
 
-For high-risk components, which exhibit both high failure likelihood and long disruption duration, a push-based approach is adopted. Multiple spare units are maintained and pre-positioned to ensure that failures can be absorbed without interrupting the testing cycle. In this case, availability is prioritised over inventory cost.
+High-risk components with high spare consumption and long lead times, such as Sprocket, are managed using strongly push-oriented inventory preparation. Multiple spare units are pre-positioned before operation in order to minimise disruption during testing activities, as reactive replenishment would be unable to respond sufficiently quickly under these conditions.
 
-For frequent components, which fail often but can be recovered quickly, a pull-based approach supported by a small buffer is more appropriate. Replacement is triggered by failure, while a limited number of spare parts is held to enable immediate recovery. This balances responsiveness with efficient use of inventory.
+In contrast, Frequent components with high spare consumption but shorter lead times, such as Chain, are managed using a hybrid replenishment approach. Limited local inventory is maintained to support immediate replacement, while replenishment is triggered continuously during operation. This allows inventory levels to remain responsive to actual operational demand without requiring excessive stock holding.
 
-For long lead-time components, failures are less frequent but result in extended disruption when they occur. These components require advance preparation, typically in the form of at least one spare unit, to avoid excessive downtime.
+Long lead components with relatively low spare consumption but long lead times, such as a Supercapacitor, are managed as strategic standby inventory. Although failures occur infrequently, at least one spare unit is retained due to the operational impact associated with delayed replenishment.
 
-For low-risk components, which have both low failure likelihood and limited impact on operation, a minimal inventory approach is sufficient. These components are largely managed on demand, with only a basic level of backup maintained to prevent unnecessary interruption.
+Finally, low-risk components with both low spare consumption and short lead times are managed more reactively through pull-oriented replenishment, where replacement is largely triggered by operational demand rather than advance preparation.
 
-Overall, the spare strategy is based on allocating inventory according to component risk, ensuring that stock is concentrated where it has the greatest effect on maintaining system continuity.
+Overall, the inventory management strategy reflects a differentiated push--pull structure in which replenishment behaviour is adapted according to the operational characteristics of different components.
 
 \subsection{Risk Mitigation}
 
-While the spare strategy ensures availability through inventory, additional risk mitigation measures are applied to reduce system vulnerability without increasing stock levels. These measures focus on reducing either the likelihood of failure or the impact of disruption through design and sourcing decisions.
+While the inventory management strategy improves operational availability through spare preparation, additional mitigation measures are introduced to reduce dependence on inventory alone. These measures focus on reducing either replenishment burden or supply responsiveness requirements across different component categories.
 
-For components with significant supply risk, mitigation is primarily achieved by improving supply reliability. This includes the use of multiple suppliers or more standardised components, which reduces dependency on specific sources and limits exposure to supply disruptions.
+For high-risk and long-lead components, mitigation primarily focuses on reducing supply vulnerability through supplier diversification, component standardisation, and the identification of compatible substitute parts. These measures reduce dependence on individual suppliers and improve recovery flexibility under disruption conditions.
 
-For frequently failing components, mitigation focuses on reducing failure frequency and simplifying recovery. This can be achieved through improved component durability, standardisation, and ease of replacement, allowing the system to recover more quickly with minimal disruption.
+For components associated with frequent spare consumption, mitigation focuses on reducing operational wear and simplifying replacement procedures. Improvements in durability, modularity, and ease of maintenance help reduce spare consumption rates while enabling faster operational recovery during testing activities.
 
-In contrast, for low-risk components, additional mitigation is limited, as the cost and complexity of further intervention may not be justified by their relatively small impact on system performance.
-
-Overall, these mitigation measures complement the spare strategy by reducing the system’s reliance on inventory alone, enabling a more balanced and efficient allocation of resources.
+In contrast, mitigation measures for low-risk components remain relatively limited, as the operational benefit of further intervention is unlikely to justify the associated increase in complexity and cost.
 
 \subsection{Conclusion}
 
-The planning analysis shows that component prioritisation can be based on failure likelihood and disruption duration. By combining FMEA with risk classification, components are grouped according to their impact on system continuity. This provides a clear basis for allocating spare parts and defining preparation levels.
+The planning analysis shows that component prioritisation can be based on failure likelihood and disruption duration. By combining FMEA with operational Monte Carlo simulation and risk classification, components are grouped according to their expected inventory demand and supply response characteristics. This provides a structured basis for defining inventory policies, inventory management, and risk mitigation across the system.
 
 \section{Supply Chain Operation}
 
@@ -3795,7 +3923,7 @@ The planning analysis shows that component prioritisation can be based on failur
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{operation1.png}
+    \includegraphics[width=0.6\linewidth]{operation1.png}
     \caption{Operational cycle and supply chain support structure}
     \label{fig:operation}
 \end{figure}
@@ -3823,7 +3951,7 @@ The performance of the system is primarily constrained by non-execution time, as
 \begin{table}[H]
 \centering
 \small
-\renewcommand{\arraystretch}{1.5}
+\renewcommand{\arraystretch}{1}
 
 \caption{Summary of Operational Time Distribution}
 \label{tab:operation_time}
@@ -3840,69 +3968,64 @@ Recovery & Repair/replacement & 10 min--2 days & Non-value-added \\
 \end{tabularx}
 \end{table}
 
-From a customer value perspective, a value-added activity is defined as an activity that directly transforms the product or service in a way that the customer is willing to pay for. Activities that do not meet this criterion are classified as non-value-added, even if they are necessary for system operation.\cite{value_added}
-
-Based on this definition, the test execution phase represents the primary value-added activity, as it directly contributes to the generation of meaningful testing data. In contrast, recharge, pre-test setup, and recovery constitute non-value-added time, as they do not directly create value from the perspective of the testing objective, despite being necessary for operation.
-
-This classification follows the standard lean manufacturing distinction between value-added and non-value-added activities, where processes are analysed based on their contribution to customer value.
+Following the lean distinction between value-added and non-value-added activities, test execution represents the primary value-added stage as it directly contributes to the generation of testing data. In contrast, recharge, setup, and recovery activities increase operational cycle time without directly contributing to testing output.\cite{value_added}
 
 As shown in Table~\ref{tab:operation_time}, the pre-test setup stage accounts for a significantly larger portion of the cycle compared to the execution phase. This indicates that system throughput is not limited by the test itself, but by the activities required before and after each run. In addition, the recovery stage introduces substantial variability, ranging from short repairs to extended structural recovery, further increasing uncertainty in overall cycle time.
 
-As a result, system performance is mainly influenced by the combined effect of preparation time and recovery variability, rather than by execution speed. Improving performance, therefore, depends on reducing non-value-added activities and managing disruption caused by failures.
+As a result, system performance is strongly influenced by preparation efficiency and recovery responsiveness rather than execution speed alone.
 
 \subsection{Process Improvements}
 
-The analysis in the previous section shows that system downtime is primarily driven by the preparation and recovery stages. These two sources of delay require different approaches to improvement.
+The previous analysis shows that operational performance is influenced primarily by preparation efficiency and recovery responsiveness. As a result, process improvements focus on reducing non-value-added activities and minimising disruption throughout the operational cycle.
 
-For the preparation stage, the process is highly structured and repeatable, making it suitable for lean-based improvements. Performance can be enhanced by reducing non-value-added activities through better organisation of the workspace, minimising unnecessary movement, and improving the layout and sequencing of tasks. These measures aim to streamline the preparation process and reduce the time required before each test cycle.
+For preparation activities, improvements are achieved mainly through process standardisation, workspace organisation, and more efficient task sequencing. Since these stages are repetitive and relatively predictable, lean operational principles can be applied to reduce unnecessary delay before each testing cycle and improve overall operational throughput.
 
-In contrast, the recovery stage can be viewed as a form of changeover process, where the system transitions from a failed state back to operation. This stage is less predictable and often requires component replacement or repair, making it a major contributor to downtime. In this context, principles similar to SMED (Single-Minute Exchange of Die) can be applied, where activities are divided into those that must be performed while the system is stopped (internal) and those that can be completed in advance (external). By shifting as many tasks as possible from internal to external, the effective downtime can be significantly reduced.
+In contrast, recovery activities require a more responsive approach due to the variability associated with component failures and operational disruption. Under these conditions, rapid replacement and recovery become more important than process efficiency alone, making recovery responsiveness a key operational consideration within the system.
 
-The use of a spare vehicle represents an extension of this approach. Instead of performing repair during downtime, a fully prepared backup system can be deployed immediately, allowing recovery to occur outside the operational cycle. This effectively converts part of the recovery process from an internal activity into an external one.
-%talk about modular supply chain maybe(Paul)
+One important extension of this recovery approach is the introduction of a modular recovery structure through the use of prepared standby resources. Rather than performing repair activities directly within the operational cycle, replacement units can be deployed immediately following operational failure, allowing testing activities to continue while repair and maintenance are carried out separately \cite {modular}.
 
-It is important to note that this does not imply maintaining multiple complete backup systems. As established in the planning analysis, all components require at least a minimal level of spare availability. Rather than increasing the total amount of inventory, a single spare vehicle can be used to cover components that require immediate replacement, while additional spare parts are maintained selectively where needed.
+This effectively transforms recovery from a sequential process into a parallel operational structure, reducing the propagation of downtime across the testing cycle and significantly improving operational responsiveness. Instead of waiting for repair to be completed before operation resumes, replacement and recovery can occur simultaneously, minimising disruption during testing activities.
 
-Following replacement, the repaired vehicle can then be restored and reused as the spare system, allowing the spare resource to be rotated within the system. This approach enables rapid recovery while avoiding unnecessary duplication of resources.
+Importantly, from a supply chain perspective, this modular strategy does not necessarily increase overall inventory requirements. As established previously, the system already maintains at least one spare unit for all components due to its availability-oriented planning strategy. The modular recovery structure, therefore, reorganises existing spare capability rather than duplicating the entire system.
+
+In addition, the concept is not limited to full vehicle replacement. At the chassis level, a prepared spare shell can be maintained as a modular replacement unit, allowing the structural assembly to be swapped immediately after a collision, while the damaged shell undergoes repair separately. Similar principles can also be applied to other components, such as wired supercapacitor assemblies or replacement electrical units, which can be pre-prepared and swapped rapidly during operation. This further reduces recovery delay while improving flexibility within the operational cycle.
+
+Following recovery, repaired systems or modules are returned to standby status and reintegrated into the active spare pool, forming a closed refurbishment loop in which recovered assets continuously rotate back into operational readiness. This ensures that spare capability is maintained dynamically rather than depleted over time.
+
+Taken together, modular inventory, spare shells, refurbishment loops, and rapid recovery are not merely operational decisions. They are what make the TaaS availability promise operational and credible. As discussed in Section 7.3.3, commercial viability depends on sustained utilisation rates and minimal track downtime; the supply chain operations developed here are precisely what deliver this in practice.
 
 \subsection{Key Activities}
 
-While the previous section describes how the system operates, this section outlines the key activities required to support and manage the system in practice.
+While the previous sections describe the operational structure of the system, several ongoing activities are required to maintain operational continuity during testing.
 
-Due to the service-oriented nature of the system and the relatively low volume of operation, traditional procurement and supplier selection activities are less critical compared to conventional production systems. Instead, the focus shifts towards maintaining system availability and ensuring continuous operation through effective management of existing resources.
-
-Inventory management is a central activity, involving the tracking and allocation of spare parts across different component categories. This ensures that critical components identified in the planning stage are available when required, while avoiding unnecessary duplication of inventory.
+Inventory coordination is a central operational activity, involving the monitoring and replenishment of spare components according to the replenishment classifications developed previously. This ensures that high-risk and high-consumption components remain available while limiting unnecessary inventory duplication.
 
 Maintenance and recovery activities are also essential, including post-test inspection, fault identification, and execution of repair or replacement procedures. Standardising these processes helps to reduce downtime and improve consistency in system recovery.
 
-In addition, system monitoring plays an important role in supporting ongoing operation. Failure data can be recorded and analysed over time, allowing adjustments to spare allocation and risk prioritisation as more information becomes available.
+In addition, operational monitoring plays an important role in supporting longer-term planning. Failure and recovery data collected during testing can be used to refine failure estimates, adjust spare allocation, and improve replenishment planning over time.
 
-Finally, while most components are sourced externally, sourcing-related activities focus on maintaining flexibility and reducing supply risk. This includes ensuring compatibility across different suppliers, monitoring supplier availability, and favouring standardised components where possible. These actions reduce dependency on specific sources and improve the system’s ability to respond to supply disruptions. Overall, these activities enable the system to operate reliably in practice, ensuring that the supply chain effectively supports continuous testing.
+Finally, sourcing-related activities focus primarily on maintaining supply flexibility and reducing replenishment vulnerability. This includes monitoring supplier availability, maintaining compatibility across suppliers, and favouring standardised components where possible in order to improve recovery responsiveness during disruption events. In addition, establishing stable partnerships with key suppliers can further reduce supply uncertainty and replenishment lead time, improving the system’s ability to respond rapidly to operational failures.
+
+Overall, these activities ensure that the operational and planning structures developed previously can be maintained effectively during continuous system operation.
 
 \section{Conclusion}
 
-The supply chain for the rabbit vehicle is driven by the need to maintain continuous operation under conditions of uncertainty, rather than to optimise production efficiency. By combining failure analysis with risk classification, components can be prioritised based on their impact on system continuity, providing a structured basis for decision-making.
+The supply chain for the rabbit vehicle is driven by the need to maintain continuous operation under uncertainty. Through failure analysis, Monte Carlo simulation, and risk classification, components are prioritised by their impact on system continuity, with inventory and mitigation efforts allocated accordingly. Beyond inventory, modular recovery approaches further reduce disruption by decoupling repair activities from the active operational cycle.
 
-This leads to a differentiated approach to resource allocation, where both inventory and mitigation efforts are focused on components that have the greatest effect on system downtime. In addition, operational improvements, such as the reorganisation of spare resources, further reduce disruption by enabling faster recovery.
-
-Overall, the system can be characterised as a centralised, agile, and failure-driven supply chain, in which performance is determined by the ability to manage uncertainty and minimise interruption within a repeated operational cycle.
+Overall, the system can be characterised as a centralised, outsourcing, agile, and failure-driven supply chain. As operational experience accumulates through failure records, recovery data, and client feedback, supply chain parameters can be continuously recalibrated, transforming it from a static design into a learning system that grows more resilient over time. Ultimately, a supply chain designed around availability and rapid recovery directly translates into service reliability. For an early-stage TaaS company, this is the product being sold.
 
 \section*{Appendix: Data Sources and Contributions}
 
-The data used in the FMEA and subsequent analysis are derived from the engineering design of the project. These include component specifications, estimated failure behaviour, and recovery-related information.
-
-Data for the different subsystems were provided by team members responsible for their respective designs:
+The data used in the FMEA and the subsequent analysis are derived from the engineering design of the project. Data for the different subsystems were provided by team members responsible for their respective designs:
 
 \begin{itemize}
-    \item Powertrain: Yuze Jiang
-    \item Battery: Paul Vogelburg
-    \item Wheels: Ziyang Xing
-    \item Chassis: Toby McConnell
+    \item Chassis: Toby McConnell (Section 1)
+    \item Wheels: Ziyang Xing (Section 2)    
+    \item Powertrain: Yuze Jiang (Section 3)
+    \item Battery: Paul Vogelburg (Section 4)
 \end{itemize}
 
 Where applicable, detailed and publicly available data sources are cited in the corresponding sections of the main text.
-
-\newpage
 
 \compactbib
 % --- END INLINE: Yuze Jiang/Business/EEM.tex ---
