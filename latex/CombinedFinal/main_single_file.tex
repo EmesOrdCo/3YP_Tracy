@@ -3613,113 +3613,112 @@ This chapter has argued that the AEB test carrier should be developed through a 
 
 This part of the report examines the supply chain design of a Formula Student “rabbit” vehicle used for autonomous emergency braking (AEB) testing.
 
-The vehicle was originally developed for the acceleration event, where the objective is to achieve high acceleration over a short distance of approximately \SI{75}{\meter}. As a result, the design is optimised for short-duration, high-performance operation, with components such as the battery sized specifically for brief usage.
+The system is operated within a B2B Testing-as-a-Service (TaaS) model, where clients schedule AEB testing sessions with fixed time windows. Any supply chain failure that interrupts testing directly impacts the client's development timeline, creating reputational and contractual risks that far exceed the cost of maintaining additional spare inventory. As an early-stage service-oriented company, service reliability is therefore not merely an operational preference but a strategic necessity for establishing credibility and securing future business~\cite{startup_reputation}.
 
-While such characteristics differ from those required in conventional racing applications, they align well with the requirements of AEB testing. In this context, the vehicle is used as a dynamic obstacle, repeatedly crossing the path of a test vehicle to evaluate detection and braking performance.
+The physical system enabling this service is the Formula Student-derived "rabbit" vehicle. It was originally developed for the Formula Student acceleration event, where the objective is to achieve high acceleration over a short distance of \SI{75}{\meter}. As a result, the design is optimised for short-duration, high-performance operation, with components such as the battery sized specifically for brief usage.
 
-This shift in application fundamentally changes the nature of the system. Rather than focusing on one-off performance or large-scale production, the vehicle operates as part of a repeated testing cycle. Consequently, the primary challenge becomes maintaining continuous operation, where downtime directly limits testing capability.
+While such characteristics differ from those required in conventional racing applications, they align well with the requirements of AEB testing, where each individual test run is short in duration and requires only brief bursts of motion. However, unlike the original racing application, AEB testing requires these short-duration operations to be repeated continuously over extended testing sessions.
 
-This classification provides a structured basis for prioritising components and informs decisions on spare allocation and preparation levels, ensuring that resources are focused on components with the greatest impact on system availability.
+In this application, the vehicle functions as a dynamic obstacle, repeatedly crossing the path of a test vehicle to evaluate detection and braking performance.
 
-Therefore, the supply chain must prioritise availability and rapid recovery, rather than minimising cost or inventory.
+This shift in application fundamentally changes the nature of the system. Rather than focusing on one-off performance, the vehicle must operate continuously and reliably during repeated testing cycles. The primary performance objective therefore becomes maximising system availability, driven by minimising downtime within the testing cycle. Downtime can be broadly decomposed into operational downtime, arising from routine activities such as preparation and recharge, and disruption-induced downtime, resulting from failure events primarily associated with collisions and subsequent recovery processes. While operational downtime is largely constrained by system design, disruption-induced downtime can be actively reduced through effective supply chain decisions such as spare inventory provisioning and rapid component replacement.
 
-To structure the analysis, the report is divided into three levels: supply chain strategy, planning, and operation. These represent decisions over different time horizons, where strategy focuses on long-term structure over several years, planning considers medium-term decisions over months, and operation addresses short-term execution on a daily or weekly basis \cite{Supply_chain_lecture}.
+It is important to note that, as established in Section 7.3.3, collisions are an expected and frequent part of normal operation rather than exceptional events, and collision-induced failures represent the dominant source of disruption. As a result, the supply chain must be designed primarily around collision recovery, treating collisions as an expected operational condition rather than a rare exception.
+
+Consequently, the supply chain must prioritise availability and rapid recovery, rather than minimising cost or inventory. To structure the analysis, the report is divided into three levels: supply chain strategy, planning, and operation. These represent decisions over different time horizons, where strategy focuses on long-term structure over several years, planning considers medium-term decisions over months, and operation addresses short-term execution on a daily or weekly basis~\cite{Supply_chain_lecture}.
 
 \section{Supply Chain Strategy}
 
 \subsection{Strategic Objective}
 
-Strategy defines the long-term structure of the supply chain, within which planning and operational decisions are made. In this case, the strategy must be aligned with the uncertainty inherent in system operation.
-
-Given the operational nature of the system, the supply chain is primarily evaluated based on its ability to maintain continuity rather than efficiency. This implies that the key objective is not to minimise cost or inventory, but to ensure that failures can be absorbed without interrupting the testing cycle. As a result, supply chain decisions are driven by recovery capability, including the availability of spare parts and response time. In this context, availability becomes the dominant design constraint, and trade-offs are made in favour of reducing downtime rather than optimising resource utilisation.
+Strategy defines the long-term structure of the supply chain, within which planning and operational decisions are made. Given the availability-driven objective established above, the strategic challenge is not to optimise efficiency but to build a supply chain structure capable of absorbing collision-induced disruption without interrupting the testing cycle.
 
 \subsection{System Framing}
 
-Given that the primary objective is to maintain continuous operation, it becomes necessary to reconsider how the system is defined from a supply chain perspective.
+In conventional production systems, the supply chain is designed around the manufacture and delivery of products. Once a unit is delivered, the supply chain's role is largely complete. The focus is therefore on managing the flow of materials and components towards a finished output. This linear model, however, does not apply here.
 
-The system can no longer be understood as a conventional production process. Instead of focusing on the manufacture and delivery of multiple units, it operates as a repeated testing cycle, where the same vehicle is used continuously over time. This fundamentally changes the nature of the supply chain. The key challenge is not how many units can be produced, but how reliably the system can continue to operate in the presence of failures. In this context, failures are expected as part of normal operation, and the system must support a cycle of testing, failure, and recovery rather than a linear production flow.
+Instead, the supply chain must support a closed-loop recovery cycle, in which the same vehicle is repeatedly tested, damaged, repaired, and returned to operation. Each collision is not the end of the process but a transition point, after which the system must be restored to operational readiness before the next test can begin. The supply chain, therefore, remains actively involved throughout the operation, rather than playing a one-off role in enabling initial deployment.
 
-As a result, the supply chain is better understood as a process-oriented or service-oriented system, where value is generated through repeated operation rather than product delivery. This shifts the focus from output volume to system availability and continuity.
+This has important implications for how supply chain decisions are made. Rather than optimising for delivery speed or production cost, the key question becomes how quickly and reliably the system can recover from each disruption. Supply chain structure, sourcing strategy, operating strategy, and flow strategy are all evaluated against this criterion, rather than against conventional metrics such as unit cost or lead time minimisation.
 
 \subsection{Strategy Type}
 
 Based on the operational characteristics of the system, the supply chain is best described as a combination of multiple approaches rather than a single conventional model.
 
-\paragraph{Supply Chain Structure (Centralised vs Distributed)}
+\paragraph{Supply Chain Structure (Centralised vs Distributed)}%**
 
-Structurally, the system is highly centralised, as all operations are concentrated around a single testing setup. From a market perspective, the overall service demand is relatively limited and geographically concentrated, which reduces the need for a distributed network. Introducing multiple testing locations would increase capital investment and operational complexity without providing significant benefits in responsiveness.
+Structurally, the system is highly centralised, as all operations are concentrated around a single testing setup. This approach improves coordination efficiency, reduces duplication of inventory and resources and simplifies maintenance and recovery through the operation. 
 
-In practice, the use of a single testing site simplifies coordination and ensures consistency across repeated test cycles. Since the system is reused continuously rather than deployed across multiple locations, centralisation allows resources, equipment, and spare components to be concentrated in one place, improving both control and efficiency. This is particularly important for maintenance and recovery activities, which rely on immediate access to tools and spare parts. Overall, a centralised structure supports operational efficiency while avoiding unnecessary duplication of resources.
+However, centralisation also reduces geographical flexibility and may increase vulnerability to local disruptions, as operational continuity depends heavily on a single facility\cite{centralisation}. In conventional supply chains, distributed networks are often used to improve responsiveness and reduce transportation delay. 
 
-\paragraph{Sourcing Strategy (Outsourcing vs In-house)}
+In this case, however, the overall service demand is both limited and geographically concentrated in the United Kingdom. More importantly, operational throughput is constrained more by recovery capability than by customer proximity. As a result, the responsiveness benefits associated with a distributed supply chain structure would not be significant, while the additional testing facilities would introduce higher capital investment, inventory duplication and operational complexity.
 
-In terms of sourcing, the system adopts a partially outsourced approach. Most components are sourced externally, as the relatively low production volume does not justify the high capital investment required for in-house manufacturing. In contrast, selected activities are retained in-house where either customisation is required to meet specific performance needs or where processes are relatively low in complexity and capital requirement.
+\paragraph{Sourcing Strategy (Outsourcing vs Vertical-integration)}%**
 
-In practice, components that require specialised manufacturing capabilities, such as the motor and inverter, are sourced externally. Meanwhile, in-house activities focus on components requiring customisation, as well as processes that are critical for maintenance and recovery. For example, structural repair and assembly are carried out in-house, allowing immediate response to failures without relying on external suppliers, thereby reducing downtime. This approach balances cost efficiency with operational flexibility.
+In terms of sourcing strategy, the system adopts an outsourcing supply chain strategy rather than vertical integration. Outsourcing reduces the need to internalise specialised supply chain activities and associated capital investment. It also provides access to specialised expertise that would be difficult to develop internally at a small operational scale. This is particularly advantageous in low-volume systems, where production demand is limited and highly irregular.
+
+However, vertical integration can also provide strategic benefits. By internalising supply chain activities, firms can improve control over quality, component availability, and recovery responsiveness, while reducing vulnerability to external supply disruptions. In larger industrial systems, companies such as Tesla have increasingly adopted vertically integrated structures to strengthen supply chain resilience and reduce supplier dependency.\cite{tesla}
+
+In this case, however, the relatively small production scale means that the risks associated with external sourcing remain comparatively manageable. Many components are required only in very small quantities each year, making the investment required for extensive vertical integration difficult to justify economically. Furthermore, although outsourcing introduces some exposure to supply disruption and lead-time uncertainty, the operational impact remains acceptable within the scale of the system. As a result, outsourcing represents a more appropriate balance between operational flexibility, access to expertise, and cost efficiency under the current operating conditions.
 
 \paragraph{Operating Strategy (Lean vs Agile)}
 
-From an operational perspective, the system aligns more closely with an agile supply chain. The operating environment is characterised by uncertainty, particularly due to failure events that occur unpredictably during testing. This makes responsiveness and flexibility more important than efficiency, as the system must be able to adapt to changing conditions and recover quickly from disruption.
+From an operational perspective, the system aligns more closely with an agile supply chain rather than a lean one. Agile supply chains prioritise flexibility and responsiveness under uncertain operating conditions\cite{agile}, whereas lean systems focus more on efficiency, waste reduction, and highly predictable processes. In large-scale manufacturing systems such as Toyota Production Systems, lean approaches are highly effective because production demand and operational processes are typically high-volume, low-variety, and relatively predictable\cite{toyota}.
 
-In contrast to traditional lean systems, which rely on stable and predictable processes, this system cannot fully optimise for efficiency due to the variability introduced by failures. Instead, agility allows the system to respond effectively to unexpected events, particularly during recovery. However, elements of lean behaviour are still present in the preparation and execution stages, where processes are repetitive and structured. Overall, the system reflects a hybrid approach, where agile principles dominate under uncertainty while lean principles are applied where stability allows.
+However, this system operates under a much higher level of uncertainty. As discussed previously, the supply chain is largely failure-driven, where disruption events occur unpredictably during testing and collision, making recovery capability more important than efficiency alone. In addition, the operational scale remains relatively small, resulting in low operating volume and high process variability compared to conventional lean production systems. As illustrated in ~\ref{fig:lean_vs_agile}, these characteristics position the system closer to the agile region within both the responsiveness--uncertainty spectrum and the Fisher variety--volume framework.
+
+\begin{figure}[h]
+    \centering
+
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.95\linewidth]{Responsiveness-uncertainty_spectrum.png}
+        \caption{Responsiveness-uncertainty spectrum\cite{responsiveness-uncertainty}} %最好也cite一下这个图的来源
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.95\linewidth]{Fisher_variety-volume_supply_chain_model.png}
+        \caption{Fisher variety-volume supply chain model\cite{fisher} }
+    \end{subfigure}
+
+    \caption{Operating strategy positioning of the system within the responsiveness--uncertainty spectrum and Fisher variety--volume framework. The red markers indicate the operational characteristics of the rabbit vehicle testing system.}
+
+    \label{fig:lean_vs_agile}
+\end{figure}
 
 \paragraph{Flow Strategy (Push vs Pull)}
 
-At the same time, the system exhibits a mixed push--pull behaviour. Certain components, particularly those with higher risk or longer disruption duration, require advance preparation and pre-positioned inventory, reflecting push-based planning. This ensures that critical failures can be addressed immediately without waiting for external supply.
+At the same time, the system exhibits a mixed push--pull strategy rather than relying entirely on either approach. Push-based processes are initiated in anticipation of operational demand and typically rely on advance preparation and inventory positioning. This improves responsiveness and reduces recovery delay for critical components, particularly where supplier lead times or disruption consequences are significant. In contrast, pull-based processes are triggered reactively by actual operational demand or failure events, reducing unnecessary inventory and improving resource efficiency where immediate availability is less critical.
 
-In contrast, other components can be managed in a more reactive manner, where actions are triggered by failure events or operational demand. This pull-based behaviour reduces unnecessary inventory and allows resources to be used more efficiently. Importantly, the push--pull boundary is not fixed but varies across components depending on their risk profile. This flexible boundary allows the system to balance responsiveness and efficiency, ensuring that resources are allocated where they have the greatest impact on maintaining system continuity.
+In this system, different components exhibit substantially different operational characteristics, supplier dependencies, and disruption impacts. As a result, the push--pull boundary cannot be defined uniformly across the entire system but must instead vary depending on the risk profile and recovery requirements of individual components. Components associated with higher disruption impact or longer recovery duration are managed using more push-oriented preparation, whereas lower-risk components can be managed more reactively through pull-based replenishment.
+
+This differentiated approach allows the system to balance responsiveness and inventory efficiency while allocating resources according to operational criticality. The component-level risk assessment developed in the subsequent planning analysis further supports this distinction between push- and pull-oriented strategies.
 
 \paragraph{Conclusion}
 
-Overall, the supply chain can be characterised as a centralised, agile, and failure-driven system, where decisions are adapted to the level of risk and uncertainty associated with different components. And the strategy reflects a strong alignment between system requirements and supply chain design, ensuring that operational continuity is maintained under uncertain conditions.
+Overall, the supply chain can be characterised as a centralised, agile, and failure-driven system, where decisions are adapted to uncertainties associated with different components. And the strategy reflects a strong alignment between system requirements and supply chain design, ensuring that operational continuity is maintained under uncertain conditions.
 
 \section{Supply Chain Planning}
-\label{sec:supply_chain_planning}
 
-\subsection{Planning Framework}
-\label{subsec:supply_chain_planning_framework}
+\subsection{Planning Framework}%**
 
 Given the operational nature of the system, supply chain planning is driven by the objective of maximising system availability through effective management of failure risk.
 
-The key consideration is how different failures affect the continuity of testing, particularly in terms of how likely they are to occur and how much downtime they introduce. As a result, planning decisions focus on prioritising resources towards components that have the greatest impact on system availability.  To structure this, the analysis considers three main factors: failure likelihood, impact on system operation, and recovery time. These together determine the level of preparation required for each component. This ensures that limited resources are allocated where they have the greatest effect on maintaining system continuity.
+Thus, the key consideration is how different failures affect the continuity of testing, particularly in terms of how likely they are to occur and how long recovery takes following disruption. Since even relatively minor component failures can prevent safe system operation, most components are treated as operationally critical within the testing cycle. For example, both a major motor failure and the loss of a small wheel fastener may render the vehicle unavailable for testing despite their very different physical scale and cost.
+
+As a result, planning decisions focus primarily on failure likelihood and recovery duration; these factors together determine the level of inventory preparation and supply responsiveness required across different components.
 
 \subsection{Failure Mode and Effect Analysis (FEMA)}
 
-To support the planning framework, a structured failure analysis is carried out using a simplified Failure Mode and Effects Analysis (FMEA)\cite{FMEA_lecture_notes}. Rather than focusing solely on downtime, this approach allows different failure modes to be linked to their likelihood, underlying causes, and operational impact.
+To support the planning framework, a structured failure analysis is carried out using a simplified Failure Mode and Effects Analysis (FMEA)\cite{FMEA_lecture_notes}\cite{fmea_supplychain}.
 
-For non-collision conditions, failure likelihood can be informed by component specifications and available engineering data, such as expected lifetime and operating limits. In contrast, collision-related failures are less predictable and cannot be directly obtained from standard data sources. Instead, they are assessed based on the physical characteristics of each component, including their exposure to impact, level of protection within the system, and their ability to withstand mechanical loads.
+Failure likelihoods are estimated using a combination of available engineering information, including component specifications, expected lifetime data, operating limits, and engineering judgment obtained through consultation with FSUK team members. In particular, impact-related failures are assessed based on the physical characteristics of each component qualitatively, including impact exposure, structural protection, and expected mechanical loading during testing activities.
 
-The FMEA is therefore used to compare components based on how frequently failures are expected to occur and how significantly they affect system continuity. As detailed quantitative data is not available, the analysis is applied in a qualitative and semi-quantitative manner, focusing on relative differences between components rather than precise numerical prediction.
+The resulting failure probabilities are then used to support subsequent operational simulation and inventory planning analysis. Since consistent quantitative data is not available across all components and operating conditions, the FMEA is applied in a qualitative and semi-quantitative manner, focusing on relative differences between components rather than precise numerical prediction.
 
-A summary of the FMEA results for the powertrain components is presented in Table~\ref{tab:fmea}, illustrating how failure likelihood and recovery time combine to determine overall risk.
+A summary of the FMEA results for the powertrain components is presented in Table~\ref{tab:fmea}, illustrating how failure likelihood and recovery time combine to determine overall risk. A detailed FMEA covering other subsystems is provided in the logbook.
 
-A detailed FMEA covering other subsystems is provided in the logbook.
-
-This analysis provides the basis for prioritising components according to their impact on system availability, supporting subsequent decisions on spare allocation and recovery planning.
-
-\begin{table}[H]
-\centering
-\small
-\renewcommand{\arraystretch}{1.5}
-
-\caption{Failure Mode and Effect Analysis for Powertrain Component}
-\label{tab:fmea}
-
-\begin{tabularx}{\textwidth}{l X c X c}
-\toprule
-Component & Failure Mode (Non-collision) & Failure Prob (Non-collision) & Failure Mode (Collision) & Failure Prob (Collision) \\
-\midrule
-Electric Motor & Overheating Bearing wear & 0.001 & Impact-induced damage & 0.005 \\
-Controller (VCU) & Overcurrent Firmware & 0.003 & Shock Connection fault & 0.008 \\
-Inverter & Overheating IGBT failure & 0.002 & Impact-induced electrical fault & 0.01 \\
-Drive Shaft & Wear Fatigue & 0.01 & Impact bending & 0.1 \\
-Sprocket & Wear & 0.02 & Impact break & 0.2 \\
-Chain & Fatigue Elongation & 0.02 & Impact failure & 0.2 \\
-Differential & Gear Bearing wear & 0.002 & Impact-induced internal damage & 0.01 \\
-Power Wiring & Loose Connector failure & 0.02 & Impact disconnection & 0.05 \\
-\bottomrule
-\end{tabularx}
-\end{table}
 
 \subsection{Risk Classification}
 
