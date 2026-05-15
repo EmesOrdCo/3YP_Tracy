@@ -1403,18 +1403,9 @@ This chapter presents the accumulator design for the FS vehicle. Objectives are 
 
 The chapter is structured as follows: Section~\ref{sec:technology_selection} covers technology selection; Section~\ref{sec:electrical_system_design} covers electrical design; Section~\ref{sec:mechanical_design_packaging} covers mechanical packaging; Section~\ref{sec:results_discussion} presents results; and Section~\ref{sec:future_improvements_conclusion} outlines future work and concludes.
 
-\subsection{Project Scope}
-The design encompasses the following scope:
-\begin{itemize}
-    \item Technology and cell selection for an acceleration-only duty cycle.
-    \item Electrical architecture at pack and segment level.
-    \item FS-required in-casing electrical safety measures.
-    \item AMS slave-to-master monitoring architecture and master interface to the vehicle ECU.
-    \item Mechanical packaging of segment modules and accumulator container layout.
-    \item Analytical verification against requirements and comparison with alternatives.
-\end{itemize}
+This chapter covers technology and cell selection for an acceleration-only duty cycle; electrical architecture at pack and segment level; in-casing electrical safety measures required by the Formula Student rules; the AMS slave-to-master monitoring architecture and its interface to the vehicle ECU; mechanical packaging of segment modules and accumulator container layout; and analytical verification against requirements and key alternatives.
 
-The following items are treated as out of scope for detailed derivation in this document and are stated as future or external work: all safety and charging systems outside the accumulator casing, full AMS firmware implementation, full manufacturing process planning, exhaustive scrutineering documentation, and complete physical test campaign data.
+Safety and charging systems outside the accumulator casing, full AMS firmware implementation, detailed manufacturing process planning, exhaustive scrutineering documentation, and complete physical test campaign data are treated as out of scope.
 
 \section{Technology Selection}
 \label{sec:technology_selection}
@@ -1423,7 +1414,7 @@ The following items are treated as out of scope for detailed derivation in this 
 Due to the nature of the acceleration-only event, the primary design driver is peak power delivery rather than total energy capacity. This shifts the focus towards technologies with high power density.
 
 To compare energy storage technologies, the following criteria were defined: (1) power output, (2) total energy capacity, and (3) a combined optimisation objective covering mass, volume, cost, and procurement risk.
-FS rules limit TS power at the TSAC outlet to 80 kW (FS-EV~2.2.1). Power is treated as constant as a conservative estimate, assuming traction-limited periods are brief relative to total run time. Event duration is set to \SI{4}{\second}, based on top Formula Student performances of \SI{3.5}{\second}.
+FS rules limit TS power at the TSAC outlet to 80 kW (FS-EV~2.2.1). Power is treated as constant for an initial conservative energy estimate, assuming traction-limited periods are brief relative to total run time. Event duration is set to \SI{4}{\second}, based on top Formula Student performances of \SI{3.5}{\second}.
 
 The required energy capacity is calculated as:
 \vspace{6pt}
@@ -1476,7 +1467,7 @@ Using this metric, asymmetric / hybrid supercapacitors are best; however, they a
 \label{subsec:supercapacitor_analysis}
 
 Supercapacitors are treated as the primary candidate, with lithium-polymer cells used as a benchmark. Electric Double Layer Capacitor (EDLC) devices are selected within the symmetric supercapacitor class due to relatively high energy capacity. Energy for capacitors is given by:
-\vspace{6pt}
+\vspace{3pt}
 \begin{equation}
 E=\frac{1}{2}CV^2 = \frac{1}{2} C (V_{max}^2-V_{min}^2)
 \label{eq:capacitor_energy}
@@ -1485,26 +1476,25 @@ E=\frac{1}{2}CV^2 = \frac{1}{2} C (V_{max}^2-V_{min}^2)
 where $E$ is energy (J), $C$ is capacitance (F), and $V$ is voltage (V).
 
 From Equation \eqref{eq:capacitor_energy}, voltage sag significantly affects usable energy capacity, necessitating careful consideration of voltage ranges. The upper limit is set by FS-EV maximum voltage regulation (600\,V per FS-EV~4.1.1), while the lower limit is determined by inverter and motor minimum operating requirements. The powertrain operating strategy in Section~\ref{subsec:powertrain_motor_operation} indicates the motor can be controlled under the power cap with an effective operating voltage on the order of \SI{350}{\volt}, so \SI{400}{\volt} is adopted here as a conservative design minimum.
-
-\vspace{6pt}
+\vspace{3pt}
 \begin{equation}
 C=\frac{2 E}{V_{max}^2-V_{min}^2}=\frac{2 \cdot 320\text{ kJ}}{600\text{ V}^2-400\text{ V}^2}=3.2\text{ F}
 \label{eq:required_capacitance}
 \end{equation}
 
 To achieve the required capacitance of 3.2 F at 600 V, cells are connected in series. The general relation for non-identical cells reduces to the equally rated case as:
-\vspace{6pt}
+\vspace{3pt}
 \begin{equation}
 \frac{1}{C_{total}} = \sum_{i=1}^{n} \frac{1}{C_{i}}\;\Rightarrow\;C_{series}=\frac{C_{i}}{n}
 \label{eq:series_capacitance}
 \end{equation}
 
-Where \(C_i\) is the individual cell capacitance, and n is the number of cells in series.
+where \(C_i\) is the individual cell capacitance, and n is the number of cells in series.
 
 For the design specification, assuming a cell voltage of 3 V, 200 cells are required in series to reach 600 V. To achieve the required capacitance of 3.2 F, cells must provide 640 F capacitance.
 
 Another key parameter is the Equivalent Series Resistance (ESR), which becomes an important consideration for series-connected supercapacitor cells. The voltage evolution during constant-power discharge is modelled via the following first-order differential equation:
-\vspace{6pt}
+\vspace{3pt}
 \begin{equation}
 \frac{dV}{dt} = -\frac{P}{C \cdot V} - \frac{P^2 \cdot R_{total}}{C \cdot V^3}
 \label{eq:pack_voltage_dynamics}
@@ -1542,19 +1532,19 @@ Figure \ref{fig:supercap_discharge} shows the voltage and current evolution duri
 
 \subsection{Tolerance Analysis}
 
-The supercapacitor datasheet gives a capacitance tolerance of +0--20\% (typically +5--10\%). This tolerance dominates electrical spread and therefore defines the binning benefit analysis.
+The supercapacitor datasheet gives a capacitance tolerance of +0--20\% (typically +5--10\%). This tolerance dominates cell-to-cell capacitance mismatch in a series string, which drives the required passive balancing duty; binning can reduce mismatch and therefore reduce balancing demand (see Section~\ref{subsec:electrical_design}).
 
 Cells are supplied in packs of 90, requiring purchase of three packs and selection of the best 200 cells. For this event, selection is simplified to maximising capacitance rather than minimising variance because balancing heat is not expected to be the limiting factor.
 
 The cell capacitances are modelled using a beta distribution:
-\vspace{6pt}
+\vspace{3pt}
 \begin{equation*}
 T = 0.2*Beta(\alpha = 3, \beta = 5)
 \end{equation*}
 
 Selecting the highest cells, the expected accumulator capacitance is calculated using Equation~\eqref{eq:series_capacitance}.
 
-Performing this Monte Carlo binning simulation to find average mean total capacitance and capacitance range, we obtain the following improvements to our initial model:
+Performing this Monte Carlo binning simulation to find average mean total capacitance and capacitance range gives the improvements summarised in Table~\ref{tab:capacitance_binning_results}.
 
 \begin{table}[htbp]
     \centering
@@ -1611,7 +1601,7 @@ The two remaining candidates (EDLC and LiPo) are compared on mass, volume, cost,
 Two different methodologies are used to estimate mass and volume for the two technologies. For LiPo, the top-down BatPac simulation tool \cite{batpac2022manual} determines a mass-sensitive pack design. Inputs characterise both the FS regulations and the acceleration focus whilst retaining physical accuracy. An asterisk is placed next to mass in the table, as this is not total mass (which cannot yet be determined) but the sum of cell mass and other technology-specific masses. For LiPo this includes heavier pack hardware and thermal management, whilst for SC only lighter pack hardware weight is included. The supercapacitor cell mass and volume are calculated using a bottom-up approach based on the selected cell (SC1) specifications \cite{sech-c46w-3r0-0600}. Whilst LiPo pouch cells can be more tightly packed than cylindrical SC cells, they require more mechanical support, so cell volume is an accurate relative indicator of total volume for this comparison.
 
 A weighted scoring system is applied using the following formulation:
-\vspace{6pt}
+\vspace{3pt}
 \begin{equation*}
 \text{Score} = \frac{\text{Best Value in Category}}{\text{Component Value}} \cdot \text{Weight}
 \end{equation*}
@@ -1625,7 +1615,7 @@ Whilst LiPo is advantageous in our weighted scoring analysis, it does not consid
 
 \subsection{System Architecture Overview}
 
-Figure~\ref{fig:electronics_architecture} shows the top-level accumulator architecture. This section is structured from power-path implementation to supervisory control: busbar design, safety design, monitoring and control, and finally system integration. The architecture consists of five high-voltage (HV) segments, each monitored by AMS slaves (MC33771), communicating with the AMS master (FRDM33664BEVB) via the MC33664 TPL interface \cite{nxp-mc33771-ds}. The low-voltage (LV) control domain interfaces to the vehicle ECU (STM32 Nucleo-F4 \cite{stm32-nucleo-f4}) over CAN, using the SN65HVD230 transceiver \cite{ti-sn65hvd230-ds}. Additional key components include Bussmann 170M1759 fusing at inter-segment \cite{eaton-bussmann-170m1759-ds}, and an EarthX ETX12A 12 V supply battery \cite{earthx-etx12a-ds}. External charging and vehicle shutdown-chain implementation are outside the scope of this section.
+Figure~\ref{fig:electronics_architecture} shows the top-level accumulator architecture. This section is structured from power-path implementation to supervisory control: busbar design, safety design, monitoring and control, and finally system integration. The architecture consists of five high-voltage (HV) segments, each monitored by AMS slaves (MC33771 \cite{nxp-mc33771-ds}), communicating with the AMS master (FRDM33664BEVB \cite{nxp-frdm33664bevb-ug}) via the MC33664 TPL interface \cite{nxp-mc33664-ds}. The low-voltage (LV) control domain interfaces to the vehicle ECU (STM32 Nucleo-F4 \cite{stm32-nucleo-f4}) over CAN, using the SN65HVD230 transceiver \cite{ti-sn65hvd230-ds}. Additional key components include Bussmann 170M1759 fusing at inter-segment \cite{eaton-bussmann-170m1759-ds}, and an EarthX ETX12A 12 V supply battery \cite{earthx-etx12a-ds}. External charging and vehicle shutdown-chain implementation are outside the scope of this section.
 
 \begin{figure}[!htbp]
     \centering
@@ -1639,7 +1629,7 @@ Figure~\ref{fig:electronics_architecture} shows the top-level accumulator archit
 Supercapacitors are connected via busbars rather than direct cell-to-cell welding for thermal expansion management and assembly accessibility. Busbar material selection minimises $\rho_{e} \cdot \rho_{m}$, where $\rho_{e}$ is electrical resistivity and $\rho_{m}$ is mass density. Although copper exhibits superior electrical performance, aluminium 1005 was specified for compatibility with aluminium cell terminals.
 
 Busbar connection area is matched to the terminal diameter, $d_{t}$, with average busbar length $L$ and target resistance per connection, $R$. The required thickness is calculated as:
-\vspace{6pt}
+\vspace{3pt}
 \begin{equation*}
 t = \frac{\rho_{e} L}{R d_{t}} = \frac{\left(2.8 \times 10^{-8}\,\Omega\,\text{m}\right)\left(50 \times 10^{-3}\,\text{m}\right)}{\left(0.1 \times 10^{-3}\,\Omega\right)\left(10 \times 10^{-3}\,\text{m}\right)} = 1.41\,\text{mm} \approx 1.45\,\text{mm} \text{ (standard 15 gauge)}
 \end{equation*}
@@ -1721,7 +1711,7 @@ The electrical requirement of 200 series-connected cells necessitates segmentati
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{figures/renders/segment.png}
+    \includegraphics[width=0.9\textwidth]{figures/renders/segment.png}
     \caption{Accumulator segment design without enclosure and busbar connections.}
     \label{fig:main_segment}
 \end{figure}
@@ -1738,7 +1728,7 @@ Fuses are mounted to the casing and their exact position varies by segment becau
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/renders/main4.png}
+    \includegraphics[width=1\textwidth]{figures/renders/main4.png}
     \caption{Accumulator design with lid removed for visibility.}
     \label{fig:main_accumulator}
 \end{figure}
@@ -3077,7 +3067,7 @@ This integrates the Chapter 6 customer logic with the market-access logic: CAM t
 
 Finally, the TaaS model aligns sustainability with commercial incentives. As a Use/Result-Oriented Product-Service System (PSS), it aggregates demand, reduces redundant OEM fleet manufacturing, and (through retained ownership) incentivises 9R circular practices. Sustainability is delivered through lifecycle extension, remanufacturing loops, and recyclable Expanded Polypropylene (EPP) sacrificial shells that reduce embodied carbon.
 
-The strategic through-line of this report is that UK autonomous vehicle developers face a simulation-to-reality validation gap: existing solutions are either too virtual, too slow to reconfigure, or too capital-intensive for repeated edge-case testing. The AEB Rabbit addresses this gap by offering high-dynamics physical validation as a Testing-as-a-Service (TaaS) platform embedded within UK CAM testbeds. This strategy creates value for AV developers, testbed operators, insurers, regulators, and the enterprise itself, but only if three conditions are met: testbed acceptance, credible safety evidence, and sufficient utilisation to justify the asset-heavy service model.
+\noindent\textbf{Strategic through-line:} UK autonomous vehicle developers need repeatable physical edge-case validation without owning and maintaining target fleets. Embedding the AEB Rabbit as a Testing-as-a-Service (TaaS) platform within UK CAM testbeds creates value for AV developers, testbed operators, insurers, regulators, and the enterprise itself, but only if three conditions are met: testbed acceptance, credible safety evidence, and sufficient utilisation to justify the asset-heavy service model.
 
 At prototype stage, the enterprise should not claim full certification or compliance. Instead, the strategic objective is to design the platform, data architecture, and operating procedures with reference to relevant PAS frameworks so that future commercial trials can progress toward formal acceptance.
 
@@ -3103,7 +3093,7 @@ The system provides physical ground-truth to validate UK investments in virtual 
 
 There is precedent for grant-funded test-target procurement within CAM Testbed UK. For example, a recent £5.8M project at the Culham Science Centre funded a motorised pedestrian dummy to expand safety test options \cite[p.~2]{culham_2024}. Our TaaS model extends this logic to an unaddressed gap: highly dynamic, high-mass vehicular targets.
 
-The UK is therefore not selected simply because the project is UK-based. It is selected because it combines policy support, CAM-specific test infrastructure, emerging automated vehicle legislation, BSI PAS safety frameworks, insurance and liability stakeholders, and public funding into a concentrated adoption ecosystem. Larger international markets may offer greater long-term scale, but the UK provides a lower-friction first market in which the enterprise can generate evidence, secure testbed credibility, and build regulatory legitimacy before expansion.
+The UK is selected as the initial beachhead because it concentrates CAM testbed infrastructure, active policy and legislative momentum, and PAS-aligned safety governance, enabling rapid piloting and credible evidence generation. While larger markets may offer greater long-term scale, the UK provides a lower-friction first market to secure testbed credibility and build regulatory legitimacy before expansion.
 
 \noindent\textbf{Implication:} the UK CAM ecosystem makes testbeds the most logical initial route to market, because they concentrate the infrastructure, customers, regulators, and safety expectations needed to prove the service.
 
@@ -3115,7 +3105,7 @@ Rather than forcing end-users into capital-intensive (CAPEX) hardware purchases,
 
 \subsection{Hardware Specialisation: The "Sprint" Advantage}
 
-This TaaS strategy is enabled by the mechanical profile of the adapted Formula Student (FS) architecture. The AEB Rabbit is designed for short, high-power manoeuvres rather than long duty cycles (Section~\ref{sec:final_run}).
+This TaaS strategy is enabled by the mechanical profile of the adapted Formula Student (FS) architecture. The AEB Rabbit is designed for short, high-power manoeuvres rather than long duty cycles (Figure~\ref{tab:optim_result}).
 
 While this profile would limit direct ownership use-cases, it matches the envelope required to simulate extreme dynamic edge cases. In the TaaS model, customers buy the validated data from a "panic" manoeuvre while the enterprise manages duty-cycle constraints using the accumulator's repeatable short-duty-cycle power delivery (Figure~\ref{fig:supercap_discharge}).
 
@@ -3131,16 +3121,16 @@ The platform uses a modular architecture to support rapid trackside recovery. St
 
 \noindent\textbf{Implication:} TaaS converts the AEB Rabbit's short-duty-cycle sprint capability from a hardware limitation into a service advantage, because customers buy validated panic-manoeuvre evidence rather than vehicle ownership.
 
-Building on the customer-segmentation and product-market fit analysis in Section~\ref{sec:target_market_selection} and the customer personas in Section~\ref{sec:personas}, this chapter focuses on a different question: which stakeholders control adoption, legitimacy, and market access?
-
 \section{Stakeholder Salience Identification}
+
+Building on the customer-segmentation and product-market fit analysis in Section~\ref{sec:target_market_selection} and the customer personas in Section~\ref{sec:personas}, this chapter focuses on a different question: which stakeholders control adoption, legitimacy, and market access?
 
 \subsection{Introduction to the model}
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.5\textwidth]{figures/StakeholderVennDiagram.png}
-\caption{Redrawn Stakeholder Typology from Mitchell Stakeholder Salience Model \cite{mitchell_1997}}
+\includegraphics[width=0.6\textwidth]{figures/StakeholderVennDiagram.png}
+\caption{Redrawn Stakeholder Typology from Mitchell Stakeholder Salience Model \cite{mitchell_1997} applied to the CAM testing ecosystem.}
 \label{fig:stakeholder_salience_typology}
 \end{figure}
 
@@ -3315,7 +3305,7 @@ At the macro-business level, the TaaS model is a Result-Oriented Product-Service
 \subsection{The 9R Framework Application}
 \label{sec:9r_framework_application}
 
-To achieve absolute alignment between environmental sustainability and commercial efficiency, the enterprise governs its lifecycle strategy through the 9R Circular Economy Framework \cite[p.~5]{potting_2017}. Because asset ownership is retained under the TaaS model, we are financially incentivised to maximise hardware lifespan. At the macro-level, this overarching Product-Service System (PSS) successfully executes the framework's highest tiers-Smarter product use and manufacture (R0-R2)-by refusing redundant OEM manufacturing and reducing overall material extraction across the industry.
+To achieve absolute alignment between environmental sustainability and commercial efficiency, the enterprise governs its lifecycle strategy through the 9R Circular Economy Framework \cite[p.~5]{potting_2017}. Because asset ownership is retained under the TaaS model, we are financially incentivised to maximise hardware lifespan. At the macro-level, this overarching Product-Service System (PSS) successfully executes the framework's highest tiers: Smarter product use and manufacture (R0-R2) by refusing redundant OEM manufacturing and reducing overall material extraction across the industry.
 
 However, at the micro-level, we face a critical engineering constraint: the reliance on the foundational Formula Student (FS) vehicle architecture. Because the base chassis and drivetrain materials are predetermined by this inherited design, the enterprise cannot optimise the platform's initial embodied carbon. To counter this, we deploy a modular hardware strategy designed to keep inherited materials at their highest utility despite the intense mechanical stress and frequent collisions of track testing. Consequently, our hardware management is categorised across three core subsystems, mapping directly to the framework's subsequent mandates to Extend lifespan (R3-R7) and ensure the Useful application of materials (R8-R9):
 
@@ -3700,8 +3690,10 @@ This differentiated approach allows the system to balance responsiveness and inv
 Overall, the supply chain can be characterised as a centralised, agile, and failure-driven system, where decisions are adapted to uncertainties associated with different components. And the strategy reflects a strong alignment between system requirements and supply chain design, ensuring that operational continuity is maintained under uncertain conditions.
 
 \section{Supply Chain Planning}
+\label{sec:supply_chain_planning}
 
 \subsection{Planning Framework}%**
+\label{subsec:supply_chain_planning_framework}
 
 Given the operational nature of the system, supply chain planning is driven by the objective of maximising system availability through effective management of failure risk.
 
