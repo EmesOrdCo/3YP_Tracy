@@ -267,7 +267,7 @@ def main():
     # Run battery simulation
     print("\n1. Running BATTERY simulation...")
     try:
-        battery_results = run_simulation('base_vehicle')
+        battery_results = run_simulation('battery_vehicle')
         print(f"   ✓ Completed in {battery_results['final_time']:.4f}s")
     except Exception as e:
         print(f"   ✗ Error: {e}")
@@ -291,7 +291,7 @@ def main():
     
     # Run wet (battery vs supercap, same 6-panel layout)
     print("\n3. Running WET (surface_mu_scaling=0.6)...")
-    battery_wet = run_simulation('base_vehicle', surface_mu_scaling=0.6)
+    battery_wet = run_simulation('battery_vehicle', surface_mu_scaling=0.6)
     supercap_wet = run_simulation('supercapacitor_vehicle', surface_mu_scaling=0.6)
     print(f"   Battery: {battery_wet['final_time']:.4f}s, Supercap: {supercap_wet['final_time']:.4f}s")
     save_path_wet = package_root / 'figures' / 'energy_storage_comparison_wet.png'

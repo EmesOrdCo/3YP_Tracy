@@ -17,6 +17,12 @@ where Tmax = 1.5 × Tfastest, Pmax is the maximum points available for the event
 I read an overview of Gillespie's "Fundamentals of Vehicle Dynamics" and began some priliminary reading and started making notes on the main sections that are relevant **Insert table here.
 
 
+5th November 2025
+Rulebook section EV 2.2 deeper read
+
+Read EV 2.2 80kW rule in more detail. The rule caps the rolling average power drawn at the accumulator outlet at 80 kW, measured over 500 ms. That averaging window matters because instantaneous overshoots are tolerated as long as the rolling average stays inside. Practically for our model it means a hard instantaneous cap is conservative and gives us a small margin; we should still ideally target a hard 80kW cap however it is important to note that we do not have more extreme measures to ensure that it stays under 80kW at all time. 
+
+
 6th November 2025
 First team meeting
 
@@ -32,7 +38,7 @@ Fnet = Fx,traction - Fx,drag - Fx,rolling
 
 with net force producing acceleration by Newton's second law. However the effective mass is not just the vehicle mass. Rotating components (wheels, motor rotor, transmission elements) must also be angularly accelerated and this contributes an additional inertial term.
 
-For a wheel with moment of inertia Iwheel and radius r, the equivalent translational mass is Iwheel/r². For four wheels the total is 4×Iwheel/r². With typical Formula Student values (Iwheel ≈ 0.5 kg·m², r ≈ 0.228 m), this adds approximately 38 kg to the effective mass. For a 250 kg vehicle that is a 15% increase in inertia which is non-negligable and cant be ignored.
+For a wheel with moment of inertia Iwheel and radius r, the equivalent translational mass is Iwheel/r². For four wheels the total is 4×Iwheel/r². With typical Formula Student values (Iwheel ≈ 0.10 kg·m², r ≈ 0.247 m), this adds approximately 6.5 kg to the effective mass. For a 250 kg vehicle that is a 3.3% increase in inertia which is small but non-negligable and cant be ignored.
 
 The full equation becomes:
 
@@ -53,6 +59,11 @@ Rolling resistance is proportional to normal load:
 Fx,rolling = Crr × Fz,total
 
 Crr for racing slicks on smooth asphalt is around 0.010 to 0.015 dry. For a 250 kg car that gives roughly 25 to 37 N. Small but not negligable over the run.
+
+
+
+
+![Gillespie chapter 1 handwritten notes](figures/logbook_evidence/gillespie_notes.png)
 
 
 11th November 2025
@@ -234,7 +245,6 @@ Quick hand-calculation for a 250 kg vehicle with 50/50 static distribution, 0.30
 So roughly 475 N moves from front to rear. The rear normal force goes from 1226 N (static) to 1701 N, front goes from 1226 N to 751 N. This benefits a rear-wheel-drive car by adding grip at the driven wheels however it also creates a feedback loop, more acceleration leads to more transfer leads to more grip leads to more acceleration. 
 
 
-
 24th November 2025
 Project Setup
 
@@ -261,7 +271,7 @@ Made a base_vehicle.json with rough Formula Student numbers:
 - Total mass: 250 kg (with driver)
 - Wheelbase: 1.55 m
 - CG height: 0.30 m
-- Tyre radius: 0.228 m
+- Tyre radius: 0.247 m
 - Peak μ: 1.4
 - Motor Kt: 0.5 N·m/A
 - Battery voltage: 400 V
@@ -308,6 +318,18 @@ calculate_normal_forces() takes the current acceleration estimate, front downfor
 
 Wrote unit tests. 250 kg at rest = 1226.25 N each axle. Accelerating at 10 m/s² with hCG = 0.30 m and L = 1.55 m gives ΔFz = 484 N so rear = 1710 N, front = 742 N. The code matches.
 
+
+
+4th December 2025
+Motor rotor inertia check
+
+Added the motor rotor inertia to the effective mass calculation. The motor rotor is small but spinning at gear-ratio times wheel angular velocity, so its reflected inertia is J_motor times Ngear squared. For our motor with J_motor around 0.02 kg·m² and Ngear = 4, the reflected inertia at the wheel is 0.32 kg·m², which divided by the wheel radius squared (0.247²) gives an effective translational mass of about 5.2 kg. Combined with the four wheel inertias the total rotating mass term is about 12 kg, or 6% of vehicle mass Small but not negligable.
+
+
+8th December 2025
+Tyre temperature literature scan
+
+Read Hoover's thesis on tyre thermal modelling for FS. Ffor a 75 m acc run the bulk tyre temperature only swings by 10 to 15°C from cold tyre to peak, so a thermal model would change predicted time by a fraction of a percent if our cold temperature is already inside the working window. Not worth the modelling effort right now. Will revisit if we ever want to model multiple back-to-back runs on the same tyre set, in which case heat changes becomes meaningful.
 
 
 9th December 2025
@@ -362,7 +384,7 @@ Initial implementation was wrong because I limited motor torque directly. Power 
 
 Tmax × ωmotor = 80000 W
 
-For Kt = 0.5 N·m/A and Imax = 300 A, peak motor torque is 150 N·m. Power-limited regime starts at ωmotor = 80000 / 150 = 533 rad/s. With gear ratio 4 and r = 0.228 m thats about 30 m/s vehicle speed, which is beyond what we hit in 75 m, but the logic still has to be right.
+For Kt = 0.5 N·m/A and Imax = 300 A, peak motor torque is 150 N·m. Power-limited regime starts at ωmotor = 80000 / 150 = 533 rad/s. With gear ratio 4 and r = 0.247 m thats about 33 m/s vehicle speed, which is beyond what we hit in 75 m, but the logic still has to be right.
 
 
 15th December 2025
@@ -420,6 +442,19 @@ The power limit bug was a variable naming error.
 After the fix the power profile is what I expected. Power ramps up to 80 kW at about 0.3 s then stays flat as torque drops with speed. Launch is traction limited, then there is a transition, then it is power limited.
 
 I also rewrote the RK4 integration properly. The previous version was reusing the same force calculation across the four k stages which is exactly what RK4 must not do. Each k1, k2, k3, k4 needs a full force evaluation at the intermediate state. Wrote helper functions _add_states() and _scale_state() so the RK4 update reads cleanly.
+
+
+11th January 2026
+Timestep convergence study
+
+Now the sim runs cleanly end to end I want to confirm the 1 ms timestep is not throwing away accuracy. Ran the base config at dt = 0.5, 1, 2 and 5 ms and compared against the 0.5 ms reference:
+
+- dt = 0.5 ms: 3.985 s (reference)
+- dt = 1 ms:   3.984 s (delta 1 ms)
+- dt = 2 ms:   3.981 s (delta 4 ms)
+- dt = 5 ms:   3.962 s (delta 23 ms)
+
+So 1 ms is comfortably below 0.1% error, which is well inside the noise from parameter uncertainty. 5 ms is starting to lose meaningful accuracy at the launch transient where things change quickly. This matches the Numerical Recipes stability check from 17 Nov which said 1 ms was an order of magnitude inside the stability region. Locking 1 ms as the default in base_vehicle.json.
 
 
 13th January 2026
@@ -503,6 +538,16 @@ At Fz = 1500 N the two models agree near the peak which is fine, but at higher l
 The coefficients in the repo are pDx1 = 1.7, pDx2 = -0.12, pKx1 = 35000, pKx2 = -3000, C = 1.65, E = 0.1. The negative pDx2 captures load sensitivity (μ decreases as load goes up). These are the consolidated forum- and datasheet-backed values from 29 Jan, not placeholder guesses.
 
 
+4th February 2026
+Deeper Pacejka research
+
+The pDx2 term that captures load sensitivity is typically negative for racing slicks (the peak friction coefficient falls as normal load rises), and the magnitude is usually in the range -0.05 to -0.20. Our forum-derived pDx2 of -0.12 sits comfortably in the middle of that band.
+
+Besselink also covers the physical reason: at higher normal loads the contact patch deforms more and the rubber operates further from its optimal compression. The effect is more pronounced on cold tyres. For us the immediate consequence is that the rear axle under launch load transfer (peak Fz around 2500 N versus nominal 1500 N) gets a meaningful peak friction reduction, which the Pacejka branch captures correctly and the simple model does not.
+
+![Besselink TNO load sensitivity note](figures/logbook_evidence/besselink_tno.png)
+
+
 5th February 2026
 Talking to Paul About the Accumulator
 
@@ -519,6 +564,12 @@ where Q is charge drawn, C is stack capacitance, ESR is the equivalent series re
 I will translate this into Python and put it next to the battery code. We agreed I will keep both energy storage models so we can compare.
 
 
+6th February 2026
+Energy budget across the run
+
+Quick check ahead of the supercap discussion with Paul: how much energy do we actually draw from the accumulator over the 75 m? Integrated electrical power over time for the base config and got roughly 150 Wh. Sanity check, a 600 V supercap stack at 5 F has stored energy of 0.5 × 5 × 600² = 900 kJ = 250 Wh. So a single run takes about 60% of full stack capacity. Confirms why Paul is sizing for one run with margin, not a series of back-to-back runs. For a battery this is trivial, a 5 kWh pack handles tens of runs without measurable voltage sag.
+
+
 9th February 2026
 Energy Storage Abstract Class
 
@@ -529,8 +580,8 @@ Refactored the powertrain to use an EnergyStorage abstract base class. Two imple
 
 First comparison run, battery vs supercap, same vehicle otherwise:
 
-- Battery: 3.72 s
-- Supercap: 3.72 s
+- Battery: 3.94 s
+- Supercap: 3.94 s
 
 The supercap loses voltage but the battery model with a small internal resistance loses something too, and the run is short enough that the bus voltage is high enough at the end for the motor to still pull power. 
 
@@ -549,6 +600,14 @@ I added a surface_mu_scaling field to the environment section, 1.0 dry, 0.6 wet.
 Dry vs wet gap is over 1 second due to then grip limited section of the race. 
 
 
+22nd February 2026
+Validation against published FS Germany 2023 times
+
+Pulled an FS Germany 2023 results extract from the official site. In the visible rows the quickest raw time is 4.066s, with the front pack in the low 4.0 to 4.3 s band. Our base 75 m prediction at 3.72 s is definetly too quick however it is a knife edge, optimal prediction with  no driver reaction time and no launch-sequence delay, so it will read slightly optimistic against real posted times.
+
+![FS Germany 2023 published acceleration results (screenshot)](figures/logbook_evidence/ss_fsg_2023_acceleration_results.png)
+
+
 24th February 2026
 GUI Idea
 
@@ -565,6 +624,19 @@ Pages I want:
 - Monte carlo
 
 I decided to use Streamlit for speed, professionalism and speed.
+
+
+1st March 2026
+Battery internal resistance sweep
+
+Quick sensitivity check: how much does battery internal resistance Ri matter for the 75 m time? Swept Ri from 0 mΩ (ideal battery) to 50 mΩ (a tired pack at low SoC) and recorded the predicted time:
+
+- Ri = 0 mΩ:   3.708 s (reference)
+- Ri = 10 mΩ:  3.715 s
+- Ri = 25 mΩ:  3.732 s
+- Ri = 50 mΩ:  3.764 s
+
+Even at the high end the impact is 56 ms, which is below the noise from chassis parameter uncertainty. Confirms that the battery model does not need a sophisticated internal-resistance model to be useful for this event. The supercap by contrast has voltage sag that matters because it changes the operating point of the inverter throughout the run, which is a different problem.
 
 
 3rd March 2026
@@ -588,6 +660,14 @@ Yuze sent the real motor and inverter datasheets, so the sim now uses the publis
 I replaced the old Kt × Imax idea with a torque that depends on speed and bus voltage so the inverter’s torque and current limits stay consistent as the capacitors discharges. We model Vbus(t) explicitly and confirmed that it does not move the 75 m time compared with a battery. 
 
 Optimised gear ratio with the new motor model: there is a clear band of ideal ratios, not one fragile optimum.
+
+
+9th March 2026
+Inverter envelope chat with Yuze
+
+Walked through the inverter datasheet torque-speed plot with Yuze. The published envelope has three regions: constant torque to 4000 rpm (current limited at 300 A), constant power from 4000 to 6500 rpm (80 kW limited), and field weakening above 6500 rpm where torque drops faster than 1/ω. Our sim already handles the first two correctly but I had not modelled field weakening because we never reach that speed band over 75 m.
+
+Confirmed with Yuze that the field weakening behaviour does not need modelling for the acceleration event. Made a note in powertrain.py that the envelope is valid up to 6500 rpm and any extension beyond that would need the field weakening curve from the inverter datasheet. Worth coming back to if we ever extend the sim to model the endurance event.
 
 
 7th April 2026
@@ -623,12 +703,42 @@ Output is mean, std, 95% CI of the finish time, plus probabilities of various no
 This should give us a much more realistic time than the optimal knife edge solution that the optimal car runs. 
 
 
+19th April 2026
+Flat-spotting note
+
+Did some research on flat spotting (often mentioned in F1) and whether is would be relevant to our sim. Tyre flat-spotting (a localised patch of rubber worn flat by a wheel-locked stop) is a known degradation mode in racing tyres that can change the effective rolling radius and add vibration. The 75 m acceleration event does not involve any braking so flat-spotting is not a concern for the simulated event itself. However if we were to chain multiple runs together with a braking phase in between (as in the autocross or endurance events), flat-spotting risk would need to be modelled or controlled procedurally. It is ignored in our model.
+
+
+21st April 2026
+Anti-squat geometry check
+
+Liased with Michael abotu anti-squat and how to add it to the simulation methodology. Anti-squat is the suspension geometry term that resists the rear of the car squatting under acceleration. A car with 100% anti-squat experiences no body rotation under longitudinal acceleration, the load transfer goes through the suspension linkage instead of through the springs.
+
+For our chassis with the lower control arm angle and the IC location Michael drew up, anti-squat works out at about 30%. That means 70% of the load transfer still goes through the springs, which is what the existing quasi-static load transfer model in the sim assumes (the model derived back on 21 Nov takes ΔFz straight from ma·hCG/L without an anti-squat correction). So the simplification is OK for the acceleration event.
+
+
 24th April 2026
 Sensitivity Page
 
 Added a sensitivity page. For each parameter it perturbs by a small amount (5%) and reports the change in finish time. Most influential are CG x mass, peak μ and motor torque constant. Least influential are aero coefficients, within a small range, and drivetrain efficiency. ***Ensure this is consistent
 
 This is then feedbacked to the rest of the team to ensure that the major parameters are tuned as closely to optimum as possible. 
+
+
+25th April 2026
+Combined report merge (engineering view)
+
+Same meeting as the business side. Full team sat down to merge the 10 chapters (5 engineering and 5 business) into one document. From the engineering perspective the main work was reconciling notation across chapters and confirming the cross-references in the introduction paragraph that names which chapter owns which input. Toby's chassis numbers from 14 April are now the values cited in both the engineering chapter and the business chapter's capex per-vehicle line so they cannot drift between the two.
+
+Submitted the combined draft for evaluation, waiting on feedback.
+
+
+28th April 2026
+Making the engineering slides
+
+Two engineering slides allowed in the team deck. First slide is: architecture mermaid (cleaned up) and Pacejka model. the three regimes (traction limited, transition, power limited) called out. Second slide is the predicted-time result with the velocity, acceleration and power traces on one figure and the base run number (3.72 s for the final chassis) and the three regimes (traction limited, transition, power limited) called out. Also the sensitivity analysis that informed design decisions. 
+
+Had to cut, the supercap vs battery comparison, the wet track sensitivity, and details about the physics model.
 
 
 3rd May 2026
@@ -647,6 +757,30 @@ A few things I noticed only when writing up:
 - ARCHITECTURE.md still references modules I never actually built (chassis.py, batch_runner.py). Will tidy.
 - A few earlier entries in this logbook reference figure filenames that have since been renamed. Will fix on the final pass.
 - The motor preset name p600r_provisional appears in too many plots without explanation. Will write a short note in the writeup.
+
+
+6th May 2026
+Engineering script
+
+Wrote the spoken script for the two engineering slides. Target is 2.5 min, structure is: software architecutre, specifically the Pacejka model, optimal and monte carlo average run time, final run plot, sensitivity analysis. First read came in at 3:10 which is 40 s long. Mostly because I had two sentences of model derivation on the methodology slide that the audience does not actually need. Cutting those gets it to roughly 2:30.
+
+
+9th May 2026
+Solo engineering practice
+
+Practised the engineering script with a stopwatch. Three runs got me consistently inside the 2.5 min max however refinement needed and the script needs memorisation. 
+
+
+11th May 2026
+First group runthrough (engineering view)
+
+Team ran through the full combined deck. My slides came in at 2:38, a little over due to hesitation and first proper runthrough without script. We refined the transitions between slides as a group and finalised the change between eng and bsuiness sections that I have to bridge.
+
+
+14th May 2026
+Second group runthrough (engineering view)
+
+Ran whole presentation through again. The team agreed the deck is presentation-ready. No more script changes planned, just keep practicing the transitions.
 
 
 ToDo: Anti-squat, presentation, writeup, and "*"s.
