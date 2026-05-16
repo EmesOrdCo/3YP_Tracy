@@ -3753,19 +3753,15 @@ This chapter has argued that the AEB test carrier should be developed through a 
 
 This part of the report examines the supply chain design of a Formula Student “rabbit” vehicle used for autonomous emergency braking (AEB) testing.
 
-The system is operated within a B2B Testing-as-a-Service (TaaS) model, where clients schedule AEB testing sessions with fixed time windows. Any supply chain failure that interrupts testing directly impacts the client's development timeline, creating reputational and contractual risks that far exceed the cost of maintaining additional spare inventory. As an early-stage service-oriented company, service reliability is therefore not merely an operational preference but a strategic necessity for establishing credibility and securing future business~\cite{startup_reputation}.
+While Section 6.1 and 6.2 establish the broader business context and value proposition, this section focuses on the operational and structural decisions required to sustain reliable service delivery.
 
-The physical system enabling this service is the Formula Student-derived "rabbit" vehicle. It was originally developed for the Formula Student acceleration event, where the objective is to achieve high acceleration over a short distance of \SI{75}{\meter}. As a result, the design is optimised for short-duration, high-performance operation, with components such as the battery sized specifically for brief usage.
+As established in Section 6.1 and 6.2, the service operates under a B2B Testing-as-a-Service (TaaS) model, in which clients schedule AEB testing sessions within fixed time windows. The physical platform enabling this service is a Formula Student-derived vehicle, adapted from its original sprint application into a repeated-cycle testing platform, retaining its core powertrain and supercapacitor accumulator architecture. Under this model, any supply chain failure that interrupts a testing session directly impacts the client's development timeline, creating reputational and contractual risks that far exceed the cost of maintaining additional spare inventory~\cite{startup_reputation}.
 
-While such characteristics differ from those required in conventional racing applications, they align well with the requirements of AEB testing, where each individual test run is short in duration and requires only brief bursts of motion. However, unlike the original racing application, AEB testing requires these short-duration operations to be repeated continuously over extended testing sessions.
+However, this shift in application fundamentally changes the operational demands placed on the vehicle. The original design was optimised for single-event, high-performance operation. AEB testing, by contrast, requires the vehicle to function as a dynamic obstacle, repeatedly crossing the path of a test vehicle across extended sessions. This sustained, repeated-cycle operation introduces a qualitatively different reliability requirement—one that the original design was not conceived to meet.
 
-In this application, the vehicle functions as a dynamic obstacle, repeatedly crossing the path of a test vehicle to evaluate detection and braking performance.
+Critically, as established in Section 7.3.3, collisions are an expected and frequent part of normal operation rather than exceptional events. Collision-induced failures therefore represent the dominant source of disruption, and the supply chain must be designed around this reality, treating collision recovery as a routine operational condition rather than a rare exception.
 
-This shift in application fundamentally changes the nature of the system. Rather than focusing on one-off performance, the vehicle must operate continuously and reliably during repeated testing cycles. The primary performance objective therefore becomes maximising system availability, driven by minimising downtime within the testing cycle. Downtime can be broadly decomposed into operational downtime, arising from routine activities such as preparation and recharge, and disruption-induced downtime, resulting from failure events primarily associated with collisions and subsequent recovery processes. While operational downtime is largely constrained by system design, disruption-induced downtime can be actively reduced through effective supply chain decisions such as spare inventory provisioning and rapid component replacement.
-
-It is important to note that, as established in Section 7.3.3, collisions are an expected and frequent part of normal operation rather than exceptional events, and collision-induced failures represent the dominant source of disruption. As a result, the supply chain must be designed primarily around collision recovery, treating collisions as an expected operational condition rather than a rare exception.
-
-Consequently, the supply chain must prioritise availability and rapid recovery, rather than minimising cost or inventory. To structure the analysis, the report is divided into three levels: supply chain strategy, planning, and operation. These represent decisions over different time horizons, where strategy focuses on long-term structure over several years, planning considers medium-term decisions over months, and operation addresses short-term execution on a daily or weekly basis~\cite{Supply_chain_lecture}.
+Consequently, the supply chain must prioritise availability and rapid recovery over cost minimisation. To structure the analysis, decisions are examined across three time horizons: strategy (long-term structural decisions), planning (medium-term decisions over months), and operation (short-term execution on a daily or weekly basis)~\cite{Supply_chain_lecture}.
 
 \section{Supply Chain Strategy}
 
@@ -3779,13 +3775,9 @@ In conventional production systems, the supply chain is designed around the manu
 
 Instead, the supply chain must support a closed-loop recovery cycle, in which the same vehicle is repeatedly tested, damaged, repaired, and returned to operation. Each collision is not the end of the process but a transition point, after which the system must be restored to operational readiness before the next test can begin. The supply chain, therefore, remains actively involved throughout the operation, rather than playing a one-off role in enabling initial deployment.
 
-This has important implications for how supply chain decisions are made. Rather than optimising for delivery speed or production cost, the key question becomes how quickly and reliably the system can recover from each disruption. Supply chain structure, sourcing strategy, operating strategy, and flow strategy are all evaluated against this criterion, rather than against conventional metrics such as unit cost or lead time minimisation.
+This has important implications for how supply chain decisions are made. Rather than optimising for delivery speed or production cost, the key question becomes how quickly and reliably the system can recover from each disruption. The following section evaluates four strategic dimensions against this recovery-oriented criterion: supply chain structure, sourcing strategy, operating strategy, and flow strategy. %13,和后面的subsec
 
-\subsection{Strategy Type}
-
-Based on the operational characteristics of the system, the supply chain is best described as a combination of multiple approaches rather than a single conventional model.
-
-\paragraph{Supply Chain Structure (Centralised vs Distributed)}%**
+\subsection{Supply Chain Structure (Centralised vs Distributed)}%**
 
 Structurally, the system is highly centralised, as all operations are concentrated around a single testing setup. This approach improves coordination efficiency, reduces duplication of inventory and resources and simplifies maintenance and recovery through the operation. 
 
@@ -3793,7 +3785,7 @@ However, centralisation also reduces geographical flexibility and may increase v
 
 In this case, however, the overall service demand is both limited and geographically concentrated in the United Kingdom. More importantly, operational throughput is constrained more by recovery capability than by customer proximity. As a result, the responsiveness benefits associated with a distributed supply chain structure would not be significant, while the additional testing facilities would introduce higher capital investment, inventory duplication and operational complexity.
 
-\paragraph{Sourcing Strategy (Outsourcing vs Vertical-integration)}%**
+\subsection{Sourcing Strategy (Outsourcing vs Vertical-integration)}%**
 
 In terms of sourcing strategy, the system adopts an outsourcing supply chain strategy rather than vertical integration. Outsourcing reduces the need to internalise specialised supply chain activities and associated capital investment. It also provides access to specialised expertise that would be difficult to develop internally at a small operational scale. This is particularly advantageous in low-volume systems, where production demand is limited and highly irregular.
 
@@ -3801,7 +3793,7 @@ However, vertical integration can also provide strategic benefits. By internalis
 
 In this case, however, the relatively small production scale means that the risks associated with external sourcing remain comparatively manageable. Many components are required only in very small quantities each year, making the investment required for extensive vertical integration difficult to justify economically. Furthermore, although outsourcing introduces some exposure to supply disruption and lead-time uncertainty, the operational impact remains acceptable within the scale of the system. As a result, outsourcing represents a more appropriate balance between operational flexibility, access to expertise, and cost efficiency under the current operating conditions.
 
-\paragraph{Operating Strategy (Lean vs Agile)}
+\subsection{Operating Strategy (Lean vs Agile)}
 
 From an operational perspective, the system aligns more closely with an agile supply chain rather than a lean one. Agile supply chains prioritise flexibility and responsiveness under uncertain operating conditions\cite{agile}, whereas lean systems focus more on efficiency, waste reduction, and highly predictable processes. In large-scale manufacturing systems such as Toyota Production Systems, lean approaches are highly effective because production demand and operational processes are typically high-volume, low-variety, and relatively predictable\cite{toyota}.
 
@@ -3827,15 +3819,15 @@ However, this system operates under a much higher level of uncertainty. As discu
     \label{fig:lean_vs_agile}
 \end{figure}
 
-\paragraph{Flow Strategy (Push vs Pull)}
+\subsection{Flow Strategy (Push vs Pull)}
 
 At the same time, the system exhibits a mixed push--pull strategy rather than relying entirely on either approach. Push-based processes are initiated in anticipation of operational demand and typically rely on advance preparation and inventory positioning. This improves responsiveness and reduces recovery delay for critical components, particularly where supplier lead times or disruption consequences are significant. In contrast, pull-based processes are triggered reactively by actual operational demand or failure events, reducing unnecessary inventory and improving resource efficiency where immediate availability is less critical.
 
 In this system, different components exhibit substantially different operational characteristics, supplier dependencies, and disruption impacts. As a result, the push--pull boundary cannot be defined uniformly across the entire system but must instead vary depending on the risk profile and recovery requirements of individual components. Components associated with higher disruption impact or longer recovery duration are managed using more push-oriented preparation, whereas lower-risk components can be managed more reactively through pull-based replenishment.
 
-This differentiated approach allows the system to balance responsiveness and inventory efficiency while allocating resources according to operational criticality. The component-level risk assessment developed in the subsequent planning analysis further supports this distinction between push- and pull-oriented strategies.
+This differentiated approach allows the system to balance responsiveness and inventory efficiency by directing preparatory resources towards operationally critical components, and constitutes a combined push–pull flow strategy in which the push–pull boundary varies across components rather than being defined uniformly. The component-level risk classification developed in Section~\ref{sec:risk_classification} determines where this boundary is drawn for each component, and directly informs the differentiated inventory management strategy presented in Section~\ref{sec:inventory_management}.
 
-\paragraph{Conclusion}
+\subsection{Conclusion}
 
 Overall, the supply chain can be characterised as a centralised, agile, and failure-driven system, where decisions are adapted to uncertainties associated with different components. And the strategy reflects a strong alignment between system requirements and supply chain design, ensuring that operational continuity is maintained under uncertain conditions.
 
@@ -3855,11 +3847,11 @@ As a result, planning decisions focus primarily on failure likelihood and recove
 
 To support the planning framework, a structured failure analysis is carried out using a simplified Failure Mode and Effects Analysis (FMEA)\cite{FMEA_lecture_notes}\cite{fmea_supplychain}.
 
-Failure likelihoods are estimated using a combination of available engineering information, including component specifications, expected lifetime data, operating limits, and engineering judgment obtained through consultation with FSUK team members. In particular, impact-related failures are assessed based on the physical characteristics of each component qualitatively, including impact exposure, structural protection, and expected mechanical loading during testing activities.
+Failure likelihoods are estimated using a combination of available engineering information, including component specifications, expected lifetime data, operating limits, and engineering judgment obtained through consultation with FSUK team members. In particular, impact-related failures are assessed based on the physical characteristics of each component qualitatively, including impact exposure, structural protection, and expected mechanical loading during testing activities. As operational data becomes available through testing, these estimates can be refined to improve the accuracy of subsequent simulation and inventory planning.
 
 The resulting failure probabilities are then used to support subsequent operational simulation and inventory planning analysis. Since consistent quantitative data is not available across all components and operating conditions, the FMEA is applied in a qualitative and semi-quantitative manner, focusing on relative differences between components rather than precise numerical prediction.
 
-A summary of the FMEA results for the powertrain components is presented in Table~\ref{tab:fmea}, illustrating how failure likelihood and recovery time combine to determine overall risk. A detailed FMEA covering other subsystems is provided in the logbook.
+A summary of the FMEA results for the powertrain components is presented in Table~\ref{tab:fmea} as a representative example, and the same framework is applied across all other subsystems.
 
 \begin{table}[H]
 \centering
@@ -3938,6 +3930,8 @@ Impact disconnection &
 \end{tabularx}
 \end{table}
 
+The results confirm that collision-induced failure probabilities are consistently one to two orders of magnitude greater than non-collision probabilities across all powertrain components, justifying the supply chain's primary focus on collision recovery over non-collision failure management.
+
 \subsection{Operational Simulation - Monte Carlo}
 
 While the FMEA provides detailed information on failure behaviour, supply chain planning additionally requires an understanding of how different components influence spare consumption and recovery responsiveness across the system.
@@ -3996,13 +3990,10 @@ Power Wiring & 3 & 0.050 & 3.89 & 0.13 & 1 \\
 
 The simulation results provide an estimate of the expected component consumption occurring during supplier lead time, representing the expected spare demand before replenishment can be completed.
 
-Based on these estimates, inventory requirements are determined using a conservative availability-oriented policy. Consistent with the availability-oriented strategy defined previously, expected consumption values are rounded upwards when determining spare inventory levels in order to reduce the risk of stock depletion during operation.
-
-In addition, a minimum inventory level of one spare component is maintained even for components with relatively low expected consumption. Although some components exhibit low expected failure frequency, long replenishment lead times and operational criticality make fully reactive replacement strategies impractical.
-
-
+Inventory requirements are determined using a conservative availability-oriented policy: expected consumption values are rounded upwards, providing redundancy against non-collision failures and peak demand variability. And a minimum of one spare is maintained for all components regardless of failure frequency, given that long lead times and operational criticality make fully reactive replacement impractical.
 
 \subsection{Risk Classification}
+\label{sec:risk_classification}
 
 Building on the inventory policy analysis, a replenishment classification framework is introduced to distinguish different spare preparation and supply response behaviours across the system.
 
@@ -4012,7 +4003,7 @@ Fixed operational boundaries are used to define the classification regions, wher
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{Classification_of_component_risk.png}
+    \includegraphics[width=0.65\linewidth]{Classification_of_component_risk.png}
     \caption{Conceptual classification of component risk}
     \label{fig:riskclassification1}
 \end{figure}
@@ -4025,23 +4016,24 @@ From this classification, components can be grouped into four replenishment cate
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.95\linewidth]{collision.png}
+    \includegraphics[width=0.85\linewidth]{collision.png}
     \caption{Component classification under collision conditions (need further updates after getting data from other teams mates and make the text in the figure bigger)}
     \label{fig:collision}
 \end{figure}
 %need update from Michael
 
 \subsection{Inventory management}
+\label{sec:inventory_management}
 
 Based on the replenishment classification framework, inventory management is differentiated across components rather than applying a uniform spare policy throughout the system. As illustrated in Figure~\ref{fig:riskclassification1}, different combinations of spare consumption behaviour and lead time require different replenishment strategies in order to balance operational continuity with inventory efficiency.
 
-High-risk components with high spare consumption and long lead times, such as Sprocket, are managed using strongly push-oriented inventory preparation. Multiple spare units are pre-positioned before operation in order to minimise disruption during testing activities, as reactive replenishment would be unable to respond sufficiently quickly under these conditions.
+High-risk components, such as Sprocket, are managed using strongly push-oriented inventory preparation. Multiple spare units are pre-positioned before operation in order to minimise disruption during testing activities, as reactive replenishment would be unable to respond sufficiently quickly under these conditions.
 
-In contrast, Frequent components with high spare consumption but shorter lead times, such as Chain, are managed using a hybrid replenishment approach. Limited local inventory is maintained to support immediate replacement, while replenishment is triggered continuously during operation. This allows inventory levels to remain responsive to actual operational demand without requiring excessive stock holding.
+In contrast, Frequent components, such as Chain, are managed using a hybrid replenishment approach. Limited local inventory is maintained to support immediate replacement, while replenishment is triggered continuously during operation. This allows inventory levels to remain responsive to actual operational demand without requiring excessive stock holding.
 
-Long lead components with relatively low spare consumption but long lead times, such as a Supercapacitor, are managed as strategic standby inventory. Although failures occur infrequently, at least one spare unit is retained due to the operational impact associated with delayed replenishment.
+Long lead components, such as Supercapacitor, are managed as strategic standby inventory. Although failures occur infrequently, at least one spare unit is retained due to the operational impact associated with delayed replenishment.
 
-Finally, low-risk components with both low spare consumption and short lead times are managed more reactively through pull-oriented replenishment, where replacement is largely triggered by operational demand rather than advance preparation.
+Finally, low-risk components, such as the controller, are managed more reactively through pull-oriented replenishment, where replacement is largely triggered by operational demand rather than advance preparation.
 
 Overall, the inventory management strategy reflects a differentiated push--pull structure in which replenishment behaviour is adapted according to the operational characteristics of different components.
 
@@ -4065,7 +4057,7 @@ The planning analysis shows that component prioritisation can be based on failur
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.6\linewidth]{operation1.png}
+    \includegraphics[width=0.5\linewidth]{operation1.png}
     \caption{Operational cycle and supply chain support structure}
     \label{fig:operation}
 \end{figure}
@@ -4134,27 +4126,34 @@ In addition, the concept is not limited to full vehicle replacement. At the chas
 
 Following recovery, repaired systems or modules are returned to standby status and reintegrated into the active spare pool, forming a closed refurbishment loop in which recovered assets continuously rotate back into operational readiness. This ensures that spare capability is maintained dynamically rather than depleted over time.
 
-Taken together, modular inventory, spare shells, refurbishment loops, and rapid recovery are not merely operational decisions. They are what make the TaaS availability promise operational and credible. As discussed in Section 7.3.3, commercial viability depends on sustained utilisation rates and minimal track downtime; the supply chain operations developed here are precisely what deliver this in practice.
-
 \subsection{Key Activities}
 
-While the previous sections describe the operational structure of the system, several ongoing activities are required to maintain operational continuity during testing.
+While the previous sections describe the operational structure of the system, five ongoing activities are required to maintain operational continuity during testing.
 
-Inventory coordination is a central operational activity, involving the monitoring and replenishment of spare components according to the replenishment classifications developed previously. This ensures that high-risk and high-consumption components remain available while limiting unnecessary inventory duplication.
+\paragraph{Inventory Coordination}
+Inventory Coordination monitors component stock levels against the reorder thresholds established in the planning analysis. For high-risk and frequent-consumption components such as sprockets and chains, stock levels are checked after each testing session, and replenishment is triggered immediately when inventory falls below the recommended spare level. For long-lead components, replenishment is initiated in advance of anticipated demand rather than reactively, given that supplier lead times may extend to several weeks.
 
-Maintenance and recovery activities are also essential, including post-test inspection, fault identification, and execution of repair or replacement procedures. Standardising these processes helps to reduce downtime and improve consistency in system recovery.
+\paragraph{Post-Collision Inspection}
+Post-Collision Inspection is initiated immediately following any contact event. Each affected subsystem is assessed against a standard checklist to determine whether components require replacement or can remain in service. Driveline components including drive shafts, sprockets, and chains are prioritised given their elevated collision failure probabilities identified in the FMEA. A replacement decision is made on-site, and the relevant spare is drawn from the pre-positioned inventory pool before the next test cycle begins.
 
-In addition, operational monitoring plays an important role in supporting longer-term planning. Failure and recovery data collected during testing can be used to refine failure estimates, adjust spare allocation, and improve replenishment planning over time.
+\paragraph{Spare Rotation and Refurbishment}
+Spare Rotation and Refurbishment builds on the modular recovery structure established in Section 9.4.4, ensuring that recovered components are systematically returned to the active spare pool. Following each replacement, damaged components are assessed for repairability against a standard serviceability criterion. Those cleared for reuse are refurbished and reintegrated as standby spares, maintaining spare pool depth without requiring continuous new procurement. This approach is aligned with circular economy principles, and is particularly important for high-cost, long-lead components such as motors and inverters, where repeated replacement from external suppliers would be both costly and operationally disruptive.
 
-Finally, sourcing-related activities focus primarily on maintaining supply flexibility and reducing replenishment vulnerability. This includes monitoring supplier availability, maintaining compatibility across suppliers, and favouring standardised components where possible in order to improve recovery responsiveness during disruption events. In addition, establishing stable partnerships with key suppliers can further reduce supply uncertainty and replenishment lead time, improving the system’s ability to respond rapidly to operational failures.
+\paragraph{Supplier Management}
+Supplier Management focuses on maintaining replenishment flexibility during operation. For critical components, at least two qualified suppliers are identified in advance to reduce exposure to single-source disruption. Urgent procurement procedures are established for high-risk components, with agreed lead time expectations documented per supplier. Compatibility across suppliers is verified during the planning stage to ensure that substitute components can be deployed without modification.
 
-Overall, these activities ensure that the operational and planning structures developed previously can be maintained effectively during continuous system operation.
+\paragraph{Data Refinement}
+Data Refinement is conducted at the end of each operational quarter. Actual failure counts and recovery durations recorded during testing are compared against the FMEA estimates and Monte Carlo predictions. Where significant deviations are observed, failure probabilities are updated and the simulation is rerun to recalibrate spare inventory levels and replenishment thresholds for the following quarter. This ensures that supply chain parameters evolve with operational experience rather than remaining fixed at initial estimates.
+
+\subsection{Conclusion}
+
+The operational structure of the system is defined by a closed recovery loop, in which preparation, execution, failure detection, and recovery rotate continuously across each testing session. Within this loop, lean principles govern the preparation and execution stages, while agile responsiveness drives the recovery stage. Process improvements, including modular recovery, further reduce non-value-added time across the cycle. These improvements are sustained in practice through five ongoing key activities. Together, these elements ensure that operational continuity is maintained under uncertain conditions,  and as established in Section 7.3.3, commercial viability depends on sustained utilisation rates and minimal track downtime; the supply chain operations developed here are precisely what deliver this in practice.
 
 \section{Conclusion}
 
 The supply chain for the rabbit vehicle is driven by the need to maintain continuous operation under uncertainty. Through failure analysis, Monte Carlo simulation, and risk classification, components are prioritised by their impact on system continuity, with inventory and mitigation efforts allocated accordingly. Beyond inventory, modular recovery approaches further reduce disruption by decoupling repair activities from the active operational cycle.
 
-Overall, the system can be characterised as a centralised, outsourcing, agile, and failure-driven supply chain. As operational experience accumulates through failure records, recovery data, and client feedback, supply chain parameters can be continuously recalibrated, transforming it from a static design into a learning system that grows more resilient over time. Ultimately, a supply chain designed around availability and rapid recovery directly translates into service reliability. For an early-stage TaaS company, this is the product being sold.
+Overall, the system can be characterised as a centralised, outsourcing, agile, and failure-driven supply chain. As operational experience accumulates through failure records, recovery data, and client feedback, supply chain parameters can be continuously recalibrated — transforming it from a static design into a learning system that grows more resilient over time. Ultimately, a supply chain designed around availability and rapid recovery directly translates into service reliability — which, for an early-stage TaaS company, is the product being sold.
 
 \section*{Appendix: Data Sources and Contributions}
 
