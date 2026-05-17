@@ -1181,5 +1181,218 @@
       10300,
       10500
     ]
+  },
+  "mvc_threshold_sims": {
+    "meta": {
+      "engine": "_generate_financial_model.py",
+      "calendar_days_per_vehicle_year": 220,
+      "joint_stress_definition": "lambda in [0,1] linearly interpolates scenario multipliers from Base (1,1,1) to Bear (0.7, 0.9, 1.1) matching run_scenarios/_scenario()."
+    },
+    "cannot_compute_from_this_model": [
+      {
+        "quantity": "maximum_safe_debt_or_leverage_headroom",
+        "reason": "build_cash_flow() assumes no debt: there is no interest schedule, covenant, or amortisation. Any 'minimum leverage' or debt capacity would be a new module, not an output of the published spreadsheet."
+      },
+      {
+        "quantity": "structural_minimum_institutional_customer_count",
+        "reason": "Revenue is built from aggregate sold test-days \u00d7 blended day-rate. There is no customer-level simulation (no queue, no contract length distribution). 'Customer count' is only a post-hoc divisor on days (see implied_customers_* keys)."
+      },
+      {
+        "quantity": "single_scalar_minimum_fleet_utilisation_percent_all_years",
+        "reason": "Fleet size steps 1\u21921\u21922\u21922\u21923 while sold days ramp; '% utilisation' is year-specific (sold_days / (fleet\u00d7220)). The model does not collapse that to one MVC percentage without choosing a normative year (we report the full vector plus the Y2 EBIT break-even load on one vehicle)."
+      },
+      {
+        "quantity": "minimum_day_rate_independent_of_sold_days",
+        "reason": "Contribution per day is (rate \u2212 variable); fixed costs are amortised across *how many* days you sell. A single 'minimum \u00a3/day' that ignores the day ladder conflates two levers. We report (i) uniform-rate NPV floor, (ii) Y2 closed-form break-even days at the Base Y2 rate, and (iii) the hypothetical Y2-only rate needed at the *planned* 70 Y2 days to clear EBIT (under-utilisation arithmetic)."
+      }
+    ],
+    "y2_fixed_plus_depreciation_gbp": 687940.0,
+    "y2_variable_cost_per_day_gbp": 2350.0,
+    "y2_planned_sold_days": 70,
+    "y2_planned_blended_rate_gbp": 8000.0,
+    "min_blended_y2_at_planned_sold_days_for_y2_ebit_ge_zero_gbp": 12177.71,
+    "min_blended_y2_at_break_even_day_count_gbp": 8000.0,
+    "break_even_sold_days_y2_stack_at_base_y2_rate": 121.7593,
+    "load_factor_vs_220_day_calendar_one_vehicle_at_y2_be": 55.3451,
+    "fleet_calendar_utilisation_percent_by_year_base_plan": {
+      "Y1": 18.182,
+      "Y2": 31.818,
+      "Y3": 25.0,
+      "Y4": 34.091,
+      "Y5": 33.333
+    },
+    "base_net_profit_k_by_year": {
+      "Y1": -402.0,
+      "Y2": -292.44000000000005,
+      "Y3": -155.7677,
+      "Y4": 11.94693218999996,
+      "Y5": 292.75895518469986
+    },
+    "base_cumulative_net_loss_y1_to_y3_k": 850.21,
+    "base_minimum_cumulative_cash_k": 89.56,
+    "base_cumulative_cash_end_y2_k": 89.56,
+    "first_year_with_positive_net_profit": 4,
+    "first_year_with_positive_ebitda": 4,
+    "first_year_with_positive_operating_cash_flow": 4,
+    "series_a_gate_revenue_proxy_first_year_with_revenue_ge_400k": 2,
+    "series_a_gate_min_customers_if_arr_equals_n_times_60k_only": 7,
+    "downtime_bisection_y5_ebit_zero_pct": 23.4091,
+    "downtime_bisection_npv20_zero_pct": 33.5714,
+    "implied_availability_pct_if_defined_as_100_minus_downtime_pct": {
+      "at_y5_ebit_zero": 76.5909,
+      "at_npv20_zero_downtime_shock": 66.4286
+    },
+    "min_uniform_blended_rate_all_years_npv20_ge_zero_gbp": 6484.53,
+    "npv20_k_at_min_uniform_blended_rate": 2.791398401313927e-08,
+    "y1_planned_sold_days": 40,
+    "implied_customer_count_y1_ceil_days_per_customer": {
+      "6": 7,
+      "7": 6,
+      "8": 5,
+      "9": 5,
+      "10": 4
+    },
+    "avg_revenue_per_customer_per_year_model_gbp": 60000,
+    "joint_lambda_npv20_equals_zero": 0.822222,
+    "joint_stress_detail": {
+      "npv20_zero": {
+        "lambda_joint": 0.8222222222222224,
+        "util_mult": 0.7533333333333332,
+        "rate_mult": 0.9177777777777778,
+        "varcost_mult": 1.0822222222222222,
+        "npv20_k": -0.9137990009326131,
+        "y5_revenue_k": 1438.47,
+        "y5_net_profit_k": -186.42419113000017,
+        "y5_ebit_k": -186.42419113000017,
+        "sold_days_ladder": [
+          30,
+          52,
+          82,
+          112,
+          165
+        ],
+        "blended_rate_ladder_gbp": [
+          6883,
+          7342,
+          7801,
+          8260,
+          8718
+        ],
+        "variable_cost_per_day_ladder_gbp": [
+          2489,
+          2543,
+          2597,
+          2651,
+          2705
+        ],
+        "cumulative_cash_end_y2_k": -132.57200000000012,
+        "cumulative_net_loss_y1_y3_k": 1316.6117000000002
+      },
+      "bear": {
+        "lambda_joint": 1.0,
+        "util_mult": 0.7,
+        "rate_mult": 0.9,
+        "varcost_mult": 1.1,
+        "npv20_k": -243.6286266758293,
+        "y5_revenue_k": 1316.7,
+        "y5_net_profit_k": -285.3691911300001,
+        "y5_ebit_k": -285.3691911300001,
+        "sold_days_ladder": [
+          28,
+          49,
+          77,
+          105,
+          154
+        ],
+        "blended_rate_ladder_gbp": [
+          6750,
+          7200,
+          7650,
+          8100,
+          8550
+        ],
+        "variable_cost_per_day_ladder_gbp": [
+          2530,
+          2585,
+          2640,
+          2695,
+          2750
+        ],
+        "cumulative_cash_end_y2_k": -169.6450000000001,
+        "cumulative_net_loss_y1_y3_k": 1394.6427
+      },
+      "base": {
+        "lambda_joint": 0.0,
+        "util_mult": 1.0,
+        "rate_mult": 1.0,
+        "varcost_mult": 1.0,
+        "npv20_k": 1321.9543570813642,
+        "y5_revenue_k": 2090.0,
+        "y5_net_profit_k": 292.75895518469986,
+        "y5_ebit_k": 361.43080886999985,
+        "sold_days_ladder": [
+          40,
+          70,
+          110,
+          150,
+          220
+        ],
+        "blended_rate_ladder_gbp": [
+          7500,
+          8000,
+          8500,
+          9000,
+          9500
+        ],
+        "variable_cost_per_day_ladder_gbp": [
+          2300,
+          2350,
+          2400,
+          2450,
+          2500
+        ],
+        "cumulative_cash_end_y2_k": 89.55999999999995,
+        "cumulative_net_loss_y1_y3_k": 850.2077
+      },
+      "four_fifths_reference": {
+        "lambda_joint": 0.8,
+        "util_mult": 0.76,
+        "rate_mult": 0.92,
+        "varcost_mult": 1.08,
+        "npv20_k": 42.618190453800025,
+        "y5_revenue_k": 1459.58,
+        "y5_net_profit_k": -169.8891911300002,
+        "y5_ebit_k": -169.8891911300002,
+        "sold_days_ladder": [
+          30,
+          53,
+          83,
+          114,
+          167
+        ],
+        "blended_rate_ladder_gbp": [
+          6900,
+          7360,
+          7820,
+          8280,
+          8740
+        ],
+        "variable_cost_per_day_ladder_gbp": [
+          2484,
+          2538,
+          2592,
+          2646,
+          2700
+        ],
+        "cumulative_cash_end_y2_k": -125.894,
+        "cumulative_net_loss_y1_y3_k": 1302.7377000000001
+      }
+    },
+    "first_coarse_downtime_pct_y5_ebit_nonpositive": 25.0,
+    "first_coarse_downtime_pct_npv20_nonpositive": null,
+    "npv20_k_sanity_base_vs_bear_joint": {
+      "base_lambda_0": 1321.9543570813642,
+      "bear_lambda_1": -243.6286266758293
+    }
   }
 }

@@ -6,6 +6,7 @@
 \label{sec:intro}
 % ---------------------------------------------------------------------
 
+This chapter builds a longitudinal, rules-aware simulation of the Formula Student acceleration sprint so subsystem choices can be compared on a common quantitative basis before hardware is fixed.
 The Formula Student Acceleration Event (FS-D~5) is a \SI{75}{\metre}
 standing start; for EVs, FS-EV~2.2 caps electrical power drawn from the
 accumulator at \SI{80}{\kilo\watt}, and FS-D~5.3.1 disqualifies runs
@@ -13,10 +14,9 @@ over \SI{25}{\second}. A competitive configuration must be
 traction-limited at launch and power-limited later while respecting
 the power cap and avoiding front-axle lift; mass, centre of gravity,
 tyres, gearing, drivetrain efficiency, and electrical architecture are
-owned elsewhere in this report. A quantitative, rules-aware longitudinal
-simulation is used to rank design levers, reject configurations that
-breach FS-EV~2.2 or FS-D~5.3.1 before hardware commitment, predict the
-final agreed vehicle, and apportion margin across chapters.
+owned elsewhere in this report. The model ranks design levers, rejects configurations that
+breach FS-EV~2.2 or FS-D~5.3.1 before hardware commitment, predicts the
+final agreed vehicle, and apportions margin across chapters.
 
 This chapter presents simulation methodology
 (Section~\ref{sec:methodology}); verification
@@ -96,34 +96,38 @@ acceleration-induced load transfer is
 with $h_{CG}$ the centre-of-gravity height above the ground. Combined
 with aerodynamic downforce $F_{L,f}$, $F_{L,r}$, the instantaneous
 axle normal forces are
-
 \begin{equation}
-F_{z,f} = F_{z,f}^\text{static} - \Delta F_z + F_{L,f},
-\qquad
-F_{z,r} = F_{z,r}^\text{static} + \Delta F_z + F_{L,r}.
+\begin{aligned}
+F_{z,f} &= F_{z,f}^\text{static} - (1 - k_\text{AS})\,\Delta F_z + F_{L,f},\\
+F_{z,r} &= F_{z,r}^\text{static} + (1 - k_\text{AS})\,\Delta F_z + F_{L,r},\\
+k_\text{AS} &= 0.2\,\text{AS}, \qquad 0 \le \text{AS} \le 1,
+\end{aligned}
 \label{eq:normal_forces}
 \end{equation}
+where $\text{AS}$ is the anti-squat dial referenced in Section~\ref{sec:antisquat_dynamic_toe}.
 
 The wheelie onset occurs when $F_{z,f} \to 0$; in the absence of
 downforce this gives
-
 \begin{equation}
-a_\text{wheelie} = \frac{F_{z,f}^\text{static} L}{m_v h_{CG}}
-                 = \frac{g (L - L_{CG})}{h_{CG}}.
+a_\text{wheelie} = \frac{F_{z,f}^\text{static} L}{(1 - k_\text{AS})\, m_v h_{CG}}
+                 = \frac{g (L - L_{CG})}{(1 - k_\text{AS})\, h_{CG}}.
 \label{eq:wheelie}
 \end{equation}
 
 For the baseline parameters ($L = \SI{1.60}{\metre}$,
-$L_{CG} = \SI{1.14}{\metre}$, $h_{CG} = \SI{0.22}{\metre}$) this
+$L_{CG} = \SI{1.14}{\metre}$, $h_{CG} = \SI{0.22}{\metre}$) and
+$k_\text{AS}=0$ (equivalently $\text{AS}=0$), Eq.~\ref{eq:wheelie}
 gives $a_\text{wheelie} = \SI{20.5}{\metre\per\second\squared}$,
 comfortably above the simulated peak of
 \SI{12.86}{\metre\per\second\squared}.
 
 Anti-squat (ratio $\text{AS} \in [0, 1]$, Section~\ref{sec:antisquat_dynamic_toe})
-multiplies Eq.~\ref{eq:load_transfer} by $(1 - k_\text{AS})$ with
-$k_\text{AS} = 0.2\,\text{AS}$. This gives a design-side lever to
+enters Eq.~\ref{eq:normal_forces} and thereby Eq.~\ref{eq:wheelie}.
+This gives a design-side lever to
 retain front normal force without lowering $h_{CG}$ or lengthening
 $L$.
+In this two-axle longitudinal model, $\text{AS}$ and $k_\text{AS}$ are a reduced-order surrogate for how strongly the rear anti-squat geometry in Section~\ref{sec:antisquat_dynamic_toe} may redistribute axle loads around the rigid-body transfer in Eq.~\ref{eq:load_transfer}; they are tuned for sprint time and wheelie margin rather than interpreted as numerically equal to the suspension chapter's geometric 100\% anti-squat line.
+The factor $0.2$ caps $k_\text{AS}$ at $0.2$ when $\text{AS}=1$, keeping the effect conservative and numerically benign while remaining monotone in $\text{AS}$ for optimisation.
 
 % ---------------------------------------------------------------------
 \subsection{Tyre force model}
@@ -474,7 +478,8 @@ resistance is negligible at this distance (Section~\ref{sec:tornado}).
 Table~\ref{tab:handcalc} compares closed-form estimates with the code for
 rolling resistance and sustaining power at \SI{20}{\metre\per\second},
 unramped launch acceleration at the torque cap, and the wheelie limit
-from Eq.~\ref{eq:wheelie}. Peak simulated acceleration stays
+from Eq.~\ref{eq:wheelie} evaluated at $k_\text{AS}=0$ for the hand column.
+Peak simulated acceleration stays
 \SI{37}{\percent} below wheelie onset (Section~\ref{sec:final_run}).
 
 \begin{table}[H]
@@ -668,25 +673,13 @@ trying new parameter sets and comparing simulated times---no
 derivatives---which suits a model with hard limits and FS rule logic;
 only seven parameters are tuned.
 
-Figure~\ref{fig:optim_convergence} shows the objective convergence
-over the first \num{243} evaluations. The best feasible time
-decreases monotonically from the \SI{3.78}{\second} baseline; wheelie-violating
-candidates appear as red crosses and are rejected via the objective penalty.
-The search converges to
-\textbf{\SI{3.67}{\second}} — a \SI{2.9}{\percent} improvement —
-with the parameter set shown in Table~\ref{tab:optim_result}. All
-three constraints are satisfied at the optimum, and the minimum
-front normal force remains comfortably positive.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.82\textwidth]{figures/optim_convergence.pdf}
-\caption{Convergence of the Nelder--Mead optimiser over \num{243}
-objective evaluations: evaluated \SI{75}{\metre} time (grey dots),
-best-so-far curve (blue), and wheelie-violating evaluations (red crosses,
-penalised in the objective).}
-\label{fig:optim_convergence}
-\end{figure}
+Over \num{243} objective evaluations the best feasible time decreased
+monotonically from the \SI{3.78}{\second} baseline to
+\textbf{\SI{3.67}{\second}}, a \SI{2.9}{\percent} improvement
+(Table~\ref{tab:optim_result}). Wheelie-violating candidates were
+rejected via the objective penalty; at the optimum all three
+constraints (FS-EV~2.2, FS-D~5.3.1, $\min F_{z,f} > 0$) are
+satisfied with comfortable margin on front normal force.
 
 \begin{table}[H]
 \centering
@@ -870,44 +863,44 @@ omits a few other models that could reduce the gap between sim and reality. Main
 \textbf{fixed $V_\text{bus}$} versus supercap voltage sag (Section~\ref{subsec:supercapacitor_analysis} develops pack discharge, which is not yet coupled dynamically here), and \textbf{driver reaction time}
 (\SIrange{0.2}{0.4}{\second} omitted). Combined with
 Section~\ref{sec:monte_carlo}, the headline \SI{75}{\metre} time is
-estimated within roughly $\pm \SI{0.20}{\second}$.
+estimated within roughly $\pm \SI{0.20}{\second}$. Adding a typical
+\SIrange{0.2}{0.4}{\second} driver reaction delay to the Monte Carlo
+mean of \SI{4.03}{\second} (Section~\ref{sec:monte_carlo}) gives a
+realistic on-event prediction of
+\SIrange{4.23}{4.43}{\second}, which sits comfortably within the band
+of published Formula Student Electric times at FSG~2023
+\cite{fsg_results_2023}, confirming that the deterministic
+\SI{3.78}{\second} baseline is best read as a knife-edge optimum
+rather than an expected race-day figure.
 
 % ---------------------------------------------------------------------
 \section{Conclusions and Further Work}
 \label{sec:conclusions}
 % ---------------------------------------------------------------------
 
-The following conclusions are drawn from the evidence presented in
-Sections~\ref{sec:vv}--\ref{sec:discussion}:
+\noindent This summary restates the numerics without repeating Section~\ref{sec:discussion}.
+Section~\ref{sec:vv} gives hand checks, timestep convergence, and a constant-power bound; Section~\ref{sec:tornado} ranks longitudinal centre of gravity and peak grip as the dominant levers on the \SI{75}{\metre} time, with wheel radius, driveline efficiency, mass, and gear ratio as a secondary band.
+Nelder--Mead over \num{243} evaluations reaches \SI{3.67}{\second} from a \SI{3.78}{\second} baseline under FS-EV~2.2, FS-D~5.3.1, and positive front load (Section~\ref{sec:optimisation}); wet grip scaling preserves the same compliance (Section~\ref{sec:drywet}).
+The \num{500}-draw Monte Carlo mean is \SI{4.03}{\second} with 5--95 band \SIrange{3.86}{4.27}{\second} and full sample compliance (Section~\ref{sec:monte_carlo}); the baseline trace matches the predicted traction-to-power split and~$v^\star$ (Section~\ref{sec:constraint_activity}).
+Adding a typical \SIrange{0.2}{0.4}{\second} driver reaction delay to that mean implies an on-event band of about \SIrange{4.23}{4.43}{\second}, which is consistent with published Formula Student Electric acceleration times at FSG~2023~\cite{fsg_results_2023}.
+Under FS-D~5.3.2 with notional $T_\text{fastest}=\SI{3.5}{\second}$, the baseline and optimised sets map to \num{59.2}/75 and \num{65.1}/75 points respectively.
 
+\subsection{Further work}
+\label{sec:further_work}
+
+Future development should focus on improving the physical fidelity of the model and increasing correlation with real-world vehicle behaviour.
+The highest-priority improvement is calibration of the Pacejka tyre coefficients using empirical tyre testing data, since tyre grip was identified as the dominant sensitivity parameter in the acceleration event (Section~\ref{sec:tornado}).
+
+Further work should also include:
 \begin{itemize}
-    \item Longitudinal simulation with load transfer, Pacejka grip,
-          traction-controlled launch, FS-EV~2.2 electrical limiting,
-          and RK4 integration at \SI{1}{\milli\second}.
-    \item Validated against hand calculations, timestep convergence,
-          and an analytical constant-power bound (Section~\ref{sec:vv}).
-    \item Dominant sensitivities: longitudinal CG and peak grip;
-          secondary band: wheel radius, driveline efficiency, mass,
-          gearing (Section~\ref{sec:tornado}).
-    \item Optimisation (\num{243} Nelder--Mead evaluations) yields
-          \SI{3.67}{\second} versus \SI{3.78}{\second} baseline
-          (Section~\ref{sec:optimisation}).
-    \item Wet-track scaling remains inside rule limits
-          (Section~\ref{sec:drywet}).
-    \item Under FS-D~5.3.2 with a notional $T_\text{fastest}=\SI{3.5}{\second}$,
-          the baseline predicts \num{59.2}/75 points and the optimised
-          set \num{65.1}/75.
+    \item modelling driveline torsional compliance to capture launch oscillations and wheel-hop behaviour;
+    \item inclusion of motor electrical transient dynamics and finite torque rise time;
+    \item integration of suspension compliance and chassis flexibility effects;
+    \item experimental validation against telemetry from a physical prototype;
+    \item extension of the model to include thermal degradation during repeated launch cycles.
 \end{itemize}
 
-\subsection*{Further work}
-
-\begin{itemize}
-    \item Calibrate Pacejka coefficients from measured longitudinal tyre data.
-    \item Couple accumulator voltage sag (Supercapacitors chapter); optionally
-          add driveline torsion and motor transient effects.
-    \item Re-scope the framework to Skidpad/Autocross if championship score
-          trades appear.
-\end{itemize}
+Additional stochastic modelling of track contamination, tyre temperature evolution, and driver reaction variability would also improve robustness predictions for real competition conditions.
 
 % ---------------------------------------------------------------------
 \compactbib

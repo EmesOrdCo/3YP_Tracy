@@ -8,6 +8,8 @@ developers, with revenue tethered to fleet utilisation.
 
 Produces:
     * financial_model.json  -- machine-readable outputs consumed by figure script
+    * mvc_threshold_sims.json -- joint/downtime/uniform-rate MVC thresholds
+      (also merged into financial_model.json under ``mvc_threshold_sims``)
     * tables/*.tex          -- LaTeX table fragments consumed by main.tex
     * report_numbers.tex    -- \\newcommand macros for inline numbers in prose
 
@@ -1127,6 +1129,15 @@ def main() -> None:
         "capex_inversion":     inversion,
         "year_10_projection":  y10_proj,
     }
+
+    import _mvc_threshold_sims as mvc_sims
+
+    mvc_full = mvc_sims.run_mvc_threshold_sims()
+    (HERE / "mvc_threshold_sims.json").write_text(
+        json.dumps(mvc_full, indent=2, default=float)
+    )
+    out["mvc_threshold_sims"] = mvc_sims.slim_for_financial_json(mvc_full)
+
     (HERE / "financial_model.json").write_text(json.dumps(out, indent=2, default=float))
 
     # Console sanity print
@@ -1156,6 +1167,13 @@ def main() -> None:
           f"Y{inversion['crossover_year']} --")
     print("\n-- Downtime sensitivity --")
     print(dt_df.to_string(index=False))
+    lam0 = out["mvc_threshold_sims"].get("joint_lambda_npv20_equals_zero")
+    print("\n-- MVC thresholds (see mvc_threshold_sims.json) --")
+    print(f"Joint Base→Bear lambda (NPV@20%=0): {lam0}")
+    print(
+        f"Uniform min blended £/day (NPV@20%>=0): "
+        f"£{out['mvc_threshold_sims'].get('min_uniform_blended_rate_all_years_npv20_ge_zero_gbp')}"
+    )
 
 
 if __name__ == "__main__":
