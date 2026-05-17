@@ -242,6 +242,8 @@
 
 <p>More concerningly, Euler's method can be unstable for certain types of differential equations, particularly those with rapidly changing derivatives. In the acceleration simulation, forces change significantly as velocity increases (drag grows quadratically) and as the powertrain transitions from traction-limited to power-limited operation.</p>
 
+<p>I also considered second-order Runge-Kutta (midpoint or Heun: two derivative evaluations per step, global error O(dt²)) as a lighter upgrade from Euler, but decided against it. The global order is still only second, so wherever the right-hand side changes sharply I would need a much smaller timestep to keep slip and speed trustworthy than I want for wall-clock runtime. Two evaluations per step does not narrow that gap enough relative to fourth-order RK at the same dt: I would either approach RK4-level cost anyway or accept accuracy I do not trust during launch and power-limited phases.</p>
+
 <p>The 4th-order Runge-Kutta method (RK4) provides substantially better accuracy. Rather than using only the derivative at the start of the timestep, RK4 evaluates the derivative at four points and takes a weighted average:</p>
 
 <div class="equation">k1 = f(x, t)</div>
@@ -253,6 +255,13 @@
 <div class="equation">k4 = f(x + k3×dt, t + dt)</div>
 
 <div class="equation">x(t + dt) = x(t) + (k1 + 2×k2 + 2×k3 + k4) × dt/6</div>
+
+<p>The same algorithm appears in my numerical methods textbook as Eq. (7.10) in Sec. 7.3 (fourth-order Runge–Kutta); the page also notes the usual drawback that this form does not estimate truncation error, so step size is chosen by trial rather than adaptively.</p>
+
+<div class="figure">
+<img src="logbook_evidence/rk4_textbook_section_7_3.png" alt="Fourth-order Runge–Kutta (Sec. 7.3, textbook excerpt)">
+<div class="figure-caption">Fourth-order Runge–Kutta (Sec. 7.3, textbook excerpt)</div>
+</div>
 
 <p>The local truncation error is O(dt⁵) and the global error is O(dt⁴). For the same timestep of 0.001 s, this represents a significant improvement in accuracy. The cost is four derivative evaluations per timestep rather than one, but for a simulation of this scale (5000-10000 timesteps), the computational overhead is negligible on modern hardware. As such I will implement RK4 for the dynamics solver as the benifits far outweigh the costs.</p>
 </div>
