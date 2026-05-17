@@ -2891,9 +2891,10 @@ User-based segmentation identifies regulatory agencies, certification laboratori
 Together, these segmentation perspectives indicate limited alignment between the market’s priorities and the platform’s core value proposition.
 
 \subsection{Commercial Challenges}
+\label{sec:commercial_challenges}
 
 This market also presents significant commercial challenges. Entry barriers are high due to certification requirements and the need to demonstrate equivalence with established methods, while procurement cycles are long and complex.
-Product–-market fit is also limited. Customers prioritise consistency and risk minimisation, whereas the platform’s core advantages lie in flexibility and adaptability.
+Product-market fit is also limited. Customers prioritise consistency and risk minimisation, whereas the platform’s core advantages lie in flexibility and adaptability.
 Scalability is constrained by a small customer base and varying international regulations, increasing the need for customisation and slowing expansion.
 
 Overall, despite functional relevance, high barriers, weak alignment, and limited scalability make this market unattractive for an early-stage product and rule it out as a viable market entry point.
@@ -3177,6 +3178,7 @@ As an early-stage entrant, the strategy prioritizes establishing a dominant pres
 This represents a realistic initial revenue opportunity, reflecting a focused geographic targeting strategy within the UK and the inherent constraints of entering a nascent, rapidly evolving market.
 
 \subsection{Strategic Rationale for UK Market Entry}
+\label{sec:uk_market}
 
 The focus on the UK as the initial commercial market is a deliberate strategic choice. Four structural advantages make it the strongest starting point at this stage:
 
@@ -3195,6 +3197,8 @@ The focus on the UK as the initial commercial market is a deliberate strategic c
 \section{Personas and User Journey}
 \label{sec:personas}
 
+To help humanisze the target market segments identified in section \ref{sec:target_market_selection}, and guide product development, threetwo personas have been developed representing the primary decision-making roles within those organisations. These representreflect the specific behaviors, motivations, and pain points and decision-making behaviours of the people most likely to evaluate and procure the platform, key stakeholders, grounding the targeting strategy in commercial reality. The gatekeeper personas, testbed operators and liability assessors, who control access to the market are developed in Section \ref{sec:paul_personas}. Taken together, Kelly and Daniel illustrate that a successful sale requires the platform to satisfy two parallel tests: technical credibility for the engineer specifying the solution, and commercial justification for the procurement manager approving it: transparent, trustworthy data outputs are the common requirement across both.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.85\textwidth]{figures/persona1.png}
@@ -3209,11 +3213,13 @@ The focus on the UK as the initial commercial market is a deliberate strategic c
     \label{fig:persona2}
 \end{figure}
 
-To help humanize the market segments and guide product development, three personas have been developed. These represent the specific behaviors, motivations, and pain points of key stakeholders, grounding the platform's value proposition in the practical requirements of vehicle validation.
+Together, these personas inform the user journey mapping below, which traces the adoption process from initial discovery through to regulatory integration. 
 
-These personas highlight different priorities across stakeholders and support user-centred design decisions. They also reinforce the segmentation analysis by demonstrating how value proposition elements align with specific customer needs.
+%To help humanize the market segments and guide product development, three personas have been developed. These represent the specific behaviors, motivations, and pain points of key stakeholders, grounding the platform's value proposition in the practical requirements of vehicle validation.
 
-Integrating the commercial targets identified in this section with the broader stakeholder ecosystem analyzed in Section \ref{sec:paul_personas}, the following journey mapping highlights how the product navigates both market adoption and regulatory validation. It helps identify pain points, decision stages, and opportunities for value creation. The user journey for the platform adoption process is structured as follows:
+%These personas highlight different priorities across stakeholders and support user-centred design decisions. They also reinforce the segmentation analysis by demonstrating how value proposition elements align with specific customer needs.
+
+%Integrating the commercial targets identified in this section with the broader stakeholder ecosystem analyzed in Section \ref{sec:paul_personas}, the following journey mapping highlights how the product navigates both market adoption and regulatory validation. It helps identify pain points, decision stages, and opportunities for value creation. The user journey for the platform adoption process is structured as follows:
 
 \begin{table}[h!]
 \centering
@@ -3232,16 +3238,30 @@ Integrating the commercial targets identified in this section with the broader s
 \vspace{-8pt}
 \section{Role of Users in Development}
 
-Understanding how target customers influence product development is important in a market where testing workflows, integration requirements, and validation priorities vary across organisations. During early development, a user-based approach is most appropriate. At this stage, users act as informants, providing insights into testing challenges and validation requirements. Interviews with engineers, safety specialists, and validation teams help identify key needs such as repeatability, data integration, and scenario flexibility, ensuring the product evolves to meet customer requirements.
-As the product develops, a co-design approach can be adopted, with users contributing to testing features and interface requirements. For example, validation engineers may suggest specific braking scenarios or data outputs for AI model verification. This ensures alignment with real-world workflows.
-In later stages, elements of user-led design may emerge, with organisations developing their own testing scenarios and applications. This increases adoption and supports continued innovation.
+Understanding how target customers influence product development is important in a market where testing workflows, integration requirements, and validation priorities vary across organisations. User involvement develops across three stages:
+
+\begin{itemize}
+
+    \item \textbf{Informant (early stage):} Users provide insights into testing challenges and validation requirements through interviews with engineers, safety specialists, and validation teams, identifying key needs such as repeatability, data integration, and scenario flexibility, ensuring the product evolves to meet customer requirements.
+
+    \item \textbf{Co-design (development stage):} Users contribute to testing features and interface requirements. For example, validation engineers may suggest specific braking scenarios or data outputs for AV model verification. This ensures alignment with real-world workflows.
+
+    \item \textbf{User-led (later stage):} Organisations develop their own testing scenarios and applications, increasing adoption and supporting continued innovation.
+
+\end{itemize}
+
 However, reliance on user input has limitations. Users may prioritise incremental improvements over transformative solutions, potentially constraining innovation. User participation should therefore be balanced with strategic foresight to address both current and emerging validation challenges.
+
+%Understanding how target customers influence product development is important in a market where testing workflows, integration requirements, and validation priorities vary across organisations. During early development, a user-based approach is most appropriate. At this stage, users act as informants, providing insights into testing challenges and validation requirements. Interviews with engineers, safety specialists, and validation teams help identify key needs such as repeatability, data integration, and scenario flexibility, ensuring the product evolves to meet customer requirements.
+%As the product develops, a co-design approach can be adopted, with users contributing to testing features and interface requirements. For example, validation engineers may suggest specific braking scenarios or data outputs for AI model verification. This ensures alignment with real-world workflows.
+%In later stages, elements of user-led design may emerge, with organisations developing their own testing scenarios and applications. This increases adoption and supports continued innovation.
+%However, reliance on user input has limitations. Users may prioritise incremental improvements over transformative solutions, potentially constraining innovation. User participation should therefore be balanced with strategic foresight to address both current and emerging validation challenges.
 
 \section{Intellectual Property and Barriers to Entry}
 
 Intellectual property plays a role in protecting the commercial value of the proposed testing platform, although broad patent protection may be limited. The core concept combines existing elements, such as a high-performance vehicle, modular testing configuration, and data acquisition systems, reducing the scope for strong standalone patents. While specific mechanical interfaces or testing architectures may be protectable, alternative implementations remain feasible.
 Competitive advantage is therefore more likely to rely on trade secrets and accumulated testing data. Proprietary scenario configurations, control strategies, and performance datasets can be retained internally. Over time, repeated high-speed testing generates valuable data, improving validation accuracy and creating switching costs.
-Additional barriers arise from the specialised engineering integration required and the need for early partnerships with automotive manufacturers. As a result, IP should be viewed as supportive rather than primary, with advantage driven by technical know-how, data, and early market adoption.
+Additional barriers arise from the specialised engineering integration required and the need for early partnerships with testbed operators and AV developers. As a result, IP should be viewed as supportive rather than primary, with advantage driven by technical know-how, data, and early market adoption.
 
 \section{Risk Analysis and Strategic Trade-offs}
 \label{sec:risk_analysis_strategic_tradeoffs}
@@ -3256,7 +3276,7 @@ When adapting our FS car for integration with the testing platform, modification
 
 The nascent nature of the market introduces a degree of uncertainty in demand, technology evolution, and regulatory direction. Demand for physical autonomous vehicle validation testing is closely linked to investment trends in automated driving technologies. Furthemore, a reduction in R\&D spending or a slowdown in autonomous vehicle deployment could reduce demand for specialised testing platforms. This risk is particularly relevant given the cyclical nature of investment in emerging technologies.
 
-This risk can be mitigated by targeting multiple customer groups. EV startups and AI technology firms may experience different investment cycles, reducing reliance on a single segment. However, a broader downturn in autonomous vehicle investment would still impact overall demand.
+This risk can be mitigated by targeting multiple customer groups. EV startups and AV developers may experience different investment cycles, reducing reliance on a single segment. A broader downturn in autonomous vehicle investment would still impact overall demand. However, UK regulatory requirements create baseline demand that is less sensitive to investment cycles (Section \ref{sec:zenzic_roadmap}).
 
 \subsection{Technological Risk}
 
@@ -3266,7 +3286,7 @@ Advances in software simulation may reduce the need for physical testing, acting
 
 Developing and maintaining a high-performance testing platform requires significant engineering resources, and operational costs may exceed initial estimates. This risk is closely linked to the chosen market entry strategy. Focusing on EV startups enables faster adoption and early validation but may limit short-term revenue due to smaller budgets. Conversely, targeting large OEMs offers higher contract value but involves longer procurement cycles and higher barriers to entry.
 
-The proposed strategy prioritises early adoption among EV startups and selected AI technology firms to generate validation data and establish credibility. This foundation can then support engagement with larger OEMs. However, if the balance is misjudged, risks emerge. Over-reliance on startups may slow revenue growth and place strain on operational resources, while premature focus on OEMs may delay market entry and prolong development without customer validation. Careful sequencing of customer engagement is therefore essential.
+The proposed strategy prioritises early adoption among EV startups and selected AV developers to generate validation data and establish credibility. This foundation can then support engagement with larger OEMs. However, if the balance is misjudged, risks emerge. Over-reliance on startups may slow revenue growth and place strain on operational resources, while premature focus on OEMs may delay market entry and prolong development without customer validation. The prototype decision gates in section \ref{sec:prototype_roadmap_compact} determine whether early traction justifies continued investment before OEM engagement begins.
 
 \subsection{Regulatory Risk}
 
@@ -3280,7 +3300,12 @@ To maintain a competitive advantage, the platform must emphasise flexibility and
 
 \section{Conclusion}
 
-The proposed platform fills a critical market gap by combining high realism with scenario flexibility for autonomous vehicle validation. With an estimated initial UK SOM of \$26 million, the business is positioned to capture a high-value niche by prioritizing agile EV startups as early adopters. Our plan to realise this commercial opportunity, is laid out in the following sections.
+The proposed platform fills the gap between expensive, inflexible proving grounds and simulation that lacks physical realism. It delivers high-realism edge-case AV validation as a paid testing service through established UK testbed facilities, targeting EV startups and AV developers as early paying users with an estimated initial UK SOM of \$ 26 million.
+
+Three strategic choices define the approach: UK-only initial market (Section \ref{sec:uk_market}); government brake testing market deliberately excluded (Section \ref{sec:commercial_challenges}); and a paid testing service model over hardware sales, accepting higher upfront costs as the trade-off (Chapter \ref{chap:strategy_stakeholder_analysis}).
+
+Taken together, these choices prioritise credibility-building over short-term revenue maximisation. The route to market runs through testbed operators first — securing their approval and embedding the platform within their facilities builds the credibility needed to attract EV startups and AV developers as paying clients, and large OEMs as longer-term customers.Our plan to realise this commercial opportunity is laid out in the following sections. 
+
 \vspace{+14pt}
 \compactbib
 
@@ -3314,6 +3339,7 @@ At prototype stage, the enterprise should not claim full certification or compli
 Our strategy leverages the government's investment focus, as outlined in the Zenzic UK CAM Roadmap, and capitalises on established CAM Testbed facilities.
 
 \subsection{The Zenzic UK CAM Roadmap}
+\label{sec:zenzic_roadmap}
 
 The UK Connected and Automated Mobility (CAM) Roadmap to 2035, coordinated by Zenzic (a joint venture between UK industry and government), provides the macro-environment framing for this strategy \cite{zenzic_about}.
 
@@ -3714,6 +3740,7 @@ The logging frequency should be selected according to the fastest dynamics that 
 \textbf{TODO: CONFIRM DATA ARCHITECTURE.} The final report should specify which channels are recorded at high frequency, which are recorded at lower frequency, how time synchronisation is achieved, and how raw logs are converted into customer-facing reports. If the early prototype cannot achieve the final logging target, present this as a staged limitation rather than a failure.
 
 \section{Prototype roadmap: Explore, Validate, Demonstrate, Convince}
+\label{sec:prototype_roadmap_compact}
 
 \subsection{Why staged prototyping is necessary}
 
