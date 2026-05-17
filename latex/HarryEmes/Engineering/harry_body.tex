@@ -224,7 +224,7 @@ FS-EV~2.2 caps \textit{electrical} power at the accumulator outlet at
 \SI{80}{\kilo\watt}, not mechanical power at the wheel. Limiting
 motor torque alone is therefore insufficient: the same motor torque
 corresponds to a range of electrical powers depending on motor speed,
-drivetrain efficiency, and battery voltage.
+drivetrain efficiency, and the time-varying DC-link voltage $V_{\mathrm{bus}}(t)$.
 
 The model represents a YASA P400R permanent-magnet motor
 ($K_t = \SI{0.822}{\newton\metre\per\ampere}$, peak AC current
@@ -239,30 +239,54 @@ T_m = \frac{T_w^\text{req}}{N_g \, \eta_\text{drv}},
 \qquad
 I_m = \frac{T_m}{K_t},
 \qquad
-P_\text{elec} = V_\text{bus} I_m.
+P_\text{elec} = V_{\mathrm{bus}}(t)\, I_m.
 \label{eq:powertrain_basic}
 \end{equation}
+Here $P_{\mathrm{elec}}$ is the \emph{demanded} electrical power using torque-demand current $I_m$; the delivered current is $I_m^{\star}$ in Eq.~\ref{eq:power_limit}, so compliant electrical power satisfies $V_{\mathrm{bus}}(t)\,I_m^{\star}\le P_{\max}$.
 
 The \SI{80}{\kilo\watt} cap is enforced by clipping motor current
 first and mapping back to wheel torque:
 
 \begin{equation}
-I_m^\star = \min\!\left(I_m,\; \frac{P_\text{max}}{V_\text{bus}}\right),
+I_m^\star = \min\!\left(I_m,\; \frac{P_\text{max}}{V_{\mathrm{bus}}(t)},\; I_\text{max}\right),
 \qquad
 T_w = K_t I_m^\star N_g \, \eta_\text{drv}.
 \label{eq:power_limit}
 \end{equation}
+where $I_\text{max}$ is the inverter AC current ceiling (\SI{285}{\ampere} here); the FS-EV~2.2 limit appears as $P_\text{max}/V_{\mathrm{bus}}(t)$, which \textbf{grows} as the bus sags because the same outlet power is supported at higher DC current at lower voltage until $I_\text{max}$ binds.
 
 The peak motor torque is $T_m^\text{peak} = K_t I_\text{max} =
 \SI{234}{\newton\metre}$, so the constraint activates at motor speed
 $\omega^\star = P_\text{max}/T_m^\text{peak} = \SI{341}{\radian\per\second}$
 (\num{3260} rpm), corresponding to a vehicle speed of
 $v^\star = \omega^\star r_w / N_g = \SI{15.4}{\metre\per\second}$
-(\SI{55}{\kilo\metre\per\hour}). Every acceleration event above this
+(\SI{55}{\kilo\metre\per\hour}).
+For this scalar estimate, $v^\star$ is evaluated at nominal $V_{\mathrm{bus}}=\SI{600}{\volt}$ together with the inverter torque ceiling $T_m^{\mathrm{peak}}=K_t I_{\max}$; a fully time-resolved bus would shift the crossover slightly.
+Every acceleration event above this
 speed is power-limited; for a \SI{75}{\metre} run reaching
 \SI{33}{\metre\per\second}, more than \SI{64}{\percent} of the run
 time is spent in the power-limited regime
 (Section~\ref{sec:final_run}).
+
+% ---------------------------------------------------------------------
+\subsection{Energy storage model and inverter-limited voltage window}
+\label{sec:accum_storage_model}
+% ---------------------------------------------------------------------
+
+Pack sizing and constant-power discharge, including series resistance, are developed in Section~\ref{subsec:supercapacitor_analysis}; selected key expressions are repeated below.
+The longitudinal code does not instantiate a parallel Li-Po electrochemical branch.
+\begin{gather}
+E=\frac{1}{2}CV^2=\frac{1}{2}C(V_{\max}^2-V_{\min}^2)
+\tag{\ref{eq:capacitor_energy}}\\
+\frac{\mathrm{d}V}{\mathrm{d}t}
+=-\frac{P}{C\,V}-\frac{P^2 R_{\mathrm{total}}}{C\,V^{3}}
+\tag{\ref{eq:pack_voltage_dynamics}}
+\end{gather}
+where $R_{\mathrm{total}}=n\,\mathrm{ESR}_{\mathrm{cell}}$ for $n$ cells in series.
+Equation~\eqref{eq:pack_voltage_dynamics} captures how the terminal voltage sags during discharge (Figure~\ref{fig:supercap_discharge}).
+The representative discharge trace falls to about \SI{369}{\volt} at the end of the \SI{4}{\second}, \SI{80}{\kilo\watt} template used there, whereas the powertrain assumes a minimum operating window on the order of \SI{350}{\volt} for inverter/motor operation (Figure~\ref{fig:motor_operation}).
+That leaves usable margin at the bottom of the sag, so a falling DC link is acceptable: the inverter supplies torque by regulating motor current across the allowed voltage span, with $P_{\mathrm{elec}}\approx V_{\mathrm{bus}}(t)\,I_{\mathrm{dc}}$ implying higher DC-link current as $V_{\mathrm{bus}}(t)$ drops until FS-EV~2.2 or $I_\text{max}$ limits bind.
+We identify that sagging trajectory with $V_{\mathrm{bus}}(t)$ in Eqs.~\ref{eq:powertrain_basic}--\ref{eq:power_limit}; further electrical transients are noted in Section~\ref{sec:discussion}.
 
 % ---------------------------------------------------------------------
 \subsection{Launch strategy and traction control}
@@ -405,6 +429,19 @@ the parametric uncertainty of the result.
 \label{sec:architecture}
 % ---------------------------------------------------------------------
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/architecture.pdf}
+\caption{Software architecture of the simulation. The five-layer
+Python core (Config, Vehicle Models, Dynamics, Rules, Results)
+enforces FS-EV~2.2 and FS-D~5.3.1 compliance on every simulated
+configuration. A Streamlit-based GUI sits above the core and is used
+by the other subsystem chapters to evaluate parameter proposals
+interactively.}
+\label{fig:architecture}
+\end{figure}
+
+Figure~\ref{fig:architecture} gives an overview of the package.
 The simulation is organised as a five-layer Python package:
 configuration, vehicle models, dynamics, rules, and results. All
 vehicle parameters are externalised in JSON configuration files so
@@ -423,20 +460,7 @@ interface (single-run, parameter sweep, optimiser, gearing study,
 sensitivity, Monte Carlo, track conditions) sits above the same
 physics core and is used by the other subsystem chapters to evaluate
 proposals (for example, the Drivetrain chapter's gear-ratio down-selection)
-without re-running command-line scripts. The architecture is
-summarised in Figure~\ref{fig:architecture}.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.95\textwidth]{figures/architecture.pdf}
-\caption{Software architecture of the simulation. The five-layer
-Python core (Config, Vehicle Models, Dynamics, Rules, Results)
-enforces FS-EV~2.2 and FS-D~5.3.1 compliance on every simulated
-configuration. A Streamlit-based GUI sits above the core and is used
-by the other subsystem chapters to evaluate parameter proposals
-interactively.}
-\label{fig:architecture}
-\end{figure}
+without re-running command-line scripts.
 
 % ---------------------------------------------------------------------
 \section{Verification and Validation}
@@ -522,7 +546,10 @@ negligible next to modelling uncertainty.
 \centering
 \caption{$t_{75}$ vs.\ timestep (reference: $\Delta t=\SI{0.2}{\milli\second}$).}
 \label{tab:dt_convergence}
-\footnotesize
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{0.88}
 \begin{tabular}{|c|c|c|}
 \hline
 $\Delta t$ (ms) & $t_{75}$ (s) & Deviation from ref.\ (ms) \\
@@ -532,6 +559,7 @@ $\Delta t$ (ms) & $t_{75}$ (s) & Deviation from ref.\ (ms) \\
 0.20 & 3.779 & $0.0$ \\
 \hline
 \end{tabular}
+\endgroup
 \end{table}
 
 % ---------------------------------------------------------------------
@@ -553,17 +581,9 @@ against track surface conditions closes the section
 \label{sec:tornado}
 % ---------------------------------------------------------------------
 
-Each candidate design parameter is perturbed by $\pm 10\,\%$ about the
-baseline configuration, holding all others fixed, and the change in
-predicted \SI{75}{\metre} time is recorded.
-Figure~\ref{fig:tornado} shows the resulting tornado plot; dominant
-parameters are longitudinal CG and peak tyre grip, with wheel radius,
-drivetrain efficiency, mass, and gear ratio forming a second tier (see
-caption).
-
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{figures/tornado.pdf}
+\includegraphics[width=0.68\textwidth]{figures/tornado.pdf}
 \caption{One-at-a-time sensitivity of the \SI{75}{\metre} time to a
 $\pm 10\,\%$ perturbation of each vehicle parameter. Centre-of-gravity
 longitudinal position and tyre peak grip dominate; drivetrain
@@ -572,6 +592,14 @@ aerodynamic drag and rolling resistance are negligible over
 \SI{75}{\metre}.}
 \label{fig:tornado}
 \end{figure}
+
+Figure~\ref{fig:tornado} summarises the sweep.
+Each candidate design parameter is perturbed by $\pm 10\,\%$ about the
+baseline configuration, holding all others fixed, and the change in
+predicted \SI{75}{\metre} time is recorded.
+Dominant parameters are longitudinal CG and peak tyre grip, with wheel radius,
+drivetrain efficiency, mass, and gear ratio forming a second tier (see
+caption).
 
 The ranking has two practical consequences. First, the two dominant
 levers (longitudinal CG and tyre peak grip) sit in different subsystems
@@ -740,7 +768,7 @@ every velocity.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{figures/dry_wet.pdf}
+\includegraphics[width=0.68\textwidth,height=0.42\textheight,keepaspectratio]{figures/dry_wet.pdf}
 \caption{Velocity trace under dry and wet surface conditions (peak
 grip multiplier \num{1.0} vs \num{0.60}). The \SI{28}{\percent} time
 penalty on wet tracks is dominated by the extended traction-limited
@@ -783,7 +811,7 @@ CG longitudinal & $L_{CG}$ & 1.14\si{\metre} & Section~\ref{sec:load_transfer} \
 CG height & $h_{CG}$ & 0.22\si{\metre} & Section~\ref{sec:load_transfer} \\
 Wheel radius & $r_w$ & 0.247\si{\metre} & Section~\ref{sec:monte_carlo}; loaded radius \\
 Peak tyre grip & $p_{Dx1}$ & 1.70 & Table~\ref{tab:pacejka} \\
-Accumulator nominal voltage & $V_\text{bus}$ & 600\si{\volt} & Supercapacitors \\
+Accumulator nominal voltage & $V_{\mathrm{bus}}(t)$ & \SI{600}{\volt} (nominal) & Section~\ref{sec:accum_storage_model} \\
 Accumulator mass & $m_\text{acc}$ & 27.8\si{\kilo\gram} & Supercapacitors \\
 Motor torque constant & $K_t$ & 0.822\si{\newton\metre\per\ampere} & Drivetrain (YASA P400R) \\
 Motor peak RMS current & $I_m^\text{peak}$ & 285\si{\ampere} & Drivetrain (BAMOCAR PG-D3) \\
@@ -860,7 +888,7 @@ consistent with the validation evidence in Section~\ref{sec:vv}, but it
 omits a few other models that could reduce the gap between sim and reality. Main gaps:
 \textbf{driveline torsional compliance} (minor launch oscillation; beyond the rigid torque path implied by Section~\ref{sec:mechanical_design_packaging}),
 \textbf{motor electrical dynamics} (finite torque rise time and brief dips; beyond the quasi-static electrical limit in Section~\ref{sec:powertrain}),
-\textbf{fixed $V_\text{bus}$} versus supercap voltage sag (Section~\ref{subsec:supercapacitor_analysis} develops pack discharge, which is not yet coupled dynamically here), and \textbf{driver reaction time}
+\textbf{electrical dynamics beyond quasi-static $V_{\mathrm{bus}}(t)$:} inverter/motor current-control transients and line effects not resolved in Sections~\ref{sec:powertrain}--\ref{sec:accum_storage_model}, and \textbf{driver reaction time}
 (\SIrange{0.2}{0.4}{\second} omitted). Combined with
 Section~\ref{sec:monte_carlo}, the headline \SI{75}{\metre} time is
 estimated within roughly $\pm \SI{0.20}{\second}$. Adding a typical
