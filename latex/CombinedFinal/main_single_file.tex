@@ -2650,20 +2650,20 @@ Additional random modelling of track contamination, tyre temperature evolution, 
 
 \section{Introduction and Executive Summary}
 
-Chapters 1 to 4 established the vehicle’s chassis, suspension, powertrain, and accumulator design, while Chapter 5 integrated these systems through simulation to validate its 3.73-second sprint capability. From this point forward, the project pivots from technical engineering to commercial strategy.
+Chapters 1 to 4 established the vehicle’s structural base and design elements (chassis, suspension, powertrain, and accumulator design), while Chapter 5 integrated these systems through simulation to validate its 3.73-second sprint capability. Chapters 6 onwards pivots from technical engineering to commercial strategy.
 
-This commercial strategy introduces a Testing-as-a-Service (TaaS) model centered on an adapted version of the Formula Student car, transitioning it from a sprint vehicle into a high-performance physical testing platform developed for advanced brake testing and autonomous vehicle (AV) validation in a business-to-business (B2B) context.
+This commercial strategy introduces a Testing-as-a-Service (TaaS) model centered on an adapted version of the FS car, transitioning it from a sprint vehicle into a high-performance physical testing platform developed for advanced brake testing and autonomous vehicle (AV) validation in a business-to-business (B2B) context.
 
-The rest of this chapter introduces our core value proposition and applies a market segmentation framework to justify a strategic focus on the autonomous sector, identifying high-priority entry points and target customers through competitive landscape evaluation, personas, and user journey mapping; with stakeholder adoption and go-to-market execution picked up in chapter \ref{chap:strategy_stakeholder_analysis}.
+This Chapter 6 introduces our core value proposition and applies a market segmentation framework to justify a strategic focus on the autonomous sector, identifying high-priority entry points and target customers through competitive landscape evaluation, personas, and user journey mapping. Chapter \ref{chap:strategy_stakeholder_analysis} continues with stakeholder adoption and go-to-market execution.
 
 \section{Product Overview and Value Proposition}
 \label{sec:value}
 
 The operational foundation of this service is a modified high-dynamic vehicle that functions as a moving target for AV systems, recreating complex real-world scenarios where rapid braking, turning, or emergency decision-making is required. To transform the base FS design into a regulated testing platform, the architecture will be updated with sophisticated data-logging features and interchangeable body shells for varied test environments.
 
-A central element of this proposal is the inheritance of the vehicle's original design constraints. Having been designed to meet strict Formula Student regulations—including a cockpit sized for a 95th percentile male—the vehicle possesses features that are strictly redundant for an unmanned testing platform. While these constraints present a potential competitive disadvantage, they are a fundamental reality of the base car’s origin. Consequently, following supervisor guidance, this business proposal proceeds with the assumption of a base product utilizing the existing high-performance supercapacitor accumulator, powertrain, and wheel design, while acknowledging that the inherited constraints of the FS regulatory framework are treated as fixed design parameters, Section \ref{sec:sprint} shows how these same characteristics define the commercial opportunity rather than limit it.
+A central element of this proposal is the inheritance of the vehicle's original design constraints. Having been designed to meet strict Formula Student regulations—including a cockpit sized for a 95th percentile male—the vehicle possesses features that are strictly redundant for an unmanned (AV) testing platform. While these constraints present a potential competitive disadvantage, they are a fundamental reality of the base car’s origin. Consequently, following supervisor guidance, this business proposal proceeds with the assumption that the base product utilises the existing high-performance supercapacitor accumulator, powertrain, and wheel design, while acknowledging that inherited constraints of the FS regulatory framework are treated as fixed design parameters, Section \ref{sec:sprint} shows how these same characteristics could define the commercial opportunity rather than limit it.
 
-Our service-based model allows clients to access these advanced testing capabilities without the capital expenditure or maintenance burdens of in-house facilities. This value proposition is structured around three primary benefits:
+Our service-based model allows clients to access advanced testing capabilities without the capital expenditure or maintenance burdens of in-house facilities. This value proposition is structured around three primary benefits:
 
 \begin{itemize}
 \item \textbf{Data Quality} -- The service enables consistent braking tests due to the supercapacitor power supply and can operate under extreme conditions enabled by tyre and chassis design. This improves validation accuracy and reduces uncertainty in performance evaluation.
@@ -2672,10 +2672,10 @@ Our service-based model allows clients to access these advanced testing capabili
 
 \item \textbf{Testing Realism} -- Physical testing reduces reliance on software-only validation and helps close the simulation-to-reality gap in autonomous systems development. These tests provide a more accurate representation of real-world decision-making, braking, and crash scenarios, which simulations cannot fully replicate. This makes the service particularly valuable for final-stage vehicle validation.
 
-\item \textbf{Client Affordability} -- Clients access advanced testing capabilities without the capital expenditure or maintenance burdens of in-house facilities, lowering the cost barrier to high-quality AV validation. How these benefits are delivered as a paid testing service is developed in chapter \ref{chap:strategy_stakeholder_analysis}.
+\item \textbf{Client Affordability} -- Clients access advanced testing capabilities without the capital expenditure or maintenance burdens of in-house facilities, lowering the cost barrier to high-quality AV validation. How these benefits are delivered as a paid testing service is developed in Chapter \ref{chap:strategy_stakeholder_analysis}.
 \end{itemize}
 
-Together, these four benefits define the platform's position in the AV validation market — acting as a “pain reliever” for slow, expensive testing cycles and a “gain creator” for safety validation confidence. The market segmentation and customer targeting that follows is built around this value proposition.
+Together, these four benefits define the platform's position in the AV validation market. It acts as a “pain reliever” for slow, expensive testing cycles and a “gain creator” for safety validation confidence. The market segmentation and customer targeting that follows is built around this value proposition.
 
 \section{Market Segmentation Strategy Overview}
 \label{sec:segmentation}
@@ -2692,7 +2692,7 @@ In this project, demographic segmentation is not appropriate due to the business
     \item \textbf{Occasion-based segmentation:} Testing needs vary depending on context, such as regulatory certification, early-stage research and development, or edge-case AI validation. Each occasion places different emphasis on flexibility, repeatability, and testing speed.
 \end{itemize}
 
-This hybrid framework ensures that segments are defined by both both  the type of organisation and the outcomes  they value,  forming the basis for the following market analysis and comparisons.
+This hybrid framework ensures that segments are defined by both the type of target organisation and the outcomes they value, forming the basis for the following market analysis and comparisons.
 
 \section{Market Option 1: Government Brake Testing Market}
 
@@ -2701,11 +2701,11 @@ This hybrid framework ensures that segments are defined by both both  the type o
 The government brake testing market includes organisations responsible for validating vehicle braking performance against safety standards. This market spans multiple stages, each relying on established methods designed to prioritise repeatability and regulatory acceptance:
 
 \begin{itemize}
-    \item \textbf{Manufacturer pre-certification testing:} Automotive manufacturers typically conduct in--house braking validation before certification using track--based testing, dynamometers, and simulation tools such as finite element modelling (FEM) with companies like Ansys and MSC Software.
+    \item \textbf{Manufacturer pre-certification testing:} Automotive manufacturers typically conduct in--house braking validation before certification using track--based testing, dynamometers, and simulation tools such as finite element modelling (FEM) with, e.g., Ansys and MSC Software.
     
     \item \textbf{Government-regulated certification testing:} Certification bodies, like the Driver and Vehicle Standards Agency (DVSA) in the UK, use standardised equipment such as roller brake testers and calibrated decelerometers to measure braking performance with equipment suppliers such as MAHA Maschinenbau Haldenwang providing certified systems
     
-    \item \textbf{Periodic roadworthiness inspection (e.g. MOT testing):} These tests typically use compact roller brake testers or portable decelerometers rather than track-based testing. Suppliers such as Tecalemit Garage Equipment and Capelec provide brake testing hardware commonly used in inspection centres. 
+    \item \textbf{Periodic roadworthiness inspection (e.g. MOT testing):} These tests typically use compact roller brake testers or portable decelerometers not track-based testing. Suppliers such as Tecalemit Garage Equipment and Capelec provide brake testing hardware commonly used in inspection centres. 
 \end{itemize}
 
 To estimate the size of this market we use a top-down estimation approach. The global brake tester market is estimated at $\sim$ 1.5 billion USD {\cite{promarketreports_brake_tester}}. As the majority of brake testing equipment is used in manufacturer validation, certification testing, and periodic inspection, this segment is estimated to account for approximatly 40\% of the total brake testing market. Therefore:
@@ -2813,9 +2813,9 @@ Competitive Rivalry & Moderate & Competition is driven by a mix of testing provi
 \end{tabularx}
 \end{table}
 
-The analysis indicates that high buyer power and the threat of substitutes—primarily software-based simulation—represent the most significant commercial hurdles. To mitigate these pressures, the platform must position itself as an integrated validation partner rather than a standard equipment vendor. By providing "ground-truth" physical data that digital environments cannot fully replicate, the service reduces the efficacy of substitutes and establishes a specialised competitive niche. Furthermore, as the autonomous vehicle testing market remains nascent, few firms have accumulated significant long-term operational experience. This limits the extent of established best practices, creating a distinct opportunity for new entrants to shape emerging standards.
+The analysis indicates that high buyer power and the threat of substitutes (primarily software-based simulation) represent the most significant commercial hurdles. To mitigate these pressures, the platform must position itself as an integrated validation partner rather than a standard equipment vendor. By providing "ground-truth" physical data that digital environments cannot fully replicate, the service reduces the efficacy of substitutes and establishes a specialised competitive niche. Furthermore, as the autonomous vehicle testing market remains nascent, few firms have accumulated significant long-term operational experience. This limits the extent of established best practices, creating a distinct opportunity for new entrants to shape emerging standards.
 
-The two most significant threats — buyer power and substitutes — both point to the same strategic response: routing to market through established testbed facilities rather than direct OEM sales (Chapter \ref{chap:strategy_stakeholder_analysis}).The direct (physical testing providers) and indirect (simulation-based alternatives) competitors operating within this landscape are examined below.
+The two most significant threats, i.e., buyer power and substitutes, both point to the same strategic response: routing to market through established testbed facilities rather than direct OEM sales (Chapter \ref{chap:strategy_stakeholder_analysis}).The direct (physical testing providers) and indirect (simulation-based alternatives) competitors operating within this landscape are examined below.
 
 \subsection{Micro Analysis: Direct Competitors}
 
