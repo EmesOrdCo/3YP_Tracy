@@ -13,6 +13,23 @@
 \providecommand{\contribution}[1]{\medskip\noindent\textbf{Section Contribution: #1}\par}
 \usepackage{xurl}
 \usepackage{multicol}
+
+\newcommand{\compactbib}{%
+  \vspace{-16pt}%
+  \enlargethispage{20pt}%
+  \section*{References}%
+  \vspace{-33pt}%
+  \begingroup
+    \begin{singlespace}%
+      \begin{multicols}{2}%
+        \scriptsize
+        \setlength{\bibitemsep}{0pt}%
+        \printbibliography[heading=none]%
+      \end{multicols}%
+    \end{singlespace}%
+  \endgroup
+}
+
 \usepackage{tocloft}
 \setlength{\cftbeforetoctitleskip}{0pt}
 \setlength{\cftaftertoctitleskip}{6pt}
@@ -67,7 +84,7 @@
 \end{refsection}
 
 \begin{refsection}
-\graphicspath{{yuze_assets/}}
+\graphicspath{{yuze_assets/Business/}}
 \input{yuze_business_body.tex}
 \end{refsection}
 

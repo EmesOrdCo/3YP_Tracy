@@ -6,9 +6,28 @@
 
 \documentclass[11pt, a4paper]{report}
 \usepackage{../../styling}
+\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
+\DefineBibliographyStrings{english}{bibliography = {References}}
 \usepackage{tabularx}
 \usepackage{tikz}
+\usepackage{multicol}
 \usetikzlibrary{arrows.meta,positioning,calc}
+
+\newcommand{\compactbib}{%
+  \vspace{-16pt}%
+  \enlargethispage{20pt}%
+  \section*{References}%
+  \vspace{-33pt}%
+  \begingroup
+    \begin{singlespace}%
+      \begin{multicols}{2}%
+        \scriptsize
+        \setlength{\bibitemsep}{0pt}%
+        \printbibliography[heading=none]%
+      \end{multicols}%
+    \end{singlespace}%
+  \endgroup
+}
 
 \numberwithin{equation}{section}
 

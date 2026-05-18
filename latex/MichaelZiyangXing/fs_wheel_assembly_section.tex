@@ -40,6 +40,7 @@ The vehicle is not intended to be a balanced skidpad, autocross and endurance ca
 \label{fig:susp_terms_defines}
 \end{figure}
 \subsection{Wheel-assembly requirements}
+\label{sec:suspension_requirements}
 The wheel assembly requirements were derived from rear traction, mass reduction, adjustability, rule compliance and subsystem integration. Table~\ref{tab:reqs_wheel} gives a concise flow-down from requirement area to design evidence. The table is intentionally compact: detailed vehicle-level acceleration targets are treated in the vehicle dynamics chapter, while this chapter concentrates on the physical wheel-assembly implications.
 
 \begin{table}[H]
@@ -272,6 +273,7 @@ N_{x,\mathrm{link}}\approx\frac{F_{x,\mathrm{wheel}}}{2\cos\alpha}
 The indicative link force is therefore about \(\sqrt{0.95^2+0.75^2}\approx\SI{1.2}{kN}\) before safety factors and transient loads. The wheel-locating links are selected as 4130 chromoly steel tube, nominally \SI{12.7}{mm} outside diameter and \SI{1.2}{mm} wall thickness, with threaded inserts and rod ends. Uprights are machined from 7075-T6 aluminium, with steel or aluminium shim packs and 4130 steel chassis brackets where welded load paths are needed.
 
 \subsection{Anti-squat and dynamic toe-control strategy}
+\label{sec:antisquat_dynamic_toe}
 Anti-squat geometry limits rear suspension compression during acceleration \parencite{zxSuspensionSecretsAntiSquat}. The initial target is 100\% anti-squat, corresponding to a \SI{12.7}{\degree} side-view force line. This value is a rational reference point for an acceleration-only car because the design objective is launch stability and rear geometry control, not all-round handling. It is not treated as a proven optimum; if testing shows excessive jacking or wheel hop, vertical shims at the upright-side pickups reduce the effective anti-squat.
 
 The static rear toe target is \SI{0.15}{\degree} toe-in. This gives initial straight-line stability, while the dynamic target is approximately zero rear toe at speed to reduce scrub. The contact-patch force at speed is

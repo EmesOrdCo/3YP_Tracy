@@ -134,6 +134,9 @@ The factor $0.2$ caps $k_\text{AS}$ at $0.2$ when $\text{AS}=1$, keeping the eff
 \label{sec:tyre}
 % ---------------------------------------------------------------------
 
+\noindent
+Longitudinal Pacejka parameters for this project were triangulated against archived team fits and tyre-modelling threads on the \emph{FSAE} engineering forum~\cite{fsae_engineering_forum}; the Magic Formula implementation below expresses the resulting friction--slip characteristic at each driven wheel.
+
 The longitudinal tractive force at each driven axle follows
 
 \begin{equation}
@@ -162,7 +165,7 @@ with load-dependent peak $D = F_z (p_{Dx1} + p_{Dx2}\,\Delta F_z /
 F_{z,0})$ and dimensionless stiffness factor $B = p_{Kx1} +
 p_{Kx2}\,\Delta F_z / F_{z,0}$.
 The coefficients used in the baseline configuration are listed in
-Table~\ref{tab:pacejka}. They are derived from the Avon FSAE tyre
+Table~\ref{tab:pacejka}. They are derived from the Avon FSAE~\cite{fsae_engineering_forum} tyre
 lateral data available to the group and typical FSAE longitudinal
 characteristics reported in the literature \cite{milliken1995,
 pacejka2012}, scaled to a representative slick peak friction coefficient
@@ -191,8 +194,10 @@ Reference load $F_{z,0}$        & \SI{1500}{\newton} & Normalisation; typical re
 \end{tabular}
 \end{table}
 
-\subsubsection{Thermal grip window}
+\subsubsection*{Thermal grip window}
+\phantomsection
 \label{sec:thermal}
+\addcontentsline{toc}{subsubsection}{Thermal grip window}
 
 Tyre grip is a strong function of carcass temperature. A compact
 lumped thermal model is available as an optional overlay on the
@@ -806,9 +811,9 @@ Drivetrain and Supercapacitors chapters.}
 \textbf{Parameter} & \textbf{Symbol} & \textbf{Value} & \textbf{Source} \\
 \hline
 Total vehicle mass & $m_v$ & 200\si{\kilo\gram} & Section~\ref{sec:monte_carlo}; chassis $<$\SI{220}{\kilo\gram} \\
-Wheelbase & $L$ & 1.60\si{\metre} & Chassis \\
-CG longitudinal & $L_{CG}$ & 1.14\si{\metre} & Section~\ref{sec:load_transfer} \\
-CG height & $h_{CG}$ & 0.22\si{\metre} & Section~\ref{sec:load_transfer} \\
+Wheelbase & $L$ & 1.573\si{\metre} & Chassis layout (CAD) \\
+CG longitudinal & $L_{CG}$ & 1.092\si{\metre} & Chassis layout (CAD) \\
+CG height & $h_{CG}$ & 0.325\si{\metre} & Chassis layout (CAD) \\
 Wheel radius & $r_w$ & 0.247\si{\metre} & Section~\ref{sec:monte_carlo}; loaded radius \\
 Peak tyre grip & $p_{Dx1}$ & 1.70 & Table~\ref{tab:pacejka} \\
 Accumulator nominal voltage & $V_{\mathrm{bus}}(t)$ & \SI{600}{\volt} (nominal) & Section~\ref{sec:accum_storage_model} \\
@@ -889,17 +894,10 @@ omits a few other models that could reduce the gap between sim and reality. Main
 \textbf{driveline torsional compliance} (minor launch oscillation; beyond the rigid torque path implied by Section~\ref{sec:mechanical_design_packaging}),
 \textbf{motor electrical dynamics} (finite torque rise time and brief dips; beyond the quasi-static electrical limit in Section~\ref{sec:powertrain}),
 \textbf{electrical dynamics beyond quasi-static $V_{\mathrm{bus}}(t)$:} inverter/motor current-control transients and line effects not resolved in Sections~\ref{sec:powertrain}--\ref{sec:accum_storage_model}, and \textbf{driver reaction time}
-(\SIrange{0.2}{0.4}{\second} omitted). Combined with
-Section~\ref{sec:monte_carlo}, the headline \SI{75}{\metre} time is
-estimated within roughly $\pm \SI{0.20}{\second}$. Adding a typical
-\SIrange{0.2}{0.4}{\second} driver reaction delay to the Monte Carlo
-mean of \SI{4.03}{\second} (Section~\ref{sec:monte_carlo}) gives a
-realistic on-event prediction of
-\SIrange{4.23}{4.43}{\second}, which sits comfortably within the band
-of published Formula Student Electric times at FSG~2023
-\cite{fsg_results_2023}, confirming that the deterministic
-\SI{3.78}{\second} baseline is best read as a knife-edge optimum
-rather than an expected race-day figure.
+(\SIrange{0.2}{0.4}{\second} omitted from the timestepping model).
+Section~\ref{sec:conclusions} relates the Monte Carlo central estimate,
+reaction-time bracketing extremes, and the FS-D~5.3.2 manual-mode
+points readout used for competition scoring.
 
 % ---------------------------------------------------------------------
 \section{Conclusions and Further Work}
@@ -908,10 +906,10 @@ rather than an expected race-day figure.
 
 \noindent This summary restates the numerics without repeating Section~\ref{sec:discussion}.
 Section~\ref{sec:vv} gives hand checks, timestep convergence, and a constant-power bound; Section~\ref{sec:tornado} ranks longitudinal centre of gravity and peak grip as the dominant levers on the \SI{75}{\metre} time, with wheel radius, driveline efficiency, mass, and gear ratio as a secondary band.
-Nelder--Mead over \num{243} evaluations reaches \SI{3.67}{\second} from a \SI{3.78}{\second} baseline under FS-EV~2.2, FS-D~5.3.1, and positive front load (Section~\ref{sec:optimisation}); wet grip scaling preserves the same compliance (Section~\ref{sec:drywet}).
+The numerical search in Section~\ref{sec:optimisation} reduces the cold-design prediction from \SI{3.78}{\second} to \SI{3.67}{\second} under FS-EV~2.2, FS-D~5.3.1, and positive front load; wet grip scaling preserves the same compliance (Section~\ref{sec:drywet}).
 The \num{500}-draw Monte Carlo mean is \SI{4.03}{\second} with 5--95 band \SIrange{3.86}{4.27}{\second} and full sample compliance (Section~\ref{sec:monte_carlo}); the baseline trace matches the predicted traction-to-power split and~$v^\star$ (Section~\ref{sec:constraint_activity}).
-Adding a typical \SIrange{0.2}{0.4}{\second} driver reaction delay to that mean implies an on-event band of about \SIrange{4.23}{4.43}{\second}, which is consistent with published Formula Student Electric acceleration times at FSG~2023~\cite{fsg_results_2023}.
-Under FS-D~5.3.2 with notional $T_\text{fastest}=\SI{3.5}{\second}$, the baseline and optimised sets map to \num{59.2}/75 and \num{65.1}/75 points respectively.
+
+Under FS-D~5.3.2 with $P_\mathrm{max}=75$ and a notional $T_\text{fastest}=\SI{4.0}{\second}$, the acceleration scoring readout uses the Monte Carlo mean (\SI{4.03}{\second}; Section~\ref{sec:monte_carlo}) plus driver-reaction extremes $+\SI{0.2}{\second}$ and $+\SI{0.4}{\second}$, giving on-event times \SI{4.23}{\second} and \SI{4.43}{\second}; on a linear bracket between $T_\text{fastest}$ and $T_\mathrm{max}=1.5\,T_\text{fastest}=\SI{6.0}{\second}$ (the usual FS~2025 manual-mode shape), those times correspond to about \num{66.8}/75 and \num{59.7}/75 respectively.
 
 \subsection{Further work}
 \label{sec:further_work}
