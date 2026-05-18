@@ -1764,11 +1764,12 @@ The accumulator system design combines proven supercapacitor technology with mod
 \label{sec:intro}
 % ---------------------------------------------------------------------
 
-This chapter builds an accurate, rules compliant simulation of the Formula Student acceleration event. It's goal is to simulate the performance of build and it is used to inform subsystem design choices before hardware is fixed.
-The Formula Student Acceleration Event (FS-D~5) is a \SI{75}{\metre}
-standing start and is subject to, FS-EV~2.2 which caps electrical power drawn from the
+This chapter details how we developed our bespoke, rules compliant simulation of the Formula Student acceleration event. This simulation has been used to inform subsystem design choices before hardware is fixed as seen by the preceeding chapters and also models the performance of the final car.
+The Formula Student Acceleration Event (FS-D~5) is subject to two key rules that inform our simulation; FS-EV~2.2 which caps electrical power drawn from the
 accumulator at \SI{80}{\kilo\watt}, and FS-D~5.3.1 disqualifies runs
-over \SI{25}{\second}. A competitive configuration must be
+over \SI{25}{\second}. 
+
+A competitive configuration must be
 traction-limited at launch and power-limited later while respecting
 the power cap and avoiding front-axle lift (wheelieing). Mass, centre of gravity,
 tyres, gearing, drivetrain efficiency, and electrical architecture are
@@ -1913,7 +1914,7 @@ with load-dependent peak $D = F_z (p_{Dx1} + p_{Dx2}\,\Delta F_z /
 F_{z,0})$ and dimensionless stiffness factor $B = p_{Kx1} +
 p_{Kx2}\,\Delta F_z / F_{z,0}$.
 The coefficients are listed in
-Table~\ref{tab:pacejka}. They are derived from the Avon FSAE tyre
+Table~\ref{tab:pacejka}. They are derived from the Avon FSAE~\cite{fsae_engineering_forum} tyre
 lateral data available to the group and typical FSAE longitudinal
 characteristics reported in the literature \cite{milliken1995,
 pacejka2012}, scaled to a representative slick peak friction coefficient
@@ -2493,9 +2494,9 @@ Drivetrain and Supercapacitors chapters.}
 \textbf{Parameter} & \textbf{Symbol} & \textbf{Value} & \textbf{Source} \\
 \hline
 Total vehicle mass & $m_v$ & 200\si{\kilo\gram} & Section~\ref{sec:monte_carlo}; chassis $<$\SI{220}{\kilo\gram} \\
-Wheelbase & $L$ & 1.60\si{\metre} & Chassis \\
-CG longitudinal & $L_{CG}$ & 1.14\si{\metre} & Section~\ref{sec:load_transfer} \\
-CG height & $h_{CG}$ & 0.22\si{\metre} & Section~\ref{sec:load_transfer} \\
+Wheelbase & $L$ & 1.573\si{\metre} & Chassis (Table~\ref{tab:layout_summary}) \\
+CG longitudinal & $L_{CG}$ & 1.092\si{\metre} & Chassis (Table~\ref{tab:layout_summary}) \\
+CG height & $h_{CG}$ & 0.325\si{\metre} & Chassis (Table~\ref{tab:layout_summary}) \\
 Wheel radius & $r_w$ & 0.247\si{\metre} & Section~\ref{sec:monte_carlo}; loaded radius \\
 Peak tyre grip & $p_{Dx1}$ & 1.70 & Table~\ref{tab:pacejka} \\
 Accumulator nominal voltage & $V_{\mathrm{bus}}(t)$ & \SI{600}{\volt} (nominal) & Section~\ref{sec:accum_storage_model} \\
@@ -4587,14 +4588,15 @@ variable \pounds/day together, and also vary only sold days (the driver least
 under management control), until NPV@20\% reaches zero; the model then implies
 the following year-by-year values:
 
-\begin{center}
-\small
-\begin{tabular}{rrrr|r}
+\noindent
+{\small
+\setlength{\tabcolsep}{6pt}%
+\begin{tabularx}{\textwidth}{@{}rr>{\raggedleft\arraybackslash}X>{\raggedleft\arraybackslash}X|r@{}}
 \hline
 \textbf{Y} &
-\textbf{Joint} &
-\textbf{Bl.\ \pounds/d} &
-\textbf{Var.\ \pounds/d} &
+\textbf{Sold Days} &
+\textbf{Blended Day rate (\pounds/d)} &
+\textbf{Variable Cost (\pounds/d)} &
 \textbf{Sold Days Only} \\
 \hline
 1 & 30 & 6{,}883 & 2{,}489 & 27 \\
@@ -4603,8 +4605,8 @@ the following year-by-year values:
 4 & 112 & 8{,}260 & 2{,}651 & 100 \\
 5 & 165 & 8{,}718 & 2{,}705 & 146 \\
 \hline
-\end{tabular}
-\end{center}
+\end{tabularx}%
+\par}
 
 \noindent For this joint stress, end-Y2 cumulative cash is about
 $-$\pounds133\,k. The Sold Days Only column shows an end-Y2 cumulative cash of $-$\pounds108\,k, so volume alone can
@@ -4621,14 +4623,15 @@ A separate numerical solve targets end-Y2 cumulative cash $\approx$ \pounds0\,k
 (the tightest point of the published cash forecast). The implied year-by-year
 values are:
 
-\begin{center}
-\small
-\begin{tabular}{rrrr|r}
+\noindent
+{\small
+\setlength{\tabcolsep}{6pt}%
+\begin{tabularx}{\textwidth}{@{}rr>{\raggedleft\arraybackslash}X>{\raggedleft\arraybackslash}X|r@{}}
 \hline
 \textbf{Y} &
-\textbf{Joint} &
-\textbf{Bl.\ \pounds/d} &
-\textbf{Var.\ \pounds/d} &
+\textbf{Sold Days} &
+\textbf{Blended Day rate (\pounds/d)} &
+\textbf{Variable Cost (\pounds/d)} &
 \textbf{Sold Days Only} \\
 \hline
 1 & 36 & 7{,}282 & 2{,}366 & 34 \\
@@ -4637,8 +4640,8 @@ values are:
 4 & 136 & 8{,}738 & 2{,}521 & 127 \\
 5 & 200 & 9{,}223 & 2{,}572 & 187 \\
 \hline
-\end{tabular}
-\end{center}
+\end{tabularx}%
+\par}
 
 \noindent For joint stresses that result in end-Y2 cumulative cash = \pounds0\,k the
 NPV is still about \pounds822\,k. The Sold Days Only model shows
