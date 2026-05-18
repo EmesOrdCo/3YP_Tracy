@@ -1311,7 +1311,7 @@ This chapter presents the accumulator design for the FS vehicle. Objectives are 
 
 The chapter is structured as follows: Section~\ref{sec:technology_selection} covers technology selection; Section~\ref{sec:electrical_system_design} covers electrical design; Section~\ref{sec:mechanical_design_packaging} covers mechanical packaging; Section~\ref{sec:results_discussion} presents results; and Section~\ref{sec:future_improvements_conclusion} outlines future work and concludes.
 
-This chapter covers technology and cell selection for an acceleration-only duty cycle; electrical architecture at pack and segment level; in-casing electrical safety measures required by the Formula Student rules; the AMS slave-to-master monitoring architecture and its interface to the vehicle ECU; mechanical packaging of segment modules and accumulator container layout; and analytical verification against requirements and key alternatives.
+This chapter covers technology and cell selection; electrical architecture at pack and segment level; in-casing electrical safety measures required by the Formula Student rules; the AMS slave-to-master monitoring architecture and its interface to the vehicle ECU; mechanical packaging of segment modules and accumulator container layout; and analytical verification against requirements and key alternatives.
 
 Safety and charging systems outside the accumulator casing, full AMS firmware implementation, detailed manufacturing process planning, exhaustive scrutineering documentation, and complete physical test campaign data are treated as out of scope.
 
@@ -1322,10 +1322,9 @@ Safety and charging systems outside the accumulator casing, full AMS firmware im
 Due to the nature of the acceleration-only event, the primary design driver is peak power delivery rather than total energy capacity. This shifts the focus towards technologies with high power density.
 
 To compare energy storage technologies, the following criteria were defined: (1) power output, (2) total energy capacity, and (3) a combined optimisation objective covering mass, volume, cost, and procurement risk.
-FS rules limit TS power at the TSAC outlet to 80 kW (FS-EV~2.2.1). Power is treated as constant for an initial conservative energy estimate, assuming traction-limited periods are brief relative to total run time. Event duration is set to \SI{4}{\second}, based on top Formula Student performances of \SI{3.5}{\second}.
+FS rules limit tractive system (TS) power at the tractive system accumulator (TSAC) outlet to 80 kW (FS-EV~2.2.1). Power is treated as constant for an initial conservative energy estimate, assuming traction-limited periods are brief relative to total run time. Event duration is set to \SI{4}{\second}, based on top Formula Student performances of \SI{3.5}{\second}.
 
 The required energy capacity is calculated as:
-\vspace{6pt}
 \begin{equation*}
 E = P \cdot t = 80~\text{kW} \times 4~\text{s} = 320~\text{kJ} = 89~\text{Wh}
 \end{equation*}
@@ -1369,44 +1368,64 @@ The resulting design requirements used for downstream verification are defined i
 Table~\ref{tab:storage_comparison} summarises representative power and energy densities of the best 3 candidates for our solution. Technologies have been shortlisted by minimum mass for the required power and energy.
 
 Other accumulator technologies in the table were considered, but not shown since these had even lower power densities than lithium batteries and therefore were not competitive.
-Using this metric, asymmetric / hybrid supercapacitors are best; however, they are excluded further from consideration due to being in the research phase \cite{kalaiarasi2024tale}, leading to limited commercial availability and specification data to ground the design around. The focus is therefore on comparing symmetric supercapacitors and high-power lithium-polymer batteries, with the former expected to have a significant mass advantage due to superior power density.
+Using this metric, asymmetric / hybrid supercapacitors are best; however, they are excluded further from consideration due to being in the research phase \cite{kalaiarasi2024tale}, leading to limited commercial availability and specification data to ground the design around. The focus is therefore on comparing symmetric supercapacitors and high-power Lithium-ion Polymer (LiPo) batteries, with the former expected to have a significant mass advantage due to superior power density.
 
 \subsection{Supercapacitor Analysis}
 \label{subsec:supercapacitor_analysis}
 
-Supercapacitors are treated as the primary candidate, with lithium-polymer cells used as a benchmark. Electric Double Layer Capacitor (EDLC) devices are selected within the symmetric supercapacitor class due to relatively high energy capacity. Energy for capacitors is given by:
-\vspace{3pt}
+Supercapacitors are treated as the primary candidate, with LiPo cells used as a benchmark. Electric Double Layer Capacitor (EDLC) devices are selected within the symmetric supercapacitor class due to relatively high energy capacity. Energy for capacitors is given by:
+\begingroup
+\setlength{\abovedisplayskip}{8pt plus 0pt minus 0pt}
+\setlength{\belowdisplayskip}{8pt plus 0pt minus 0pt}
+\setlength{\abovedisplayshortskip}{8pt plus 0pt minus 0pt}
+\setlength{\belowdisplayshortskip}{8pt plus 0pt minus 0pt}
 \begin{equation}
 E=\frac{1}{2}CV^2 = \frac{1}{2} C (V_{max}^2-V_{min}^2)
 \label{eq:capacitor_energy}
 \end{equation}
+\endgroup
 
 where $E$ is energy (J), $C$ is capacitance (F), and $V$ is voltage (V).
 
 From Equation \eqref{eq:capacitor_energy}, voltage sag significantly affects usable energy capacity, necessitating careful consideration of voltage ranges. The upper limit is set by FS-EV maximum voltage regulation (600\,V per FS-EV~4.1.1), while the lower limit is determined by inverter and motor minimum operating requirements. The powertrain operating strategy in Section~\ref{subsec:powertrain_motor_operation} indicates the motor can be controlled under the power cap with an effective operating voltage on the order of \SI{350}{\volt}, so \SI{400}{\volt} is adopted here as a conservative design minimum.
-\vspace{3pt}
+\begingroup
+\setlength{\abovedisplayskip}{8pt plus 0pt minus 0pt}
+\setlength{\belowdisplayskip}{8pt plus 0pt minus 0pt}
+\setlength{\abovedisplayshortskip}{8pt plus 0pt minus 0pt}
+\setlength{\belowdisplayshortskip}{8pt plus 0pt minus 0pt}
 \begin{equation}
 C=\frac{2 E}{V_{max}^2-V_{min}^2}=\frac{2 \cdot 320\text{ kJ}}{600\text{ V}^2-400\text{ V}^2}=3.2\text{ F}
 \label{eq:required_capacitance}
 \end{equation}
+\endgroup
 
 To achieve the required capacitance of 3.2 F at 600 V, cells are connected in series. The general relation for non-identical cells reduces to the equally rated case as:
-\vspace{3pt}
+\begingroup
+\setlength{\abovedisplayskip}{8pt plus 0pt minus 0pt}
+\setlength{\belowdisplayskip}{8pt plus 0pt minus 0pt}
+\setlength{\abovedisplayshortskip}{8pt plus 0pt minus 0pt}
+\setlength{\belowdisplayshortskip}{8pt plus 0pt minus 0pt}
 \begin{equation}
 \frac{1}{C_{total}} = \sum_{i=1}^{n} \frac{1}{C_{i}}\;\Rightarrow\;C_{series}=\frac{C_{i}}{n}
 \label{eq:series_capacitance}
 \end{equation}
+\endgroup
 
 where \(C_i\) is the individual cell capacitance, and n is the number of cells in series.
 
 For the design specification, assuming a cell voltage of 3 V, 200 cells are required in series to reach 600 V. To achieve the required capacitance of 3.2 F, cells must provide 640 F capacitance.
 
 Another key parameter is the Equivalent Series Resistance (ESR), which becomes an important consideration for series-connected supercapacitor cells. The voltage evolution during constant-power discharge is modelled via the following first-order differential equation:
-\vspace{3pt}
+\begingroup
+\setlength{\abovedisplayskip}{8pt plus 0pt minus 0pt}
+\setlength{\belowdisplayskip}{8pt plus 0pt minus 0pt}
+\setlength{\abovedisplayshortskip}{8pt plus 0pt minus 0pt}
+\setlength{\belowdisplayshortskip}{8pt plus 0pt minus 0pt}
 \begin{equation}
 \frac{dV}{dt} = -\frac{P}{C \cdot V} - \frac{P^2 \cdot R_{total}}{C \cdot V^3}
 \label{eq:pack_voltage_dynamics}
 \end{equation}
+\endgroup
 
 Where $V(t)$ is the instantaneous pack voltage, $P$ is the constant power draw (W), $C$ is the pack capacitance (F), and $R_{total} = ESR_{cell} \times n$ is the total series resistance (\(\Omega\)) with $ESR_{cell}$ the individual cell ESR and $n$ the number of cells in series. The first term represents capacitive voltage decay; the second term represents resistive voltage loss proportional to $I^2 R$ dissipation.
 
@@ -1445,7 +1464,6 @@ The supercapacitor datasheet gives a capacitance tolerance of +0--20\% (typicall
 Cells are supplied in packs of 90, requiring purchase of three packs and selection of the best 200 cells. For this event, selection is simplified to maximising capacitance rather than minimising variance because balancing heat is not expected to be the limiting factor.
 
 The cell capacitances are modelled using a beta distribution:
-\vspace{3pt}
 \begin{equation*}
 T = 0.2*Beta(\alpha = 3, \beta = 5)
 \end{equation*}
@@ -1479,7 +1497,7 @@ The two remaining candidates (EDLC and LiPo) are compared on mass, volume, cost,
 
 \begin{table}[htbp]
     \centering
-    \caption{Comparison of EDLC supercapacitor and high-power Li-Po battery technologies \cite{batpac2022manual}. Weighted scoring system applied. LiPo wins by 4.0\% overall score, driven by volume advantages.}
+    \caption{Comparison of EDLC supercapacitor and high-power LiPo battery technologies \cite{batpac2022manual}. Weighted scoring system applied. LiPo wins by 4.0\% overall score, driven by volume advantages.}
     \label{tab:tech_comparison}
     \footnotesize
     \begin{tabular}{|l|c|c|l|}
@@ -1509,10 +1527,15 @@ The two remaining candidates (EDLC and LiPo) are compared on mass, volume, cost,
 Two different methodologies are used to estimate mass and volume for the two technologies. For LiPo, the top-down BatPac simulation tool \cite{batpac2022manual} determines a mass-sensitive pack design. Inputs characterise both the FS regulations and the acceleration focus whilst retaining physical accuracy. An asterisk is placed next to mass in the table, as this is not total mass (which cannot yet be determined) but the sum of cell mass and other technology-specific masses. For LiPo this includes heavier pack hardware and thermal management, whilst for SC only lighter pack hardware weight is included. The supercapacitor cell mass and volume are calculated using a bottom-up approach based on the selected cell (SC1) specifications \cite{sech-c46w-3r0-0600}. Whilst LiPo pouch cells can be more tightly packed than cylindrical SC cells, they require more mechanical support, so cell volume is an accurate relative indicator of total volume for this comparison.
 
 A weighted scoring system is applied using the following formulation:
-\vspace{3pt}
+\begingroup
+\setlength{\abovedisplayskip}{8pt plus 0pt minus 0pt}
+\setlength{\belowdisplayskip}{8pt plus 0pt minus 0pt}
+\setlength{\abovedisplayshortskip}{8pt plus 0pt minus 0pt}
+\setlength{\belowdisplayshortskip}{8pt plus 0pt minus 0pt}
 \begin{equation*}
 \text{Score} = \frac{\text{Best Value in Category}}{\text{Component Value}} \cdot \text{Weight}
 \end{equation*}
+\endgroup
 
 A 70-30 weighting is typically applied for mass and volume, as mass has a higher impact on performance. Volume's biggest impact is the increased aerodynamic drag which it introduces. However, for this acceleration-only application, where initial speeds are low, this has a less significant effect, hence the weightings have been adjusted to 75-25 (or 3-1) to reflect this appropriately.
 
@@ -1523,7 +1546,7 @@ Whilst LiPo is advantageous in our weighted scoring analysis, it does not consid
 
 \subsection{System Architecture Overview}
 
-Figure~\ref{fig:electronics_architecture} shows the top-level accumulator architecture. This section is structured from power-path implementation to supervisory control: busbar design, safety design, monitoring and control, and finally system integration. The architecture consists of five high-voltage (HV) segments, each monitored by AMS slaves (MC33771 \cite{nxp-mc33771-ds}), communicating with the AMS master (FRDM33664BEVB \cite{nxp-frdm33664bevb-ug}) via the MC33664 TPL interface \cite{nxp-mc33664-ds}. The low-voltage (LV) control domain interfaces to the vehicle ECU (STM32 Nucleo-F4 \cite{stm32-nucleo-f4}) over CAN, using the SN65HVD230 transceiver \cite{ti-sn65hvd230-ds}. Additional key components include Bussmann 170M1759 fusing at inter-segment \cite{eaton-bussmann-170m1759-ds}, and an EarthX ETX12A 12 V supply battery \cite{earthx-etx12a-ds}. External charging and vehicle shutdown-chain implementation are outside the scope of this section.
+Figure~\ref{fig:electronics_architecture} shows the top-level accumulator architecture. This section is structured from power-path implementation to supervisory control: busbar design, safety design, monitoring and control, and finally system integration. The architecture consists of five high-voltage (HV) segments, each monitored by AMS slaves (MC33771 \cite{nxp-mc33771-ds}), communicating with the AMS master (FRDM33664BEVB \cite{nxp-frdm33664bevb-ug}) via the MC33664 Twisted Pair Link (TPL) interface \cite{nxp-mc33664-ds}. The low-voltage (LV) control domain interfaces to the vehicle ECU (STM32 Nucleo-F4 \cite{stm32-nucleo-f4}) over CAN, using the SN65HVD230 transceiver \cite{ti-sn65hvd230-ds}. Additional key components include Bussmann 170M1759 fusing at inter-segment \cite{eaton-bussmann-170m1759-ds}, and an EarthX ETX12A 12 V supply battery \cite{earthx-etx12a-ds}. External charging and vehicle shutdown-chain implementation are outside the scope of this section.
 
 \begin{figure}[!htbp]
     \centering
@@ -1537,14 +1560,20 @@ Figure~\ref{fig:electronics_architecture} shows the top-level accumulator archit
 Supercapacitors are connected via busbars rather than direct cell-to-cell welding for thermal expansion management and assembly accessibility. Busbar material selection minimises $\rho_{e} \cdot \rho_{m}$, where $\rho_{e}$ is electrical resistivity and $\rho_{m}$ is mass density. Although copper exhibits superior electrical performance, aluminium 1005 was specified for compatibility with aluminium cell terminals.
 
 Busbar connection area is matched to the terminal diameter, $d_{t}$, with average busbar length $L$ and target resistance per connection, $R$. The required thickness is calculated as:
-\vspace{3pt}
+
+\begingroup
+\setlength{\abovedisplayskip}{8pt plus 0pt minus 0pt}
+\setlength{\belowdisplayskip}{8pt plus 0pt minus 0pt}
+\setlength{\abovedisplayshortskip}{8pt plus 0pt minus 0pt}
+\setlength{\belowdisplayshortskip}{8pt plus 0pt minus 0pt}
 \begin{equation*}
 t = \frac{\rho_{e} L}{R d_{t}} = \frac{\left(2.8 \times 10^{-8}\,\Omega\,\text{m}\right)\left(50 \times 10^{-3}\,\text{m}\right)}{\left(0.1 \times 10^{-3}\,\Omega\right)\left(10 \times 10^{-3}\,\text{m}\right)} = 1.41\,\text{mm} \approx 1.45\,\text{mm} \text{ (standard 15 gauge)}
 \end{equation*}
+\endgroup
 
 \subsection{Safety Design}
 
-Grounding is treated as a floating HV system with insulation monitoring against chassis (FS-EV~4.3.1). Fuse placement is integrated per segment to localise faults and satisfy FS-EV~3.2.1 and FS-EV~3.2.7. For EMI robustness and rule-compliant layout practice, communication wiring follows segregated HV/LV routing to satisfy FS-EV~4.3.3 physical separation requirements. Any external AMS master to vehicle ECU or diagnostic connection is implemented with galvanic isolation in accordance with FS-EV~4.3.2. Vehicle-level shutdown-chain implementation, AIR actuation hardware, and charging safety circuitry are outside the scope.
+Grounding is treated as a floating HV system with insulation monitoring against chassis (FS-EV~4.3.1). Fuse placement is integrated per segment to localise faults and satisfy FS-EV~3.2.1 and FS-EV~3.2.7. For electromagnetic interference (EMI) robustness and rule-compliant layout practice, communication wiring follows segregated HV/LV routing to satisfy FS-EV~4.3.3 physical separation requirements. Any external AMS master to vehicle ECU or diagnostic connection is implemented with galvanic isolation in accordance with FS-EV~4.3.2. Vehicle-level shutdown-chain implementation, AIR actuation hardware, and charging safety circuitry are outside the scope.
 
 \subsection{Monitoring and Control Systems}
 \label{subsec:electrical_design}
@@ -1552,11 +1581,11 @@ Grounding is treated as a floating HV system with insulation monitoring against 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth]{figures/schematics/PCB.pdf}
-    \caption{Complete segment AMS PCB schematic showing MC33771 topology for 40-cell segment monitoring.}
+    \caption{Complete segment AMS printed circuit board (PCB) schematic showing MC33771 topology for 40-cell segment monitoring.}
     \label{fig:pcb_schematic}
 \end{figure}
 
-The controller IC is powered directly by the cells themselves via the \texttt{VPWR} pins and therefore floats at the segment potential. The daisy-chain interface follows TPL pin mapping, with \texttt{COM\_IN} receiving data from the lower segment and \texttt{COM\_OUT} forwarding data to the upper segment.
+The controller integrated circuit (IC) is powered directly by the cells themselves via the \texttt{VPWR} pins and therefore floats at the segment potential. The daisy-chain interface follows TPL pin mapping, with \texttt{COM\_IN} receiving data from the lower segment and \texttt{COM\_OUT} forwarding data to the upper segment.
 
 \begin{figure}[!htbp]
     \centering
@@ -1565,22 +1594,33 @@ The controller IC is powered directly by the cells themselves via the \texttt{VP
     \label{fig:pmic}
 \end{figure}
 
-\textbf{AMS architecture and communication:} The monitoring network adopts a scalable master-slave topology using NXP MC33771 controllers across five accumulator segments \cite{nxp-mc33771-ds}. Communication is implemented with the NXP Twisted Pair Link (TPL) interface via the MC33664, whose current-mode transmission provides strong immunity to inverter-generated EMI \cite{nxp-mc33664-ds}. Galvanic domain separation in the daisy chain is maintained using high-voltage safety capacitors ($C4$, $C5$), which couple communication across stacked segment voltage domains while blocking DC transfer.
+\textbf{AMS architecture and communication:} The monitoring network adopts a scalable master-slave topology using NXP MC33771 controllers across five accumulator segments \cite{nxp-mc33771-ds}. Communication is implemented with the NXP TPL interface via the MC33664, whose current-mode transmission provides strong immunity to inverter-generated EMI \cite{nxp-mc33664-ds}. Galvanic domain separation in the daisy chain is maintained using high-voltage safety capacitors ($C4$, $C5$), which couple communication across stacked segment voltage domains while blocking DC transfer.
 
 The TPL bus is implemented as a single-ended daisy chain from the AMS master to the first AMS slave. The architecture uses three AMS slaves per segment across five segments (15 slaves total), with data forwarded stage-by-stage via \texttt{COM\_OUT} to \texttt{COM\_IN}. The end of the chain is terminated using the NXP-recommended end-of-line network, including a termination resistor, to ensure signal integrity and avoid reflections.
 
 Each slave device performs segment voltage and temperature acquisition and reports diagnostic status to the AMS master. The AMS master (FRDM33664BEVB) executes pack-level limit checks, aggregates faults, and communicates accumulator status to the vehicle ECU (STM32 Nucleo-F4).
 
-\textbf{Voltage sensing and balancing:} Cell voltage sensing uses an anti-aliasing filter with $R = 100\,\Omega$ (R6, R7 in Figure~\ref{fig:signal_conditioning}a) and $C = 47\,\text{nF}$ (C8, C9 in Figure~\ref{fig:signal_conditioning}a). The corresponding cutoff frequency
-\vspace{6pt}
+\textbf{Voltage sensing and balancing:} Cell voltage sensing uses an anti-aliasing resistor-capacitor (RC) filter with $R = 100\,\Omega$ (R6, R7 in Figure~\ref{fig:signal_conditioning}a) and $C = 47\,\text{nF}$ (C8, C9 in Figure~\ref{fig:signal_conditioning}a). The corresponding cutoff frequency:
+\begingroup
+\setlength{\abovedisplayskip}{8pt plus 0pt minus 0pt}
+\setlength{\belowdisplayskip}{8pt plus 0pt minus 0pt}
+\setlength{\abovedisplayshortskip}{8pt plus 0pt minus 0pt}
+\setlength{\belowdisplayshortskip}{8pt plus 0pt minus 0pt}
 \begin{equation*}
 f_c = \frac{1}{2\pi R C} = \frac{1}{2\pi (100)(47 \times 10^{-9})} \approx 33.8\,\text{kHz},
 \end{equation*}
+\endgroup
+
 which attenuates high-frequency inverter switching content while preserving measurement bandwidth for pack diagnostics. Based on the binned-cell capacitance spread of up to 10\% (Table~\ref{tab:capacitance_binning_results}), passive balancing is required to control inter-cell voltage divergence. Passive balancing is implemented through switchable resistors with $R_{bal} = 33\,\Omega$ (R5, R8, R9 in Figure~\ref{fig:signal_conditioning}a). At a nominal maximum cell voltage of 3 V, the corresponding balancing current is $I_{bal} \approx 91\,\text{mA}$, and the dissipation per balancing branch is
-\vspace{6pt}
+\begingroup
+\setlength{\abovedisplayskip}{8pt plus 0pt minus 0pt}
+\setlength{\belowdisplayskip}{8pt plus 0pt minus 0pt}
+\setlength{\abovedisplayshortskip}{8pt plus 0pt minus 0pt}
+\setlength{\belowdisplayshortskip}{8pt plus 0pt minus 0pt}
 \begin{equation*}
 P_{diss} = \frac{V_{cell}^{2}}{R_{bal}} = \frac{(3\,\text{V})^{2}}{33\,\Omega} \approx 0.27\,\text{W}.
 \end{equation*}
+\endgroup
 
 This thermal load requires resistor packages with sufficient margin, so the format 1210, rated at 0.5\,W, was chosen for stable operation during balancing intervals.
 
@@ -1603,7 +1643,7 @@ This thermal load requires resistor packages with sufficient margin, so the form
     \label{fig:signal_conditioning}
 \end{figure}
 
-\textbf{Temperature monitoring and protection:} Temperature channels are conditioned with an RC input filter ($R=10\,\text{k}\Omega$, $C=47\,\text{nF}$), implemented as R37 \& C20 in Figure~\ref{fig:signal_conditioning}b. This suppresses transient noise that could otherwise cause false over-temperature flags. NTC thermistors are connected directly to \texttt{GPIO} measurement channels, and cell temperature is reconstructed from this voltage. Sensors are placed on 30\% of the cells to satisfy temperature monitoring requirements (FS-EV~5.8.4). The protection strategy applies a hard fault response using the AIR when any monitored cell temperature exceeds $T > 60^\circ\text{C}$ (FS-EV~5.8.5), with AMS-triggered shutdown behavior as required by FS-EV~5.8.7.
+\textbf{Temperature monitoring and protection:} Temperature channels are conditioned with an RC input filter ($R=10\,\text{k}\Omega$, $C=47\,\text{nF}$), implemented as R37 \& C20 in Figure~\ref{fig:signal_conditioning}b. This suppresses transient noise that could otherwise cause false over-temperature flags. Negative temperature coefficient (NTC) thermistors are connected directly to general-purpose input/output (GPIO) measurement channels, and cell temperature is reconstructed from this voltage. Sensors are placed on 30\% of the cells to satisfy temperature monitoring requirements (FS-EV~5.8.4). The protection strategy applies a hard fault response using the AIR when any monitored cell temperature exceeds $T > 60^\circ\text{C}$ (FS-EV~5.8.5), with AMS-triggered shutdown behavior as required by FS-EV~5.8.7.
 
 \subsection{System Integration}
 
@@ -1628,7 +1668,7 @@ Segment design prioritises modularity and replicability, with each segment conta
 
 Although honeycomb packing is generally denser, it provides only about 1\% volume reduction once constrained to cuboid envelope, so the rectangular layout is retained for simplicity.
 
-The PCB layout (detailed in Section~\ref{subsec:electrical_design}) is positioned to fit within the segment depth and centred to facilitate harness routing and cell connection while enabling mechanical accessibility via bracket-based mounting to the FR4 matrix board. PCB peripheral spacing accommodates cable routing.
+The PCB layout (detailed in Section~\ref{subsec:electrical_design}) is positioned to fit within the segment depth and centred to facilitate harness routing and cell connection while enabling mechanical accessibility via bracket-based mounting to the FR4 (flame-retardant 4) matrix board. PCB peripheral spacing accommodates cable routing.
 
 Fuses are mounted to the casing and their exact position varies by segment because of inter-segment packaging constraints. Busbar topology is consistent, but routing varies to support fuse placement.
 
@@ -1645,7 +1685,7 @@ The accumulator is placed between driver and motor, below the inverter, to reduc
 
 The external casing is fabricated from stainless steel featuring 0.9 mm walls and a 1.2 mm floor to meet FS-EV~4.4.2 regulations. The three-piece assembly (removable bolted lid, welded lower shell, and base floor) enables service access while maintaining structural integrity.
 
-Detailed manufacturing process planning, quality control workflow, and full BOM costing are not expanded in this report and are deferred to implementation documentation.
+Detailed manufacturing process planning, quality control workflow, and full bill of materials (BOM) costing are not expanded in this report and are deferred to implementation documentation.
 
 \section{Results and Discussion}
 \label{sec:results_discussion}
@@ -1654,7 +1694,7 @@ Detailed manufacturing process planning, quality control workflow, and full BOM 
 
 \begin{table}[htbp]
     \centering
-    \caption{Comparison of EDLC supercapacitor, using results from design analysis, and high-power Li-Po battery technologies, using motorsport-adapted simulation results \cite{batpac2022manual}. Weighted scoring system applied. Tie between the two technologies.}
+    \caption{Comparison of EDLC supercapacitor, using results from design analysis, and high-power LiPo battery technologies, using motorsport-adapted simulation results \cite{batpac2022manual}. Weighted scoring system applied. Tie between the two technologies.}
     \label{tab:results_comparison}
     \footnotesize
     \begin{tabular}{|c|l|l|l|}
@@ -1679,7 +1719,7 @@ Detailed manufacturing process planning, quality control workflow, and full BOM 
     \end{tabular}
 \end{table}
 
-Table~\ref{tab:results_comparison} evaluates the final design against the LiPo baseline using a more detailed model than Table~\ref{tab:tech_comparison}. SC mass and volume are taken from the CAD model, while LiPo results are adjusted to represent a complete pack. Cell volume is scaled by a CtP ratio of 0.413 for pouch-cell FS designs \cite{epp_multiphysical_battery}. With a tie in weighted score, cost becomes the key differentiator once BOM costings are finalised; public pricing data for FS LiPo systems are limited, but they are generally reported to be significantly more expensive than the SC solution. Considering procurement risk and system complexity, the SC solution is preferred for this project context.
+Table~\ref{tab:results_comparison} evaluates the final design against the LiPo baseline using a more detailed model than Table~\ref{tab:tech_comparison}. SC mass and volume are taken from the CAD model, while LiPo results are adjusted to represent a complete pack. Cell volume is scaled by a cell-to-pack (CtP) ratio of 0.413 for pouch-cell FS designs \cite{epp_multiphysical_battery}. With a tie in weighted score, cost becomes the key differentiator once BOM costings are finalised; public pricing data for FS LiPo systems are limited, but they are generally reported to be significantly more expensive than the SC solution. Considering procurement risk and system complexity, the SC solution is preferred for this project context.
 
 \subsection{Design Criteria Achievement}
 \label{sec:design_criteria_achievement}
@@ -1720,7 +1760,7 @@ In the current simulation, the car is only ever traction- or power-limited, as s
 \subsection{Conclusion}
 The accumulator system design combines proven supercapacitor technology with modular electrical and mechanical architecture to meet Formula Student requirements for the acceleration application. The analysis demonstrates comparable quantitative performance to the LiPo baseline while reducing cost and procurement risk. Subsequent development should focus on prototype validation, thermal characterisation under representative operating conditions, and iterative refinement based on test data.
 
-\vspace{6pt}
+\pagebreak
 \compactbib
 % --- END INLINE: PaulVogelberg/Engineering/paul_body.tex ---
 \end{refsection}
