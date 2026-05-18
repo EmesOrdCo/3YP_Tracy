@@ -577,12 +577,12 @@ On checking the third failure mode, the axial force distribution revealed one of
 \vspace{-5pt}
 \begin{align*}
 \text{Second moment of area: } & I = \frac{\pi}{64}(D^4-d^4) = \frac{\pi}{64}(25^4-21^4) = 9.63 \times 10^{3}~\text{mm}^4, \\
-\text{Reduced Euler load (imperfection factor 0.7): } & P = 0.7 \cdot \frac{\pi^2 E I}{(K L)^2} = 0.7 \cdot \frac{\pi^2 (200 \times 10^9)(9.63\times10^{-9})}{(1 \cdot 1.05)^2} = 12.0~\text{kN}, \\
-\text{Design critical load with safety factor 0.5: } & P_{\text{critical}} = 0.5 \cdot P = 0.5 \cdot 1.20 \times 10^{4} = 6.0 \times 10^{3}~\text{N} = 6.0~\text{kN}, \\
+\text{Reduced Euler load (IF 0.7): } & P = 0.7 \cdot \frac{\pi^2 E I}{(K L)^2} = 0.7 \cdot \frac{\pi^2 (200 \times 10^9)(9.63\times10^{-9})}{(1 \cdot 1.05)^2} = 12.0~\text{kN}, \\
+\text{Design critical load (Safety Factor 0.5): } & P_{\text{critical}} = 0.5 \cdot P = 0.5 \cdot 1.20 \times 10^{4} = 6.0 \times 10^{3}~\text{N} = 6.0~\text{kN}, \\
 \text{Comparison with applied load: } & P_{\text{critical}} = 6.0~\text{kN} < 6.5~\text{kN}
 \end{align*}
 
-These compression safety factors used are strict but in combination with the high yield risk, and potential weld failure (even with gusset, risk of manufacturing errors only increase) the configuration was not sufficiently robust. This verified the need for additional support bars which FEA showed yielded massive improvements: Max stress is now 165MPa and is distributed across a bar in tension not a joint or in compression also the weld joint stress was reduced by over 60\% without gussets (fig. \ref{fig:success_front_impact_stress}). This modification increased the chassis mass by approximately 1.45 kg (a 3.7\% increase), but it remained below the 45kg limit and improved driver safety justified the design trade-off.
+These compression safety factors, like the 0.7 imperfection factor (IF) used in the Reduced Euler load calculation, are strict but in combination with the high yield risk, and potential weld failure (even with gusset, risk of manufacturing errors only increase) the configuration was not sufficiently robust. This verified the need for additional support bars which FEA showed yielded massive improvements: Max stress is now 165MPa and is distributed across a bar in tension not a joint or in compression also the weld joint stress was reduced by over 60\% without gussets (fig. \ref{fig:success_front_impact_stress}). This modification increased the chassis mass by approximately 1.45 kg (a 3.7\% increase), but it remained below the 45kg limit and improved driver safety justified the design trade-off.
 
 \begin{figure}[h]
     \centering
@@ -2637,7 +2637,7 @@ Additional random modelling of track contamination, tyre temperature evolution, 
 \begin{refsection}
 \graphicspath{{../TobyMcConnell/Business/}}
 % --- BEGIN INLINE: TobyMcConnell/Business/toby_business_body.tex ---
-\chapterauthor{Market and Competition Analysis}{Toby McConnell}
+\chapterauthor{Market \& Competition Analysis}{Toby McConnell}
 \label{sec:market_and_competition}
 
 \section{Introduction and Executive Summary}
@@ -3036,8 +3036,8 @@ To help humanise the target market segments identified in section \ref{sec:targe
     \label{fig:persona2}
 \end{figure}
 
-These personas reflect the specific behaviors, motivations, pain points and decision-making behaviours of the people most likely to evaluate and procure the platform, grounding the targeting strategy in commercial reality. 
-The gatekeeper personas, testbed operators and liability assessors, who control access to the market are developed in Section \ref{sec:paul_personas}. Taken together, Kelly and Daniel illustrate that a successful sale requires the platform to satisfy two parallel tests: technical credibility for the engineer specifying the solution, and commercial justification for the procurement manager approving it: transparent, trustworthy data outputs are the common requirement across both.
+These user personas reflect the specific behaviors, motivations, pain points and decision-making behaviours of the people most likely to evaluate and procure the platform, grounding the targeting strategy in commercial reality. 
+The stakeholder acceptance personas, testbed operators and liability assessors, who control access to the market are developed in Section \ref{sec:paul_personas}. Taken together, Kelly and Daniel illustrate that a successful sale requires the platform to satisfy two parallel tests: technical credibility for the engineer specifying the solution, and commercial justification for the procurement manager approving it: transparent, trustworthy data outputs are the common requirement across both.
 
 Together, these personas inform the user journey mapping below, which traces the adoption process from initial discovery through to regulatory integration. 
 
@@ -3141,12 +3141,12 @@ Taken together, these choices prioritise credibility-building over short-term re
 \begin{refsection}
 \graphicspath{{../PaulVogelberg/Business/}}
 % --- BEGIN INLINE: PaulVogelberg/Business/paul_business_body.tex ---
-\chapterauthor{Strategy \& Stakeholder Analysis}{Paul Vogelberg}
+\chapterauthor{Strategy \& Stakeholder \protect\\ Analysis}{Paul Vogelberg}
 \label{chap:strategy_stakeholder_analysis}
 
 \section{Introduction to the Strategic Pivot}
 
-The UK Connected and Automated Mobility (CAM) sector faces a simulation-to-reality gap: regulators and insurers require physical edge-case validation evidence before approving autonomous deployments, yet Original Equipment Manufacturers (OEMs) often lack agile hardware to execute high-risk tests safely. The enterprise addresses this by pivoting the AEB Platform from a product into a Testing-as-a-Service (TaaS) platform, giving autonomous vehicle (AV) developers access to high-fidelity validation data without owning and maintaining target fleets.
+As discussed in Chapter 6, the UK Connected and Automated Mobility (CAM) sector faces a simulation-to-reality gap: regulators and insurers require physical edge-case validation evidence before approving autonomous deployments, yet Original Equipment Manufacturers (OEMs) often lack agile hardware to execute high-risk tests safely. The enterprise addresses this by pivoting the AEB Platform from a product into a Testing-as-a-Service (TaaS) platform, giving autonomous vehicle (AV) developers access to high-fidelity validation data without owning and maintaining target fleets.
 
 This service model is enabled by the vehicle's sprint-oriented architecture. The AEB Platform utilises a supercapacitor energy storage system to execute repeatable, sub-10-second "panic" manoeuvres that mimic erratic human behaviour. Because profitability depends on utilisation, the platform standardises replaceable impact shells and maintains a buffer of drivetrain components to enable rapid trackside recovery after contact.
 
@@ -3448,7 +3448,7 @@ The minimum viable strategic conditions for the TaaS model are therefore: first,
 % Target length: approximately 14--15 pages with styling.sty, figures, and references
 % -----------------------------------------------------------------------------
 
-\chapterauthor{Commercially Driven Design Requirements and Prototype Planning}{Ziyang Xing}
+\chapterauthor{Design Requirements \&  Prototype Planning}{Ziyang Xing}
 \label{chap:eem_prototype_planning}
 \contribution{This chapter frames the design requirements and prototype plan for the autonomous emergency braking (AEB) test carrier from an Engineering Entrepreneurship and Management (EEM) perspective. It links technical requirements to UK customer needs, standards-led testing expectations, prototype-risk reduction, and commercialisation logic.}
 
@@ -3945,7 +3945,7 @@ Building on the inventory policy analysis, a replenishment classification framew
 
 As illustrated in Figure~\ref{fig:riskclassification}, components are classified according to two key dimensions: expected spare parts consumption and supplier lead time. Expected spare parts consumption reflects the inventory burden associated with each component, while lead time represents the level of supply responsiveness required for recovery.
 
-Fixed operational boundaries are used to define the classification regions, where components with expected spare parts consumption greater than two units per quarter are classified as high-consumption components, while components with lead times exceeding two weeks are classified as high-responsiveness components.
+Fixed operational boundaries are used to define the classification regions, where components with expected spare parts consumption greater than two units per quarter are classified as \\high-consumption components, while components with lead times exceeding two weeks are classified as high-responsiveness components.
 
 \begin{figure}
     \centering
