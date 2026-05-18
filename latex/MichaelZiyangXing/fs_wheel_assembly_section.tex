@@ -23,8 +23,22 @@ The vehicle is not intended to be a balanced skidpad, autocross and endurance ca
 
 \textit{Squat} is the rear suspension compression caused by acceleration load transfer. \textit{Anti-squat} is a geometric force-path effect that resists this compression. The driven tyre force passes through the suspension links; if the side-view force line is inclined, a vertical jacking component is generated. Anti-squat is therefore part of the same suspension-kinematics problem as bump steer, wheel-centre path and compliance steer \parencite{zxMilliken1995,zxDixon2009}. \textit{Bump steer} is toe change during wheel bump or rebound. \textit{Unsprung mass} is mass that moves with the wheel, including wheel, tyre, hub, upright and outboard brake hardware.
 
-\figbox{26mm}{Terminology schematic placeholder: plan-view toe, front-view camber, side-view squat/anti-squat force path, and inboard versus outboard brake location.}
-
+%\figbox{26mm}{Terminology schematic placeholder: plan-view toe, front-view camber, side-view squat/anti-squat force path, and inboard versus outboard brake location.}
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/Toe_Demo.png}
+    \caption{Top view visual of a car with toe in.}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/Camber_Demo.png}
+    \caption{Front view visual of a car with negative camber.}
+\end{subfigure}
+\caption{Visualizations for the suspension terminology.}
+\label{fig:susp_terms_defines}
+\end{figure}
 \subsection{Wheel-assembly requirements}
 The wheel assembly requirements were derived from rear traction, mass reduction, adjustability, rule compliance and subsystem integration. Table~\ref{tab:reqs_wheel} gives a concise flow-down from requirement area to design evidence. The table is intentionally compact: detailed vehicle-level acceleration targets are treated in the vehicle dynamics chapter, while this chapter concentrates on the physical wheel-assembly implications.
 
@@ -137,6 +151,44 @@ Indicative result & Medium & Medium & Highest & Medium/risky \\
 \end{table}
 
 Steering was kept conventional because it is not the main performance differentiator. A rack-based system with direct mechanical actuation, rack-mounted stops and visible mechanical joints was selected. This follows the Formula Student steering requirements for mechanical actuation, rack stops and limited steering free play \parencite{zxFSUK2026Rules,zxFSG2026Rules}.
+
+The driven-wheel architecture was selected using the same Pugh-matrix method as the suspension and braking concepts. A quad-motor all-wheel-drive layout offers the greatest theoretical control authority, but its benefit is reduced for this acceleration-only vehicle because the centre of gravity is deliberately placed rearward. Under peak launch acceleration, the car is close to the wheelie or tipping limit, so the front axle is lightly loaded and front-wheel drive contributes less useful tractive force than it would in a more balanced vehicle. The additional motors, inverters, shafts, cooling requirements and control software would therefore add substantial mass, cost and complexity for a limited performance gain. A single-motor rear-wheel-drive layout was selected as the most appropriate architecture because it is lighter, cheaper, simpler to integrate and more compatible with the limited-slip differential and single inboard brake package.
+
+\begin{table}[H]
+\centering
+\caption{Pugh matrix for driven-wheel architecture selection.}
+\label{tab:pugh_drive_architecture}
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|c|c|c|}
+\hline
+\textbf{Criterion} & \textbf{AWD quad motor} & \textbf{Dual-motor RWD} & \textbf{Single-motor RWD} \\
+\hline
+Peak acceleration potential & + & + & 0 \\
+\hline
+Usefulness with rearward centre of gravity & - & + & ++ \\
+\hline
+Front-axle traction benefit near wheelie limit & - & 0 & + \\
+\hline
+Total vehicle mass & -- & - & ++ \\
+\hline
+Powertrain cost & -- & - & ++ \\
+\hline
+Mechanical and electrical complexity & -- & - & ++ \\
+\hline
+Packaging around wheel assemblies & -- & - & ++ \\
+\hline
+Control calibration risk & -- & - & ++ \\
+\hline
+Reliability and serviceability & - & 0 & + \\
+\hline
+Compatibility with LSD and inboard brake package & -- & - & ++ \\
+\hline
+Indicative result & Performance gain, high penalty & Medium & Highest \\
+\hline
+\end{tabularx}
+\end{table}
+
+The single-motor rear-wheel-drive option was therefore selected. This choice does not maximise theoretical traction in isolation, but it gives the best system-level compromise for an acceleration-only design. The rearward mass distribution already biases normal load towards the driven axle during launch, while the vehicle's proximity to the wheelie limit reduces the practical value of adding front drive. The selected architecture also reduces integration risk and leaves more packaging freedom for the rear multi-link suspension, limited-slip differential and inboard brake assembly.
 
 \section{Rear wheel assembly design}
 
@@ -322,7 +374,13 @@ Front links & 4130 steel double-wishbone links & Simple load paths and reliable 
 \end{tabularx}
 \end{table}
 
-\figbox{30mm}{Front suspension, steering and brake drawing placeholder: double-wishbone links, upright, steering arm, rack/tie rods and front brake package.}
+%\figbox{30mm}{Front suspension, steering and brake drawing placeholder: double-wishbone links, upright, steering arm, rack/tie rods and front brake package.}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\linewidth]{figures/Front_Preview.png}
+\caption{Preview of the front suspension and strring rack layout.}
+\label{fig:front_preview}
+\end{figure}
 
 \section{System integration and teamwork}
 
