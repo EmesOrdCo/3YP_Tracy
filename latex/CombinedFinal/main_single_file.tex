@@ -681,10 +681,11 @@ where $F$ is the tractive force at the wheels and $m$ is the vehicle mass.
 
 This indicates that acceleration performance can be improved by either increasing the available tractive force or reducing the overall system mass. The powertrain system directly influences the generation of tractive force through motor torque, inverter capability, and drivetrain efficiency, while system-level design choices impact the overall mass.
 
-Therefore, the design approach focuses on maximising torque delivery while minimising system mass, resulting in a balanced optimisation of acceleration performance.
+Therefore, the design approach focuses on maximising torque delivery while optimising system mass, resulting in a balanced optimisation of acceleration performance.
 \subsection{Problem Definition}
 
-Vehicle mass is a key factor in determining acceleration performance, as increased mass directly reduces the acceleration for a given tractive force. Minimising system weight while maintaining sufficient power supply and structural robustness is therefore a key design challenge.
+Vehicle mass is a key factor in determining acceleration performance, as increased mass directly reduces the acceleration for a given tractive force.
+Working from preliminary simulations (Section 1.7.2), we decided although minimising vehicle mass as a whole does not necessarily optimise our performance (as discussed in Section 1.3), it is best to minimise the motor mass specifically to be compatible with the integrated motor mount design (proposed in Section 1.5) while maintaining sufficient power supply.
 
 The use of a supercapacitor-based energy storage system introduces additional complexity, as the supply voltage decreases during discharge. This affects the ability to sustain desired power output throughout the acceleration event and requires careful consideration in both powertrain and control system design.
 
@@ -867,6 +868,7 @@ Motor
 Based on the evaluation, the YASA P400R achieves the highest overall score and is therefore selected as the motor for the powertrain system, providing the most suitable solution for the defined performance requirements.
 
 \subsection{Motor Operation}
+\label{subsec:powertrain_motor_operation}
 
 Following the motor selection, the operating strategy is defined to ensure compliance with the \SI{80}{\kilo\watt} power limit. As shown in Figure~\ref{fig:motor_operation}, the YASA P400R motor is capable of delivering a peak power significantly higher than the system limit (approximately \SI{170}{\kilo\watt}). Therefore, the motor is not operated at its maximum capability. Instead, the operating point is constrained through the inverter and controller by limiting the effective operating voltage to approximately \SI{350}{\volt}.
 
@@ -1294,11 +1296,11 @@ Overall, the design demonstrates an integrated approach that balances performanc
 \chapterauthor{Accumulator Design}{Paul Vogelberg}
 
 \section{Introduction}
-This chapter presents the accumulator design for the FS vehicle. Objectives are to deliver short-term energy and high power for the acceleration event while minimising mass and packaging volume, complying with scrutineering and electrical safety requirements, and integrating with the vehicle.
+This chapter presents the accumulator design for the FS vehicle. The design choices are motivated by the same objectives to deliver short-term energy and high power working with our CAD model \ref{sec:chassis_architecture} and simulations (Chapter 10) to optmise mass and packaging volume, whilst also compiling with the specific FS electrical safety requirements.
 
 The chapter is structured as follows: Section~\ref{sec:technology_selection} covers technology selection; Section~\ref{sec:electrical_system_design} covers electrical design; Section~\ref{sec:mechanical_design_packaging} covers mechanical packaging; Section~\ref{sec:results_discussion} presents results; and Section~\ref{sec:future_improvements_conclusion} outlines future work and concludes.
 
-This chapter covers technology and cell selection; electrical architecture at pack and segment level; in-casing electrical safety measures required by the Formula Student rules; the AMS slave-to-master monitoring architecture and its interface to the vehicle ECU; mechanical packaging of segment modules and accumulator container layout; and analytical verification against requirements and key alternatives.
+These sections will discuss and justify technology and cell selection; electrical architecture at pack and segment level; in-casing electrical safety measures required by the Formula Student rules; the AMS slave-to-master monitoring architecture and its interface to the vehicle ECU; mechanical packaging of segment modules and accumulator container layout; and analytical verification against requirements and key alternatives.
 
 Safety and charging systems outside the accumulator casing, full AMS firmware implementation, detailed manufacturing process planning, exhaustive scrutineering documentation, and complete physical test campaign data are treated as out of scope.
 
@@ -1308,7 +1310,7 @@ Safety and charging systems outside the accumulator casing, full AMS firmware im
 \subsection{Design Requirements and Selection Criteria}
 Due to the nature of the acceleration-only event, the primary design driver is peak power delivery rather than total energy capacity. This shifts the focus towards technologies with high power density.
 
-To compare energy storage technologies, the following criteria were defined: (1) power output, (2) total energy capacity, and (3) a combined optimisation objective covering mass, volume, cost, and procurement risk.
+To compare energy storage technologies, the following criteria were defined: (1) power output, (2) total energy capacity, and (3) a combined optimisation objective covering mass, volume, cost, and procurement risk. From the simulations (in Chapter 5), it was determined that the optimal mass for the battery for both traction and centre of mass distribution involves minimising the mass whilst keeping it above 20kg, as too low of a mass would reduce traction below optimal for peak performance. Since all full solutions considered are above this limit, the mass can simply be minimised.
 FS rules limit tractive system (TS) power at the tractive system accumulator (TSAC) outlet to 80 kW (FS-EV~2.2.1). Power is treated as constant for an initial conservative energy estimate, assuming traction-limited periods are brief relative to total run time. Event duration is set to \SI{4}{\second}, based on top Formula Student performances of \SI{3.5}{\second}.
 
 The required energy capacity is calculated as:
@@ -2640,7 +2642,7 @@ Additional random modelling of track contamination, tyre temperature evolution, 
 
 \section{Introduction and Executive Summary}
 
-Chapters 1 to 4 established the vehicle’s structural base and design elements (chassis, suspension, powertrain, and accumulator design), while Chapter 5 integrated these systems through simulation to validate its 3.73-second sprint capability. Chapters 6 onwards pivots from technical engineering to commercial strategy.
+Chapters 1 to 4 established the vehicle’s structural base and design elements (chassis, suspension, powertrain, and accumulator design), while Chapter 5 integrated these systems through simulation to validate its Monte Carlo 4.02-second sprint capability. Chapters 6 onwards pivots from technical engineering to commercial strategy.
 
 This commercial strategy introduces a Testing-as-a-Service (TaaS) model centered on an adapted version of the FS car, transitioning it from a sprint vehicle into a high-performance physical testing platform developed for advanced brake testing and autonomous vehicle (AV) validation in a business-to-business (B2B) context.
 
@@ -3020,7 +3022,7 @@ To help humanise the target market segments identified in section \ref{sec:targe
 %To help humanise the target market segments identified in section \ref{sec:target_market_selection}, and guide product development, two personas have been developed representing the primary decision-making roles within those organisations. These reflect the specific behaviors, motivations, pain points and decision-making behaviours of the people most likely to evaluate and procure the platform, grounding the targeting strategy in commercial reality.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{figures/persona1.png}
+    \includegraphics[width=0.85\textwidth]{Figures/persona1.png}
     %\caption{Market Segmentation Map for Autonomous Vehicle Validation Solutions}
     \label{fig:persona1}
 \end{figure}
@@ -3029,7 +3031,7 @@ To help humanise the target market segments identified in section \ref{sec:targe
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{figures/persona2.png}
+    \includegraphics[width=0.85\textwidth]{Figures/persona2.png}
     %\caption{Market Segmentation Map for Autonomous Vehicle Validation Solutions}
     \label{fig:persona2}
 \end{figure}
@@ -3144,17 +3146,17 @@ Taken together, these choices prioritise credibility-building over short-term re
 
 \section{Introduction to the Strategic Pivot}
 
-The UK Connected and Automated Mobility (CAM) sector faces a simulation-to-reality gap: regulators and insurers require physical edge-case validation evidence before approving autonomous deployments, yet Original Equipment Manufacturers (OEMs) often lack agile hardware to execute high-risk tests safely. The enterprise addresses this by pivoting the AEB Rabbit from a product into a Testing-as-a-Service (TaaS) platform, giving autonomous vehicle (AV) developers access to high-fidelity validation data without owning and maintaining target fleets.
+The UK Connected and Automated Mobility (CAM) sector faces a simulation-to-reality gap: regulators and insurers require physical edge-case validation evidence before approving autonomous deployments, yet Original Equipment Manufacturers (OEMs) often lack agile hardware to execute high-risk tests safely. The enterprise addresses this by pivoting the AEB Platform from a product into a Testing-as-a-Service (TaaS) platform, giving autonomous vehicle (AV) developers access to high-fidelity validation data without owning and maintaining target fleets.
 
-This service model is enabled by the vehicle's sprint-oriented architecture. The AEB Rabbit utilises a supercapacitor energy storage system to execute repeatable, sub-10-second "panic" manoeuvres that mimic erratic human behaviour. Because profitability depends on utilisation, the platform standardises replaceable impact shells and maintains a buffer of drivetrain components to enable rapid trackside recovery after contact.
+This service model is enabled by the vehicle's sprint-oriented architecture. The AEB Platform utilises a supercapacitor energy storage system to execute repeatable, sub-10-second "panic" manoeuvres that mimic erratic human behaviour. Because profitability depends on utilisation, the platform standardises replaceable impact shells and maintains a buffer of drivetrain components to enable rapid trackside recovery after contact.
 
-Strategically, the Go-To-Market plan bypasses individual OEM procurement delays by integrating the AEB Rabbit into established CAM Testbed UK facilities. Operating within controlled Operational Design Domains defined using PAS 1883 taxonomy, and adopting safety governance and telemetry practices designed with reference to PAS 1881 and PAS 1882, the service absorbs the physical risks of edge-case testing while producing a tamper-evident evidence trail for insurers and regulators.
+Strategically, the Go-To-Market plan bypasses individual OEM procurement delays by integrating the AEB Platform into established CAM Testbed UK facilities. Operating within controlled Operational Design Domains defined using PAS 1883 taxonomy, and adopting safety governance and telemetry practices designed with reference to PAS 1881 and PAS 1882, the service absorbs the physical risks of edge-case testing while producing a tamper-evident evidence trail for insurers and regulators.
 
 This integrates the Chapter 6 customer logic with the market-access logic: CAM testbeds are the channel and adoption gatekeeper; EV start-ups and selected AV/AI development firms are the early paying users; and large OEMs become later strategic customers once pilot evidence and utilisation are proven.
 
 Finally, the TaaS model aligns sustainability with commercial incentives. As a Use/Result-Oriented Product-Service System (PSS), it aggregates demand, reduces redundant OEM fleet manufacturing, and (through retained ownership) incentivises 9R circular practices. Sustainability is delivered through lifecycle extension, remanufacturing loops, and recyclable Expanded Polypropylene (EPP) sacrificial shells that reduce embodied carbon.
 
-\noindent\textbf{Strategic through-line:} UK autonomous vehicle developers need repeatable physical edge-case validation without owning and maintaining target fleets. Embedding the AEB Rabbit as a Testing-as-a-Service (TaaS) platform within UK CAM testbeds creates value for AV developers, testbed operators, insurers, regulators, and the enterprise itself, but only if three conditions are met: testbed acceptance, credible safety evidence, and sufficient utilisation to justify the asset-heavy service model.
+\noindent\textbf{Strategic through-line:} UK autonomous vehicle developers need repeatable physical edge-case validation without owning and maintaining target fleets. Embedding the AEB Platform as a Testing-as-a-Service (TaaS) platform within UK CAM testbeds creates value for AV developers, testbed operators, insurers, regulators, and the enterprise itself, but only if three conditions are met: testbed acceptance, credible safety evidence, and sufficient utilisation to justify the asset-heavy service model.
 
 At prototype stage, the enterprise should not claim full certification or compliance. Instead, the strategic objective is to design the platform, data architecture, and operating procedures with reference to relevant PAS frameworks so that future commercial trials can progress toward formal acceptance.
 
@@ -3195,7 +3197,7 @@ Rather than forcing end-users into capital-intensive (CAPEX) hardware purchases,
 \subsection{Hardware Specialisation: The "Sprint" Advantage}
 \label{sec:sprint}
 
-This TaaS strategy is enabled by the mechanical profile of the adapted Formula Student (FS) architecture. The AEB Rabbit is designed for short, high-power manoeuvres rather than long duty cycles (Figure~\ref{tab:optim_result}).
+This TaaS strategy is enabled by the mechanical profile of the adapted Formula Student (FS) architecture. The AEB Platform is designed for short, high-power manoeuvres rather than long duty cycles (Figure~\ref{tab:optim_result}).
 
 While this profile would limit direct ownership use-cases, it matches the envelope required to simulate extreme dynamic edge cases. In the TaaS model, customers buy the validated data from a "panic" manoeuvre while the enterprise manages duty-cycle constraints using the accumulator's repeatable short-duty-cycle power delivery (Figure~\ref{fig:supercap_discharge}).
 
@@ -3205,11 +3207,11 @@ The TaaS model lowers barriers to entry by providing the self-propelled target, 
 
 \subsection{Supply Chain and Margin Defensibility}
 
-Commercial viability relies on high utilisation and minimal track downtime. Because the AEB Rabbit will be subjected to physical impacts during edge-case validation, downtime control is a primary constraint.
+Commercial viability relies on high utilisation and minimal track downtime. Because the AEB Platform will be subjected to physical impacts during edge-case validation, downtime control is a primary constraint.
 
 The platform uses a modular architecture to support rapid trackside recovery. Standardised components are classified by wear and collision probability, isolating damage to low-cost outer components while protecting the high-value drivetrain. This resilience sustains throughput, supporting OPEX forecasts and predictable ROI.
 
-\noindent\textbf{Implication:} TaaS converts the AEB Rabbit's short-duty-cycle sprint capability from a hardware limitation into a service advantage, because customers buy validated panic-manoeuvre evidence rather than vehicle ownership.
+\noindent\textbf{Implication:} TaaS converts the AEB Platform's short-duty-cycle sprint capability from a hardware limitation into a service advantage, because customers buy validated panic-manoeuvre evidence rather than vehicle ownership.
 
 \section{Stakeholder Salience Identification}
 \label{sec:stakeholder_salience_identification}
@@ -3695,7 +3697,7 @@ This chapter has argued that the AEB test carrier should be developed through a 
 
 \section{Introduction}
 
-This part of the report examines the supply chain design of a Formula Student “rabbit” vehicle used for autonomous emergency braking (AEB) testing.
+This part of the report examines the supply chain design of a Formula Student vehicle used for autonomous emergency braking (AEB) testing.
 
 While Section 6.1 and 6.2 establish the broader business context and value proposition, this section focuses on the operational and structural decisions required to sustain reliable service delivery.
 
@@ -3758,7 +3760,7 @@ However, this system operates under a much higher level of uncertainty. As discu
         \caption{Fisher variety-volume supply chain model\cite{fisher} }
     \end{subfigure}
 
-    \caption{Operating strategy positioning of the system within the responsiveness--uncertainty spectrum and Fisher variety--volume framework. The red markers indicate the operational characteristics of the rabbit vehicle testing system.}
+    \caption{Operating strategy positioning of the system within the responsiveness--uncertainty spectrum and Fisher variety--volume framework. The red markers indicate the operational characteristics of the vehicle testing system.}
 
     \label{fig:lean_vs_agile}
 \end{figure}
@@ -3941,7 +3943,7 @@ Inventory requirements are determined using a conservative availability-oriented
 
 Building on the inventory policy analysis, a replenishment classification framework is introduced to distinguish different spare preparation and supply response behaviours across the system.
 
-As illustrated in Figure~\ref{fig:riskclassification1}, components are classified according to two key dimensions: expected spare parts consumption and supplier lead time. Expected spare parts consumption reflects the inventory burden associated with each component, while lead time represents the level of supply responsiveness required for recovery.
+As illustrated in Figure~\ref{fig:riskclassification}, components are classified according to two key dimensions: expected spare parts consumption and supplier lead time. Expected spare parts consumption reflects the inventory burden associated with each component, while lead time represents the level of supply responsiveness required for recovery.
 
 Fixed operational boundaries are used to define the classification regions, where components with expected spare parts consumption greater than two units per quarter are classified as high-consumption components, while components with lead times exceeding two weeks are classified as high-responsiveness components.
 
@@ -3949,7 +3951,7 @@ Fixed operational boundaries are used to define the classification regions, wher
     \centering
     \includegraphics[width=0.65\linewidth]{Classification_of_component_risk.png}
     \caption{Conceptual classification of component risk}
-    \label{fig:riskclassification1}
+    \label{fig:riskclassification}
 \end{figure}
 
 Based on this, components are classified according to two key factors: failure likelihood and lead time, which together determine how frequently disruptions occur and how long the system is affected when they do. A conceptual classification is first introduced in Figure~\ref{fig:riskclassification}, defining four categories based on these dimensions. The boundaries between categories are defined using median values, providing a consistent and relative basis for comparison.
@@ -3968,7 +3970,7 @@ From this classification, components can be grouped into four replenishment cate
 \subsection{Inventory management}
 \label{sec:inventory_management}
 
-Based on the replenishment classification framework, inventory management is differentiated across components rather than applying a uniform spare policy throughout the system. As illustrated in Figure~\ref{fig:riskclassification1}, different combinations of spare consumption behaviour and lead time require different replenishment strategies in order to balance operational continuity with inventory efficiency.
+Based on the replenishment classification framework, inventory management is differentiated across components rather than applying a uniform spare policy throughout the system. As illustrated in Figure~\ref{fig:riskclassification}, different combinations of spare consumption behaviour and lead time require different replenishment strategies in order to balance operational continuity with inventory efficiency.
 
 High-risk components, such as Sprocket, are managed using strongly push-oriented inventory preparation. Multiple spare units are pre-positioned before operation in order to minimise disruption during testing activities, as reactive replenishment would be unable to respond sufficiently quickly under these conditions.
 
@@ -4094,7 +4096,7 @@ The operational structure of the system is defined by a closed recovery loop, in
 
 \section{Conclusion}
 
-The supply chain for the rabbit vehicle is driven by the need to maintain continuous operation under uncertainty. Through failure analysis, Monte Carlo simulation, and risk classification, components are prioritised by their impact on system continuity, with inventory and mitigation efforts allocated accordingly. Beyond inventory, modular recovery approaches further reduce disruption by decoupling repair activities from the active operational cycle.
+The supply chain for the vehicle is driven by the need to maintain continuous operation under uncertainty. Through failure analysis, Monte Carlo simulation, and risk classification, components are prioritised by their impact on system continuity, with inventory and mitigation efforts allocated accordingly. Beyond inventory, modular recovery approaches further reduce disruption by decoupling repair activities from the active operational cycle.
 
 Overall, the system can be characterised as a centralised, outsourcing, agile, and failure-driven supply chain. As operational experience accumulates through failure records, recovery data, and client feedback, supply chain parameters can be continuously recalibrated — transforming it from a static design into a learning system that grows more resilient over time. Ultimately, a supply chain designed around availability and rapid recovery directly translates into service reliability — which, for an early-stage TaaS company, is the product being sold.
 
