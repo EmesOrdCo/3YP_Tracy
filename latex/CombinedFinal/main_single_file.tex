@@ -711,7 +711,7 @@ Feedback from the powertrain hardware, in the form of shaft or wheel speed, is r
 
 In addition to the control system, a shutdown circuit (SDC) provides an independent safety mechanism using non-programmable hardware. When triggered, it actuates the accumulator isolation relay (AIR) to disconnect the tractive system, ensuring fail-safe operation.
 
-Overall, the system is designed to transfer electrical energy from the accumulator to mechanical energy at the driveshaft while maintaining controllability and safety. And a CAD drawing is shown in Figure~\ref{fig:CAD} to help visualization.
+Overall, the system is designed to transfer electrical energy from the accumulator to mechanical energy at the driveshaft while maintaining controllability and safety. A CAD drawing is shown in Figure~\ref{fig:CAD} to help visualization.
 
 \begin{figure}
     \centering
@@ -725,19 +725,13 @@ Overall, the system is designed to transfer electrical energy from the accumulat
 \subsection{Motor Configuration}
 % Ask Michael
 
-The powertrain architecture adopts a centralised single-motor configuration, as determined by the overall vehicle design (based on analysis from Ziyang Xing).
+The powertrain architecture adopts a centralised single-motor configuration, as determined by the overall vehicle design (based on analysis from Ziyang Xing(cite)).
 
-A multi-motor configuration can provide advantages such as torque vectoring and improved traction control. However, for the \SI{75}{\meter} acceleration event, the vehicle primarily operates under straight-line conditions, where the benefits of torque vectoring are limited.
-
-The selected single-motor configuration reduces drivetrain complexity and vehicle mass, which is beneficial for acceleration performance under power and current constraints. It is therefore used as the basis for subsequent motor selection and powertrain design.
+This configuration is selected to minimise drivetrain complexity and system mass, both of which directly benefit acceleration performance. While a multi-motor configuration would enable torque vectoring, however, it offers limited advantage in the 75,m straight-line acceleration event and introduces significant additional mass, outweighing any potential performance gain.
 
 \subsection{Motor Requirements}
 
-The motor must be capable of delivering high torque, particularly at low speeds, to maximise usable traction.
-
-It must operate within the \SI{80}{\kilo\watt} power limit and \SI{500}{\ampere} current constraint, requiring a balance between torque output and electrical demand.
-
-Consideration is also given to system mass, cooling requirements, and integration with the inverter and drivetrain, as these factors influence overall performance and packaging.
+The primary requirement for the motor is to deliver high torque at low speeds, maximising tractive force during the acceleration event. And it must operate within the \SI{80}{\kilo\watt} power limit and \SI{500}{\ampere} current constraint imposed by FSUK rules\cite{fs-ev-rules2026}.
 
 \subsection{Candidate Motors}
 
@@ -812,7 +806,7 @@ Motor
 & 2
 & 5
 & 1
-& {} \\
+& - \\
 
 \midrule
 
@@ -868,17 +862,13 @@ Motor
 \end{tabularx}
 \end{table}
 
-The results show that the YASA P400R achieves the highest overall score, primarily due to its superior peak torque performance, which has the greatest influence on acceleration capability.
-
 \subsection{Final Decision}
 
-Based on the evaluation, the YASA P400R is selected as the motor for the powertrain system, providing the most suitable solution for the defined performance requirements.
+Based on the evaluation, the YASA P400R achieves the highest overall score and is therefore selected as the motor for the powertrain system, providing the most suitable solution for the defined performance requirements.
 
 \subsection{Motor Operation}
 
-Following the motor selection, the operating strategy is defined to ensure compliance with the \SI{80}{\kilo\watt} power limit.
-
-As shown in Figure~\ref{fig:motor_operation}, the YASA P400R motor is capable of delivering a peak power significantly higher than the system limit (approximately \SI{170}{\kilo\watt}). Therefore, the motor is not operated at its maximum capability. Instead, the operating point is constrained through the inverter and controller by limiting the effective operating voltage to approximately \SI{350}{\volt}.
+Following the motor selection, the operating strategy is defined to ensure compliance with the \SI{80}{\kilo\watt} power limit. As shown in Figure~\ref{fig:motor_operation}, the YASA P400R motor is capable of delivering a peak power significantly higher than the system limit (approximately \SI{170}{\kilo\watt}). Therefore, the motor is not operated at its maximum capability. Instead, the operating point is constrained through the inverter and controller by limiting the effective operating voltage to approximately \SI{350}{\volt}.
 
 This ensures that the motor operates within the power limit while still delivering high torque in the low-speed region, which is critical for acceleration performance. As vehicle speed increases, the operating point is dynamically adjusted through current and voltage control to maintain optimal power delivery within system constraints.
 
@@ -913,9 +903,7 @@ Using a motor mass of $m = \SI{28.2}{\kilogram}$ and an average specific heat ca
 \SI{1.1}{\degreeCelsius}
 \end{equation}
 
-Even under high ambient temperatures, a temperature rise of only \SI{1.1}{\degreeCelsius} would keep the motor well below its typical continuous operating temperature of approximately \SI{50}{\degreeCelsius}, indicating negligible thermal risk during operation.
-
-This suggests that the motor is effectively over-designed in terms of cooling for this application. Therefore, future development could explore simplified cooling configurations in collaboration with the manufacturer, potentially reducing system mass and complexity.
+Even under high ambient temperatures, a temperature rise of only \SI{1.1}{\degreeCelsius} would keep the motor well below its typical continuous operating temperature of approximately \SI{50}{\degreeCelsius}, indicating negligible thermal risk during operation. This suggests that the motor is effectively over-designed in terms of cooling for this application. Therefore, future development could explore simplified cooling configurations in collaboration with the manufacturer, potentially reducing system mass and complexity. 
 
 \section{Inverter Selection}
 
@@ -935,6 +923,9 @@ These candidates provide different voltage ranges, current capabilities, and sys
 
 \subsection{Candidate Parameters}
 
+
+\subsection{Candidate Parameters}
+
 \begin{table}[H]
 \centering
 \renewcommand{\arraystretch}{1}
@@ -945,10 +936,10 @@ These candidates provide different voltage ranges, current capabilities, and sys
 Inverter & $V_{\text{max}}$ (V) & $V_{\text{min}}$ (V) & $I_{\text{peak}}$ (A) & $P_{\text{peak}}$ (kW) & Weight (kg) & Cost (USD) \\
 \midrule
 DMC544 & 450 & 12 & 600 & 300 & 15.3 & 24000 \\
-BAMOCAR 400/400 & 400 & 12 & 285 & 75 & 8.5 & 6300 \\
-BAMOCAR 700/250 & 700 & 12 & 178 & 85 & 8.5 & 6300 \\
+BAMOCAR 400/400 & 400 & 12 & 285 & 75 & 8.5 & 5000 \\
+BAMOCAR 700/250 & 700 & 12 & 178 & 85 & 8.5 & 5000 \\
 %need check for bamocar price
-BAMOCAR 700/400 & 700 & 12 & 285 & 135 & 8.5 & 6300 \\
+BAMOCAR 700/400 & 700 & 12 & 285 & 135 & 8.5 & 5000 \\
 CM200DX & 480 & 50 & 740 & 225 & 6.75 & 8700 \\
 CM200DZ & 840 & 200 & 400 & 225 & 6.75 & 9000 \\
 \bottomrule
@@ -1009,7 +1000,7 @@ Inverter
 & 1
 & 2
 & 1
-& {} \\
+& - \\
 
 \midrule
 
@@ -1065,13 +1056,9 @@ CM200DZ
 \end{tabular}
 \end{table}
 
-The results indicate that the BAMOCAR PG-D3-700/400 achieves the highest overall score.
-
-This is primarily due to its wide voltage operating range, which provides greater flexibility for the supercapacitor-based energy storage system. Other candidates either have more limited voltage capability or present fewer benefits in cost, lead time, and integration.
-
 \subsection{Final Decision}
 
-Based on the evaluation, the BAMOCAR PG-D3-700/400 is selected as the inverter for the powertrain system, providing the most suitable solution for this application.
+Based on the evaluation, the BAMOCAR PG-D3-700/400 achieves the highest overall score and is therefore selected as the inverter for the powertrain system, primarily due to its wide voltage operating range, which provides the greatest flexibility for the supercapacitor-based energy storage system, providing the most suitable solution for this application.
 
 \section{Controller Design}
 
@@ -1098,9 +1085,7 @@ Raw sensor signals are filtered to reduce noise and ensure stable inputs for con
 
 Plausibility checks are applied to ensure the validity of critical input signals, particularly the accelerator pedal position sensors. The consistency between multiple pedal signals is monitored to detect implausible conditions in accordance with safety requirements.
 
-If an inconsistency is detected, the torque request is immediately set to zero to ensure safe operation.
-
-In addition, a brake override strategy is implemented, where motor torque is reduced to zero when braking is detected.
+If an inconsistency is detected, the torque request is immediately set to zero to ensure safe operation. In addition, a brake override strategy is implemented, where motor torque is reduced to zero when braking is detected.
 
 \subsection{Torque Control Strategy}
 The controller calculates the required motor torque based on driver input using a feedforward approach.
@@ -1167,11 +1152,9 @@ NXP S32K
 }
 \end{table}
 
-The results indicate that the STM32 achieves the highest overall score due to its balanced performance in cost, weight, processing capability, communication support, and reliability.
-
 \subsection{Final Decision}
 
-Based on the evaluation, the STM32 platform is selected as the controller for the powertrain system.
+Based on the evaluation, the STM32 platform achieves the highest overall score and is therefore selected as the controller for the powertrain system, due to its balanced performance in cost, weight, processing capability, communication support, and reliability.
 
 \section{Shutdown Circuit (SDC) Design}
 
@@ -1182,9 +1165,8 @@ The shutdown circuit (SDC) is a critical safety system designed to ensure immedi
 
 The shutdown circuit is designed based on Formula Student UK (FSUK) safety requirements, which mandate a non-programmable, hardware-based system to ensure reliable and fail-safe operation.
 
-The SDC is implemented as a series-connected circuit of safety devices, including monitoring systems and interlock components. All elements must remain in a closed state for normal operation, and any triggered fault will open the circuit and deactivate the tractive system.
+The SDC is implemented as a series-connected circuit of safety devices, including monitoring systems and interlock components. All elements must remain in a closed state for normal operation, and any triggered fault will open the circuit and deactivate the tractive system. This series configuration ensures that a fault in any individual component will activate the entire circuit, resulting in immediate shutdown by Accumulator Isolation Relays(AIRs).
 
-%bigger figure
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{shutdown_circuit.png}
@@ -1193,47 +1175,35 @@ The SDC is implemented as a series-connected circuit of safety devices, includin
     \label{fig:shutdown_circuit_design}
 \end{figure}
 
-This series configuration ensures that a fault in any individual component will activate the entire circuit, resulting in immediate shutdown by Accumulator Isolation Relays(AIRs).
-
 In addition, the circuit is designed such that any loss of power or disconnection will also result in the shutdown circuit opening, ensuring inherently fail-safe behaviour.
 
 \subsection{Key Components and Operation}
 
 The shutdown circuit consists of a series of safety-critical components, including monitoring devices and manual shutdown interfaces.
 
-Key elements include the Accumulator Management System (AMS), Insulation Monitoring Device (IMD), Brake System Plausibility Device (BSPD), and shutdown buttons.
-
-Among these, the Accumulator Isolation Relays (AIRs) act as the final switching elements of the shutdown circuit. When the SDC is closed, the AIR coils are energised, allowing the high-voltage system to remain connected.
+Key elements include the Accumulator Management System (AMS), Insulation Monitoring Device (IMD), Brake System Plausibility Device (BSPD), and shutdown buttons. Among these, the Accumulator Isolation Relays (AIRs) act as the final switching elements of the shutdown circuit. When the SDC is closed, the AIR coils are energised, allowing the high-voltage system to remain connected.
 
 %Air Pic maybe
 
-When any fault condition is detected and the SDC is opened, the AIR coils are de-energised, immediately disconnecting the tractive system.
-
-This ensures that all fault conditions, regardless of their origin, result in a direct and reliable shutdown of the high-voltage system.
+When any fault condition is detected and the SDC is opened, the AIR coils are de-energised, immediately disconnecting the tractive system. This ensures that all fault conditions, regardless of their origin, result in a direct and reliable shutdown of the high-voltage system.
 
 \section{Drivetrain Design}
 
 \subsection{Design Overview}
 
-The drivetrain system is responsible for transmitting torque from the motor to the driven wheels. A chain drive configuration is selected due to its simplicity, low mass, and suitability for short-duration acceleration applications, where efficiency and lightweight design are prioritised.
-
-A typical chain-drive drivetrain consists of a driving and driven sprocket connected by a chain. For the selected YASA P400R motor, which does not include an integrated output shaft, a custom shaft is designed to connect the motor to the drivetrain.
-
-The transmission ratio is determined from simulation, with a final drive ratio of 5.5:1 selected to balance torque and speed for the acceleration event. Lightweight materials are used to minimise system mass while maintaining sufficient strength.
+The drivetrain system is responsible for transmitting torque from the motor to the driven wheels. It consists of a custom output shaft, driving and driven sprockets, and a chain. A chain drive configuration is selected due to its low mass, high efficiency, and ease of adjustment, making it well-suited for the short-duration acceleration application. All component selections prioritise lightweight design and compatibility with the single-run operating profile.
 
 %maybe sprocket size? (ask Michael)
 
-\subsection{Material Selection}
+\subsection{Component Design and Selection}
 
-Material selection is performed using a strength-to-weight approach. An Ashby plot of material strength versus density is used to compare candidate materials.
+The chain ratio of 5.5:1, as optimised from vehicle dynamics simulation detailed in Section 5.5.1, is achieved using an 16-tooth driving sprocket and 88-tooth driven sprocket with an ISO 606 12B-1 chain (pitch 19.05 mm). Chain tension under peak motor torque of 234 N·m was calculated as 4.82 kN, yielding a safe load of 28.94 kN based on a safety factor of 6 per ISO 606 requirements\cite{iso606}.
 
-Materials with high strength-to-weight ratios are preferred to minimise mass while maintaining structural integrity.
-
-Due to different loading conditions, different materials are selected for specific components. The output shaft, which is subjected to higher torsional loads, is manufactured using glass fibre reinforced polymer (GFRP) to provide sufficient strength while maintaining low weight.
-
-For the chain and sprocket components, where the loading is comparatively lower, nylon~6 is selected due to its lightweight properties and adequate mechanical performance.
-
-In addition, practical considerations such as cost, reliability, and manufacturability are taken into account to ensure feasibility.
+Material selection is conducted using an Ashby plot of strength against density, with strength thresholds derived from stress analysis:
+\begin{equation}
+    \sigma_y > 765\ \text{MPa (shaft)}, \quad \sigma_y > 3.01\ \text{MPa (sprocket)}, \quad \sigma_y > 32.5\ \text{MPa (chain)}
+\end{equation}
+GFRP is selected for the output shaft as it meets the strength requirement at significantly lower density than metallic alternatives. Nylon 6 is selected for both the chain and sprocket, offering adequate strength, low density, and lower cost than CFRP. The drivetrain scatter shield is constructed from 3\,mm aluminium alloy 6061-T6, which is lighter than the 2\,mm steel alternative permitted under FSUK rule\cite{fs-ev-rules2026}.
 
 \section{Differential Design}
 
@@ -1242,6 +1212,7 @@ In addition, practical considerations such as cost, reliability, and manufactura
 For a straight-line acceleration application, a differential is not strictly required, as both driven wheels can be powered equally.
 
 However, system-level considerations show that incorporating a differential enables a centralised braking configuration. Replacing two wheel-mounted braking systems with a single centralised braking system reduces the overall system mass, despite the addition of the differential.
+
 % Michael's new table to replace this one - citation
 \subsection{Configuration Comparison}
 
@@ -1269,30 +1240,44 @@ Configuration & Component & Quantity & Weight per Unit (kg) & Total Weight (kg) 
 \end{table}
 
 The results indicate that the configuration with a differential achieves a lower total system mass.
-
 \subsection{Differential Selection}
 
-The differential is selected based on minimising weight and cost while ensuring sufficient torque capacity.
+Four candidate units were evaluated against the criteria of torque capacity, weight, cost, and LSD type, as summarised in Table~\ref{tab:differential_selection}. A minimum torque capacity of 1158\,N$\cdot$m is required. Weight is assigned the highest weighting as it directly influences acceleration performance. The Drexler FSAE LSD achieves the highest overall score, primarily due to its low mass, and is therefore selected.
 
-A comparison of candidate options shows that the Drexler FSAE LSD \cite{Drexler_FSAE_LSD_data_sheet}
-achieves the highest overall score due to its low mass and adequate torque capability. Therefore, it is selected as the most suitable differential for the drivetrain system.
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1}
+\setlength{\tabcolsep}{3pt}
+\caption{Merit Matrix for Differential Selection}
+\label{tab:differential_selection}
+\small
+Scoring scale: 0 = poor, 1 = acceptable, 2 = good, 3 = excellent.
+Weighted score $= \sum (\text{score} \times \text{weighting})$.
+\makebox[\textwidth][c]{
+\begin{tabularx}{0.95\textwidth}{p{4 cm} *{4}{>{\centering\arraybackslash}X} >{\centering\arraybackslash}X}
+\toprule
+Differential & Torque Capacity & Weight & Cost & \textbf{Score} \\
+\midrule
+Weighting & Pass/Fail & 2 & 1 & -- \\
+\midrule
+\textbf{Drexler FSAE LSD\cite{Drexler_FSAE_LSD_data_sheet}} & Pass & 1 & 2 & \textbf{3} \\
+Quaife ATB LSD\cite{Quaife_ATB_LSD} & Pass & 0 & 1 & 1 \\
+Kaaz LSD\cite{Kaaz_LSD} & Fail & - & - & 0 \\
+OS Giken LSD\cite{OSGiken_LSD} & Fail & - & - & 0 \\
+\bottomrule
+\end{tabularx}
+}
+\end{table}
 
-\section{Summary}
+\section{Summary}%23
 
 The powertrain system is designed to maximise acceleration performance under the constraints of the Formula Student UK\cite{fs-ev-rules2026}.
-%how to say FSUK, everyone should say the same
-
 A centralised single-motor architecture is selected to reduce system complexity and mass. The YASA P400R motor is chosen based on its superior torque performance and compatibility with the electrical system.
-
-The inverter selection prioritises voltage range to accommodate the variable output of the supercapacitor system, resulting in the selection of the BAMOCAR PG-D3-700/400.
-
-A structured control system is developed to ensure stable operation, incorporating signal processing, plausibility checks, and constraint handling. Safety is ensured through a shutdown circuit designed in accordance with FSUK requirements.
-
-In addition, system-level optimisation is applied to the mechanical design. A lightweight drivetrain is implemented with a custom output shaft and material selection based on strength-to-weight considerations.
-
-The inclusion of a differential enables a centralised braking configuration, reducing overall system mass.
+The inverter selection prioritises voltage range to accommodate the variable output of the supercapacitor system, resulting in the selection of the BAMOCAR PG-D3-700/400.A structured control system is developed to ensure stable operation, incorporating signal processing, plausibility checks, and constraint handling. Safety is ensured through a shutdown circuit designed in accordance with FSUK requirements.In addition, system-level optimisation is applied to the mechanical design. A lightweight drivetrain is implemented with a custom output shaft and material selection based on strength-to-weight considerations.The inclusion of a differential enables a centralised braking configuration, reducing overall system mass.
 
 Overall, the design demonstrates an integrated approach that balances performance, safety, and practicality, resulting in an efficient and competitive powertrain system.
+
 \vspace{1cm}
 %maybe add some system images here
 %maybe add final parameters here
