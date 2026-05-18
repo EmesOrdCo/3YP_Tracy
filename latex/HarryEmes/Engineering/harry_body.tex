@@ -134,6 +134,9 @@ The factor $0.2$ caps $k_\text{AS}$ at $0.2$ when $\text{AS}=1$, keeping the eff
 \label{sec:tyre}
 % ---------------------------------------------------------------------
 
+\noindent
+Longitudinal Pacejka parameters for this project were triangulated against archived team fits and tyre-modelling threads on the \emph{FSAE} engineering forum~\cite{fsae_engineering_forum}; the Magic Formula implementation below expresses the resulting friction--slip characteristic at each driven wheel.
+
 The longitudinal tractive force at each driven axle follows
 
 \begin{equation}
@@ -162,7 +165,7 @@ with load-dependent peak $D = F_z (p_{Dx1} + p_{Dx2}\,\Delta F_z /
 F_{z,0})$ and dimensionless stiffness factor $B = p_{Kx1} +
 p_{Kx2}\,\Delta F_z / F_{z,0}$.
 The coefficients used in the baseline configuration are listed in
-Table~\ref{tab:pacejka}. They are derived from the Avon FSAE tyre
+Table~\ref{tab:pacejka}. They are derived from the Avon FSAE~\cite{fsae_engineering_forum} tyre
 lateral data available to the group and typical FSAE longitudinal
 characteristics reported in the literature \cite{milliken1995,
 pacejka2012}, scaled to a representative slick peak friction coefficient
@@ -191,8 +194,10 @@ Reference load $F_{z,0}$        & \SI{1500}{\newton} & Normalisation; typical re
 \end{tabular}
 \end{table}
 
-\subsubsection{Thermal grip window}
+\subsubsection*{Thermal grip window}
+\phantomsection
 \label{sec:thermal}
+\addcontentsline{toc}{subsubsection}{Thermal grip window}
 
 Tyre grip is a strong function of carcass temperature. A compact
 lumped thermal model is available as an optional overlay on the
@@ -806,9 +811,9 @@ Drivetrain and Supercapacitors chapters.}
 \textbf{Parameter} & \textbf{Symbol} & \textbf{Value} & \textbf{Source} \\
 \hline
 Total vehicle mass & $m_v$ & 200\si{\kilo\gram} & Section~\ref{sec:monte_carlo}; chassis $<$\SI{220}{\kilo\gram} \\
-Wheelbase & $L$ & 1.60\si{\metre} & Chassis \\
-CG longitudinal & $L_{CG}$ & 1.14\si{\metre} & Section~\ref{sec:load_transfer} \\
-CG height & $h_{CG}$ & 0.22\si{\metre} & Section~\ref{sec:load_transfer} \\
+Wheelbase & $L$ & 1.573\si{\metre} & Chassis layout (CAD) \\
+CG longitudinal & $L_{CG}$ & 1.092\si{\metre} & Chassis layout (CAD) \\
+CG height & $h_{CG}$ & 0.325\si{\metre} & Chassis layout (CAD) \\
 Wheel radius & $r_w$ & 0.247\si{\metre} & Section~\ref{sec:monte_carlo}; loaded radius \\
 Peak tyre grip & $p_{Dx1}$ & 1.70 & Table~\ref{tab:pacejka} \\
 Accumulator nominal voltage & $V_{\mathrm{bus}}(t)$ & \SI{600}{\volt} (nominal) & Section~\ref{sec:accum_storage_model} \\

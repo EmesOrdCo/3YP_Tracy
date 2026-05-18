@@ -6,12 +6,32 @@
 
 \documentclass[11pt, a4paper]{report}
 \usepackage{../../styling}
+\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
+\DefineBibliographyStrings{english}{bibliography = {References}}
 
 \usepackage{xspace}
 \usepackage{tabularx}
 \usepackage{array}
 \usepackage{longtable}
 \usepackage{rotating}
+\usepackage{multicol}
+
+\newcommand{\compactbib}{%
+  \vspace{-16pt}%
+  \enlargethispage{20pt}%
+  \section*{References}%
+  \vspace{-33pt}%
+  \begingroup
+    \begin{singlespace}%
+      \begin{multicols}{2}%
+        \scriptsize
+        \setlength{\bibitemsep}{0pt}%
+        \printbibliography[heading=none]%
+      \end{multicols}%
+    \end{singlespace}%
+  \endgroup
+}
+\providecommand{\contribution}[1]{\medskip\noindent\textbf{Section Contribution: #1}\par}
 
 \input{harry_business_macros.tex}
 

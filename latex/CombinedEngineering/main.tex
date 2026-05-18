@@ -16,6 +16,24 @@
 % Toby's recovered Engineering body uses xurl, multicol, and singlespace.
 \usepackage{xurl}
 \usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+
+\newcommand{\compactbib}{%
+  \vspace{-16pt}%
+  \enlargethispage{20pt}%
+  \section*{References}%
+  \vspace{-33pt}%
+  \begingroup
+    \begin{singlespace}%
+      \begin{multicols}{2}%
+        \scriptsize
+        \setlength{\bibitemsep}{0pt}%
+        \printbibliography[heading=none]%
+      \end{multicols}%
+    \end{singlespace}%
+  \endgroup
+}
 
 \numberwithin{equation}{section}
 
@@ -56,7 +74,7 @@
 \end{refsection}
 
 \begin{refsection}
-\graphicspath{{yuze_assets/}}
+\graphicspath{{yuze_assets/Engineering/}}
 \input{yuze_body.tex}
 \end{refsection}
 
