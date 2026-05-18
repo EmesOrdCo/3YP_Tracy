@@ -684,14 +684,11 @@ This indicates that acceleration performance can be improved by either increasin
 Therefore, the design approach focuses on maximising torque delivery while optimising system mass, resulting in a balanced optimisation of acceleration performance.
 \subsection{Problem Definition}
 
-Vehicle mass is a key factor in determining acceleration performance, as increased mass directly reduces the acceleration for a given tractive force.
-Working from preliminary simulations (Section 1.7.2), we decided although minimising vehicle mass as a whole does not necessarily optimise our performance (as discussed in Section 1.3), it is best to minimise the motor mass specifically to be compatible with the integrated motor mount design (proposed in Section 1.5) while maintaining sufficient power supply.
+Working from preliminary CAD simulations (Section 1.7.2), we decided although minimising vehicle mass as a whole does not necessarily optimise our performance (as discussed in Section 1.3), it is best to minimise the motor mass specifically to be compatible with the integrated motor mount design (proposed in Section 1.5) while maintaining sufficient power supply.
 
-The use of a supercapacitor-based energy storage system introduces additional complexity, as the supply voltage decreases during discharge. This affects the ability to sustain desired power output throughout the acceleration event and requires careful consideration in both powertrain and control system design.
+Additionally, the supercapacitor-based energy storage system introduces a varying supply voltage during discharge, which must be considered in the powertrain and control system design, while traction-related effects, such as slip, are addressed within the control strategy whilst the system must comply with safety requirements defined by the Formula Student rules. The shutdown circuit (SDC) provides fail-safe protection through independent hardware, operating separately from the controller to ensure safe system shutdown in fault conditions.
 
-In addition, the system must comply with safety requirements defined by the Formula Student rules. The shutdown circuit (SDC) provides fail-safe protection through independent hardware, operating separately from the controller to ensure safe system shutdown in fault conditions.
-
-Other factors, such as cost and component lead time (the time between ordering and receiving the component), must also be considered. Traction-related effects, such as slip, are addressed within the control strategy, and these factors are treated as secondary considerations in this acceleration-focused design.
+Other factors, such as cost and component lead time (the time between ordering and receiving the component), must also be considered as secondary factors in this acceleration-focused design.
 
 \subsection{Powertrain Structure}
 
@@ -922,9 +919,6 @@ Several inverter options were considered for the powertrain system, including th
 , CM200DX and CM200DZ\cite{CM200_data_sheet}.
 
 These candidates provide different voltage ranges, current capabilities, and system integration characteristics, forming the basis for further evaluation. The key specifications are summarised in Table~\ref{tab:inverter_parameters}.
-
-\subsection{Candidate Parameters}
-
 
 \subsection{Candidate Parameters}
 
@@ -1213,37 +1207,8 @@ GFRP is selected for the output shaft as it meets the strength requirement at si
 
 For a straight-line acceleration application, a differential is not strictly required, as both driven wheels can be powered equally.
 
-However, system-level considerations show that incorporating a differential enables a centralised braking configuration. Replacing two wheel-mounted braking systems with a single centralised braking system reduces the overall system mass, despite the addition of the differential.
+However, system-level considerations in Table~\ref{tab:pugh_brake_wheel} show that incorporating a differential enables a centralised braking configuration. Replacing two wheel-mounted braking systems with a single centralised braking system reduces the overall system mass, despite the addition of the differential.
 
-% Michael's new table to replace this one - citation
-\subsection{Configuration Comparison}
-
-\begin{table}[H]
-\centering
-\caption{Comparison of Drivetrain Configurations (based on Breaking system analysis from Ziyang Xing)}
-\label{tab:drivetrain_comparison}
-\begin{tabular}{lcccc}
-\toprule
-Configuration & Component & Quantity & Weight per Unit (kg) & Total Weight (kg) \\
-\midrule
-\multirow{5}{*}{Without Differential}
-& Braking System & 2 & 1.8 & 3.6 \\
-& Upright & 2 & 1.2 & 2.4 \\
-& Differential & 0 & -- & 0 \\
-& Axle & 1 & 4.0 & 4.0 \\
-& Total & & & \textbf{10}\\
-\midrule
-\multirow{5}{*}{With Differential} 
-& Braking System & 1 & 1.8 & 1.8 \\
-& Upright & 2 & 0.8 & 1.6 \\
-& Differential & 1 & 2.5 & 2.5 \\
-& Axle & 2 halves & 1.3 & 2.6 \\
-& Total & & & \textbf{8.5} \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The results indicate that the configuration with a differential achieves a lower total system mass.
 \subsection{Differential Selection}
 
 Four candidate units were evaluated against the criteria of torque capacity, weight, cost, and LSD type, as summarised in Table~\ref{tab:differential_selection}. A minimum torque capacity of 1158\,N$\cdot$m is required. Weight is assigned the highest weighting as it directly influences acceleration performance. The Drexler FSAE LSD achieves the highest overall score, primarily due to its low mass, and is therefore selected.
@@ -1274,6 +1239,36 @@ OS Giken LSD\cite{OSGiken_LSD} & Fail & - & - & 0 \\
 }
 \end{table}
 
+\subsection{Configuration Comparison}
+
+\begin{table}[H]
+\centering
+\caption{Comparison of Drivetrain Configurations (based on Breaking system analysis from Ziyang Xing)}
+\label{tab:drivetrain_comparison}
+\begin{tabular}{lcccc}
+\toprule
+Configuration & Component & Quantity & Weight per Unit (kg) & Total Weight (kg) \\
+\midrule
+\multirow{5}{*}{Without Differential}
+& Braking System & 2 & 1.8 & 3.6 \\
+& Upright & 2 & 1.2 & 2.4 \\
+& Differential & 0 & -- & 0 \\
+& Axle & 1 & 4.0 & 4.0 \\
+& Total & & & \textbf{10}\\
+\midrule
+\multirow{5}{*}{With Differential} 
+& Braking System & 1 & 1.8 & 1.8 \\
+& Upright & 2 & 0.8 & 1.6 \\
+& Differential & 1 & 2.5 & 2.5 \\
+& Axle & 2 halves & 1.3 & 2.6 \\
+& Total & & & \textbf{8.5} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The results indicate that the configuration with a differential achieves a lower total system mass. By selecting the Drexler differential and adopting a centralised braking configuration, the overall drivetrain and braking assembly mass is reduced from 10\,kg to 8.5\,kg, achieving a total mass saving of 1.5\,kg. Therefore, despite the additional differential component, the final configuration provides a more mass-efficient solution for the vehicle.
+
+
 \section{Summary}%23
 
 The powertrain system is designed to maximise acceleration performance under the constraints of the Formula Student UK\cite{fs-ev-rules2026}.
@@ -1285,7 +1280,6 @@ Overall, the design demonstrates an integrated approach that balances performanc
 \vspace{1cm}
 %maybe add some system images here
 %maybe add final parameters here
-\pagebreak
 \compactbib
 % --- END INLINE: Yuze Jiang/Engineering/main.tex ---
 \end{refsection}
@@ -3882,9 +3876,10 @@ The results confirm that collision-induced failure probabilities are consistentl
 
 While the FMEA provides detailed information on failure behaviour, supply chain planning additionally requires an understanding of how different components influence spare consumption and recovery responsiveness across the system.
 
-To support this, a simplified operational Monte Carlo simulation is introduced using the failure probabilities and lead times obtained from the FMEA\cite{montecarlo}. Each simulation run represents a typical operational quarter consisting of 75 contact events, estimated from the financial and market growth analysis conducted by Harry. Contact events include both minor and major impacts occurring during testing activities. Component failures during each quarter are then estimated using a binomial distribution based on the corresponding failure probabilities obtained from the FMEA. And to reduce stochastic variation and improve the stability of the results, the simulation is repeated over 1000 Monte Carlo iterations.
+To support this, a simplified operational Monte Carlo simulation is introduced using the failure probabilities and lead times obtained from the FMEA\cite{montecarlo}. Each simulation run represents a typical operational quarter consisting of 75 collision events, estimated from the financial and market growth analysis conducted by Harry. Collision events include both minor and major impacts occurring during testing activities. Component failures during each quarter are then estimated using a binomial distribution based on the corresponding failure probabilities obtained from the FMEA. And to reduce stochastic variation and improve the stability of the results, the simulation is repeated over 1000 Monte Carlo iterations.
+
 \[
-N_{\text{failure}} \sim \text{Binomial}(75,\, P_{\text{failure} \mid \text{contact}})
+N_{\text{failure}} \sim \text{Binomial}(75,\; P_{\text{failure} \mid \text{collision}})
 \]
 
 \begin{table}[h]
@@ -3903,7 +3898,7 @@ N_{\text{failure}} \sim \text{Binomial}(75,\, P_{\text{failure} \mid \text{conta
 \textbf{(days)}} &
 
 \makecell{\textbf{Failure Prob.} \\
-\textbf{per Contact}} &
+\textbf{per Collision}} &
 
 \makecell{\textbf{Average Spare} \\
 \textbf{Consumption} \\
@@ -3954,9 +3949,9 @@ Fixed operational boundaries are used to define the classification regions, wher
     \label{fig:riskclassification}
 \end{figure}
 
-Based on this, components are classified according to two key factors: failure likelihood and lead time, which together determine how frequently disruptions occur and how long the system is affected when they do. A conceptual classification is first introduced in Figure~\ref{fig:riskclassification}, defining four categories based on these dimensions. The boundaries between categories are defined using median values, providing a consistent and relative basis for comparison.
+Based on this, components are classified according to two key factors: failure likelihood and lead time, which together determine how frequently disruptions occur and how long the system is affected when they do. A conceptual classification is first introduced in Figure~\ref{fig:riskclassification}, defining four categories based on these dimensions.
 
-The framework is then evaluated under contact operating conditions, as shown in Figure~\ref{fig:collision}. Under these conditions, several driveline components shift towards regions requiring higher inventory levels and more responsive supply chain strategies.
+The framework is then evaluated under collision operating conditions, as shown in Figure~\ref{fig:collision}. Under these conditions, several driveline components shift towards regions requiring higher inventory levels and more responsive supply chain strategies.
 
 From this classification, components can be grouped into four replenishment categories: high-risk components requiring both high inventory preparation and responsive supply; frequent-consumption components requiring continuous replenishment; strategic spare components with low expected consumption but long replenishment delay; and low-risk components that can be managed more reactively.
 
@@ -4105,10 +4100,10 @@ Overall, the system can be characterised as a centralised, outsourcing, agile, a
 The data used in the FMEA and the subsequent analysis are derived from the engineering design of the project. Data for the different subsystems were provided by team members responsible for their respective designs:
 
 \begin{itemize}
-    \item Chassis: Toby McConnell (Section 1)
-    \item Wheels: Ziyang Xing (Section 2)    
-    \item Powertrain: Yuze Jiang (Section 3)
-    \item Battery: Paul Vogelburg (Section 4)
+    \item Chassis: Toby McConnell (Chapter 1)
+    \item Wheels: Ziyang Xing (Chapter 2)    
+    \item Powertrain: Yuze Jiang (Chapter 3)
+    \item Battery: Paul Vogelburg (Chapter 4)
 \end{itemize}
 
 Where applicable, detailed and publicly available data sources are cited in the corresponding sections of the main text.
