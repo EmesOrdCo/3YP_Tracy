@@ -723,7 +723,7 @@ Overall, the system is designed to transfer electrical energy from the accumulat
 \subsection{Motor Configuration}
 % Ask Michael
 
-The powertrain architecture adopts a centralised single-motor configuration, as determined by the overall vehicle design (based on analysis from Ziyang Xing(cite)).
+The powertrain architecture adopts a centralised single-motor configuration, as determined by the overall vehicle design (based on analysis from Table~\ref{tab:pugh_drive_architecture}).
 
 This configuration is selected to minimise drivetrain complexity and system mass, both of which directly benefit acceleration performance. While a multi-motor configuration would enable torque vectoring, however, it offers limited advantage in the 75,m straight-line acceleration event and introduces significant additional mass, outweighing any potential performance gain.
 
@@ -1207,7 +1207,7 @@ GFRP is selected for the output shaft as it meets the strength requirement at si
 
 For a straight-line acceleration application, a differential is not strictly required, as both driven wheels can be powered equally.
 
-However, system-level considerations in Table~\ref{tab:pugh_brake_wheel} show that incorporating a differential enables a centralised braking configuration. Replacing two wheel-mounted braking systems with a single centralised braking system reduces the overall system mass, despite the addition of the differential.
+However, system-level considerations in Table~\ref{tab:pugh_brake_wheel} show that incorporating a differential enables a centralised braking configuration. Replacing two wheel-mounted braking systems with a single centralised braking system reduces the overall system mass, despite the addition of the differential. As the requirements specified, the use of inboard brakes reduces mechanical complexity and would be beneficial if it can achieve the estimated weight reduction, so this section is tasked to find the option with minimal mass.
 
 \subsection{Differential Selection}
 
@@ -1243,7 +1243,7 @@ OS Giken LSD\cite{OSGiken_LSD} & Fail & - & - & 0 \\
 
 \begin{table}[H]
 \centering
-\caption{Comparison of Drivetrain Configurations (based on Breaking system analysis from Ziyang Xing)}
+\caption{Comparison of Drivetrain Configurations (Extended from Table~\ref{tab:bom_mass_wheel})}
 \label{tab:drivetrain_comparison}
 \begin{tabular}{lcccc}
 \toprule
