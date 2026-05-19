@@ -1266,7 +1266,7 @@ Configuration & Component & Quantity & Weight per Unit (kg) & Total Weight (kg) 
 \end{tabular}
 \end{table}
 
-The results indicate that the configuration with a differential achieves a lower total system mass. By selecting the Drexler differential and adopting a centralised braking configuration, the overall drivetrain and braking assembly mass is reduced from 10\,kg to 8.5\,kg, achieving a total mass saving of 1.5\,kg. Therefore, despite the additional differential component, the final configuration provides a more mass-efficient solution for the vehicle.
+The results indicate that the configuration with a differential achieves a lower total system mass. By selecting the Drexler differential and adopting a centralised braking configuration, the overall drivetrain and braking assembly mass is reduced from 10\,kg to 8.5\,kg, achieving a total mass saving of 1.5\,kg. Therefore, despite the additional differential component, the final configuration provides a more mass efficient solution for the vehicle.
 
 
 \section{Summary}%23
@@ -1743,6 +1743,7 @@ In the current simulation, the car is only ever traction- or power-limited, as s
 \subsection{Conclusion}
 The accumulator system design combines proven supercapacitor technology with modular electrical and mechanical architecture to meet Formula Student requirements for the acceleration application. The analysis demonstrates comparable quantitative performance to the LiPo baseline while reducing cost and procurement risk. Subsequent development should focus on prototype validation, thermal characterisation under representative operating conditions, and iterative refinement based on test data.
 
+\pagebreak
 \compactbib
 % --- END INLINE: PaulVogelberg/Engineering/paul_body.tex ---
 \end{refsection}
@@ -2639,7 +2640,7 @@ Chapters 1 to 4 established the vehicle’s structural base and design elements 
 
 This commercial strategy introduces a Testing-as-a-Service (TaaS) model centered on an adapted version of the FS car, transitioning it from a sprint vehicle into a high-performance physical testing platform developed for advanced brake testing and autonomous vehicle (AV) validation in a business-to-business (B2B) context.
 
-This Chapter 6 introduces our core value proposition and applies a market segmentation framework to justify a strategic focus on the autonomous sector in the UK, identifying high-priority entry points and target customers through competitive landscape evaluation, personas, and user journey mapping. Chapter \ref{chap:strategy_stakeholder_analysis} continues with stakeholder adoption and go-to-market execution.
+This Chapter 6 introduces our core value proposition and applies a market segmentation framework to justify a strategic focus on the autonomous sector in the Uk, identifying high-priority entry points and target customers through competitive landscape evaluation, personas, and user journey mapping. Chapter \ref{chap:strategy_stakeholder_analysis} continues with stakeholder adoption and go-to-market execution.
 
 \section{Product Overview and Value Proposition}
 \label{sec:value}
@@ -2648,16 +2649,16 @@ The operational foundation of this service is a modified high-dynamic vehicle th
 
 A central element of this proposal is the inheritance of the vehicle's original design constraints. Having been designed to meet strict Formula Student regulations—including a cockpit sized for a 95th percentile male—the vehicle possesses features that are strictly redundant for an unmanned (AV) testing platform. While these constraints present a potential competitive disadvantage, they are a fundamental reality of the base car’s origin. Consequently, following supervisor guidance, this business proposal proceeds with the assumption that the base product utilises the existing high-performance supercapacitor accumulator, powertrain, and wheel design, while acknowledging that inherited constraints of the FS regulatory framework are treated as fixed design parameters, Section \ref{sec:sprint} shows how these same characteristics could define the commercial opportunity rather than limit it.
 
-Our service-based model allows clients to access advanced testing capabilities without the capital expenditure or maintenance burdens of in-house facilities. This value proposition is structured around four primary benefits:
+Our service-based model allows clients to access advanced testing capabilities without the capital expenditure or maintenance burdens of in-house facilities. This value proposition is structured around three primary benefits:
 
 \begin{itemize}
 \item \textbf{Data Quality} -- The service enables consistent braking tests due to the supercapacitor power supply and can operate under extreme conditions enabled by tyre and chassis design. This improves validation accuracy and reduces uncertainty in performance evaluation.
 
-\item \textbf{Scenario Flexibility} -- Modular configuration with different shells allowing clients to simulate different braking conditions and edge cases without the overhead of large facility changes.
+\item \textbf{Scenario Flexibility} -- Modular configuration with different shells allowing clients to simulate different braking conditions and edge cases without the overhead of large-scale facility changes.
 
 \item \textbf{Testing Realism} -- Physical testing reduces reliance on software-only validation and helps close the simulation-to-reality gap in autonomous systems development. These tests provide a more accurate representation of real-world decision-making, braking, and crash scenarios, which simulations cannot fully replicate. This makes the service particularly valuable for final-stage vehicle validation.
 
-\item \textbf{Client Affordability} -- Clients access advanced testing capabilities without the capital expenditure or maintenance burdens of in-house facilities, lowering the cost barrier to high-quality AV validation. How these benefits are delivered as a paid TaaS is developed in Chapter \ref{chap:strategy_stakeholder_analysis}.
+\item \textbf{Client Affordability} -- Clients access advanced testing capabilities without the capital expenditure or maintenance burdens of in-house facilities, lowering the cost barrier to high-quality AV validation. How these benefits are delivered as a paid testing service is developed in Chapter \ref{chap:strategy_stakeholder_analysis}.
 \end{itemize}
 
 Together, these four benefits define the platform's position in the AV validation market. It acts as a “pain reliever” for slow, expensive testing cycles and a “gain creator” for safety validation confidence. The market segmentation and customer targeting that follows is built around this value proposition.
@@ -2924,7 +2925,7 @@ Medium & Low & Low & Medium & Medium \\
 
 \begin{minipage}{0.95\linewidth}
 \footnotesize
-\textbf{*}Currently low as a pre-commercial platform; the staged proof-of-concept process in Section \ref{sec:stakeholder_acceptance_execution_plan} targets Medium through established UK testbed integration, and High through formal PAS accreditation.
+\textbf{*}Currently low as a pre-commercial platform; the staged proof-of-concept process in Section \ref{sec:stakeholder_acceptance_execution_plan}targets Medium through established UK testbed integration, and High through formal PAS accreditation.
 \end{minipage}
 
 \end{table}
@@ -3093,7 +3094,7 @@ When adapting our FS car for integration with the testing platform, modification
 
 \subsection{Market Risk}
 
-The nascent nature of the market introduces a degree of uncertainty in demand, technology evolution, and regulatory direction. Demand for physical AV validation testing is closely linked to investment trends in automated driving technologies. Furthemore, a reduction in R\&D spending or a slowdown in AV deployment could reduce demand for specialised testing platforms. This risk is particularly relevant given the cyclical nature of investment in emerging technologies.
+The nascent nature of the market introduces a degree of uncertainty in demand, technology evolution, and regulatory direction. Demand for physical autonomous vehicle validation testing is closely linked to investment trends in automated driving technologies. Furthemore, a reduction in R\&D spending or a slowdown in autonomous vehicle deployment could reduce demand for specialised testing platforms. This risk is particularly relevant given the cyclical nature of investment in emerging technologies.
 
 This risk can be mitigated by targeting multiple customer groups. EV startups and AV developers may experience different investment cycles, reducing reliance on a single segment. A broader downturn in autonomous vehicle investment would still impact overall demand. However, UK regulatory requirements create baseline demand that is less sensitive to investment cycles (Section \ref{sec:zenzic_roadmap}).
 
@@ -4029,12 +4030,17 @@ The performance of the system is primarily constrained by non-execution time, as
 \caption{Summary of Operational Time Distribution}
 \label{tab:operation_time}
 
-\begin{tabularx}{\textwidth}{l X c c}
+\begin{tabularx}{\textwidth}{
+    p{3.5cm}
+    p{6cm}
+    p{3cm}
+    p{4cm}
+}
 \toprule
 Stage & Description & Time & Role in Process \\
 \midrule
 Recharge & Battery charging & $\sim$10 s & Non-value-added \\
-Pre-test Setup & System checks and preparation & $\sim$430 s & Non-value-added \\
+Pre-test Setup & System checks and preparation & $\sim$420 s & Non-value-added \\
 Test Execution & Dynamic crossing test & $\sim$36 s & Value-added \\
 Recovery & Repair/replacement & 10 min--2 days & Non-value-added \\
 \bottomrule
