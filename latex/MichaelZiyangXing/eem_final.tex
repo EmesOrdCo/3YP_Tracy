@@ -1,0 +1,260 @@
+% -----------------------------------------------------------------------------
+% Revised Chapter 8: Design Requirements & Prototype Planning
+% Placeholder cross-reference labels are used below and should be created in the
+% relevant Chapter 6 and Chapter 7 source files before final compilation.
+% Examples: sec:ch6-gov-market-segmentation, sec:ch6-av-market-segmentation,
+% sec:ch6-strategic-positioning, sec:ch6-risk-analysis, sec:ch7-taas-pivot,
+% sec:ch7-uk-cam-roadmap, sec:ch7-cam-testbed, tab:strategic_engagement_matrix.
+% -----------------------------------------------------------------------------
+
+\chapterauthor{Design Requirements \& Prototype Planning}{Ziyang Xing}
+\label{chap:eem_prototype_planning}
+%\contribution{In this chapter, the market, stakeholder and strategic analysis is translated into design requirements and a staged prototype plan for the autonomous emergency braking test carrier. The contribution is the conversion of customer needs, risk findings and UK assurance expectations into measurable platform requirements, prototype evidence outputs and development gates.}
+
+\section{Design requirements and prototype-planning rationale}
+\label{sec:ch8_design_requirements_rationale}
+
+\subsection{From strategic need to engineering requirements}
+\label{sec:ch8_strategic_need_to_requirements}
+
+A stronger early opportunity is identified by the market analysis in flexible automated-vehicle and electric-vehicle validation than in formal government brake-testing equipment. The government brake-testing route is characterised by established regulatory fit, procedural standardisation and certification acceptance, rather than the flexibility and rapid iteration offered by the proposed platform (Sections~\ref{sec:ch6-gov-market-segmentation} and~\ref{sec:ch6-gov-commercial-challenges}). In contrast, developers, innovation teams and test operators are identified by the autonomous-vehicle and electric-vehicle market segmentation as users for whom flexible physical validation remains valuable (Section~\ref{sec:ch6-av-market-segmentation}). The design requirements in this chapter are therefore derived from a customer need for controlled, repeatable and instrumented physical testing rather than from a need to replace formal statutory brake-test equipment.
+
+A more specific direction is provided by the strategic analysis for this requirement-setting task. A Testing-as-a-Service model has been selected in Chapter~7, with the platform being positioned around short, high-dynamic manoeuvres, replaceable impact shells and controlled recreation of safety-critical edge cases (Sections~\ref{sec:ch7-taas-pivot},~\ref{sec:ch7-sprint-advantage} and~\ref{sec:ch7-cam-testbed}). That strategy is therefore converted here into product-level decisions on physical capability, recorded data, repeatability evidence and prototype maturity.
+
+A coherent link is also required to later supply-chain and financial analysis, because replaceable shells, modular sensor interfaces, data loggers, service access and prototype stages determine what must be sourced, costed and assumed in utilisation models. The prototype plan is therefore treated as an evidence-generation process rather than a simple build sequence.
+
+\subsection{Design basis for a UK-focused prototype}
+\label{sec:ch8_uk_design_basis}
+
+The UK focus has already been justified strategically through the target-market selection and the UK connected and automated mobility ecosystem analysis (Sections~\ref{sec:ch6-uk-market-entry},~\ref{sec:ch7-uk-cam-roadmap} and~\ref{sec:ch7-cam-testbed}). In this chapter, that focus is used to determine which standards and assurance expectations should influence the prototype. Full certification is not claimed for an early prototype. However, the platform, operating procedure and data architecture can still be designed with reference to UK automated vehicle trial practice and relevant PAS and ISO frameworks.
+
+This distinction is important. A prototype may be commercially useful before full certification if its limitations are clear and its evidence outputs are credible. PAS 1881 motivates operational safety-case thinking, PAS 1882 motivates consistent data collection and incident-investigation readiness, and PAS 1883 together with BS ISO 34503 motivates clear definition of the operating conditions under which an automated-driving or test platform is intended to function \parencite{bsiPAS1881,bsiPAS1882,bsiPAS1883,iso34503}. The Department for Transport trialling code also reinforces the need for competent supervision, safety management and responsible operation during automated-vehicle trials \parencite{dftTriallingCode}. These references are therefore used as design guidance rather than as evidence of formal compliance.
+
+\section{Strategic and risk inputs shaping the requirements}
+\label{sec:ch8_strategic_risk_inputs}
+
+\subsection{Market fit and customer value}
+\label{sec:ch8_market_fit_customer_value}
+
+Several dimensions that must be reflected by the product requirements are identified by the strategic positioning analysis in Section~\ref{sec:ch6-strategic-positioning}: testing realism, scenario flexibility, affordability, data quality and regulatory credibility. These dimensions are complementary rather than independent. A cheap platform with poor repeatability would not be a credible test product, while a highly instrumented platform that cannot be reset quickly would be unattractive for iterative development work. The requirements must therefore balance physical performance, operating efficiency and evidence quality.
+
+It is also implied by the target-market analysis that different customer groups require different prototype maturity levels. Large original equipment manufacturers and established test operators are unlikely to be convinced by an early experimental chassis alone. Smaller automated-vehicle developers, electric-vehicle start-ups and innovation teams may engage earlier if a useful development need can be served at lower cost. For this reason, the prototype pathway must not be based on a single step from concept to commercial product. Early prototypes are used to demonstrate feasibility and gather user feedback; mid-stage prototypes are used to prove repeatability and data quality; later prototypes are used to convince testbeds and customer organisations that the platform can support a professional service.
+
+The role of users in development, identified in Section~\ref{sec:ch6-role-of-users}, is therefore reflected directly in the prototype plan. Early users should inform scenario priorities, mid-stage users should review setup and data outputs, and later users may become pilot customers once sufficient evidence has been generated to address the credibility barrier in Section~\ref{sec:ch7-cold-start}.
+
+\subsection{Stakeholder and validation needs}
+\label{sec:ch8_stakeholder_validation_needs}
+
+Physical validation is identified as a bottleneck by the UK connected and automated mobility roadmap between simulation and deployment (Section~\ref{sec:ch7-uk-cam-roadmap}). It is further shown by the CAM Testbed UK discussion that safety-critical edge cases are not suitable for uncontrolled real-traffic experimentation, but must instead be recreated in controlled environments (Section~\ref{sec:ch7-cam-testbed}). These points are converted into two central requirement categories: repeatable scenario execution and evidence-quality data capture.
+
+More detail on what must be demonstrated to different actors is provided by the stakeholder analysis in Chapter~7. Testbed operators require safe, efficient equipment; automated-vehicle developers require scenario flexibility and useful data; and liability stakeholders require traceability and reconstructable evidence. The strategic engagement matrix in Table~\ref{tab:strategic_engagement_matrix} is therefore converted in this chapter into measurable design targets for physical performance, experimental setup, data logging and serviceability.
+
+The requirements are also shaped by the ethical and liability analysis in Section~\ref{sec:ch7-ethics-liability}. A test carrier designed for safety-critical scenarios must not merely move quickly. It must also support transparent records of what was commanded, what was measured and what occurred during each run. Data quality is therefore treated as part of the product design, not as a later reporting task.
+
+\subsection{Risk implications before design requirements are fixed}
+\label{sec:ch8_risk_implications_before_requirements}
+
+It is indicated by the risk analysis in Section~\ref{sec:ch6-risk-analysis} that only some risks can be addressed directly through design requirements and prototype planning. Initial product-development risk can be reduced by modular development, incremental feature addition and frequent liaison with potential users. Regulatory risk can be partly reduced by a data architecture that is flexible enough to adapt to emerging standards. Competitive risk can be partly reduced through rapid, repeatable testing iterations and the accumulation of scenario and run data that would be difficult for a new entrant to reproduce quickly.
+
+Other risks remain less controllable at the product-requirements level. Market risk depends on adoption timing, customer budgets and willingness to pay. Technological risk depends on the extent to which simulation and software-based validation may reduce demand for some physical testing. Strategy and operational risks depend on service delivery, staffing, insurance, utilisation and supply-chain reliability. These risks are acknowledged in Chapter~6 and are not removed by this chapter. Instead, the design requirements are focused on risks that can realistically be influenced by the prototype itself.
+
+Four requirement groups are therefore produced by this logic. Physical-performance requirements address the ability to execute the short, high-dynamic manoeuvres implied by the sprint advantage. Experimental-setup requirements address repeatability, scenario coverage and controlled recreation of edge cases. Standards and data requirements address traceability, safety assurance and regulatory adaptability. Modularity, serviceability and sustainability requirements address early product-development risk, operating cost and circular-economy expectations.
+
+\subsection{Business-model implications for product design}
+\label{sec:ch8_business_model_implications}
+
+The nature of the design requirements is changed by the Testing-as-a-Service strategy in Chapter~7. A platform intended for internal experimentation could be optimised mainly for technical performance. A platform intended to support a service must also be reset quickly, repaired efficiently, instrumented consistently and operated under a repeatable procedure. The design is therefore required to support service delivery rather than only one-off demonstration.
+
+The sub-10-second panic-manoeuvre emphasis in Section~\ref{sec:ch7-taas-pivot} and the sprint advantage in Section~\ref{sec:ch7-sprint-advantage} imply that the carrier should be strongest in short, high-dynamic events. A lightweight chassis, high acceleration, controlled braking, rapid command response and a replaceable soft target shell are therefore favoured. It does not require the early prototype to claim full standards certification. Instead, the data architecture and operating procedure should be structured so that certification-relevant evidence can be added as the product matures.
+
+Prototype planning is also affected by the sustainability strategy in Section~\ref{sec:ch7-sustainability}. The 9R framework in Section~\ref{sec:ch7-9r-framework} should be applied not only to the final product, but also to components that are replaced or discarded during prototype iterations. Replaceable shells, modular brackets, reusable sensor mounts and separable logger modules are therefore design requirements rather than purely environmental preferences. If these features are included early, the cost and waste of iteration can be reduced while the commercial service model is made easier to maintain.
+
+\section{Requirements analysis}
+\label{sec:ch8_requirements_analysis}
+
+\subsection{From user needs to design specifications}
+\label{sec:ch8_user_needs_to_specs}
+
+A requirement process is used so that engineering specifications are not selected in isolation from customer value. Customer and stakeholder needs are grouped into broad categories and then converted into measurable specifications. A Kano-style distinction can be used for this conversion. Some requirements are must-have conditions, such as safe stopping, emergency stop, controlled operation, basic logging and repeatability. Some are performance requirements, such as acceleration, speed accuracy, path accuracy, reset time and logging frequency. Others are differentiators, such as modular impact shells, adaptable sensor interfaces, scenario-library growth and rapid iteration.
+
+The same distinction is reflected in the prototype roadmap. Early prototypes should prove must-have safety and motion functions at low cost. Mid-stage prototypes should prove performance requirements such as repeatability and data quality. Late-stage prototypes should prove differentiating features that support a Testing-as-a-Service offer, including scenario workflow, report generation and recovery after impact-shell replacement.
+
+\subsection{Physical-performance requirements}
+\label{sec:ch8_physical_performance_requirements}
+
+The physical-performance requirements are derived from the need to recreate short, high-dynamic safety events under controlled conditions. The carrier must be capable of acceleration, braking and path-following performance that is sufficient for vehicle-to-vehicle AEB scenarios, while remaining compatible with lower-demand pedestrian or cyclist target tests. The intended product is therefore more demanding than a low-speed dummy platform, but it is not required to become a fully autonomous road vehicle.
+
+The initial targets should include a 0-X km/h acceleration time of X s, a peak test speed of X km/h, a braking deceleration of X m s$^{-2}$, a payload allowance of X kg, and short panic-style manoeuvres lasting less than X s. Each target must later be supported by calculation, component selection or measured prototype evidence.
+
+Physical robustness is also required because low-energy contact is foreseeable in AEB testing. Replaceable impact shells should therefore be treated as serviceable modules, while the chassis, drivetrain, battery and instrumentation should be protected from minor impacts.
+
+\subsection{Experimental setup and repeatability requirements}
+\label{sec:ch8_experimental_repeatability_requirements}
+
+The experimental-setup requirements are derived from the need to recreate safety-critical scenarios repeatedly and safely. Controlled variation of speed, overlap, approach angle, time-to-collision and target motion should therefore be supported with known tolerances.
+
+Repeatability targets should include speed error below $\pm$X km/h, path error below $\pm$X m, heading error below $\pm$X degrees, timing error below X ms, and successful repetition over X consecutive runs. The exact values must be finalised from engineering capability and customer feedback, but the requirement categories are fixed by the market need. Without speed, path and timing repeatability, a physical test run cannot be treated as reliable evidence of AEB performance.
+
+Operational repeatability is also needed: reset time should be below X minutes, shell replacement below X minutes, and staff required per test day no more than X. These values link engineering design to later financial and supply-chain assumptions.
+
+\subsection{Standards, data and evidence requirements}
+\label{sec:ch8_standards_data_requirements}
+
+The standards and data requirements are derived from the need to convert motion into auditable evidence. A flexible data-acquisition architecture is therefore required, so that speed, position, acceleration, yaw, commands, emergency-stop status, scenario ID, software version and environmental metadata can be added or revised without redesigning the platform.
+
+PAS 1882 is particularly relevant because data collection, curation, storage and sharing are central to incident investigation and safety evidence \parencite{bsiPAS1882}. PAS 1881 is relevant because operating limits, monitoring, change control and safety-case assumptions must be managed for automated-vehicle trials \parencite{bsiPAS1881}. PAS 1883 and BS ISO 34503 are relevant because the operational design domain of the test platform must be defined: surface, weather, test area, speed range, target type, supervision mode and communication assumptions should not be left implicit \parencite{bsiPAS1883,iso34503}. ISO 22133 and the ISO 19206 series provide additional design references for test-object monitoring/control and surrogate target compatibility \parencite{iso22133,iso19206series}.
+
+At prototype stage, these references should be used to shape the architecture and procedure. The data system should therefore target a logging frequency of at least X Hz for dynamic channels, with synchronisation error below X ms and a run-level report generated within X minutes after test completion. Full compliance should not be claimed until calibration, synchronisation, storage, security and reporting have been verified. However, standards-aware architecture should be built from the beginning so that later compliance work does not require redesign of the platform.
+
+\subsection{Modularity, serviceability and sustainability requirements}
+\label{sec:ch8_modularity_serviceability_requirements}
+
+Modularity is required because the product is intended to be developed under uncertainty. A fixed early design would increase the risk of expensive redesign after customer feedback. The platform should therefore be divided into modules: base chassis, powertrain and battery, soft impact shell, sensor/logger package, communication system and scenario-control software. Each module should have a defined interface so that higher-fidelity components can be added during later prototype stages.
+
+Serviceability is required because the proposed business model depends on repeated test operation. A customer-facing platform must not be judged only by peak acceleration or braking capability. It must also be recoverable after runs, inspectable between tests and maintainable during a service day. Replaceable shells, accessible fasteners, removable logger modules, standardised brackets and documented checks should therefore be treated as design requirements.
+
+Sustainability is linked to this modular architecture. Iterated prototypes produce obsolete brackets, shells, mounts and electronics. These components should be managed in line with the 9R approach described in Section~\ref{sec:ch7-9r-framework}: refuse unnecessary parts, reduce material use, reuse undamaged components, repair serviceable modules, refurbish prototype assemblies where possible, and recycle materials when reuse is no longer feasible. Sustainability is therefore embedded in prototype planning rather than appended at the end of the product life.
+
+\subsection{Requirement matrix}
+\label{sec:ch8_requirement_matrix}
+
+The resulting specifications are summarised in Table~\ref{tab:ch8_requirement_matrix}. The X values should be replaced with measured, calculated or agreed targets before final submission. Their purpose in this draft is to show the required structure of the specifications and the type of evidence expected from each prototype stage.
+
+\begin{table}[H]
+\centering
+\caption{Traceable design requirements for the AEB test carrier.}
+\label{tab:ch8_requirement_matrix}
+\begin{tabular}{p{0.18\textwidth}p{0.23\textwidth}p{0.27\textwidth}p{0.20\textwidth}}
+\toprule
+\textbf{Category} & \textbf{Source need} & \textbf{Design requirement} & \textbf{Example target} \\
+\midrule
+Physical performance & Sprint and panic-style manoeuvres & High acceleration and controlled braking for V2V AEB scenarios & 0-X km/h in X s; decel $\geq$ X m s$^{-2}$ \\
+\midrule
+Physical performance & Replaceable shell strategy & Impact shell separated from protected chassis and instrumentation & Shell changeover $\leq$ X min \\
+\midrule
+Experimental setup & Controlled edge-case recreation & Repeatable speed, path, heading and timing control & $\pm$X km/h; $\pm$X m; $\pm$X ms \\
+\midrule
+Experimental setup & Testbed utilisation & Fast reset and low operator burden & Reset $\leq$ X min; staff $\leq$ X \\
+\midrule
+Standards and data & Evidence and liability traceability & Timestamped logs for vehicle state, commands, scenario and safety events & Dynamic logging $\geq$ X Hz; sync $\leq$ X ms \\
+\midrule
+Standards and data & Emerging regulatory expectations & Modular logger and sensor interfaces & Add sensor/logger module without chassis redesign \\
+\midrule
+Modularity and sustainability & TaaS maintenance and 9R strategy & Replaceable, reusable and repairable modules & X\% of prototype modules reusable/refurbishable \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Staged prototype plan}
+\label{sec:prototype_roadmap_compact}
+\label{sec:ch8_staged_prototype_plan}
+
+\subsection{Prototype strategy and fidelity}
+\label{sec:ch8_prototype_strategy_fidelity}
+
+The prototype plan is structured by increasing fidelity. Early prototypes are used to test whether the core platform can move safely and cheaply. Mid-stage prototypes are used to test repeatability, data quality and customer usefulness. Later prototypes are used to demonstrate high-dynamic edge-case testing and produce evidence that can support a testbed or customer pilot. This staged approach addresses the regulatory cold-start problem in Section~\ref{sec:ch7-cold-start}, because credibility is generated gradually through evidence rather than asserted at the start.
+
+Each prototype stage should answer a specific question. The early stage asks whether the base chassis can be controlled safely. The first mid-stage asks whether repeatable runs and structured data can be produced. The second mid-stage asks whether the platform can perform the high-dynamic scenarios that differentiate it from slower target systems. The late stage asks whether the platform can be packaged into a customer-facing Testing-as-a-Service demonstrator.
+
+\subsection{Early prototype: feasibility and low-cost learning}
+\label{sec:ch8_early_prototype}
+
+The early prototype should use the baseline chassis with only the modifications needed for safe controlled motion. The purpose is feasibility, not customer demonstration. Basic acceleration, braking, emergency stop and operator-control functions should be tested at low speed. The evidence should include video records, motion traces, fault notes and operator observations.
+
+Initial product-development risk is reduced at this stage by initial product-development risk by avoiding premature investment in a high-fidelity platform. It also enables the user-involvement process discussed in Section~\ref{sec:ch6-role-of-users}. Potential users can be shown a simple proof of motion and asked which scenarios, data outputs and operating constraints are most important before expensive features are fixed.
+
+\subsection{Mid-stage prototype: repeatability and data validation}
+\label{sec:ch8_mid_stage_repeatability}
+
+Closed-loop speed control, improved position or heading estimation, structured scenario setup and reliable logging should be added in the first mid-stage prototype. closed-loop speed control, improved position or heading estimation, structured scenario setup and reliable logging. The purpose is for it to be shown that physical validation can bridge simulation and deployment, as required by the UK CAM roadmap discussion in Section~\ref{sec:ch7-uk-cam-roadmap}. Repeatability plots, run logs and a clear operator procedure should be produced.
+
+The key question is whether the platform can reproduce a planned scenario within defined tolerances. Example evidence would be a run set showing speed error within $\pm$X km/h, lateral path error within $\pm$X m and timing error within X ms over X repeated runs. At this stage, customer-facing polish is less important than proof that the platform can produce consistent data.
+
+\subsection{High-dynamics prototype: sprint and edge-case demonstration}
+\label{sec:ch8_high_dynamics_prototype}
+
+The high-dynamics value proposition should be demonstrated by the second mid-stage prototype. the high-dynamics value proposition. A soft vehicle shell, priority vehicle-to-vehicle AEB scenario library and stronger safety-supervision procedure should be added. Candidate scenarios include stationary-target approach, moving-target approach, braking-target approach, crossing-target recreation and low-speed cut-in conditions. The exact scenario set should be selected from customer feedback and safe operating capability.
+
+This stage is directly aligned with the sprint advantage in Section~\ref{sec:ch7-sprint-advantage} and the CAM Testbed UK need for controlled recreation of safety-critical edge cases in Section~\ref{sec:ch7-cam-testbed}. High-dynamic videos, repeatability results, shell-replacement records, emergency-stop tests and a first scenario catalogue should be produced. The intended result is not full certification, but a credible demonstration that the product is differentiated by rapid, repeatable, short-duration physical testing.
+
+\subsection{Late prototype: customer-facing proof and TaaS readiness}
+\label{sec:ch8_late_prototype}
+
+The late prototype should be packaged for customer-facing proof. The required artefacts include an operating manual, risk assessment, safety-case outline, PAS-aware report template, maintenance plan, scenario catalogue and costed service description. The platform should also include the modular shell and sensor/logger interfaces needed for repeated service use.
+
+At this point, the prototype should support a testbed demonstration, paid pilot, letter of intent or structured partner evaluation. The decision enabled by this stage is whether the product should be commercialised as a service, leased as equipment, or further developed before external deployment. The late prototype therefore connects product design to the financial and supply-chain assumptions used later in the report.
+
+\begin{table}[H]
+\centering
+\caption{Prototype maturity stages and evidence outputs.}
+\label{tab:ch8_prototype_stages}
+\begin{tabular}{p{0.18\textwidth}p{0.24\textwidth}p{0.25\textwidth}p{0.21\textwidth}}
+\toprule
+\textbf{Maturity} & \textbf{Main question} & \textbf{Capability added} & \textbf{Evidence produced} \\
+\midrule
+Early & Can safe motion be achieved cheaply? & Basic control, braking and emergency stop & Motion traces, fault notes, video \\
+\midrule
+Mid: repeatability & Can runs be repeated and logged? & Closed-loop control and structured logging & Repeatability plots, logs, operator procedure \\
+\midrule
+Mid: high dynamics & Can edge cases be recreated? & Soft shell, V2V scenarios, higher speed & Scenario catalogue, safety records, demo data \\
+\midrule
+Late & Can a customer pilot be supported? & Report pack, operating process, service model & PAS-aware reports, risk pack, pilot proposal \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Risk and value alignment of the proposed requirements}
+\label{sec:ch8_risk_value_alignment}
+
+\subsection{Addressable risks reflected in the design}
+\label{sec:ch8_addressable_risks}
+
+The addressable risks identified earlier in the report are reflected in the final requirement set. the addressable risks identified earlier in the report. Initial product-development risk is addressed by modular architecture and incremental prototype fidelity. Regulatory risk is addressed by standards-aware data structures and flexible logger/sensor interfaces, so that emerging requirements can be incorporated without rebuilding the core chassis. Competitive risk is addressed by rapid, repeatable testing iterations and by the accumulation of scenario/run data. The cold-start problem is addressed by staged evidence generation: each prototype stage produces a more credible artefact for customers, testbeds and stakeholders.
+
+The risk response is summarised in Table~\ref{tab:ch8_risk_alignment}. The table is intentionally limited to risks that can be influenced through requirements and prototype design. Wider strategic and operational risks are not hidden, but are handled outside the direct product-design scope.
+
+\begin{table}[H]
+\centering
+\caption{Risk alignment between earlier analysis and Chapter 8 design decisions.}
+\label{tab:ch8_risk_alignment}
+\begin{tabular}{p{0.25\textwidth}p{0.23\textwidth}p{0.40\textwidth}}
+\toprule
+\textbf{Risk theme} & \textbf{Addressed by design?} & \textbf{Requirement or prototype response} \\
+\midrule
+Initial product development & Yes & Modular feature addition, early customer liaison and low-cost feasibility stage \\
+\midrule
+Regulatory change & Partly & Flexible data acquisition, scenario metadata and PAS-aware operating procedure \\
+\midrule
+Competitive pressure & Partly & Rapid repeatability, scenario iteration and accumulated test data \\
+\midrule
+Safety and liability evidence & Yes & Timestamped logs, incident records and customer-facing report packs \\
+\midrule
+Market adoption & Residual & Dependent on customer budgets, timing and willingness to pay \\
+\midrule
+Technology substitution & Residual & Dependent on future simulation capability and validation practice \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Value proposition reflected in requirements}
+\label{sec:ch8_value_reflected_in_requirements}
+
+The value proposition from Chapter~6 is reflected in the requirements through three concrete design choices. First, flexibility is built into the scenario, shell and sensor architecture. This allows different customer needs to be addressed without a new platform for every use case. Second, repeatability is treated as a core performance requirement. This allows the carrier to produce evidence rather than isolated demonstrations. Third, data quality and traceability are built into the platform from the beginning. This supports safety assurance, liability demarcation and later regulatory progress.
+
+The Testing-as-a-Service strategy is also reflected by the operational requirements. Reset time, shell replacement, data export and service access all influence utilisation and therefore financial viability. If these features were omitted, the platform could still be a useful engineering prototype, but it would be less credible as a service asset. The proposed requirements therefore align the product with the strategic pivot rather than only with technical feasibility.
+
+\subsection{Residual limitations}
+\label{sec:ch8_residual_limitations}
+
+Several limitations remain. Market demand must be tested through customer engagement and willingness-to-pay evidence. Technological risk remains because simulation may continue to improve. Strategy and operational risk also remain dependent on staffing, insurance, utilisation, maintenance and capital availability.
+
+A second limitation is that standards-aware design is not the same as formal compliance. The proposed platform can be designed with reference to PAS 1881, PAS 1882, PAS 1883, ISO 34503 and ISO 22133, but compliance claims require validated processes, calibrated instrumentation and documented procedures. This limitation is managed by staging: early prototypes create learning, while later prototypes create the evidence packs required for serious testbed and customer engagement.
+
+\section{Chapter conclusion}
+\label{sec:ch8_conclusion}
+
+The design requirements and prototype plan have been derived from the market, stakeholder and strategic analysis rather than from isolated technical ambition. The strongest early opportunity has been associated with flexible AV/EV physical validation, controlled recreation of safety-critical scenarios and Testing-as-a-Service delivery. The requirements have therefore been grouped into physical performance, experimental repeatability, standards/data readiness, and modularity/serviceability/sustainability.
+
+The staged prototype plan has been structured to increase fidelity only when evidence justifies the next investment. Early development is used to prove safe motion and gather user feedback. Mid-stage development is used to prove repeatability, logging and physical validation value. High-dynamic demonstration is used to show the sprint advantage and controlled edge-case recreation. Late-stage development is used to produce customer-facing evidence, operating procedures and a PAS-aware report pack for pilots or testbed engagement.
+
+A bridge is therefore provided between commercial strategy and later implementation work. The requirements support the value proposition established in Chapter~6, the Testing-as-a-Service strategy established in Chapter~7, and the supply-chain and financial planning that follow. The prototype is not treated as a single final build. It is treated as a sequence of evidence-generating artefacts through which technical performance, customer value and regulatory credibility can be developed together.

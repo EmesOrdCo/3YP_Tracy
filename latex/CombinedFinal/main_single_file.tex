@@ -2704,13 +2704,13 @@ To estimate the size of this market we use a top-down estimation approach. The g
 This yields an estimated addressable market of approximately \$600 million globally.
 \vspace{-10pt}
 \subsection{Market Segmentation}
-
+\label{sec:ch6-gov-market-segmentation}
 User-based segmentation identifies regulatory agencies, certification laboratories, and inspection operators as primary customers operating within strict compliance frameworks. Benefits-based segmentation shows a strong focus on reliability, standardisation, and regulatory acceptance, with limited emphasis on flexibility. Occasion-based segmentation highlights that testing occurs primarily during certification and compliance checks, requiring fixed procedures
 Together, these segmentation perspectives indicate limited alignment between the market’s priorities and the platform’s core value proposition.
 
 \subsection{Commercial Challenges}
 \label{sec:commercial_challenges}
-
+\label{sec:ch6-gov-commercial-challenges}
 This market also presents significant commercial challenges. Entry barriers are high due to certification requirements and the need to demonstrate equivalence with established methods, while procurement cycles are long and complex.
 Product-market fit is also limited. Customers prioritise consistency and risk minimisation, whereas the platform’s core advantages lie in flexibility and adaptability.
 Scalability is constrained by a small customer base and varying international regulations, increasing the need for customisation and slowing expansion.
@@ -2762,7 +2762,7 @@ Therefore, the autonomous vehicle testing market is estimated at approximately \
 %\end{table}
 
 \subsection{Market Segmentation}
-
+\label{sec:ch6-av-market-segmentation}
 User-based segmentation identifies autonomous vehicle R\&D teams, EV startups, AV developers and automotive innovation divisions as primary customers. These organisations are actively developing automated driving systems and require frequent testing during development. Compared with regulatory bodies, they typically have faster decision-making processes and a greater willingness to adopt new testing technologies.
 Benefits-based segmentation highlights that customers prioritise flexibility, rapid iteration, and real-world validation. Autonomous systems must be tested across a wide range of edge cases, including emergency braking scenarios. These requirements align closely with a platform capable of repeatable high-speed testing and configurable conditions.
 Occasion-based segmentation further reinforces this alignment. Testing occurs during algorithm validation, edge-case scenario development, and system integration phases. These occasions require adaptable testing environments that complement simulation-based workflows. A platform that enables repeatable physical testing under configurable conditions directly supports these activities.
@@ -2863,7 +2863,7 @@ Contract Proving Ground Services & Applus IDIADA, UTAC \cite{utac_millbrook} & H
 These indirect competitors highlight the broader validation ecosystem, where organisations combine multiple tools to achieve comprehensive testing. The proposed platform aims to complement rather than replace these solutions by providing  the physical ground-truth data that makes it a genuine hybrid physical testing capability.
 
 \section{Strategic Positioning}
-
+\label{sec:ch6-strategic-positioning}
 The competitive landscape can be assessed across five key dimensions corresponding to the platform's core value proposition: testing realism, scenario flexibility, client affordability, data quality and regulatory credibility in table \ref{tab:competitive_positioning}.
 
 %\begin{figure}[h]
@@ -2993,6 +2993,7 @@ This represents a realistic initial revenue opportunity, reflecting a focused ge
 
 \subsection{Strategic Rationale for UK Market Entry}
 \label{sec:uk_market}
+\label{sec:ch6-uk-market-entry}
 
 The focus on the UK as the initial commercial market is a deliberate strategic choice. Four structural advantages make it the strongest starting point at this stage:
 
@@ -3056,7 +3057,7 @@ Together, these personas inform the user journey mapping below, which traces the
 \end{table}
 \vspace{-8pt}
 \section{Role of Users in Development}
-
+\label{sec:ch6-role-of-users}
 Understanding how target customers influence product development is important in a market where testing workflows, integration requirements, and validation priorities vary across organisations. User involvement develops across three stages:
 
 \begin{itemize}
@@ -3084,7 +3085,7 @@ Additional barriers arise from the specialised engineering integration required 
 
 \section{Risk Analysis and Strategic Trade-offs}
 \label{sec:risk_analysis_strategic_tradeoffs}
-
+\label{sec:ch6-risk-analysis}
 A range of risks must be considered when assessing the product feasibility and commercialisation.
 
 \subsection{Initial Product Development Risk}
@@ -3138,7 +3139,7 @@ Taken together, these choices prioritise credibility-building over short-term re
 \label{chap:strategy_stakeholder_analysis}
 
 \section{Introduction to the Strategic Pivot}
-
+\label{sec:ch7-taas-pivot}
 As discussed in Chapter 6, the UK Connected and Automated Mobility (CAM) sector faces a simulation-to-reality gap: regulators and insurers require physical edge-case validation evidence before approving autonomous deployments, yet Original Equipment Manufacturers (OEMs) often lack agile hardware to execute high-risk tests safely. The enterprise addresses this by pivoting the AEB Platform from a product into a Testing-as-a-Service (TaaS) platform, giving autonomous vehicle (AV) developers access to high-fidelity validation data without owning and maintaining target fleets.
 
 This service model is enabled by the vehicle's sprint-oriented architecture. The AEB Platform utilises a supercapacitor energy storage system to execute repeatable, sub-10-second "panic" manoeuvres that mimic erratic human behaviour. Because profitability depends on utilisation, the platform standardises replaceable impact shells and maintains a buffer of drivetrain components to enable rapid trackside recovery after contact.
@@ -3159,7 +3160,7 @@ Our strategy leverages the government's investment focus, as outlined in the Zen
 
 \subsection{The Zenzic UK CAM Roadmap}
 \label{sec:zenzic_roadmap}
-
+\label{sec:ch7-uk-cam-roadmap}
 The UK Connected and Automated Mobility (CAM) Roadmap to 2035, coordinated by Zenzic (a joint venture between UK industry and government), provides the macro-environment framing for this strategy \cite{zenzic_about}.
 
 Its executive summary notes that, despite aggressive timelines, the UK AV sector remains bottlenecked by a lack of physical validation: regulators want robust safety evidence and OEMs fear that a single public incident could derail deployment \cite[p.~5,11,14]{cracknell_2023}.
@@ -3170,7 +3171,7 @@ The total addressable market is expanding due to labour shortages in freight, lo
 
 \subsection{Utilising CAM Testbed UK}
 \label{sec:cam_testbed_uk}
-
+\label{sec:ch7-cam-testbed}
 The UK offers a concentrated route to market through CAM Testbed UK, a unified network of physical and virtual testbeds. Because safety-critical edge cases are rare and dangerous to replicate in real-world traffic, developers cannot rely on encountering them on public roads \cite[p.~12]{chen_2024}. Our platform enables repeated, controlled recreation of high-stakes scenarios, supporting PAS 1881-style safety governance and ALARP risk reduction \cite[p.~1]{pas1881}.
 
 The system provides physical ground-truth to validate UK investments in virtual simulation by correlating digital-twin testing with real-world sensor data. Rather than targeting individual OEMs with long procurement cycles, the strategy integrates into testbed service offerings, positioning the enterprise as an embedded supplier.
@@ -3189,7 +3190,7 @@ Rather than forcing end-users into capital-intensive (CAPEX) hardware purchases,
 
 \subsection{Hardware Specialisation: The "Sprint" Advantage}
 \label{sec:sprint}
-
+\label{sec:ch7-sprint-advantage}
 This TaaS strategy is enabled by the mechanical profile of the adapted Formula Student (FS) architecture. The AEB Platform is designed for short, high-power manoeuvres rather than long duty cycles (Figure~\ref{tab:optim_result}).
 
 While this profile would limit direct ownership use-cases, it matches the envelope required to simulate extreme dynamic edge cases. In the TaaS model, customers buy the validated data from a "panic" manoeuvre while the enterprise manages duty-cycle constraints using the accumulator's repeatable short-duty-cycle power delivery (Figure~\ref{fig:supercap_discharge}).
@@ -3357,6 +3358,7 @@ These personas are not intended to repeat the customer personas in Section~\ref{
 
 \section{Integrated Strategy for Ethics, Liability, and Safety Assurance}
 \label{sec:automated_vehicles_act_2024}
+\label{sec:ch7-ethics-liability}
 
 The UK Automated Vehicles Act 2024 fundamentally shifts legal liability away from human drivers and onto the corporate developers \cite{lawcom_avs_2024}. In this environment, ethical obligations, legal liability, and safety assurance cannot be treated as isolated topics; they are inextricably linked. Our strategy navigates this complex web by positioning our hardware as the critical compliance tool across three integrated fronts:
 
@@ -3381,7 +3383,7 @@ To protect systemic integrity, the platform should be informed by PAS 1885 \cite
 Finally, these elements are governed by a Safety Management System (SMS) designed with reference to PAS 1881 \cite{pas1881}. Treating safety cases as "live documents" ensures near-misses and unexpected component behaviours feed into change control for continuous improvement.
 
 \section{Sustainability, Lifecycle, and the Circular Economy}
-
+\label{sec:ch7-sustainability}
 Sustainability is treated here as a strategic consequence of the TaaS model rather than as a separate design topic. Because the enterprise retains ownership of the vehicle fleet, environmental incentives and commercial incentives become aligned: longer asset life, repairability, recyclability, and reduced redundant manufacturing all improve both sustainability and margin resilience.
 
 In the automotive sector, Life Cycle Assessments (LCA) often emphasise tailpipe emissions and grid mix. For an electric TaaS platform, the use-phase is effectively zero-emission, so sustainability pivots to manufacturing impacts: almost half of an EV's life cycle Global Warming Potential (GWP) is locked into production \cite[p.~56]{hawkins_2013}. The report therefore mandates "effective recycling programs and improved EV lifetimes" \cite[p.~61]{hawkins_2013}. The enterprise operationalises this through a Product-Service System (PSS) framework (life extension) and the 9R Circular Economy framework (closed-loop recycling), reducing the environmental impact of autonomous validation toward ALARP.
@@ -3392,7 +3394,7 @@ At the macro-business level, the TaaS model is a Result-Oriented Product-Service
 
 \subsection{The 9R Framework Application}
 \label{sec:9r_framework_application}
-
+\label{sec:ch7-9r-framework}
 To achieve absolute alignment between environmental sustainability and commercial efficiency, the enterprise governs its lifecycle strategy through the 9R Circular Economy Framework \cite[p.~5]{potting_2017}. Because asset ownership is retained under the TaaS model, we are financially incentivised to maximise hardware lifespan. At the macro-level, this overarching Product-Service System (PSS) successfully executes the framework's highest tiers: Smarter product use and manufacture (R0-R2) by refusing redundant OEM manufacturing and reducing overall material extraction across the industry.
 
 However, at the micro-level, we face a critical engineering constraint: the reliance on the foundational Formula Student (FS) vehicle architecture. Because the base chassis and drivetrain materials are predetermined by this inherited design, the enterprise cannot optimise the platform's initial embodied carbon. To counter this, we deploy a modular hardware strategy designed to keep inherited materials at their highest utility despite the intense mechanical stress and frequent collisions of track testing. Consequently, our hardware management is categorised across three core subsystems, mapping directly to the framework's subsequent mandates to Extend lifespan (R3-R7) and ensure the Useful application of materials (R8-R9):
@@ -3420,7 +3422,7 @@ While TaaS shifts client costs to OPEX, the primary limitation is the inversion 
 Under the PSS framework, retained ownership transfers hardware failure risk to the enterprise. Because revenue is tethered to uptime, collision damage that exceeds forecast repair windows erodes margins and can threaten testbed relationships. Commercial execution therefore depends on Supply Chain Planning (Section~\ref{sec:supply_chain_planning}), including modular spares buffers and trackside recovery protocols.
 
 \subsection{The Regulatory "Cold Start" Problem}
-
+\label{sec:ch7-cold-start}
 Finally, integrating into established CAM Testbed UK facilities creates a regulatory "cold start" problem. Operations directors and liability assessors (stakekeepers) require empirical proof that the platform will not damage infrastructure or endanger personnel, but this evidence is difficult to generate without track access. The mitigation is staged proof-of-concept testing aligned to Chapter~\ref{chap:eem_prototype_planning} (Design Requirements \& Prototype Planning), ensuring the platform reaches minimum viable safety thresholds required for initial approval.
 
 The minimum viable strategic conditions for the TaaS model are therefore: first, at least one CAM testbed must approve controlled pilot operation; second, telemetry and incident evidence must be credible to insurers, regulators, and customers; third, paid pilots must convert into repeat bookings; fourth, utilisation must approach the break-even threshold identified in the financial model (Section~\ref{sec:breakeven}); and fifth, downtime must remain within the recovery assumptions supported by the supply-chain plan (Section~\ref{sec:supply_chain_planning}). If any of these conditions fail, the strategy should be narrowed before further fleet expansion.
@@ -3435,250 +3437,8 @@ The minimum viable strategic conditions for the TaaS model are therefore: first,
 \begin{refsection}
 \graphicspath{{../MichaelZiyangXing/}}
 % --- BEGIN INLINE: MichaelZiyangXing/eem_design_requirements_prototype_planning_compact.tex ---
-% -----------------------------------------------------------------------------
-% Compact preliminary EEM draft section for internal team review
-% Project: UK-focused AEB test-carrier development from baseline EV chassis
-% Target length: approximately 14--15 pages with styling.sty, figures, and references
-% -----------------------------------------------------------------------------
-
-\chapterauthor{Design Requirements \& Prototype Planning}{Ziyang Xing}
-\label{chap:eem_prototype_planning}
-\contribution{This chapter frames the design requirements and prototype plan for the autonomous emergency braking (AEB) test carrier from an Engineering Entrepreneurship and Management (EEM) perspective. It links technical requirements to UK customer needs, standards-led testing expectations, prototype-risk reduction, and commercialisation logic.}
-
-\section{Purpose and commercial framing}
-
-This chapter evaluates the design requirements and prototype plan for converting the team's baseline product, a lightweight and configurable electric vehicle (EV) chassis, into a high-dynamics autonomous emergency braking (AEB) test carrier. The proposed product direction is to prioritise vehicle-to-vehicle (V2V) AEB test cases, while retaining compatibility with less demanding tests such as pedestrian, cyclist, and low-speed obstacle scenarios. The design problem is therefore not only whether the vehicle can accelerate, brake, and follow a controlled path. It is whether these technical capabilities can become a credible and commercially useful testing asset for UK original equipment manufacturers (OEMs), proving grounds, connected and automated mobility (CAM) testbeds, advanced driver assistance system (ADAS) developers, and research organisations.
-
-The chapter treats design requirements as market-facing requirements. Physical performance requirements determine which test cases the carrier can support. Experimental setup requirements determine whether the evidence produced is repeatable and usable. Standards and data requirements determine whether the prototype is credible in a professional UK testing environment. The prototype roadmap then shows how the team can begin with a low-cost exploratory platform, validate repeatability, demonstrate high-dynamics V2V capability, and finally package the system as a customer-ready demonstrator. This structure follows good practice observed in previous EEM project reports: clear customer segmentation, UK ecosystem framing, disciplined treatment of assumptions and financing, and operational realism around maintainability and downtime.
-
-The scope is deliberately limited to the UK. EU and US regulatory pathways, including NHTSA-oriented expansion, are treated as future commercial scaling opportunities rather than immediate design drivers. This is appropriate for the current report because it keeps the design argument focused on UK customers, UK trial expectations, and relevant British Standards Institution (BSI) PAS documents. The central argument is that the test carrier should not be designed as a generic fast remote-controlled vehicle. It should be designed as a standards-aware, repeatable, data-producing test object that can support a future testing service or equipment offering.
-
-\textbf{TODO: CONFIRM PROJECT-SPECIFIC SCOPE.} This draft assumes that the baseline EV chassis is available as a functioning or near-functioning platform and that the agreed market entry point is a high-dynamics AEB test carrier rather than a full autonomous driving vehicle. Before submission, this paragraph should be updated with the actual chassis status, the ownership of the baseline design, and the boundary between this EEM chapter and the engineering-design chapter.
-
-\section{UK market need and customer problem}
-
-\subsection{Why a physical AEB test carrier is useful}
-
-AEB development increasingly uses simulation, software-in-the-loop testing, and controlled proving-ground experiments. Simulation is efficient for exploring large numbers of scenarios, but it cannot fully replace physical testing where perception, timing, actuation, tyres, surface condition, target presentation, and near-collision safety interact. For a customer, the value of a physical test carrier is therefore not only the vehicle itself. The value lies in producing repeatable, believable, and traceable evidence under controlled conditions.
-
-The commercial opportunity sits between two extremes. Low-cost prototype platforms can be built quickly, but they often lack repeatability, data quality, safety documentation, and customer confidence. Premium active-safety test systems offer high capability, but they can be expensive, specialised, and difficult for smaller developers or research-led teams to access. The proposed AEB test carrier should occupy an intermediate position: a modular, lower-cost, UK standards-aware platform that first proves serious V2V testing capability and then matures towards a professional demonstrator.
-
-\textbf{TODO: COLLECT MARKET EVIDENCE.} The final report should add at least two concrete evidence sources, such as stakeholder interviews, indicative supplier prices, published testbed-access rates, or CAM-sector reports. If exact costs cannot be obtained, the analysis should clearly state that it uses indicative cost bands rather than verified supplier quotations.
-
-\subsection{Customer segments}
-
-The first UK-focused commercialisation phase should target business-to-business customers rather than private consumers. The most relevant users are organisations that need to generate, validate, or sell AEB test evidence. Table~\ref{tab:customer_segments_compact} summarises the customer segments and their design implications.
-
-\begin{table}[H]
-\centering
-\caption{Indicative UK customer segments and design implications.}
-\label{tab:customer_segments_compact}
-\begin{tabular}{p{0.20\textwidth} p{0.31\textwidth} p{0.37\textwidth}}
-\toprule
-\textbf{Segment} & \textbf{Primary need} & \textbf{Design implication} \\
-\midrule
-OEM validation teams & Repeatable V2V AEB evidence for internal development. & Prioritise acceleration, braking repeatability, trajectory control, logging, and reportable outputs. \\
-\midrule
-Proving grounds and CAM testbeds & Additional active-safety service capability. & Prioritise robust operation, fast reset, safety procedures, maintainability, and workflow integration. \\
-\midrule
-ADAS developers and Tier suppliers & Faster iteration between software changes and physical tests. & Prioritise modular scenarios, accessible data export, and lower operating cost. \\
-\midrule
-Research organisations & Affordable platform for controlled safety experiments. & Prioritise safe operating limits, instrumentation access, and transparent limitations. \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The shared customer problem is access to controlled physical validation without immediately taking on the full cost, complexity, and liability burden of premium target fleets. This makes the prototype plan commercially important. The team must not simply maximise technical ambition; it must decide which capabilities create customer confidence at each stage of development.
-
-\subsection{UK policy and standards context}
-
-The UK context strengthens the rationale because connected and automated mobility is an active national policy and investment area. The Automated Vehicles Act 2024 creates a legal framework for automated vehicles in Great Britain, while UK Government and CAM Testbed UK material presents automated mobility as a growth sector and testbed opportunity \parencite{automatedVehiclesAct2024,govukAVJobs2025,camTestbedUK}. The project should not claim that a university prototype is immediately compliant with commercial certification requirements. Instead, UK policy and standards should be used as design guidance: they show what a serious testing platform will eventually need to demonstrate.
-
-For this report, the most relevant UK-facing references are PAS 1881 for operational safety, PAS 1882 for data collection and incident-investigation readiness, PAS 1883 and BS ISO 34503 for Operational Design Domain (ODD) definition, the Department for Transport automated vehicle trialling code of practice, ISO 22133 for test-object monitoring and control, and the ISO 19206 series for surrogate targets \parencite{bsiPAS1881,bsiPAS1882,bsiPAS1883,iso34503,dftTriallingCode,iso22133,iso19206series}. These sources do not all apply in the same way, but together they justify three design priorities: safe operation, repeatable tests, and traceable evidence.
-
-\textbf{TODO: VERIFY VERSION-SENSITIVE STANDARDS.} Some standards are version-sensitive. Before submission, the team should confirm the exact current versions available through the university or BSI access, especially PAS 1881, PAS 1883, and ISO 22133. The report should avoid claiming formal compliance unless the corresponding evidence has been generated.
-
-\begin{table}[H]
-\centering
-\caption{UK-focused standards and design implications.}
-\label{tab:standards_design_compact}
-\begin{tabular}{p{0.25\textwidth} p{0.61\textwidth}}
-\toprule
-\textbf{Reference} & \textbf{Implication for the AEB test-carrier project} \\
-\midrule
-PAS 1881 & Motivates safety-case thinking, operating limits, emergency procedures, change control, and monitoring of safety assumptions. \\
-PAS 1882 & Motivates structured data capture, data retention, incident review, access control, and evidence preservation. \\
-PAS 1883 / BS ISO 34503 & Motivates a clearly defined ODD for the prototype, including test environment, surface, speed range, target type, and weather limits. \\
-DfT trialling guidance & Reinforces safety management, competent supervision, and responsible operation during public or semi-public trials. \\
-ISO 22133 / ISO 19206 & Supports compatibility with active-safety test-object control and surrogate target expectations. \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\section{Design requirements as commercial requirements}
-
-\subsection{Requirement logic}
-
-The design requirements are organised into three lenses: physical performance, experimental setup, and standards/data readiness. This avoids presenting the carrier as a collection of unrelated technical specifications. Each lens answers a customer-facing question. First, can the platform execute the test cases that customers value? Second, can it repeat those tests reliably enough for engineering evidence? Third, can it produce data and documentation that a professional customer can trust?
-
-\begin{table}[H]
-\centering
-\caption{Commercial interpretation of key design requirements.}
-\label{tab:requirements_compact}
-\begin{tabular}{p{0.18\textwidth} p{0.31\textwidth} p{0.24\textwidth} p{0.17\textwidth}}
-\toprule
-\textbf{Lens} & \textbf{Key points} & \textbf{Customer value} & \textbf{Example target} \\
-\midrule
-Physical performance & Acceleration, braking, top speed, payload, low-profile structure, and target compatibility. & Enables higher-value V2V AEB cases rather than only low-speed target motion. & 0--X km/h in $<$ X s; decel $>$ X m/s$^2$. \\
-\midrule
-Experimental setup & Repeatable speed, path, heading, scenario reset, emergency stop, and run-to-run consistency. & Reduces wasted test time and increases confidence that measured differences are caused by the vehicle under test. & Speed error $<$ $\pm$X km/h; lateral error $<$ $\pm$X m. \\
-\midrule
-Standards and data & Synchronised logging, scenario metadata, incident records, operating limits, and traceable reports. & Converts a moving carrier into professional test evidence. & Logging $>$ X Hz; time sync error $<$ X ms. \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{Physical performance}
-
-The physical-performance requirements determine whether the platform can credibly support the chosen market position. A pedestrian-only target carrier can be relatively low speed and low acceleration, but V2V AEB scenarios require stronger longitudinal performance, stability, and control. The carrier should therefore be designed around measurable targets such as 0--X km/h acceleration time, maximum test speed of X km/h, braking deceleration above X m/s$^2$, payload capacity of X kg, and safe operation with a soft vehicle target mounted or towed.
-
-These figures should not be treated as arbitrary engineering ambitions. They are commercial filters. If the chassis cannot reach the required dynamics, it may still be useful for low-speed research, but it will not support the differentiated value proposition of high-dynamics V2V AEB testing. Conversely, over-specifying the vehicle too early would increase cost before demand is validated. The correct approach is to define minimum performance thresholds for each prototype stage and tighten them only after early tests show the chassis can support further development.
-
-\textbf{TODO: INSERT ACTUAL PERFORMANCE TARGETS.} Replace X values with measured or justified targets from the engineering team. The final report should state whether each target is an aspiration, a calculated requirement, or a measured prototype result.
-
-\subsection{Experimental setup and repeatability}
-
-Repeatability is the bridge between a technical prototype and a test product. The carrier must be able to execute the same scenario multiple times with controlled variation in speed, path, heading, acceleration, and timing. This is commercially important because testbed operators sell reliable test time. If the platform requires long manual setup, has high downtime, or produces inconsistent runs, its commercial value falls even if the hardware is impressive.
-
-The experimental requirements should therefore include both test-quality and operational metrics. Test-quality metrics include path error below $\pm$X m, speed error below $\pm$X km/h, heading error below $\pm$X degrees, and repeatability over X repeated runs. Operational metrics include reset time below X minutes, number of runs per charge above X, repair time after minor contact below X minutes, and number of staff required per test day. These operational details connect engineering decisions to the EEM criteria because they affect cost, utilisation, and customer satisfaction.
-
-\subsection{Standards, data, and evidence quality}
-
-The standards/data lens converts motion into evidence. The platform should record sufficient data to reconstruct each run and explain the test context. A preliminary data-channel set should include timestamp, position, velocity, acceleration, yaw or heading, drive command, braking command, energy-store state, communications status, emergency-stop status, fault codes, scenario ID, operator, software version, weather condition, and any deviations from the planned test.
-
-The logging frequency should be selected according to the fastest dynamics that need to be captured. In this draft, X Hz is used as a placeholder; the team should decide whether 100 Hz is technically achievable and commercially necessary for the later prototype. The report should be careful with wording. It can say that the data architecture is designed with standards-aware logging in mind, but it should not claim compliance until the sensors, synchronisation, storage, calibration, and data-processing chain have been validated.
-
-\textbf{TODO: CONFIRM DATA ARCHITECTURE.} The final report should specify which channels are recorded at high frequency, which are recorded at lower frequency, how time synchronisation is achieved, and how raw logs are converted into customer-facing reports. If the early prototype cannot achieve the final logging target, present this as a staged limitation rather than a failure.
-
-\section{Prototype roadmap: Explore, Validate, Demonstrate, Convince}
-\label{sec:prototype_roadmap_compact}
-
-\subsection{Why staged prototyping is necessary}
-
-The project begins with limited resources, uncertain customer demand, and unverified technical performance. A single attempt to build a customer-ready product from the beginning would create high financial and technical risk. A staged roadmap reduces this risk by creating decision gates. Each stage answers a clear question: can the chassis move safely; can it repeat a controlled test; can it demonstrate high-dynamics V2V value; and can it produce evidence that customers would trust?
-
-\begin{figure}[H]
-\centering
-\fbox{\parbox{0.86\textwidth}{\centering\vspace{7mm}
-\textbf{PLACEHOLDER FOR ROADMAP FIGURE}\par
-A compact vertical figure should show: P0 Explore $\rightarrow$ P1 Validate $\rightarrow$ P2 Demonstrate $\rightarrow$ P3 Convince. Each stage should contain two or three short phrases. The style should match the dark-blue presentation theme.\vspace{7mm}}}
-\caption{Staged prototype path from low-cost exploration to customer-ready proof.}
-\label{fig:prototype_roadmap_compact}
-\end{figure}
-
-\subsection{Stage definitions}
-
-P0, \textit{Explore}, should use the baseline EV chassis with the minimum modifications required for safe controlled motion. The purpose is to learn cheaply, not to impress customers. The expected evidence includes simple acceleration traces, braking traces, emergency-stop tests, video records, and operator feedback. If the chassis cannot meet a minimum motion envelope at P0, the team can pivot before investing in expensive sensors or target structures.
-
-P1, \textit{Validate}, should convert the moving chassis into a repeatable experimental platform. The main additions are closed-loop velocity control, improved position or heading estimation, structured scenario setup, and reliable logging. The output should be a repeatability evidence pack showing, for example, that the vehicle can run a planned path at X km/h with speed error below $\pm$X km/h and lateral error below $\pm$X m over X repeated runs.
-
-P2, \textit{Demonstrate}, should show the differentiated value proposition: high-dynamics V2V AEB testing. This stage should add soft vehicle target integration, a priority scenario library, stronger safety supervision, and enough performance to execute commercially interesting cases. Candidate cases include stationary target approach, moving target approach, braking target, crossing target, or low-speed cut-in scenarios. The exact scenario set should be chosen to match both customer interest and safe technical capability.
-
-P3, \textit{Convince}, should package the prototype into a customer-ready demonstrator. This does not necessarily mean full commercial certification. It means that the prototype has the artefacts needed for a serious pilot discussion: operating manual, risk assessment, safety-case outline, scenario catalogue, data-export format, report template, maintenance plan, and costed service model. At this stage, the aim is not merely to show that the vehicle is fast; it is to reduce customer uncertainty.
-
-\begin{table}[H]
-\centering
-\caption{Prototype stages, evidence outputs, and business decisions.}
-\label{tab:prototype_stages_compact}
-\begin{tabular}{p{0.14\textwidth} p{0.25\textwidth} p{0.29\textwidth} p{0.20\textwidth}}
-\toprule
-\textbf{Stage} & \textbf{Prototype focus} & \textbf{Evidence produced} & \textbf{Decision enabled} \\
-\midrule
-P0 Explore & Basic chassis motion and safe stop. & Feasibility video, acceleration/braking traces, failure notes. & Continue, redesign, or pivot. \\
-P1 Validate & Repeatability, control, and logging. & Repeatability plots and structured logs. & Decide whether external demonstration is credible. \\
-P2 Demonstrate & High-dynamics V2V scenarios. & Scenario videos, target integration, safety procedure. & Seek testbed or customer feedback. \\
-P3 Convince & Customer-ready workflow and reports. & Report template, operating pack, risk pack, costed offer. & Launch pilot, lease trial, or service partnership. \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\textbf{TODO: INSERT CURRENT PROTOTYPE STATUS.} The final report should identify which stage the team has actually reached and which stages remain planned. If P0 or P1 tests have been completed, include measured performance, key failures, and lessons learned. If they have not been completed, the report should clearly describe them as planned decision gates.
-
-\section{Value proposition and business model}
-
-\subsection{Value proposition}
-
-The proposed value proposition is a modular, lower-cost, UK standards-aware AEB test carrier that enables repeatable active-safety scenarios without requiring customers to immediately invest in a premium full-scale target system. Its initial differentiation should be practical rather than exaggerated: the platform should offer a credible route to V2V AEB testing, faster iteration, structured logs, and a development pathway that can be adapted to customer feedback.
-
-For OEMs and ADAS developers, the value is additional physical evidence during development. For testbeds, the value is a possible new service capability. For research organisations, the value is an affordable and transparent platform for controlled experiments. Across these segments, the strongest commercial message is not simply low cost. It is lower cost combined with repeatability, safety awareness, and clear evidence outputs.
-
-\subsection{Commercial model options}
-
-Three business models are plausible. Direct product sale gives simple revenue but creates support and liability burdens. Leasing lowers customer entry cost and may suit testbeds that want equipment access without immediate purchase. Testing-as-a-Service gives the team more control over safety, maintenance, and data quality, but it requires staff time, site access, insurance, and operational planning. For the early UK phase, the most realistic route is likely prototype-led customer engagement followed by either a testbed partnership or a limited Testing-as-a-Service pilot.
-
-\begin{table}[H]
-\centering
-\caption{Indicative business model comparison.}
-\label{tab:business_model_compact}
-\begin{tabular}{p{0.21\textwidth} p{0.29\textwidth} p{0.20\textwidth} p{0.20\textwidth}}
-\toprule
-\textbf{Model} & \textbf{Description} & \textbf{Strength} & \textbf{Limitation} \\
-\midrule
-Product sale & Sell the carrier hardware and support package. & Clear transaction and scalable if mature. & High support, warranty, and liability burden. \\
-Leasing & Provide carrier access for a monthly or project fee. & Lowers customer entry cost. & Requires capital ownership and maintenance capacity. \\
-Testing-as-a-Service & Operate the carrier for customers at a test site. & Controls quality and builds service revenue. & Requires staff, insurance, test-site access, and scheduling. \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\textbf{TODO: ADD COST AND PRICE ASSUMPTIONS.} The final report should include a simple cost model with indicative capital expenditure, operating expenditure, maintenance cost, staff cost, utilisation, and price per test day or pilot. If precise prices are unavailable, the analysis should present low/medium/high scenarios and explain the assumptions.
-
-\section{Assumptions, risks, and limitations}
-
-\subsection{Key assumptions}
-
-The commercial argument depends on several assumptions. The report should state them explicitly rather than hiding them inside the narrative. The most important assumptions are that UK customers value lower-cost access to repeatable AEB testing, that the baseline chassis can meet the minimum high-dynamics envelope, that standards-aware logging increases customer confidence, and that a staged prototype path reduces financial risk.
-
-\begin{table}[H]
-\centering
-\caption{Core assumptions and validation actions.}
-\label{tab:assumptions_compact}
-\begin{tabular}{p{0.36\textwidth} p{0.26\textwidth} p{0.27\textwidth}}
-\toprule
-\textbf{Assumption} & \textbf{Why it matters} & \textbf{How to test it} \\
-\midrule
-UK test operators want lower-cost AEB test capability. & Supports demand and positioning. & Interview testbeds, OEMs, and ADAS developers. \\
-The baseline chassis can reach the required dynamics. & Supports the V2V value proposition. & Run P0/P1 acceleration, braking, and stability tests. \\
-Customers value traceable logs and reports. & Supports standards-aware differentiation. & Show sample reports and collect feedback. \\
-Staged prototyping reduces financial risk. & Supports funding and decision gates. & Review costs and evidence at each stage. \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{Risk management}
-
-The main risks are technical, market, operational, safety, and commercial. Technical risk arises if the chassis cannot meet the acceleration, braking, stability, or payload requirements. Market risk arises if customers prefer established premium systems or if the lower-cost niche is smaller than expected. Operational risk arises from downtime, damaged target structures, battery or energy-store limitations, and manual setup burden. Safety risk is especially important because the prototype operates close to vehicles, targets, and test personnel. Commercial risk arises if the project cannot convert prototype evidence into a credible pilot or revenue model.
-
-Mitigation should follow the staged roadmap. P0 and P1 reduce technical risk early. Customer interviews and testbed conversations reduce market risk before expensive P2 integration. Modular design, spare parts, and maintenance planning reduce operational risk. Emergency stop, geofencing, operating limits, competent supervision, and safety-case documentation reduce safety risk. A simple staged budget and business-model comparison reduce commercial risk.
-
-\textbf{TODO: ADD TEAM RISK REGISTER.} The final report should include the team's actual risk register or a condensed version of it. Each risk should have a likelihood, impact, owner, mitigation, and residual risk rating if those are available.
-
-\subsection{Limitations}
-
-The proposed design and business plan have clear limitations. First, the prototype is not yet a certified commercial test system. Second, the UK-only scope improves focus but limits immediate international scalability. Third, performance targets remain provisional until validated by physical tests. Fourth, customer willingness to pay is assumed rather than proven. Fifth, standards are used as design guidance unless full compliance evidence is generated. Finally, the shift from low-speed target motion to high-dynamics V2V operation may require stronger mechanical design, more reliable control, and more robust safety systems than the baseline chassis currently provides.
-
-Recognising these limitations strengthens rather than weakens the commercial case. It shows that the team understands the gap between a promising prototype and a sustainable product or service. The correct conclusion is therefore not that the design is already market-ready, but that the proposed roadmap gives a credible route for converting technical capability into customer evidence.
-
-\section{Sustainability, ethics, IP, and conclusion}
-
-Sustainability should be considered through the life cycle of the platform. An electric test carrier avoids local exhaust emissions during operation, but this does not make the project automatically sustainable. Battery sourcing, charging demand, tyre and brake wear, damaged target materials, electronic components, and end-of-life disposal should be considered. A modular repairable design can improve sustainability by extending platform life and reducing waste after minor impacts.
-
-Ethical issues arise because AEB testing is safety-related. Poor testing could create false confidence in a vehicle system, while unsafe demonstrations could harm operators or damage equipment. The team should therefore communicate limitations clearly, avoid overstating compliance, and use conservative operating envelopes during early prototypes. Security and intellectual property also matter. Data logs may contain commercially sensitive customer information, while the control software, chassis modifications, and reporting workflow may contain protectable know-how. Access control, version management, and clear ownership of design files should be part of the prototype plan.
-
-\textbf{TODO: CONFIRM IP AND DATA OWNERSHIP.} Before submission, the team should confirm who owns the baseline chassis design, software, data logs, and any modifications produced during the project. If customer demonstrations are planned, the report should explain how test data will be stored, shared, and protected.
-
-This chapter has argued that the AEB test carrier should be developed through a commercially driven requirements process. The UK market context creates a plausible opportunity for a lower-cost, modular, standards-aware platform that can support repeatable active-safety testing. The requirements are therefore not only technical specifications; they are conditions for customer confidence. The staged roadmap from Explore to Validate, Demonstrate, and Convince reduces early financial risk while building towards a customer-ready evidence package. The project remains dependent on validation of performance, demand, cost, and safety assumptions, but the proposed plan provides a coherent route from an engineering prototype to a commercially meaningful UK testing proposition.
-
+% ---------------------------------------------
+\input{MichaelZiyangXing/eem_final}
 % --- END INLINE: MichaelZiyangXing/eem_design_requirements_prototype_planning_compact.tex ---
 \compactbib
 \end{refsection}

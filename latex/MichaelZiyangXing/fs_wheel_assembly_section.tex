@@ -14,9 +14,9 @@
 \section{Wheel assembly design scope and key terminology}
 
 \subsection{Scope of this chapter}
-This chapter presents the wheel-assembly design for the acceleration-only Formula Student UK vehicle. The previous chapter establishes the vehicle-level event objective; this chapter explains how the suspension, steering and braking choices support that objective at the wheel-assembly level. The front suspension, steering system and front brakes are included because they are required for a complete and rule-compliant vehicle, but the main engineering contribution is the rear wheel assembly. The rear design combines multi-link kinematics, a tunable anti-squat target, dynamic rear toe control, and a single inboard brake acting on the limited-slip differential (LSD).
+This chapter presents the wheel-assembly design for the acceleration-only Formula Student UK vehicle. The previous chapter establishes the vehicle-level event objective; this chapter explains how the suspension, steering and braking choices support that objective at the wheel-assembly level. The main engineering contribution is the rear wheel assembly. The rear design combines multi-link kinematics, a tunable anti-squat target, dynamic rear toe control, and a single inboard brake acting on the limited-slip differential (LSD), while the front suspension features a simpler double A arm design with rack-and-pinion steering as specified by FS regulations \parencite{fs-ev-rules2026}.
 
-The vehicle is not intended to be a balanced skidpad, autocross and endurance car. Its useful dynamic case is launch and short straight-line acceleration. The rear suspension can therefore be biased towards rear traction, ride-height control, low scrub and wheel-end mass reduction. The chosen wheel package is the OZ Racing Formula Student Hybrid Carbon CL \SI{10}{in} wheel and Hoosier 18.0 x 6.0-10 Formula Student slick tyre. OZ lists the 7 x 10 in hybrid carbon wheel at approximately \SI{1.35}{kg}, while Hoosier lists the 18.0 x 6.0-10 slick at approximately \SI{9}{lb} \parencite{zxOZCarbon10,zxHoosierSpecs}. These light components make the remaining upright, brake and link mass important to the corner-mass budget.
+The rear suspension is biased towards rear traction, ride-height control, low scrub and wheel-end mass reduction for the acceleration event. Because the simulation sensitivity list (Section \ref{sec:5.4.1}) shows that total vehicle mass contributes minimally to performance, mass reduction is considered in conjunction of mechanical complexity and cost. This is in line with the team's overall approach of being considerate with manufacturing difficulty and cost when making decisions as Section \ref{chassis tube}. Due to the nature of the wheels and tyres being buy-and-use products, and that different products behave the same in mechanical complexity sense, they are chosen early in the process, optimising for mass under reasonable cost constraints. The chosen wheel package is the OZ Racing Formula Student Hybrid Carbon CL \SI{10}{in} wheel and Hoosier 18.0 x 6.0-10 Formula Student slick tyre. OZ lists the 7 x 10 in hybrid carbon wheel at approximately \SI{1.35}{kg}, while Hoosier lists the 18.0 x 6.0-10 slick at approximately \SI{9}{lb} \parencite{zxOZCarbon10,zxHoosierSpecs}. These light components make the remaining upright, brake and link mass important to the corner-mass budget.
 
 \subsection{Definitions used in the design argument}
 \textit{Toe angle} is the plan-view angle between the wheel and the vehicle centreline. \textit{Toe-in} points the front of the wheel inwards; \textit{toe-out} points it outwards. Small rear toe-in can improve straight-line stability, while zero toe reduces tyre scrub and power loss in straight running \parencite{zxSuspensionSecretsToe}. \textit{Camber} is the front-view wheel inclination relative to vertical. It is secondary for this acceleration-only design, but it must remain adjustable to compensate for manufacturing and setup variation.
@@ -24,6 +24,7 @@ The vehicle is not intended to be a balanced skidpad, autocross and endurance ca
 \textit{Squat} is the rear suspension compression caused by acceleration load transfer. \textit{Anti-squat} is a geometric force-path effect that resists this compression. The driven tyre force passes through the suspension links; if the side-view force line is inclined, a vertical jacking component is generated. Anti-squat is therefore part of the same suspension-kinematics problem as bump steer, wheel-centre path and compliance steer \parencite{zxMilliken1995,zxDixon2009}. \textit{Bump steer} is toe change during wheel bump or rebound. \textit{Unsprung mass} is mass that moves with the wheel, including wheel, tyre, hub, upright and outboard brake hardware.
 
 %\figbox{26mm}{Terminology schematic placeholder: plan-view toe, front-view camber, side-view squat/anti-squat force path, and inboard versus outboard brake location.}
+\iffalse
 \begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.49\linewidth}
@@ -38,6 +39,47 @@ The vehicle is not intended to be a balanced skidpad, autocross and endurance ca
 \end{subfigure}
 \caption{Visualizations for the suspension terminology.}
 \label{fig:susp_terms_defines}
+\end{figure}
+\fi
+\begin{figure}[htbp]
+    \centering
+
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/camber_definition.png}
+        \caption{Camber angle viewed from the front of the vehicle. Negative camber is shown in the figure.}
+        \label{fig:camber_definition}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/toe_definition.png}
+        \caption{Toe angle viewed from above the vehicle. Toe in is shown in the figure.}
+        \label{fig:toe_definition}
+    \end{subfigure}
+
+    \caption{Suspension alignment terminology used in the wheel-assembly design. Camber describes the wheel inclination in front view, while toe describes the wheel angle relative to the vehicle centreline in plan view.}
+    \label{fig:camber_toe_terminology}
+\end{figure}
+\begin{figure}[htbp]
+    \centering
+
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/reference_no_antisquat_line.png}
+        \caption{Reference case with a horizontal longitudinal force line.}
+        \label{fig:reference_no_antisquat_line}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/antisquat_force_line.png}
+        \caption{Inclined force line used to generate anti-squat.}
+        \label{fig:antisquat_force_line}
+    \end{subfigure}
+
+    \caption{Side-view illustration of the anti-squat force-line concept. An inclined force line introduces a vertical reaction component that can resist rear suspension squat under longitudinal tyre force.}
+    \label{fig:antisquat_terminology}
 \end{figure}
 \subsection{Wheel-assembly requirements}
 \label{sec:suspension_requirements}
@@ -154,7 +196,32 @@ Indicative result & Medium & Medium & Highest & Medium/risky \\
 Steering was kept conventional because it is not the main performance differentiator. A rack-based system with direct mechanical actuation, rack-mounted stops and visible mechanical joints was selected. This follows the Formula Student steering requirements for mechanical actuation, rack stops and limited steering free play \parencite{zxFSUK2026Rules,zxFSG2026Rules}.
 
 The driven-wheel architecture was selected using the same Pugh-matrix method as the suspension and braking concepts. A quad-motor all-wheel-drive layout offers the greatest theoretical control authority, but its benefit is reduced for this acceleration-only vehicle because the centre of gravity is deliberately placed rearward. Under peak launch acceleration, the car is close to the wheelie or tipping limit, so the front axle is lightly loaded and front-wheel drive contributes less useful tractive force than it would in a more balanced vehicle. The additional motors, inverters, shafts, cooling requirements and control software would therefore add substantial mass, cost and complexity for a limited performance gain. A single-motor rear-wheel-drive layout was selected as the most appropriate architecture because it is lighter, cheaper, simpler to integrate and more compatible with the limited-slip differential and single inboard brake package.
-
+\begin{table}[H]
+\centering
+\caption{Pugh matrix for driven-wheel architecture selection.}
+\label{tab:pugh_drive_architecture}
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|c|c|c|}
+\hline
+\textbf{Criterion} & \textbf{AWD quad motor} & \textbf{Dual-motor RWD} & \textbf{Single-motor RWD} \\
+\hline
+Acceleration potential & ++ & + & 0 \\
+\hline
+Suitability for rearward centre of gravity & - & + & ++ \\
+\hline
+Mass and packaging efficiency & -- & - & ++ \\
+\hline
+Cost and system complexity & -- & - & ++ \\
+\hline
+Reliability and serviceability & - & 0 & + \\
+\hline
+Compatibility with LSD and inboard brake layout & -- & - & ++ \\
+\hline
+\textbf{Indicative result} & High performance, high penalty & Intermediate & \textbf{Preferred} \\
+\hline
+\end{tabularx}
+\end{table}
+\iffalse
 \begin{table}[H]
 \centering
 \caption{Pugh matrix for driven-wheel architecture selection.}
@@ -188,6 +255,7 @@ Indicative result & Performance gain, high penalty & Medium & Highest \\
 \hline
 \end{tabularx}
 \end{table}
+\fi
 
 The single-motor rear-wheel-drive option was therefore selected. This choice does not maximise theoretical traction in isolation, but it gives the best system-level compromise for an acceleration-only design. The rearward mass distribution already biases normal load towards the driven axle during launch, while the vehicle's proximity to the wheelie limit reduces the practical value of adding front drive. The selected architecture also reduces integration risk and leaves more packaging freedom for the rear multi-link suspension, limited-slip differential and inboard brake assembly.
 
@@ -200,13 +268,15 @@ The rear assembly is shown in Figure~\ref{fig:rear_views_wheel}. In the top view
 \centering
 \begin{subfigure}[t]{0.49\linewidth}
     \centering
-    \includegraphics[width=\linewidth]{figures/rear_top_view.png}
+    \includegraphics[width=\linewidth]{figures/rear_top_view_cropped.png}
     \caption{Top view.}
+    \label{fig:rear_top_view}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.49\linewidth}
     \centering
-    \includegraphics[width=\linewidth]{figures/rear_side_view.png}
+    \includegraphics[width=\linewidth]{figures/rear_side_view_cropped.png}
     \caption{Side view.}
+    \label{fig:rear_side_view}
 \end{subfigure}
 \caption{CAD views of the rear multi-link wheel assembly. The top view identifies the rear-mounted toe link and the forward pushrod; the side view shows the shallow locating links and steep pushrod.}
 \label{fig:rear_views_wheel}
@@ -241,13 +311,33 @@ Toe-link length & Nominal toe during build & Initial setup, then fixed \\
 \end{tabularx}
 \end{table}
 
+\iffalse
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.78\linewidth]{figures/rear_susp_motion.png}
 \caption{Rear suspension motion view used to check that the toe link, pushrod and wheel-locating links remain separated and inspectable through the expected travel range.}
 \label{fig:rear_motion_wheel}
 \end{figure}
+\fi
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/antisquat_neutral_position.png}
+    \caption{Neutral suspension position.}
+    \label{fig:antisquat_neutral_position}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.49\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/antisquat_compressed_position.png}
+    \caption{Exaggerated compressed position.}
+    \label{fig:antisquat_compressed_position}
+\end{subfigure}
+\caption{Rear wheel motion relative to the anti-squat force line. The exaggerated compressed position illustrates that the wheel-centre path follows the intended anti-squat direction, although the displacement shown is larger than the expected movement during normal operation.}
+\label{fig:antisquat_motion_pair}
+\end{figure}
 
+\iffalse
 \subsection{Preliminary link angles and force basis}
 Screenshot-derived side-view measurements show shallow locating-link angles of approximately X to \SI{12}{\degree} relative to horizontal and a much steeper pushrod angle of approximately X to \SI{80}{\degree}. The final CAD hardpoint table records the exact upper, lower and toe-link angles as X\(^{\circ}\), X\(^{\circ}\) and X\(^{\circ}\). The force-analysis design basis is \SI{230}{kg} vehicle mass and \SI{1.3}{g} maximum acceleration:
 \begin{equation}
@@ -271,6 +361,67 @@ N_{x,\mathrm{link}}\approx\frac{F_{x,\mathrm{wheel}}}{2\cos\alpha}
 =\frac{1.47}{2\cos10^\circ}\approx\SI{0.75}{kN}.
 \end{equation}
 The indicative link force is therefore about \(\sqrt{0.95^2+0.75^2}\approx\SI{1.2}{kN}\) before safety factors and transient loads. The wheel-locating links are selected as 4130 chromoly steel tube, nominally \SI{12.7}{mm} outside diameter and \SI{1.2}{mm} wall thickness, with threaded inserts and rod ends. Uprights are machined from 7075-T6 aluminium, with steel or aluminium shim packs and 4130 steel chassis brackets where welded load paths are needed.
+\fi
+
+\subsection{Preliminary link-force and buckling basis}
+
+A preliminary force analysis was carried out using the final CAD hardpoints rather than the earlier side-view angle estimate. The upright was modelled as a rigid body, the chassis was assumed rigid, and each suspension link was treated as a pin-jointed two-force member. The five wheel-locating links and the pushrod were included in the equilibrium solve, but only the five wheel-locating links are reported here, because these members define the suspension location and are the primary buckling-critical links.
+
+The design load case uses a \SI{230}{kg} vehicle mass and \SI{1.3}{g} maximum acceleration. The total longitudinal drive force is therefore
+\begin{equation}
+F_{\mathrm{drive,total}} = ma
+= 230 \times 1.3 \times 9.81
+\approx \SI{2.93}{kN}.
+\end{equation}
+Assuming the two driven rear wheels share the drive force equally, the applied force at one rear hub is
+\begin{equation}
+F_{\mathrm{drive,wheel}} \approx \SI{1.47}{kN}.
+\end{equation}
+This force was applied at the bearing centre in the forward direction, corresponding to the negative longitudinal \(z\)-direction in the adopted CAD coordinate system. The resulting axial member forces are shown in Table~\ref{tab:rear_link_force_buckling}. Positive values denote tension and negative values denote compression.
+
+The wheel-locating links are specified as 4130 chromoly steel tube with nominal outside diameter \SI{12.7}{mm} and wall thickness \SI{1.2}{mm}. For a thin circular tube, the second moment of area is
+\begin{equation}
+I = \frac{\pi}{64}\left(D_o^4-D_i^4\right),
+\end{equation}
+where \(D_o=\SI{12.7}{mm}\) and \(D_i=\SI{10.3}{mm}\), giving
+\begin{equation}
+I \approx \SI{724}{mm^4}.
+\end{equation}
+The pinned--pinned Euler buckling load was then estimated as
+\begin{equation}
+P_{\mathrm{cr}} = \frac{\pi^2 E I}{L^2},
+\end{equation}
+using \(E=\SI{205}{GPa}\). This is a conservative first estimate for rod-end suspension links, which behave approximately as pin-ended compression members. Local joint strength, threaded inserts, weld quality, bracket stiffness and fatigue are not included in this simple buckling check and should be checked separately.
+
+\begin{table}[h!]
+\centering
+\caption{Preliminary rear suspension wheel-locating link forces and Euler buckling checks under \SI{1.3}{g} acceleration. Positive force denotes tension; negative force denotes compression.}
+\label{tab:rear_link_force_buckling}
+\begin{tabular}{lrrrrl}
+\hline
+\textbf{Member} &
+\textbf{Length} &
+\textbf{Axial force} &
+\textbf{State} &
+\textbf{\(P_{\mathrm{cr}}\)} &
+\textbf{Safe?} \\
+&
+\textbf{(mm)} &
+\textbf{(kN)} &
+&
+\textbf{(kN)} &
+\\
+\hline
+Lower fore link & 370 & -0.77 & Compression & 10.71 & Yes \\
+Lower aft link  & 280 & +1.43 & Tension     & 18.70 & Yes \\
+Upper fore link & 370 & -1.21 & Compression & 10.71 & Yes \\
+Upper aft link  & 280 & +0.88 & Tension     & 18.70 & Yes \\
+Toe link        & 279 & -1.05 & Compression & 18.83 & Yes \\
+\hline
+\end{tabular}
+\end{table}
+
+The largest compressive force occurs in the upper fore link, at approximately \SI{1.21}{kN}. Its corresponding pinned Euler buckling load is approximately \SI{10.71}{kN}, giving a buckling safety factor of about 8.8 for this simplified static load case. The lower fore link and toe link are also in compression but have larger margins. The two aft links are in tension for this acceleration case, so Euler buckling is not active for those members under this particular loading direction. Overall, the selected \SI{12.7}{mm} outside diameter, \SI{1.2}{mm} wall 4130 tube appears adequate for the preliminary \SI{1.3}{g} longitudinal acceleration case, although transient impact loads, combined braking/cornering cases, fatigue, threaded-end strength and bracket load paths still require separate verification.
 
 \subsection{Anti-squat and dynamic toe-control strategy}
 \label{sec:antisquat_dynamic_toe}
@@ -284,9 +435,47 @@ so the anti-squat geometry responds not only to the force accelerating the vehic
 \begin{equation}
 \Delta N_{\mathrm{rear}}\approx\frac{ma h_{\mathrm{CG}}+D z_D}{L}.
 \end{equation}
-With the final aerodynamic model, \(D=X\,\mathrm{N}\) at X km/h and \(z_D=X\,\mathrm{m}\). This gives X N additional rear load transfer and a rear jacking displacement of X mm. Reading from the toe curve, the rear toe at X km/h is X\(^{\circ}\), satisfying the target of approximately zero toe at speed.
+\iffalse
+With the final aerodynamic model, the drag force is \(D=\SI{580}{N}\). The drag line of action is \(\SI{60}{mm}\) above the centre of gravity, so, with \(z_{\mathrm{CG}}=\SI{0.325}{m}\), the drag-force height is
+\begin{equation}
+z_D = 0.325 + 0.060 = \SI{0.385}{m}.
+\end{equation}
+This produces a nose-up pitching moment that presses the rear axle down and lifts the front axle:
+\begin{equation}
+M_D = D(z_D-z_{\mathrm{CG}})
+= 580 \times 0.060
+= \SI{34.8}{N.m}.
+\end{equation}
+Using the wheelbase \(L=\SI{1.573}{m}\), the equivalent additional rear load transfer is
+\begin{equation}
+\Delta F_{\mathrm{rear}}
+= \frac{M_D}{L}
+= \frac{34.8}{1.573}
+\approx \SI{22.1}{N}.
+\end{equation}
+With the selected rear wheel rate of approximately \(\SI{18.5}{N/mm}\) per rear wheel, this corresponds to a rear wheel compression of
+\begin{equation}
+\Delta y_{\mathrm{rear}}
+= \frac{22.1/2}{18.5}
+\approx \SI{0.60}{mm}.
+\end{equation}
+Reading from the original rear toe curve at \(\Delta y_{\mathrm{rear}}\approx\SI{0.6}{mm}\), the toe change is only about \(-\SI{0.006}{\degree}\). Therefore, with a static rear setting of \(\SI{0.15}{\degree}\) toe-in, the rear toe at the aerodynamic design condition is approximately
+\begin{equation}
+\theta_{\mathrm{toe,speed}}
+\approx 0.15 - 0.006
+= \SI{0.144}{\degree}\ \text{toe-in}.
+\end{equation}
+The current geometry therefore does not fully achieve the target of approximately zero rear toe at speed. However, the proposed upright-side shim and spacer adjustment strategy gives a practical route to fine-tune the toe curve once more representative aerodynamic, tyre and track-test data are available.
 
-\figbox{30mm}{Rear toe curve placeholder: rear toe angle against wheel displacement or vehicle speed, showing \SI{0.15}{\degree} static toe-in and approximately zero toe at X km/h.}
+\figbox{30mm}{Rear toe curve placeholder: change in rear toe angle against vertical wheel displacement, showing that the current \SI{0.15}{\degree} static rear toe-in is only reduced to approximately \SI{0.144}{\degree} toe-in under the estimated aerodynamic pitch displacement.}
+\fi
+With the final aerodynamic model, \(D=580\,\mathrm{N}\) at \(V\) km/h and \(z_D=0.385\,\mathrm{m}\). This gives \(\SI{22.1}{N}\) additional rear load transfer and a rear jacking displacement of \(\SI{0.60}{mm}\). Reading from the toe curve, the rear toe at \(33\) m/s is approximately \(\SI{0.144}{\degree}\) toe-in,
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/change_in_rear_toe_angle_against_wheel_displacement.png}
+\caption{Calculated change in rear toe angle against vertical wheel displacement for the original toe-link pickup and for \(\pm\SI{10}{mm}\) vertical adjustment of the hub-side toe-link pickup. Positive values denote toe-in. The original pickup gives a comparatively shallow toe-change curve, while the adjusted pickup positions show the available tuning range for later track testing.}
+\label{fig:rear_toe_angle_wheel_displacement}
+\end{figure}
 
 \subsection{Single inboard brake acting on the LSD}
 The rear brake acts on the LSD. This is the clearest rule-facing description because the Formula Student UK rules explicitly allow a single brake acting on a limited-slip differential \parencite{zxFSUK2026Rules}. The layout removes rear wheel-end brake discs and calipers, reducing rear unsprung mass and simplifying the upright package. The estimated saving is \SI{3.6}{kg} of rear unsprung mass and \SI{0.9}{kg} total mass relative to a conventional outboard rear brake arrangement.
@@ -307,7 +496,7 @@ Single inboard brake acting on LSD & \(-\SI{3.6}{kg}\) & \(-\SI{0.9}{kg}\) & Low
 \end{tabularx}
 \end{table}
 
-The final brake package uses a Wilwood GP200 caliper, an X mm steel disc and an aluminium caliper mount tied into the rear frame bay. Brake design remains safety-critical: hydraulic pressure, piston area, effective radius, pedal force, brake balance and thermal capacity must be checked according to normal brake-design practice \parencite{zxLimpert2011}. The Formula Student rules also require protection from drivetrain failure and moving parts \parencite{zxFSUK2026Rules}.
+The final brake package uses a Wilwood GP200 caliper, an 180 mm steel disc and an aluminium caliper mount tied into the rear frame bay. Brake design remains safety-critical: hydraulic pressure, piston area, effective radius, pedal force, brake balance and thermal capacity must be checked according to normal brake-design practice \parencite{zxLimpert2011}. The Formula Student rules also require protection from drivetrain failure and moving parts \parencite{zxFSUK2026Rules}.
 
 \begin{figure}[H]
 \centering
@@ -350,11 +539,11 @@ Brake/drivetrain interaction & Concentrated central brake torque and protection 
 
 \section{Front wheel assembly, steering and braking design}
 
-The front wheel assembly is deliberately conventional. The front suspension is a compact double-wishbone arrangement using 4130 steel links, 7075-T6 aluminium uprights and rod-end joints with misalignment spacers. Its role is to locate the front wheels, maintain straight-line tracking and support steering and braking. Static camber is X\(^{\circ}\), front toe is X\(^{\circ}\), and the bump-steer target is less than X\(^{\circ}\) over the expected front wheel travel.
+The front wheel assembly is deliberately conventional. The front suspension is a compact double-wishbone arrangement using 4130 steel links, 7075-T6 aluminium uprights and rod-end joints with misalignment spacers. Its role is to locate the front wheels, maintain straight-line tracking and support steering and braking. Static camber is 0\(^{\circ}\), front toe is 0\(^{\circ}\), and the bump-steer target is less than 0.1\(^{\circ}\) over the expected front wheel travel.
 
 The steering system uses a compact rack-and-pinion layout with a continuous-perimeter steering wheel, quick-release hub, steering column, compact rack, tie rods and steering arms. A direct column is used where packaging allows; one high-quality universal joint is used if the final column angle requires it. The rack is mechanically attached to the primary structure, and steering stops act on the rack. This low-risk choice reflects the Formula Student steering requirements and keeps the main novelty in the rear assembly \parencite{zxFSUK2026Rules,zxFSG2026Rules}.
 
-The front brakes provide the main inspection confidence and braking capacity. They use small outboard discs, Wilwood GP200 calipers and a conventional hydraulic circuit. The rear LSD brake reduces rear wheel-end mass, but the overall brake system still uses two independent hydraulic circuits as required by the rules \parencite{zxFSUK2026Rules}. The final brake-balance calculation gives X\% front bias and X\% rear bias at a pedal force of X N.
+The front brakes provide the main inspection confidence and braking capacity. They use small outboard discs, Wilwood GP200 calipers and a conventional hydraulic circuit. The rear LSD brake reduces rear wheel-end mass, but the overall brake system still uses two independent hydraulic circuits as required by the rules \parencite{zxFSUK2026Rules}. The final brake-balance calculation gives 58\% front bias at a pedal force of 400 N.
 
 \begin{table}[H]
 \centering
@@ -377,13 +566,39 @@ Front links & 4130 steel double-wishbone links & Simple load paths and reliable 
 \end{table}
 
 %\figbox{30mm}{Front suspension, steering and brake drawing placeholder: double-wishbone links, upright, steering arm, rack/tie rods and front brake package.}
+\iffalse
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.78\linewidth]{figures/Front_Preview.png}
 \caption{Preview of the front suspension and strring rack layout.}
 \label{fig:front_preview}
 \end{figure}
+\fi
 
+\begin{figure}[htbp]
+    \centering
+    
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        % left, bottom, right, top
+        \includegraphics[width=\linewidth,trim={10 10 45 20},clip]{figures/front_steer_extreme_1.png}
+        \caption{Inboard wheel extreme steering position.}
+        \label{fig:front_steer_extreme_a}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        % left, bottom, right, top
+        \includegraphics[width=\linewidth,trim={20 10 70 20},clip]{figures/front_steer_extreme_2.png}
+        \caption{Ouboard wheel extreme steering position.}
+        \label{fig:front_steer_extreme_b}
+    \end{subfigure}
+    
+    \caption{Front suspension geometry shown at the two extreme steering positions.}
+    \label{fig:front_steering_extremes}
+\end{figure}
+
+\iffalse
 \section{System integration and teamwork}
 
 The rear suspension was developed with the chassis, drivetrain, braking and vehicle-dynamics work rather than as an isolated mechanism. The simple rectangular chassis-side hardpoint arrangement gives manufacturable load paths and reduces the risk that late setup changes require chassis redesign. The upright-side shim system then provides the tuning freedom.
@@ -413,6 +628,8 @@ Steering & Rack and tie-rod geometry & Conventional front steering retained for 
 \end{table}
 
 Shared CAD reviews, mass-budget updates and rule checks were used to control these interfaces. This is important because the rear axle is not only a suspension design; it is a combined suspension, brake and drivetrain module. The design therefore satisfies the engineering requirement that individual work remains connected to the wider group design rather than optimising one isolated component.
+\fi
+
 \iffalse
 \section{Evidence, limitations and final verification}
 
@@ -446,6 +663,6 @@ The main limitation is specialisation. A 100\% anti-squat starting target increa
 
 This chapter has presented the wheel assembly, suspension, steering and braking design for the acceleration-only Formula Student UK vehicle. The front systems are intentionally conventional: they provide controllability, braking confidence and rule compliance. The main contribution is the rear wheel assembly, where multi-link kinematics, dynamic toe behaviour and inboard braking are integrated.
 
-The rear suspension uses five wheel-locating links plus a pushrod. The chassis-side pickups are simple and rectangular, while the upright-side hardpoints and shim packs provide tuning. The 100\% anti-squat target, corresponding to a \SI{12.7}{\degree} side-view force line, is an educated starting point for launch control. The \SI{0.15}{\degree} static rear toe-in is likewise an initial setup value, intended to move towards approximately zero toe at speed as the anti-squat and drag-related load state changes.
+The rear suspension uses five wheel-locating links plus a pushrod. The chassis-side pickups are simple and rectangular, while the upright-side hardpoints and shim packs provide tuning. The 100\% anti-squat target, corresponding to a \SI{12.7}{\degree} side-view force line, is an educated starting point for launch control. The \SI{0.15}{\degree} static rear toe-in is likewise an initial setup value, intended to move towards approximately zero toe at speed as the anti-squat and drag-related load state changes. Though the simulation results indicate that the current setup may not achieve the desired results, the adjustability of the layout allows fine tuning when physical test data becomes available.
 
 The rear brake acts on the LSD and removes outboard rear brake hardware. The expected saving is \SI{3.6}{kg} unsprung mass and \SI{0.9}{kg} total mass. The result is not a generic suspension package, but an acceleration-event-specific rear axle concept: start from a rational rear-traction setup, make the geometry adjustable, and reduce wheel-end mass while retaining rule-compliant steering and braking systems.
